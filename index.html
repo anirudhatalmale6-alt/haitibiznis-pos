@@ -11,153 +11,145 @@
 :root{
   --blue:#00209F; --red:#D21034; --ink:#12151c; --muted:#6b7280;
   --bg:#eef1f6; --card:#ffffff; --line:#e2e6ee; --good:#12a150; --warn:#e08a00;
-  --shadow:0 2px 10px rgba(20,30,60,.08); --shadow-lg:0 10px 30px rgba(20,30,60,.14);
-  --r:16px;
+  --shadow:0 2px 10px rgba(20,30,60,.08); --shadow-lg:0 10px 30px rgba(20,30,60,.14); --r:16px;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0}
-body{
-  font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
-  background:var(--bg); color:var(--ink); line-height:1.4;
-  padding-bottom:84px; max-width:720px; margin:0 auto; min-height:100vh;
-}
-button{font-family:inherit; cursor:pointer}
+body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);
+  line-height:1.4;padding-bottom:150px;max-width:720px;margin:0 auto;min-height:100vh}
+button{font-family:inherit;cursor:pointer}
 img{display:block}
-/* ---- Header ---- */
-.appbar{
-  position:sticky; top:0; z-index:20;
-  background:linear-gradient(120deg,var(--blue),#0b2fc4);
-  color:#fff; padding:12px 14px; display:flex; align-items:center; gap:10px;
-  box-shadow:var(--shadow);
-}
+.appbar{position:sticky;top:0;z-index:20;background:linear-gradient(120deg,var(--blue),#0b2fc4);color:#fff;
+  padding:12px 14px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow)}
 .appbar .logo{width:38px;height:38px;border-radius:10px;background:#fff;padding:3px;object-fit:contain}
 .appbar h1{font-size:16px;margin:0;line-height:1.15;font-weight:700;flex:1}
 .appbar h1 small{display:block;font-weight:500;opacity:.85;font-size:11px;letter-spacing:.4px}
 .lang{display:flex;gap:4px;background:rgba(255,255,255,.15);border-radius:999px;padding:3px}
-.lang button{border:0;background:transparent;color:#fff;font-size:12px;font-weight:700;
-  padding:5px 9px;border-radius:999px;opacity:.7}
+.lang button{border:0;background:transparent;color:#fff;font-size:12px;font-weight:700;padding:5px 9px;border-radius:999px;opacity:.7}
 .lang button.on{background:#fff;color:var(--blue);opacity:1}
-/* ---- Screens ---- */
 main{padding:16px 14px}
-.screen{display:none;animation:fade .25s ease}
+.screen{display:none;animation:fade .22s ease}
 .screen.on{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .h2{font-size:20px;font-weight:800;margin:2px 0 4px}
 .sub{color:var(--muted);font-size:13px;margin:0 0 16px}
-.back{display:inline-flex;align-items:center;gap:6px;border:0;background:#fff;color:var(--blue);
-  font-weight:700;font-size:14px;padding:8px 12px;border-radius:999px;box-shadow:var(--shadow);margin-bottom:14px}
-/* ---- Home service grid ---- */
+.back{display:inline-flex;align-items:center;gap:6px;border:0;background:#fff;color:var(--blue);font-weight:700;
+  font-size:14px;padding:8px 12px;border-radius:999px;box-shadow:var(--shadow);margin-bottom:14px}
+/* home tiles */
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.svc{
-  border:0;background:var(--card);border-radius:var(--r);padding:18px 14px;text-align:center;
-  box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:10px;
-  border:1px solid var(--line);transition:transform .12s,box-shadow .12s;min-height:150px;justify-content:center;
-}
+.svc{border:1px solid var(--line);background:var(--card);border-radius:var(--r);padding:16px 12px;text-align:center;
+  box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:9px;min-height:140px;
+  justify-content:center;transition:transform .12s}
 .svc:active{transform:scale(.97)}
-.svc .em{font-size:40px;line-height:1}
-.svc .il{width:60px;height:60px;border-radius:14px;background:#fff;padding:5px;object-fit:contain;
-  border:1px solid var(--line);box-shadow:0 3px 8px rgba(0,0,0,.08)}
-.svc .nm{font-weight:800;font-size:15px}
+.svc .em{font-size:38px;line-height:1}
+.svc .il{width:58px;height:58px;border-radius:14px;background:#fff;padding:5px;object-fit:contain;border:1px solid var(--line);box-shadow:0 3px 8px rgba(0,0,0,.08)}
+.svc .nm{font-weight:800;font-size:14px}
 .svc .tg{font-size:11px;color:var(--muted);font-weight:600}
-/* ---- Steps ---- */
-.steps{display:flex;gap:6px;margin-bottom:16px}
-.steps .st{flex:1;height:6px;border-radius:999px;background:var(--line)}
-.steps .st.on{background:var(--blue)}
-.steps .st.done{background:var(--good)}
+/* 2-step indicator */
+.steps{display:flex;gap:8px;margin-bottom:16px}
+.steps .st{flex:1;display:flex;align-items:center;gap:8px;font-weight:800;font-size:13px;color:var(--muted)}
+.steps .st .n{width:26px;height:26px;border-radius:50%;background:var(--line);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px}
+.steps .st.on{color:var(--blue)}
+.steps .st.on .n{background:var(--blue)}
+.steps .st.done .n{background:var(--good)}
+/* menu category tabs */
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px}
+.tabs button{white-space:nowrap;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:9px 15px;font-weight:700;font-size:13px;color:var(--muted)}
+.tabs button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);margin-bottom:14px}
 label.fl{display:block;font-weight:700;font-size:13px;margin:0 0 6px}
-input[type=text],input[type=tel],input[type=number],select,textarea{
-  width:100%;border:1.5px solid var(--line);border-radius:12px;padding:13px 12px;font-size:16px;
-  background:#fbfcfe;color:var(--ink);margin-bottom:14px;font-family:inherit}
+input[type=text],input[type=tel],input[type=number],select,textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;
+  padding:13px 12px;font-size:16px;background:#fbfcfe;color:var(--ink);margin-bottom:14px;font-family:inherit}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);background:#fff}
-textarea{min-height:70px;resize:vertical}
+textarea{min-height:64px;resize:vertical}
 .hint{font-size:12px;color:var(--muted);margin:-8px 0 14px}
-/* choice rows */
-.choice{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:12px;
-  padding:14px;margin-bottom:10px;background:#fbfcfe;font-weight:600}
+/* menu item rows (restaurant style) */
+.menu-item{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:12px 14px;box-shadow:var(--shadow);margin-bottom:10px}
+.menu-item .mi-t{flex:1}
+.menu-item .mi-t .nm{font-weight:700;font-size:15px}
+.menu-item .mi-t .ds{font-size:12px;color:var(--muted)}
+.menu-item .price-in{width:96px;margin:0;padding:9px;text-align:right;font-size:15px}
+.addbtn{border:0;background:var(--blue);color:#fff;font-weight:800;font-size:20px;width:40px;height:40px;border-radius:11px;flex:0 0 auto;line-height:1}
+.addbtn.on{background:var(--good)}
+/* checkable */
+.choice{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px;background:#fbfcfe;font-weight:600}
 .choice.on{border-color:var(--blue);background:#eef3ff}
-.choice .dot{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);flex:0 0 auto;position:relative}
+.choice .dot{width:22px;height:22px;border-radius:6px;border:2px solid var(--line);flex:0 0 auto;position:relative}
+.choice.radio .dot{border-radius:50%}
 .choice.on .dot{border-color:var(--blue)}
-.choice.on .dot:after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--blue)}
-.choice.check .dot{border-radius:6px}
-.choice.check.on .dot:after{border-radius:2px}
-.choice .txt{flex:1}
-.choice .amt{font-weight:800;color:var(--blue);white-space:nowrap}
-.pkg .pill{display:inline-block;font-size:11px;background:#eef3ff;color:var(--blue);border-radius:999px;padding:2px 8px;font-weight:700;margin-top:3px}
-/* payment tiles */
+.choice.on .dot:after{content:"";position:absolute;inset:4px;border-radius:2px;background:var(--blue)}
+.choice.radio.on .dot:after{border-radius:50%}
+.choice .txt{flex:1}.choice .amt{font-weight:800;color:var(--blue);white-space:nowrap}
+.pkgbanner{background:#eef3ff;border:1px solid #cdd9ff;border-radius:12px;padding:12px 14px;margin:6px 0 14px;font-weight:700;color:var(--blue);display:flex;justify-content:space-between;align-items:center}
+.pkgbanner b{font-size:18px}
+/* cart bar */
+.cartbar{position:fixed;bottom:64px;left:0;right:0;max-width:720px;margin:0 auto;padding:0 14px;z-index:25;pointer-events:none}
+.cartbar .inner{background:#0e1830;color:#fff;border-radius:16px;padding:13px 18px;display:flex;align-items:center;gap:12px;
+  box-shadow:var(--shadow-lg);pointer-events:auto}
+.cartbar .cc{background:var(--red);border-radius:999px;min-width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;padding:0 7px}
+.cartbar .ct{flex:1;font-weight:800}.cartbar .ct span{opacity:.7;font-weight:600;font-size:12px}
+.cartbar .go{background:#fff;color:var(--blue);border:0;border-radius:10px;padding:10px 16px;font-weight:800;font-size:14px}
+/* cart lines in checkout */
+.cline{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.cline:last-child{border-bottom:0}.cline .cl-t{flex:1;font-weight:600}.cline .cl-a{font-weight:800}
+.cline .cl-x{border:0;background:none;color:var(--red);font-size:20px;font-weight:800}
+.totbar{display:flex;justify-content:space-between;align-items:center;background:#0e1830;color:#fff;border-radius:14px;padding:14px 16px;margin:6px 0 14px}
+.totbar b{font-size:22px}.totbar span{opacity:.8;font-size:13px}
+/* payment */
 .pays{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .pay{border:1.5px solid var(--line);border-radius:14px;padding:16px 10px;text-align:center;background:#fbfcfe;font-weight:800;font-size:14px}
-.pay .pe{font-size:28px;display:block;margin-bottom:6px}
-.pay.on{border-color:var(--blue);background:#eef3ff}
-/* total bar */
-.totbar{display:flex;justify-content:space-between;align-items:center;background:#0e1830;color:#fff;
-  border-radius:14px;padding:14px 16px;margin-bottom:14px}
-.totbar b{font-size:22px}
-.totbar span{opacity:.8;font-size:13px}
-.breakdown{font-size:13px;color:var(--muted)}
-.breakdown div{display:flex;justify-content:space-between;padding:3px 0}
-.breakdown div.tot{color:var(--ink);font-weight:800;border-top:1px dashed var(--line);margin-top:6px;padding-top:8px}
+.pay .pe{font-size:28px;display:block;margin-bottom:6px}.pay.on{border-color:var(--blue);background:#eef3ff}
 /* docs */
-.dropz{border:2px dashed var(--blue);border-radius:16px;padding:28px 16px;text-align:center;background:#f4f7ff;color:var(--blue);font-weight:700}
-.dropz .de{font-size:36px;margin-bottom:6px}
-.filelist{margin-top:12px}
+.dropz{display:block;width:100%;border:2px dashed var(--blue);border-radius:16px;padding:20px 16px;text-align:center;background:#f4f7ff;color:var(--blue);font-weight:700;margin-bottom:12px}
+.dropz .de{font-size:32px;margin-bottom:4px}
 .filerow{display:flex;align-items:center;gap:10px;background:#fbfcfe;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-bottom:8px;font-size:13px}
 .filerow .fi{width:34px;height:34px;border-radius:8px;object-fit:cover;background:#eef1f6;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:18px}
 .filerow .fx{margin-left:auto;color:var(--red);font-weight:800;border:0;background:none;font-size:18px}
-/* primary button */
-.cta{width:100%;border:0;background:var(--blue);color:#fff;font-weight:800;font-size:17px;
-  padding:16px;border-radius:14px;box-shadow:var(--shadow-lg);margin-top:4px}
-.cta:active{transform:scale(.99)}
-.cta.red{background:var(--red)}
-.cta.ghost{background:#fff;color:var(--blue);border:1.5px solid var(--line);box-shadow:var(--shadow)}
+/* primary buttons */
+.cta{width:100%;border:0;background:var(--blue);color:#fff;font-weight:800;font-size:17px;padding:16px;border-radius:14px;box-shadow:var(--shadow-lg);margin-top:4px}
+.cta:active{transform:scale(.99)}.cta.red{background:var(--red)}.cta.ghost{background:#fff;color:var(--blue);border:1.5px solid var(--line);box-shadow:var(--shadow)}
 .cta:disabled{opacity:.45}
-.row2{display:flex;gap:10px}
-.row2 .cta{margin-top:0}
+.row2{display:flex;gap:10px}.row2 .cta{margin-top:0}
+/* registration chooser */
+.regpick{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
+.regpick button{border:1.5px solid var(--line);background:#fff;border-radius:var(--r);padding:22px 12px;box-shadow:var(--shadow);
+  display:flex;flex-direction:column;align-items:center;gap:8px;font-weight:800;font-size:15px}
+.regpick button .re{font-size:38px}
+.regpick button.on{border-color:var(--blue);background:#eef3ff;color:var(--blue)}
 /* orders */
 .filterbar{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px}
 .filterbar button{white-space:nowrap;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-weight:700;font-size:13px;color:var(--muted)}
 .filterbar button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
 .order{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow);margin-bottom:12px}
 .order .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-.order .who{font-weight:800;font-size:15px}
-.order .meta{font-size:12px;color:var(--muted)}
+.order .who{font-weight:800;font-size:15px}.order .meta{font-size:12px;color:var(--muted)}
 .order .svc-t{font-size:13px;font-weight:700;color:var(--blue);margin:6px 0}
 .badge{font-size:11px;font-weight:800;padding:5px 10px;border-radius:999px;white-space:nowrap}
-.b-wait{background:#fff6e6;color:#b57000}
-.b-prog{background:#e7f0ff;color:#1550c0}
-.b-ready{background:#e6f7ee;color:#0c8f45}
-.b-done{background:#eef1f6;color:#5a6272}
+.b-wait{background:#fff6e6;color:#b57000}.b-prog{background:#e7f0ff;color:#1550c0}.b-ready{background:#e6f7ee;color:#0c8f45}.b-done{background:#eef1f6;color:#5a6272}
+.b-pending{background:#fff6e6;color:#b57000}.b-approved{background:#e7f0ff;color:#1550c0}.b-active{background:#e6f7ee;color:#0c8f45}
 .order .amt2{font-weight:800;font-size:16px}
 .statusrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
-.statusrow button{flex:1;min-width:70px;border:1.5px solid var(--line);background:#fbfcfe;border-radius:10px;padding:8px 4px;font-size:11px;font-weight:700;color:var(--muted)}
+.statusrow button{flex:1;min-width:64px;border:1.5px solid var(--line);background:#fbfcfe;border-radius:10px;padding:8px 4px;font-size:11px;font-weight:700;color:var(--muted)}
 .statusrow button.on{border-color:var(--blue);background:#eef3ff;color:var(--blue)}
+.rtag{display:inline-block;font-size:10px;font-weight:800;background:#eef3ff;color:var(--blue);border-radius:6px;padding:2px 7px;margin-left:6px;vertical-align:middle}
 /* dashboard */
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:6px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 14px;box-shadow:var(--shadow)}
-.stat .n{font-size:32px;font-weight:900;line-height:1}
-.stat .l{font-size:12px;color:var(--muted);font-weight:700;margin-top:6px}
+.stat .n{font-size:30px;font-weight:900;line-height:1}.stat .l{font-size:12px;color:var(--muted);font-weight:700;margin-top:6px}
 .stat.sales{grid-column:1/-1;background:linear-gradient(120deg,var(--blue),#0b2fc4);color:#fff;border:0}
 .stat.sales .l{color:#fff;opacity:.85}
-.empty{text-align:center;color:var(--muted);padding:40px 16px;font-weight:600}
-.empty .ee{font-size:44px;margin-bottom:10px}
-/* confirmation */
+.empty{text-align:center;color:var(--muted);padding:40px 16px;font-weight:600}.empty .ee{font-size:44px;margin-bottom:10px}
 .confirm{text-align:center;padding:20px 10px}
-.confirm .ok{width:84px;height:84px;border-radius:50%;background:var(--good);color:#fff;font-size:44px;
-  display:flex;align-items:center;justify-content:center;margin:6px auto 16px;box-shadow:0 8px 24px rgba(18,161,80,.4)}
+.confirm .ok{width:84px;height:84px;border-radius:50%;background:var(--good);color:#fff;font-size:44px;display:flex;align-items:center;justify-content:center;margin:6px auto 16px;box-shadow:0 8px 24px rgba(18,161,80,.4)}
 .confirm h3{font-size:22px;margin:0 0 4px}
 .confirm .oid{font-family:monospace;font-size:15px;background:#eef1f6;border-radius:8px;padding:6px 12px;display:inline-block;margin:8px 0;font-weight:700}
-/* bottom nav */
-.nav{position:fixed;bottom:0;left:0;right:0;max-width:720px;margin:0 auto;background:#fff;border-top:1px solid var(--line);
-  display:flex;box-shadow:0 -4px 16px rgba(20,30,60,.06);z-index:30}
+.nav{position:fixed;bottom:0;left:0;right:0;max-width:720px;margin:0 auto;background:#fff;border-top:1px solid var(--line);display:flex;box-shadow:0 -4px 16px rgba(20,30,60,.06);z-index:30}
 .nav button{flex:1;border:0;background:none;padding:9px 0 10px;color:var(--muted);font-size:11px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:3px}
-.nav button .ni{font-size:22px;line-height:1}
-.nav button.on{color:var(--blue)}
+.nav button .ni{font-size:22px;line-height:1}.nav button.on{color:var(--blue)}
 .badge-dot{position:relative}
-.badge-dot[data-n]:not([data-n="0"]):after{content:attr(data-n);position:absolute;top:-3px;right:calc(50% - 22px);
-  background:var(--red);color:#fff;font-size:10px;font-weight:800;min-width:16px;height:16px;border-radius:999px;
-  display:flex;align-items:center;justify-content:center;padding:0 4px}
+.badge-dot[data-n]:not([data-n="0"]):after{content:attr(data-n);position:absolute;top:-3px;right:calc(50% - 22px);background:var(--red);color:#fff;font-size:10px;font-weight:800;min-width:16px;height:16px;border-radius:999px;display:flex;align-items:center;justify-content:center;padding:0 4px}
 .settings-note{font-size:12px;color:var(--warn);background:#fff8ec;border:1px solid #ffe6b0;border-radius:10px;padding:10px 12px;margin-bottom:14px;font-weight:600}
-.mono{font-family:monospace}
 </style>
 </head>
 <body>
@@ -174,90 +166,87 @@ textarea{min-height:70px;resize:vertical}
 
 <main>
 
-<!-- ============ HOME ============ -->
+<!-- ===== HOME ===== -->
 <section id="s-home" class="screen on">
   <div class="h2" data-i18n="home_t">Chwazi yon sèvis</div>
-  <p class="sub" data-i18n="home_s">Peze yon bouton pou kòmanse yon nouvo kòmand.</p>
+  <p class="sub" data-i18n="home_s">Peze yon sèvis pou kòmanse. Ou ka ajoute plizyè sèvis nan yon sèl kòmand.</p>
   <div class="grid" id="svcGrid"></div>
 </section>
 
-<!-- ============ NEW ORDER FLOW ============ -->
-<section id="s-order" class="screen">
-  <button class="back" onclick="orderBack()">‹ <span data-i18n="back">Retounen</span></button>
-  <div class="steps"><div class="st" data-step="1"></div><div class="st" data-step="2"></div><div class="st" data-step="3"></div><div class="st" data-step="4"></div></div>
+<!-- ===== STEP 1 : MENU / ORDER ===== -->
+<section id="s-menu" class="screen">
+  <button class="back" onclick="go('home')">‹ <span data-i18n="back">Retounen</span></button>
+  <div class="steps">
+    <div class="st on" id="ind1"><span class="n">1</span><span data-i18n="step_order">Kòmand</span></div>
+    <div class="st" id="ind2"><span class="n">2</span><span data-i18n="step_pay">Peman</span></div>
+  </div>
+  <div class="tabs" id="menuTabs"></div>
+  <div id="menuBody"></div>
+</section>
 
-  <!-- step 1 customer -->
-  <div id="step-1" class="stepbox">
-    <div class="h2" data-i18n="cust_t">Enfòmasyon kliyan</div>
-    <p class="sub"><span id="svcLabel1"></span></p>
-    <div class="card">
-      <label class="fl" data-i18n="f_name">Non konplè</label>
-      <input type="text" id="c_name" autocomplete="off">
-      <label class="fl" data-i18n="f_phone">Telefòn</label>
-      <input type="tel" id="c_phone" inputmode="tel" placeholder="+509 ...">
-      <label class="fl" data-i18n="f_wa">WhatsApp</label>
-      <input type="tel" id="c_wa" inputmode="tel" placeholder="+509 ...">
-      <p class="hint" data-i18n="wa_hint">Kite l vid si se menm nimewo ak telefòn.</p>
+<!-- ===== STEP 2 : CHECKOUT ===== -->
+<section id="s-checkout" class="screen">
+  <button class="back" onclick="go('menu')">‹ <span data-i18n="back">Retounen</span></button>
+  <div class="steps">
+    <div class="st done"><span class="n">✓</span><span data-i18n="step_order">Kòmand</span></div>
+    <div class="st on"><span class="n">2</span><span data-i18n="step_pay">Peman</span></div>
+  </div>
+  <div class="h2" data-i18n="checkout_t">Fini kòmand la</div>
+
+  <div class="card">
+    <label class="fl" data-i18n="f_name">Non konplè</label>
+    <input type="text" id="c_name" autocomplete="off">
+    <div class="row2">
+      <div style="flex:1"><label class="fl" data-i18n="f_phone">Telefòn</label><input type="tel" id="c_phone" inputmode="tel" placeholder="+509 ..."></div>
+      <div style="flex:1"><label class="fl" data-i18n="f_wa">WhatsApp</label><input type="tel" id="c_wa" inputmode="tel" placeholder="+509 ..."></div>
     </div>
-    <button class="cta" onclick="toStep(2)" data-i18n="next">Kontinye</button>
   </div>
 
-  <!-- step 2 service details (rendered dynamically) -->
-  <div id="step-2" class="stepbox" style="display:none">
-    <div class="h2" id="svcTitle2"></div>
-    <p class="sub" id="svcSub2"></p>
-    <div id="svcBody"></div>
-    <div class="totbar"><span data-i18n="subtotal">Total</span><b><span id="subTot">0</span> GDES</b></div>
-    <button class="cta" onclick="toStep(3)" data-i18n="next">Kontinye</button>
-  </div>
+  <div class="card" id="coSummary"></div>
 
-  <!-- step 3 documents -->
-  <div id="step-3" class="stepbox" style="display:none">
-    <div class="h2" data-i18n="docs_t">Dokiman</div>
-    <p class="sub" data-i18n="docs_s">Ajoute foto oswa fichye pou kòmand sa a. Sistèm nan gwoupe yo otomatikman.</p>
-    <label class="dropz" for="docInput">
-      <div class="de">📎</div>
-      <div data-i18n="docs_add">Ajoute Dokiman</div>
-      <div style="font-size:12px;font-weight:600;opacity:.75;margin-top:4px" data-i18n="docs_hint">Pran yon foto oswa chwazi fichye</div>
-    </label>
-    <input type="file" id="docInput" accept="image/*,application/pdf" multiple capture="environment" style="display:none">
-    <div class="filelist" id="fileList"></div>
-    <button class="cta" onclick="toStep(4)" data-i18n="next">Kontinye</button>
-  </div>
+  <label class="dropz" for="docInput"><span class="de">📎</span><span data-i18n="docs_add">Ajoute Dokiman</span>
+    <div style="font-size:12px;font-weight:600;opacity:.75;margin-top:2px" data-i18n="docs_opt">Opsyonèl — foto oswa fichye</div></label>
+  <input type="file" id="docInput" accept="image/*,application/pdf" multiple capture="environment" style="display:none">
+  <div id="fileList"></div>
 
-  <!-- step 4 payment -->
-  <div id="step-4" class="stepbox" style="display:none">
-    <div class="h2" data-i18n="pay_t">Peman</div>
-    <p class="sub" data-i18n="pay_s">Chwazi metòd peman an.</p>
-    <div class="card">
-      <div class="breakdown" id="payBreakdown"></div>
-    </div>
-    <div class="pays" id="payGrid">
-      <button class="pay" data-pay="cash"><span class="pe">💵</span><span data-i18n="p_cash">Kach</span></button>
-      <button class="pay" data-pay="moncash"><span class="pe">📱</span>MonCash</button>
-      <button class="pay" data-pay="natcash"><span class="pe">📲</span>NatCash</button>
-      <button class="pay" data-pay="card"><span class="pe">💳</span><span data-i18n="p_card">Kat</span></button>
-    </div>
-    <div style="height:14px"></div>
-    <button class="cta red" onclick="completeOrder()" id="payBtn" disabled data-i18n="pay_do">Konplete Peman</button>
+  <div style="font-weight:800;margin:14px 0 8px" data-i18n="pay_t">Peman</div>
+  <div class="pays" id="payGrid">
+    <button class="pay" data-pay="cash"><span class="pe">💵</span><span data-i18n="p_cash">Kach</span></button>
+    <button class="pay" data-pay="moncash"><span class="pe">📱</span>MonCash</button>
+    <button class="pay" data-pay="natcash"><span class="pe">📲</span>NatCash</button>
+    <button class="pay" data-pay="card"><span class="pe">💳</span><span data-i18n="p_card">Kat</span></button>
   </div>
+  <div style="height:12px"></div>
+  <button class="cta red" id="payBtn" onclick="completeOrder()" disabled data-i18n="pay_do">Konplete Peman</button>
+</section>
 
-  <!-- confirmation -->
-  <div id="step-done" class="stepbox" style="display:none">
-    <div class="confirm">
-      <div class="ok">✓</div>
-      <h3 data-i18n="conf_t">Kòmand kreye!</h3>
-      <div class="oid" id="doneId"></div>
-      <p class="sub" id="doneSummary"></p>
-      <div class="row2">
-        <button class="cta ghost" onclick="go('orders')" data-i18n="conf_view">Wè kòmand yo</button>
-        <button class="cta" onclick="go('home')" data-i18n="conf_new">Nouvo kòmand</button>
-      </div>
+<!-- ===== MSOUWOUT REGISTRATION ===== -->
+<section id="s-reg" class="screen">
+  <button class="back" onclick="go('home')">‹ <span data-i18n="back">Retounen</span></button>
+  <div class="h2">MsouWout — <span data-i18n="reg_t">Enskripsyon</span></div>
+  <p class="sub" data-i18n="reg_s">Enskri yon chofè oswa yon pasaje nan MsouWout.</p>
+  <div class="regpick">
+    <button data-reg="driver" onclick="pickReg('driver')"><span class="re">🏍️</span><span data-i18n="reg_driver">Enskri Chofè</span></button>
+    <button data-reg="rider" onclick="pickReg('rider')"><span class="re">🙋</span><span data-i18n="reg_rider">Enskri Pasaje</span></button>
+  </div>
+  <div id="regForm"></div>
+</section>
+
+<!-- ===== CONFIRMATION ===== -->
+<section id="s-done" class="screen">
+  <div class="confirm">
+    <div class="ok">✓</div>
+    <h3 id="doneTitle" data-i18n="conf_t">Kòmand kreye!</h3>
+    <div class="oid" id="doneId"></div>
+    <p class="sub" id="doneSummary"></p>
+    <div class="row2">
+      <button class="cta ghost" onclick="go('orders')" data-i18n="conf_view">Wè kòmand yo</button>
+      <button class="cta" onclick="go('home')" data-i18n="conf_new">Nouvo kòmand</button>
     </div>
   </div>
 </section>
 
-<!-- ============ ORDERS ============ -->
+<!-- ===== ORDERS ===== -->
 <section id="s-orders" class="screen">
   <div class="h2" data-i18n="ord_t">Kòmand yo</div>
   <p class="sub" data-i18n="ord_s">Peze yon estati pou chanje l.</p>
@@ -265,14 +254,14 @@ textarea{min-height:70px;resize:vertical}
   <div id="ordersList"></div>
 </section>
 
-<!-- ============ DASHBOARD ============ -->
+<!-- ===== DASHBOARD ===== -->
 <section id="s-dash" class="screen">
   <div class="h2" data-i18n="dash_t">Tablodbò</div>
   <p class="sub" id="dashDate"></p>
   <div class="stats" id="dashStats"></div>
 </section>
 
-<!-- ============ SETTINGS ============ -->
+<!-- ===== SETTINGS ===== -->
 <section id="s-set" class="screen">
   <div class="h2" data-i18n="set_t">Paramèt pri</div>
   <p class="sub" data-i18n="set_s">Ajiste pri baz yo. Chanjman yo sere sou aparèy sa a.</p>
@@ -283,6 +272,15 @@ textarea{min-height:70px;resize:vertical}
 
 </main>
 
+<!-- floating cart bar (only on menu screen) -->
+<div class="cartbar" id="cartBar" style="display:none">
+  <div class="inner">
+    <span class="cc" id="cartCount">0</span>
+    <span class="ct"><span id="cartLbl">Total</span><br><span id="cartTot">0 GDES</span></span>
+    <button class="go" onclick="go('checkout')" data-i18n="pay_go">Peye ›</button>
+  </div>
+</div>
+
 <nav class="nav">
   <button data-nav="home" class="on" onclick="go('home')"><span class="ni">🏠</span><span data-i18n="n_home">Akèy</span></button>
   <button data-nav="orders" class="badge-dot" onclick="go('orders')"><span class="ni">📋</span><span data-i18n="n_orders">Kòmand</span></button>
@@ -292,491 +290,469 @@ textarea{min-height:70px;resize:vertical}
 
 <script>
 /* ============================================================
-   HaitiBiznis Center — POS MVP
-   Single-file app, offline-capable, localStorage persistence.
-   Phase 1: full order-taking flow + orders board + dashboard.
+   HaitiBiznis Center — POS MVP  (v2: restaurant 2-step flow)
+   Single file, offline, localStorage. HT / FR / EN.
    ============================================================ */
 
 /* ---------- i18n ---------- */
-const T = {
-  ht:{
-    app_t:'Sant HaitiBiznis', app_s:'POINT OF SALE',
-    home_t:'Chwazi yon sèvis', home_s:'Peze yon bouton pou kòmanse yon nouvo kòmand.',
-    back:'Retounen', next:'Kontinye', subtotal:'Total',
-    cust_t:'Enfòmasyon kliyan', f_name:'Non konplè', f_phone:'Telefòn', f_wa:'WhatsApp',
-    wa_hint:'Kite l vid si se menm nimewo ak telefòn.',
-    docs_t:'Dokiman', docs_s:'Ajoute foto oswa fichye pou kòmand sa a. Sistèm nan gwoupe yo otomatikman.',
-    docs_add:'Ajoute Dokiman', docs_hint:'Pran yon foto oswa chwazi fichye',
-    pay_t:'Peman', pay_s:'Chwazi metòd peman an.', p_cash:'Kach', p_card:'Kat', pay_do:'Konplete Peman',
-    conf_t:'Kòmand kreye!', conf_view:'Wè kòmand yo', conf_new:'Nouvo kòmand',
-    ord_t:'Kòmand yo', ord_s:'Peze yon estati pou chanje l.',
-    dash_t:'Tablodbò',
-    set_t:'Paramèt pri', set_s:'Ajiste pri baz yo. Chanjman yo sere sou aparèy sa a.',
-    set_note:'⚠ Pri Anrejistreman Biznis yo se plas-tenir — antre vrè chif yo isit la.', set_save:'Sere paramèt',
-    n_home:'Akèy', n_orders:'Kòmand', n_dash:'Tablodbò', n_set:'Paramèt',
-    st_wait:'Ap tann dokiman', st_prog:'An kou', st_ready:'Pare', st_done:'Fini',
-    dash_new:'Nouvo kòmand', dash_prog:'An kou', dash_ready:'Pare', dash_sales:'Vant jodi a',
-    all:'Tout', pick_pkg:'Chwazi yon pakè', pick_admin:'Chwazi sèvis yo (tcheke)', pick_reg:'Chwazi tip anrejistreman',
-    svc_generic:'Deskripsyon & montan', gen_desc:'Deskripsyon sèvis la', gen_amt:'Montan (GDES)',
-    inc_svc:'sèvis enkli', selected:'chwazi', fee_hb:'Frè sèvis HaitiBiznis (30%)', fee_press:'Frè Près Nasyonal',
-    base:'Pri baz', total:'TOTAL', order:'Kòmand', empty_ord:'Pa gen kòmand pou kounye a.',
-    presses_q:'Piblikasyon Près Nasyonal?', yes:'Wi', no:'Non',
-    need_name:'Antre non kliyan an.', need_svc:'Chwazi omwen yon sèvis / montan.',
-    created:'kreye', by:'sèvis', doc_one:'dokiman',
-  },
-  fr:{
-    app_t:'Centre HaitiBiznis', app_s:'POINT DE VENTE',
-    home_t:'Choisir un service', home_s:'Appuyez sur un bouton pour démarrer une commande.',
-    back:'Retour', next:'Continuer', subtotal:'Total',
-    cust_t:'Informations client', f_name:'Nom complet', f_phone:'Téléphone', f_wa:'WhatsApp',
-    wa_hint:'Laissez vide si identique au téléphone.',
-    docs_t:'Documents', docs_s:'Ajoutez des photos ou fichiers pour cette commande. Le système les regroupe automatiquement.',
-    docs_add:'Ajouter des documents', docs_hint:'Prenez une photo ou choisissez un fichier',
-    pay_t:'Paiement', pay_s:'Choisissez le mode de paiement.', p_cash:'Espèces', p_card:'Carte', pay_do:'Terminer le paiement',
-    conf_t:'Commande créée !', conf_view:'Voir les commandes', conf_new:'Nouvelle commande',
-    ord_t:'Commandes', ord_s:'Appuyez sur un statut pour le changer.',
-    dash_t:'Tableau de bord',
-    set_t:'Paramètres de prix', set_s:'Ajustez les prix de base. Enregistré sur cet appareil.',
-    set_note:'⚠ Les prix d’enregistrement d’entreprise sont provisoires — saisissez les vrais chiffres ici.', set_save:'Enregistrer',
-    n_home:'Accueil', n_orders:'Commandes', n_dash:'Tableau', n_set:'Réglages',
-    st_wait:'En attente docs', st_prog:'En cours', st_ready:'Prêt', st_done:'Terminé',
-    dash_new:'Nouvelles', dash_prog:'En cours', dash_ready:'Prêtes', dash_sales:'Ventes du jour',
-    all:'Toutes', pick_pkg:'Choisir un forfait', pick_admin:'Choisir les services (cocher)', pick_reg:'Type d’enregistrement',
-    svc_generic:'Description & montant', gen_desc:'Description du service', gen_amt:'Montant (GDES)',
-    inc_svc:'services inclus', selected:'sélectionné(s)', fee_hb:'Frais de service HaitiBiznis (30%)', fee_press:'Frais Presses Nationales',
-    base:'Prix de base', total:'TOTAL', order:'Commande', empty_ord:'Aucune commande pour l’instant.',
-    presses_q:'Publication Presses Nationales ?', yes:'Oui', no:'Non',
-    need_name:'Saisissez le nom du client.', need_svc:'Choisissez au moins un service / montant.',
-    created:'créée', by:'service', doc_one:'document',
-  },
-  en:{
-    app_t:'HaitiBiznis Center', app_s:'POINT OF SALE',
-    home_t:'Choose a service', home_s:'Tap a button to start a new order.',
-    back:'Back', next:'Continue', subtotal:'Total',
-    cust_t:'Customer information', f_name:'Full name', f_phone:'Phone', f_wa:'WhatsApp',
-    wa_hint:'Leave blank if same as phone.',
-    docs_t:'Documents', docs_s:'Add photos or files for this order. The system groups them automatically.',
-    docs_add:'Add Documents', docs_hint:'Take a photo or choose a file',
-    pay_t:'Payment', pay_s:'Choose the payment method.', p_cash:'Cash', p_card:'Card', pay_do:'Complete Payment',
-    conf_t:'Order created!', conf_view:'View orders', conf_new:'New order',
-    ord_t:'Orders', ord_s:'Tap a status to change it.',
-    dash_t:'Dashboard',
-    set_t:'Price settings', set_s:'Adjust base prices. Saved on this device.',
-    set_note:'⚠ Business Registration prices are placeholders — enter the real figures here.', set_save:'Save settings',
-    n_home:'Home', n_orders:'Orders', n_dash:'Dashboard', n_set:'Settings',
-    st_wait:'Waiting for Docs', st_prog:'In Progress', st_ready:'Ready', st_done:'Completed',
-    dash_new:'New orders', dash_prog:'In progress', dash_ready:'Ready orders', dash_sales:'Today’s sales',
-    all:'All', pick_pkg:'Choose a package', pick_admin:'Select services (check)', pick_reg:'Registration type',
-    svc_generic:'Description & amount', gen_desc:'Service description', gen_amt:'Amount (GDES)',
-    inc_svc:'services included', selected:'selected', fee_hb:'HaitiBiznis service fee (30%)', fee_press:'Presses Nationales fee',
-    base:'Base price', total:'TOTAL', order:'Order', empty_ord:'No orders yet.',
-    presses_q:'Presses Nationales publication?', yes:'Yes', no:'No',
-    need_name:'Enter the customer name.', need_svc:'Select at least one service / amount.',
-    created:'created', by:'service', doc_one:'document',
-  }
+const T={
+ ht:{app_t:'Sant HaitiBiznis',app_s:'POINT OF SALE',
+  home_t:'Chwazi yon sèvis',home_s:'Peze yon sèvis pou kòmanse. Ou ka ajoute plizyè sèvis nan yon sèl kòmand.',
+  back:'Retounen',step_order:'Kòmand',step_pay:'Peman',checkout_t:'Fini kòmand la',
+  f_name:'Non konplè',f_phone:'Telefòn',f_wa:'WhatsApp',
+  docs_add:'Ajoute Dokiman',docs_opt:'Opsyonèl — foto oswa fichye',
+  pay_t:'Peman',p_cash:'Kach',p_card:'Kat',pay_do:'Konplete Peman',pay_go:'Peye ›',
+  conf_t:'Kòmand kreye!',conf_reg:'Enskripsyon fèt!',conf_view:'Wè kòmand yo',conf_new:'Nouvo kòmand',
+  ord_t:'Kòmand yo',ord_s:'Peze yon estati pou chanje l.',dash_t:'Tablodbò',
+  set_t:'Paramèt pri',set_s:'Ajiste pri baz yo. Chanjman yo sere sou aparèy sa a.',
+  set_note:'⚠ Pri Anrejistreman Biznis yo se plas-tenir — antre vrè chif yo isit la.',set_save:'Sere paramèt',
+  n_home:'Akèy',n_orders:'Kòmand',n_dash:'Tablodbò',n_set:'Paramèt',
+  st_wait:'Ap tann dokiman',st_prog:'An kou',st_ready:'Pare',st_done:'Fini',
+  st_pending:'An atant',st_approved:'Apwouve',st_active:'Aktif',
+  all:'Tout',add:'Ajoute',added:'Ajoute ✓',total:'TOTAL',subtotal:'Total',remove:'Retire',
+  cat_48h:'48HoursReady',cat_admin:'Administratif',cat_reg:'Anrejistreman',cat_legal:'Legal',cat_shop:'MyPlopPlop',
+  m48_pick:'Chwazi sèvis ki nan kòmand la — sistèm nan konte yo epi chwazi pakè a otomatikman.',
+  pkg:'Pakè',inc:'sèvis',fee_hb:'Frè sèvis HaitiBiznis (30%)',fee_press:'Frè Près Nasyonal',base:'Pri baz',presses_q:'Piblikasyon Près Nasyonal?',
+  admin_pick:'Antre pri a epi peze + pou ajoute nan kòmand la.',reg_pick_lbl:'Chwazi tip anrejistreman biznis:',
+  legal_lbl:'Deskripsyon sèvis legal la',amount:'Montan (GDES)',legal_hint:'Ekri sèvis la epi montan an, apre peze Ajoute.',
+  shop_note:'MyPlopPlop gen pwòp sistèm cashier li — n ap bati l apa. Pou kounye a, antre yon sèvis ak montan.',
+  reg_t:'Enskripsyon',reg_s:'Enskri yon chofè oswa yon pasaje nan MsouWout.',reg_driver:'Enskri Chofè',reg_rider:'Enskri Pasaje',
+  rd_vehicle:'Tip machin',rd_moto:'Moto',rd_car:'Machin',rd_plate:'Plak',rd_license:'Nº Lisans / Kondwi',reg_fee:'Frè enskripsyon (GDES)',reg_save:'Anrejistre',
+  reg_docs:'Dokiman (lisans, ID) — opsyonèl',cust_wa_hint:'Kite WhatsApp vid si menm ak telefòn.',
+  need_name:'Antre non kliyan an.',need_pay:'Chwazi metòd peman.',cart_empty:'Kòmand la vid — ajoute yon sèvis anvan.',
+  empty_ord:'Pa gen kòmand pou kounye a.',order:'Kòmand',reg_word:'Enskripsyon',
+  dash_new:'Nouvo',dash_prog:'An kou',dash_ready:'Pare',dash_sales:'Vant jodi a',dash_reg:'Enskripsyon',
+  driver:'Chofè',rider:'Pasaje'},
+ fr:{app_t:'Centre HaitiBiznis',app_s:'POINT DE VENTE',
+  home_t:'Choisir un service',home_s:'Appuyez sur un service. Vous pouvez en ajouter plusieurs à une commande.',
+  back:'Retour',step_order:'Commande',step_pay:'Paiement',checkout_t:'Finaliser la commande',
+  f_name:'Nom complet',f_phone:'Téléphone',f_wa:'WhatsApp',
+  docs_add:'Ajouter des documents',docs_opt:'Optionnel — photo ou fichier',
+  pay_t:'Paiement',p_cash:'Espèces',p_card:'Carte',pay_do:'Terminer le paiement',pay_go:'Payer ›',
+  conf_t:'Commande créée !',conf_reg:'Inscription faite !',conf_view:'Voir les commandes',conf_new:'Nouvelle commande',
+  ord_t:'Commandes',ord_s:'Appuyez sur un statut pour le changer.',dash_t:'Tableau de bord',
+  set_t:'Paramètres de prix',set_s:'Ajustez les prix de base. Enregistré sur cet appareil.',
+  set_note:'⚠ Les prix d’enregistrement sont provisoires — saisissez les vrais chiffres ici.',set_save:'Enregistrer',
+  n_home:'Accueil',n_orders:'Commandes',n_dash:'Tableau',n_set:'Réglages',
+  st_wait:'En attente docs',st_prog:'En cours',st_ready:'Prêt',st_done:'Terminé',
+  st_pending:'En attente',st_approved:'Approuvé',st_active:'Actif',
+  all:'Toutes',add:'Ajouter',added:'Ajouté ✓',total:'TOTAL',subtotal:'Total',remove:'Retirer',
+  cat_48h:'48HoursReady',cat_admin:'Administratif',cat_reg:'Enregistrement',cat_legal:'Légal',cat_shop:'MyPlopPlop',
+  m48_pick:'Choisissez les services inclus — le système les compte et sélectionne le forfait automatiquement.',
+  pkg:'Forfait',inc:'services',fee_hb:'Frais de service HaitiBiznis (30%)',fee_press:'Frais Presses Nationales',base:'Prix de base',presses_q:'Publication Presses Nationales ?',
+  admin_pick:'Saisissez le prix puis appuyez sur + pour ajouter.',reg_pick_lbl:'Type d’enregistrement d’entreprise :',
+  legal_lbl:'Description du service légal',amount:'Montant (GDES)',legal_hint:'Décrivez le service et le montant, puis Ajouter.',
+  shop_note:'MyPlopPlop aura son propre système caisse — construit séparément. Pour l’instant, saisissez un service et un montant.',
+  reg_t:'Inscription',reg_s:'Inscrire un chauffeur ou un passager sur MsouWout.',reg_driver:'Inscrire Chauffeur',reg_rider:'Inscrire Passager',
+  rd_vehicle:'Type de véhicule',rd_moto:'Moto',rd_car:'Voiture',rd_plate:'Plaque',rd_license:'Nº Permis',reg_fee:'Frais d’inscription (GDES)',reg_save:'Enregistrer',
+  reg_docs:'Documents (permis, ID) — optionnel',cust_wa_hint:'Laissez WhatsApp vide si identique au téléphone.',
+  need_name:'Saisissez le nom du client.',need_pay:'Choisissez le mode de paiement.',cart_empty:'Commande vide — ajoutez un service.',
+  empty_ord:'Aucune commande pour l’instant.',order:'Commande',reg_word:'Inscription',
+  dash_new:'Nouvelles',dash_prog:'En cours',dash_ready:'Prêtes',dash_sales:'Ventes du jour',dash_reg:'Inscriptions',
+  driver:'Chauffeur',rider:'Passager'},
+ en:{app_t:'HaitiBiznis Center',app_s:'POINT OF SALE',
+  home_t:'Choose a service',home_s:'Tap a service to start. You can add several to one order.',
+  back:'Back',step_order:'Order',step_pay:'Payment',checkout_t:'Complete the order',
+  f_name:'Full name',f_phone:'Phone',f_wa:'WhatsApp',
+  docs_add:'Add Documents',docs_opt:'Optional — photo or file',
+  pay_t:'Payment',p_cash:'Cash',p_card:'Card',pay_do:'Complete Payment',pay_go:'Pay ›',
+  conf_t:'Order created!',conf_reg:'Registration done!',conf_view:'View orders',conf_new:'New order',
+  ord_t:'Orders',ord_s:'Tap a status to change it.',dash_t:'Dashboard',
+  set_t:'Price settings',set_s:'Adjust base prices. Saved on this device.',
+  set_note:'⚠ Business Registration prices are placeholders — enter the real figures here.',set_save:'Save settings',
+  n_home:'Home',n_orders:'Orders',n_dash:'Dashboard',n_set:'Settings',
+  st_wait:'Waiting for Docs',st_prog:'In Progress',st_ready:'Ready',st_done:'Completed',
+  st_pending:'Pending',st_approved:'Approved',st_active:'Active',
+  all:'All',add:'Add',added:'Added ✓',total:'TOTAL',subtotal:'Total',remove:'Remove',
+  cat_48h:'48HoursReady',cat_admin:'Administrative',cat_reg:'Registration',cat_legal:'Legal',cat_shop:'MyPlopPlop',
+  m48_pick:'Select the services in the order — the system counts them and picks the package automatically.',
+  pkg:'Package',inc:'services',fee_hb:'HaitiBiznis service fee (30%)',fee_press:'Presses Nationales fee',base:'Base price',presses_q:'Presses Nationales publication?',
+  admin_pick:'Enter the price then tap + to add to the order.',reg_pick_lbl:'Business registration type:',
+  legal_lbl:'Legal service description',amount:'Amount (GDES)',legal_hint:'Describe the service and amount, then Add.',
+  shop_note:'MyPlopPlop gets its own cashier system — built separately. For now, enter a service and amount.',
+  reg_t:'Registration',reg_s:'Register a driver or a rider on MsouWout.',reg_driver:'Register Driver',reg_rider:'Register Rider',
+  rd_vehicle:'Vehicle type',rd_moto:'Moto',rd_car:'Car',rd_plate:'Plate',rd_license:'License Nº',reg_fee:'Registration fee (GDES)',reg_save:'Save',
+  reg_docs:'Documents (license, ID) — optional',cust_wa_hint:'Leave WhatsApp blank if same as phone.',
+  need_name:'Enter the customer name.',need_pay:'Choose a payment method.',cart_empty:'Order is empty — add a service first.',
+  empty_ord:'No orders yet.',order:'Order',reg_word:'Registration',
+  dash_new:'New',dash_prog:'In progress',dash_ready:'Ready',dash_sales:'Today’s sales',dash_reg:'Registrations',
+  driver:'Driver',rider:'Rider'}
 };
-let lang = localStorage.getItem('hb_pos_lang') || 'ht';
+let lang=localStorage.getItem('hb_pos_lang')||'ht';
 function t(k){return (T[lang]&&T[lang][k])||T.ht[k]||k;}
 function applyI18n(){
   document.documentElement.lang=lang;
   document.querySelectorAll('[data-i18n]').forEach(el=>{
-    const k=el.getAttribute('data-i18n');
-    if(T[lang][k]!==undefined){
-      // preserve nested <small> for app title
-      if(k==='app_t'){el.childNodes[0].nodeValue=T[lang].app_t;}
-      else el.textContent=T[lang][k];
-    }
+    const k=el.getAttribute('data-i18n'); if(T[lang][k]===undefined)return;
+    if(k==='app_t'){el.childNodes[0].nodeValue=T[lang].app_t;} else el.textContent=T[lang][k];
   });
-  const small=document.querySelector('.appbar h1 small'); if(small) small.textContent=T[lang].app_s;
+  const small=document.querySelector('.appbar h1 small'); if(small)small.textContent=T[lang].app_s;
 }
 
-/* ---------- Services ---------- */
-const SERVICES = [
-  {id:'msouwout',   nmk:'MsouWout',              em:'🏍️', logo:'assets/msouwout-logo.png',   type:'generic'},
-  {id:'myplopplop', nmk:'MyPlopPlop',            em:'🛒', logo:'assets/myplopplop-logo.png', type:'generic'},
-  {id:'48h',        nmk:'48HoursReady',          em:'🚀', logo:'assets/48hoursready-logo.jpg', type:'package'},
-  {id:'admin',      nm:{ht:'Sèvis Administratif',fr:'Services Administratifs',en:'Administrative Services'}, em:'📄', type:'admin'},
-  {id:'legal',      nm:{ht:'Sèvis Legal',fr:'Services Légaux',en:'Legal Services'}, em:'⚖️', type:'generic'},
-  {id:'reg',        nm:{ht:'Anrejistreman Biznis',fr:'Enregistrement Entreprise',en:'Business Registration'}, em:'🏢', type:'reg'},
+/* ---------- Home services ---------- */
+const SERVICES=[
+  {id:'48h',   cat:'48h',   nmk:'48HoursReady', em:'🚀', logo:'assets/48hoursready-logo.jpg', mode:'order'},
+  {id:'admin', cat:'admin', nm:{ht:'Sèvis Administratif',fr:'Services Administratifs',en:'Administrative Services'}, em:'📄', mode:'order'},
+  {id:'reg',   cat:'reg',   nm:{ht:'Anrejistreman Biznis',fr:'Enregistrement Entreprise',en:'Business Registration'}, em:'🏢', mode:'order'},
+  {id:'legal', cat:'legal', nm:{ht:'Sèvis Legal',fr:'Services Légaux',en:'Legal Services'}, em:'⚖️', mode:'order'},
+  {id:'msouwout', nm:{ht:'MsouWout — Enskri',fr:'MsouWout — Inscrire',en:'MsouWout — Register'}, em:'🏍️', logo:'assets/msouwout-logo.png', mode:'reg'},
+  {id:'shop',  cat:'shop',  nmk:'MyPlopPlop', em:'🛒', logo:'assets/myplopplop-logo.png', mode:'order'},
 ];
-function svcName(s){return s.nmk || (s.nm&&s.nm[lang]) || s.id;}
+function svcName(s){return s.nmk||(s.nm&&s.nm[lang])||s.id;}
+const CATS=['48h','admin','reg','legal','shop'];
+function catLabel(c){return t('cat_'+c);}
 
-/* 48HoursReady packages (from client spec) */
-const PACKAGES = [
-  {id:'p1', amt:500,   inc:1, color:'#12a150'},
-  {id:'p2', amt:1000,  inc:3, color:'#00209F'},
-  {id:'p3', amt:5000,  inc:5, color:'#e08a00'},
-  {id:'p4', amt:10000, inc:7, color:'#D21034'},
-];
-/* Administrative services checklist (from client spec) */
-const ADMIN_ITEMS = ['Patente','Extrait d’Archive','Assurance','Permis','Matricule Fiscal','Légalisation','Mariage Civil'];
+/* 48HoursReady service list (from HaitiBiznis Center wall) — editable in Settings later */
+const FH_SERVICES=['Logo','Kat Biznis','Rezime Egzekitif','Pitch Deck','Prezantasyon Video','Profil Rezo Sosyal','Sit Entènèt Senp'];
+/* count -> package price (anchors 1/3/5/7 from client spec) */
+function pkgFor(n){ if(n<=1)return{amt:500,inc:1}; if(n<=3)return{amt:1000,inc:3}; if(n<=5)return{amt:5000,inc:5}; return{amt:10000,inc:7}; }
+const ADMIN_ITEMS=['Patente','Extrait d’Archive','Assurance','Permis','Matricule Fiscal','Légalisation','Mariage Civil'];
 
-/* ---------- Editable config (placeholders until client confirms) ---------- */
-const DEFAULT_CFG = {
-  hbFeePct: 30,          // HaitiBiznis service fee %
-  reg:[                  // base prices are PLACEHOLDERS — client to confirm
-    {id:'nc',  nm:'Nom Commercial',        base:0, press:0},
-    {id:'ncol',nm:'Nom Collectif',         base:0, press:0},
-    {id:'sa',  nm:'Société Anonyme',       base:0, press:0},
-    {id:'sam', nm:'Société Anonyme Mixte', base:0, press:0},
-  ]
-};
-function getCfg(){
-  try{const c=JSON.parse(localStorage.getItem('hb_pos_cfg')); if(c&&c.reg) return c;}catch(e){}
-  return JSON.parse(JSON.stringify(DEFAULT_CFG));
-}
+/* ---------- Editable config ---------- */
+const DEFAULT_CFG={hbFeePct:30,reg:[
+  {id:'nc',nm:'Nom Commercial',base:0,press:0},
+  {id:'ncol',nm:'Nom Collectif',base:0,press:0},
+  {id:'sa',nm:'Société Anonyme',base:0,press:0},
+  {id:'sam',nm:'Société Anonyme Mixte',base:0,press:0}]};
+function getCfg(){try{const c=JSON.parse(localStorage.getItem('hb_pos_cfg'));if(c&&c.reg)return c;}catch(e){}return JSON.parse(JSON.stringify(DEFAULT_CFG));}
 function setCfg(c){localStorage.setItem('hb_pos_cfg',JSON.stringify(c));}
 
 /* ---------- Orders store ---------- */
 function loadOrders(){try{return JSON.parse(localStorage.getItem('hb_pos_orders'))||[];}catch(e){return[];}}
 function saveOrders(o){localStorage.setItem('hb_pos_orders',JSON.stringify(o));}
-const STATUSES=[
-  {id:'wait', k:'st_wait', em:'🟡', cls:'b-wait'},
-  {id:'prog', k:'st_prog', em:'🔵', cls:'b-prog'},
-  {id:'ready',k:'st_ready',em:'🟢', cls:'b-ready'},
-  {id:'done', k:'st_done', em:'✅', cls:'b-done'},
-];
-function statusOf(id){return STATUSES.find(s=>s.id===id)||STATUSES[0];}
+const STATUS_SETS={
+  sale:[{id:'wait',k:'st_wait',em:'🟡',cls:'b-wait'},{id:'prog',k:'st_prog',em:'🔵',cls:'b-prog'},{id:'ready',k:'st_ready',em:'🟢',cls:'b-ready'},{id:'done',k:'st_done',em:'✅',cls:'b-done'}],
+  reg:[{id:'pending',k:'st_pending',em:'🟡',cls:'b-pending'},{id:'approved',k:'st_approved',em:'🔵',cls:'b-approved'},{id:'active',k:'st_active',em:'🟢',cls:'b-active'}]
+};
+function statusInfo(setName,id){const set=STATUS_SETS[setName]||STATUS_SETS.sale;return set.find(s=>s.id===id)||set[0];}
 
-/* ---------- Draft (current order being taken) ---------- */
-let draft=null;
-function newDraft(svc){
-  draft={svc:svc.id, svcName:svcName(svc), items:[], amount:0, docs:[],
-         pkg:null, regType:null, press:false, genDesc:'', genAmt:0, payment:null};
+/* ---------- CART (step 1) ---------- */
+let CART=[];               // {label, amt, cat}
+let activeCat='48h';
+let f48=[];                // selected 48h services
+let regSel=null, regPress=false;
+function cartTotal(){return CART.reduce((a,b)=>a+(+b.amt||0),0);}
+function refreshCartBar(){
+  const bar=document.getElementById('cartBar');
+  const onMenu=document.getElementById('s-menu').classList.contains('on');
+  if(onMenu && CART.length){bar.style.display='block';
+    document.getElementById('cartCount').textContent=CART.length;
+    document.getElementById('cartTot').textContent=cartTotal().toLocaleString()+' GDES';
+    document.getElementById('cartLbl').textContent=t('subtotal');
+  } else bar.style.display='none';
 }
+function addLine(label,amt,cat){CART.push({label,amt:+amt||0,cat});renderMenu();refreshCartBar();}
 
 /* ---------- Navigation ---------- */
 function go(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
   document.getElementById('s-'+name).classList.add('on');
-  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.nav===name));
+  const navMap={home:'home',orders:'orders',dash:'dash',set:'set'};
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.nav===navMap[name]));
+  if(!navMap[name])document.querySelector('.nav button[data-nav="home"]').classList.add('on');
   window.scrollTo(0,0);
-  if(name==='orders') renderOrders();
-  if(name==='dash') renderDash();
-  if(name==='set') renderSettings();
-  if(name==='home') refreshBadges();
+  if(name==='menu')renderMenu();
+  if(name==='checkout')renderCheckout();
+  if(name==='orders')renderOrders();
+  if(name==='dash')renderDash();
+  if(name==='set')renderSettings();
+  refreshCartBar(); refreshBadges();
 }
 function refreshBadges(){
-  const o=loadOrders();
-  const active=o.filter(x=>x.status!=='done').length;
-  const nav=document.querySelector('.nav button[data-nav="orders"]');
-  nav.setAttribute('data-n',active);
+  const o=loadOrders(); const active=o.filter(x=>!(x.status==='done'||x.status==='active')).length;
+  document.querySelector('.nav button[data-nav="orders"]').setAttribute('data-n',active);
 }
 
-/* ---------- Home grid ---------- */
+/* ---------- Home ---------- */
 function renderHome(){
   const g=document.getElementById('svcGrid'); g.innerHTML='';
   SERVICES.forEach(s=>{
     const b=document.createElement('button'); b.className='svc';
-    const icon = s.logo ? `<img class="il" src="${s.logo}" alt="">` : `<span class="em">${s.em}</span>`;
+    const icon=s.logo?`<img class="il" src="${s.logo}" alt="">`:`<span class="em">${s.em}</span>`;
     b.innerHTML=`${icon}<span class="nm">${svcName(s)}</span>`;
-    b.onclick=()=>startOrder(s);
+    b.onclick=()=>{ if(s.mode==='reg'){startReg();} else {activeCat=s.cat; go('menu');} };
     g.appendChild(b);
   });
 }
 
-/* ---------- Order flow ---------- */
-let step=1;
-function startOrder(s){
-  newDraft(s);
-  go('order');
-  document.querySelector('.nav button[data-nav="home"]').classList.add('on');
-  document.getElementById('svcLabel1').textContent=svcName(s);
-  toStep(1,true);
-}
-function orderBack(){ if(step>1&&step<=4){toStep(step-1);} else {go('home');} }
-function setSteps(){
-  document.querySelectorAll('.steps .st').forEach(el=>{
-    const n=+el.dataset.step;
-    el.classList.toggle('on',n===step);
-    el.classList.toggle('done',n<step);
-  });
-}
-function showStepBox(id){
-  ['step-1','step-2','step-3','step-4','step-done'].forEach(x=>document.getElementById(x).style.display='none');
-  document.getElementById(id).style.display='block';
-}
-function toStep(n,init){
-  // validation on forward moves
-  if(!init && n>step){
-    if(step===1){
-      if(!document.getElementById('c_name').value.trim()){alert(t('need_name'));return;}
-      draft.name=document.getElementById('c_name').value.trim();
-      draft.phone=document.getElementById('c_phone').value.trim();
-      draft.wa=document.getElementById('c_wa').value.trim()||draft.phone;
-    }
-    if(step===2){
-      computeAmount();
-      if(draft.amount<=0 && draft.svc!=='admin'){ /* allow 0? require >0 */ }
-      if(draft.items.length===0 && draft.amount<=0){alert(t('need_svc'));return;}
-    }
-  }
-  step=n; setSteps();
-  if(n===1) showStepBox('step-1');
-  else if(n===2){ showStepBox('step-2'); renderServiceStep(); }
-  else if(n===3){ showStepBox('step-3'); renderFiles(); }
-  else if(n===4){ showStepBox('step-4'); renderPayment(); }
-  window.scrollTo(0,0);
-}
+/* ---------- STEP 1 : menu ---------- */
+function renderMenu(){
+  const tabs=document.getElementById('menuTabs'); tabs.innerHTML='';
+  CATS.forEach(c=>{const b=document.createElement('button');b.textContent=catLabel(c);b.className=activeCat===c?'on':'';
+    b.onclick=()=>{activeCat=c;renderMenu();};tabs.appendChild(b);});
+  const body=document.getElementById('menuBody'); body.innerHTML='';
+  const cfg=getCfg();
 
-/* ----- Step 2: service-specific body ----- */
-function renderServiceStep(){
-  const svc=SERVICES.find(s=>s.id===draft.svc);
-  document.getElementById('svcTitle2').textContent=svcName(svc);
-  const body=document.getElementById('svcBody'); body.innerHTML='';
-  const sub=document.getElementById('svcSub2');
-
-  if(svc.type==='package'){                     // 48HoursReady
-    sub.textContent=t('pick_pkg');
-    PACKAGES.forEach(p=>{
-      const row=document.createElement('div'); row.className='choice pkg'+(draft.pkg===p.id?' on':'');
-      row.innerHTML=`<span class="dot"></span><span class="txt">${p.amt.toLocaleString()} GDES
-        <span class="pill">${p.inc} ${t('inc_svc')}</span></span><span class="amt">${p.amt.toLocaleString()}</span>`;
-      row.onclick=()=>{draft.pkg=p.id; draft.items=[{label:`48HoursReady — ${p.inc} ${t('inc_svc')}`,amt:p.amt}]; computeAmount(); renderServiceStep();};
-      body.appendChild(row);
-    });
-  }
-  else if(svc.type==='admin'){                  // Administrative Services checklist
-    sub.textContent=t('pick_admin');
-    ADMIN_ITEMS.forEach((name,i)=>{
-      const ex=draft.items.find(it=>it.label===name);
-      const row=document.createElement('div'); row.className='choice check'+(ex?' on':'');
-      row.innerHTML=`<span class="dot"></span><span class="txt">${name}</span>
-        <input type="number" inputmode="numeric" placeholder="GDES" value="${ex?ex.amt:''}"
-          style="width:92px;margin:0;padding:8px;text-align:right" onclick="event.stopPropagation()" data-adm="${i}">`;
-      row.onclick=(e)=>{
-        if(e.target.tagName==='INPUT')return;
-        const idx=draft.items.findIndex(it=>it.label===name);
-        if(idx>=0)draft.items.splice(idx,1);
-        else{const amt=+row.querySelector('input').value||0; draft.items.push({label:name,amt});}
-        computeAmount(); renderServiceStep();
-      };
-      row.querySelector('input').oninput=(e)=>{
-        const amt=+e.target.value||0;
-        let it=draft.items.find(it=>it.label===name);
-        if(!it){it={label:name,amt};draft.items.push(it);row.classList.add('on');}
-        it.amt=amt; computeAmount();
-        document.getElementById('subTot').textContent=draft.amount.toLocaleString();
-      };
-      body.appendChild(row);
-    });
-  }
-  else if(svc.type==='reg'){                    // Business Registration
-    sub.textContent=t('pick_reg');
-    const cfg=getCfg();
-    cfg.reg.forEach(r=>{
-      const on=draft.regType===r.id;
+  if(activeCat==='48h'){
+    body.innerHTML=`<p class="sub">${t('m48_pick')}</p>`;
+    const pk=pkgFor(f48.length);
+    FH_SERVICES.forEach(name=>{
+      const on=f48.includes(name);
       const row=document.createElement('div'); row.className='choice'+(on?' on':'');
-      const fee=Math.round(r.base*cfg.hbFeePct/100);
+      row.innerHTML=`<span class="dot"></span><span class="txt">${name}</span>`;
+      row.onclick=()=>{const i=f48.indexOf(name); if(i>=0)f48.splice(i,1); else f48.push(name); renderMenu();};
+      body.appendChild(row);
+    });
+    if(f48.length){
+      const pkg=pkgFor(f48.length);
+      const banner=document.createElement('div'); banner.className='pkgbanner';
+      banner.innerHTML=`<span>${t('pkg')} ${pkg.inc} ${t('inc')} · ${f48.length} ${t('subtotal').toLowerCase()}</span><b>${pkg.amt.toLocaleString()} GDES</b>`;
+      body.appendChild(banner);
+      const add=document.createElement('button'); add.className='cta'; add.textContent=t('add')+' — 48HoursReady';
+      add.onclick=()=>{addLine('48HoursReady ('+f48.join(', ')+')',pkgFor(f48.length).amt,'48h'); f48=[];};
+      body.appendChild(add);
+    }
+  }
+  else if(activeCat==='admin'){
+    body.innerHTML=`<p class="sub">${t('admin_pick')}</p>`;
+    ADMIN_ITEMS.forEach((name,i)=>{
+      const row=document.createElement('div'); row.className='menu-item';
+      row.innerHTML=`<div class="mi-t"><div class="nm">${name}</div></div>
+        <input type="number" class="price-in" inputmode="numeric" placeholder="GDES" id="adm${i}">
+        <button class="addbtn">+</button>`;
+      row.querySelector('.addbtn').onclick=()=>{const amt=+row.querySelector('input').value||0; addLine(name,amt,'admin');};
+      body.appendChild(row);
+    });
+  }
+  else if(activeCat==='reg'){
+    body.innerHTML=`<p class="sub">${t('reg_pick_lbl')}</p>`;
+    cfg.reg.forEach(r=>{
+      const on=regSel===r.id, fee=Math.round(r.base*cfg.hbFeePct/100);
+      const row=document.createElement('div'); row.className='choice radio'+(on?' on':'');
       row.innerHTML=`<span class="dot"></span><span class="txt">${r.nm}
         <div style="font-size:11px;color:var(--muted);font-weight:600">${t('base')}: ${r.base.toLocaleString()} · ${t('fee_hb')}: ${fee.toLocaleString()}</div></span>`;
-      row.onclick=()=>{draft.regType=r.id; computeAmount(); renderServiceStep();};
+      row.onclick=()=>{regSel=r.id;renderMenu();};
       body.appendChild(row);
     });
-    // Presses Nationales toggle
-    const pr=document.createElement('div'); pr.className='choice check'+(draft.press?' on':'');
-    pr.style.marginTop='6px';
+    const pr=document.createElement('div'); pr.className='choice'+(regPress?' on':'');
     pr.innerHTML=`<span class="dot"></span><span class="txt">${t('presses_q')}</span>`;
-    pr.onclick=()=>{draft.press=!draft.press; computeAmount(); renderServiceStep();};
+    pr.onclick=()=>{regPress=!regPress;renderMenu();};
     body.appendChild(pr);
-  }
-  else {                                        // generic (MsouWout, MyPlopPlop, Legal)
-    sub.textContent=t('svc_generic');
-    body.innerHTML=`<div class="card">
-      <label class="fl">${t('gen_desc')}</label>
-      <textarea id="genDesc">${draft.genDesc||''}</textarea>
-      <label class="fl">${t('gen_amt')}</label>
-      <input type="number" id="genAmt" inputmode="numeric" value="${draft.genAmt||''}">
-    </div>`;
-    body.querySelector('#genDesc').oninput=e=>{draft.genDesc=e.target.value;};
-    body.querySelector('#genAmt').oninput=e=>{draft.genAmt=+e.target.value||0; computeAmount(); document.getElementById('subTot').textContent=draft.amount.toLocaleString();};
-  }
-  computeAmount();
-  document.getElementById('subTot').textContent=draft.amount.toLocaleString();
-}
-
-function computeAmount(){
-  const svc=SERVICES.find(s=>s.id===draft.svc);
-  const cfg=getCfg();
-  let total=0; let items=[];
-  if(svc.type==='package'){
-    if(draft.pkg){const p=PACKAGES.find(x=>x.id===draft.pkg); total=p.amt; items=[{label:`48HoursReady — ${p.inc} ${t('inc_svc')}`,amt:p.amt}];}
-  } else if(svc.type==='admin'){
-    items=draft.items.slice(); total=items.reduce((a,b)=>a+(+b.amt||0),0);
-  } else if(svc.type==='reg'){
-    if(draft.regType){
-      const r=cfg.reg.find(x=>x.id===draft.regType);
-      const fee=Math.round(r.base*cfg.hbFeePct/100);
-      const press=draft.press?(r.press||0):0;
-      total=r.base+fee+press;
-      items=[{label:r.nm,amt:r.base},{label:`${t('fee_hb')}`,amt:fee}];
-      if(draft.press)items.push({label:t('fee_press'),amt:press});
+    if(regSel){
+      const r=cfg.reg.find(x=>x.id===regSel), fee=Math.round(r.base*cfg.hbFeePct/100), press=regPress?(r.press||0):0, tot=r.base+fee+press;
+      const banner=document.createElement('div'); banner.className='pkgbanner';
+      banner.innerHTML=`<span>${r.nm}</span><b>${tot.toLocaleString()} GDES</b>`;
+      body.appendChild(banner);
+      const add=document.createElement('button'); add.className='cta'; add.textContent=t('add');
+      add.onclick=()=>{let lbl=r.nm+' (+'+t('fee_hb')+(regPress?' + '+t('fee_press'):'')+')'; addLine(lbl,tot,'reg'); regSel=null;regPress=false;};
+      body.appendChild(add);
     }
-  } else {
-    total=+draft.genAmt||0;
-    if(total>0)items=[{label:draft.genDesc||svcName(svc),amt:total}];
   }
-  if(svc.type!=='admin')draft.items=items;
-  draft.amount=total;
+  else if(activeCat==='legal'){
+    body.innerHTML=`<p class="sub">${t('legal_hint')}</p>
+      <div class="card"><label class="fl">${t('legal_lbl')}</label><textarea id="lgDesc"></textarea>
+      <label class="fl">${t('amount')}</label><input type="number" id="lgAmt" inputmode="numeric"></div>
+      <button class="cta" id="lgAdd">${t('add')}</button>`;
+    body.querySelector('#lgAdd').onclick=()=>{const d=body.querySelector('#lgDesc').value.trim()||t('cat_legal');const a=+body.querySelector('#lgAmt').value||0;addLine(d,a,'legal');};
+  }
+  else if(activeCat==='shop'){
+    body.innerHTML=`<div class="settings-note">${t('shop_note')}</div>
+      <div class="card"><label class="fl">${t('legal_lbl').replace('legal','MyPlopPlop').replace('légal','MyPlopPlop')}</label><textarea id="shDesc"></textarea>
+      <label class="fl">${t('amount')}</label><input type="number" id="shAmt" inputmode="numeric"></div>
+      <button class="cta" id="shAdd">${t('add')}</button>`;
+    body.querySelector('#shAdd').onclick=()=>{const d=body.querySelector('#shDesc').value.trim()||'MyPlopPlop';const a=+body.querySelector('#shAmt').value||0;addLine(d,a,'shop');};
+  }
+  // current cart preview under menu
+  if(CART.length){
+    const c=document.createElement('div'); c.className='card'; c.style.marginTop='16px';
+    c.innerHTML=`<div style="font-weight:800;margin-bottom:6px">${t('step_order')} (${CART.length})</div>`;
+    CART.forEach((l,i)=>{
+      const row=document.createElement('div'); row.className='cline';
+      row.innerHTML=`<span class="cl-t">${l.label}</span><span class="cl-a">${l.amt.toLocaleString()}</span><button class="cl-x">×</button>`;
+      row.querySelector('.cl-x').onclick=()=>{CART.splice(i,1);renderMenu();refreshCartBar();};
+      c.appendChild(row);
+    });
+    document.getElementById('menuBody').appendChild(c);
+  }
+  refreshCartBar();
 }
 
-/* ----- Step 3: documents ----- */
-document.getElementById('docInput').addEventListener('change',e=>{
-  [...e.target.files].forEach(f=>{
-    draft.docs.push({name:f.name, type:f.type, url:(f.type.startsWith('image/')?URL.createObjectURL(f):null)});
-  });
-  e.target.value=''; renderFiles();
-});
+/* ---------- STEP 2 : checkout ---------- */
+let coDocs=[], coPay=null;
+function renderCheckout(){
+  const s=document.getElementById('coSummary'); s.innerHTML=`<div style="font-weight:800;margin-bottom:6px">${t('step_order')}</div>`;
+  CART.forEach((l,i)=>{const row=document.createElement('div');row.className='cline';
+    row.innerHTML=`<span class="cl-t">${l.label}</span><span class="cl-a">${l.amt.toLocaleString()}</span><button class="cl-x">×</button>`;
+    row.querySelector('.cl-x').onclick=()=>{CART.splice(i,1); if(!CART.length){go('menu');return;} renderCheckout();};
+    s.appendChild(row);});
+  const tot=document.createElement('div'); tot.className='totbar'; tot.style.margin='12px 0 0';
+  tot.innerHTML=`<span>${t('total')}</span><b>${cartTotal().toLocaleString()} GDES</b>`; s.appendChild(tot);
+  renderFiles();
+  document.querySelectorAll('#payGrid .pay').forEach(p=>{p.classList.toggle('on',coPay===p.dataset.pay);
+    p.onclick=()=>{coPay=p.dataset.pay;renderCheckout();};});
+  document.getElementById('payBtn').disabled=!coPay;
+}
 function renderFiles(){
   const l=document.getElementById('fileList'); l.innerHTML='';
-  draft.docs.forEach((d,i)=>{
-    const r=document.createElement('div'); r.className='filerow';
+  coDocs.forEach((d,i)=>{const r=document.createElement('div');r.className='filerow';
     const thumb=d.url?`<img class="fi" src="${d.url}">`:`<span class="fi">📄</span>`;
-    r.innerHTML=`${thumb}<span>${d.name}</span><button class="fx" data-i="${i}">×</button>`;
-    r.querySelector('.fx').onclick=()=>{draft.docs.splice(i,1);renderFiles();};
-    l.appendChild(r);
-  });
+    r.innerHTML=`${thumb}<span>${d.name}</span><button class="fx">×</button>`;
+    r.querySelector('.fx').onclick=()=>{coDocs.splice(i,1);renderFiles();};l.appendChild(r);});
 }
-
-/* ----- Step 4: payment ----- */
-function renderPayment(){
-  const b=document.getElementById('payBreakdown'); b.innerHTML='';
-  draft.items.forEach(it=>{
-    b.innerHTML+=`<div><span>${it.label}</span><span>${(+it.amt||0).toLocaleString()} GDES</span></div>`;
-  });
-  b.innerHTML+=`<div class="tot"><span>${t('total')}</span><span>${draft.amount.toLocaleString()} GDES</span></div>`;
-  document.querySelectorAll('#payGrid .pay').forEach(p=>{
-    p.classList.toggle('on',draft.payment===p.dataset.pay);
-    p.onclick=()=>{draft.payment=p.dataset.pay; renderPayment(); document.getElementById('payBtn').disabled=false;};
-  });
-  document.getElementById('payBtn').disabled=!draft.payment;
-}
-
-/* ----- Complete ----- */
-function orderId(orders){
-  const n=orders.length+1;
-  return 'HB-'+String(1000+n);
-}
+document.getElementById('docInput').addEventListener('change',e=>{
+  [...e.target.files].forEach(f=>coDocs.push({name:f.name,url:(f.type.startsWith('image/')?URL.createObjectURL(f):null)}));
+  e.target.value=''; renderFiles();
+});
 function completeOrder(){
-  if(!draft.payment)return;
-  const orders=loadOrders();
-  const id=orderId(orders);
-  const rec={
-    id, svc:draft.svc, svcName:draft.svcName,
-    name:draft.name, phone:draft.phone, wa:draft.wa,
-    items:draft.items, amount:draft.amount, payment:draft.payment,
-    docs:draft.docs.map(d=>({name:d.name})),   // metadata only in localStorage
-    status: draft.docs.length? 'prog' : 'wait',
-    ts: nowStamp()
-  };
-  orders.push(rec); saveOrders(orders);
-  document.getElementById('doneId').textContent=id;
-  const svc=SERVICES.find(s=>s.id===draft.svc);
-  document.getElementById('doneSummary').textContent=
-    `${draft.name} · ${draft.svcName} · ${draft.amount.toLocaleString()} GDES · ${payLabel(draft.payment)}`;
-  showStepBox('step-done');
-  document.querySelectorAll('.steps .st').forEach(el=>el.classList.add('done'));
+  const name=document.getElementById('c_name').value.trim();
+  if(!name){alert(t('need_name'));return;}
+  if(!coPay){alert(t('need_pay'));return;}
+  if(!CART.length){alert(t('cart_empty'));return;}
+  const orders=loadOrders(); const id='HB-'+String(1000+orders.length+1);
+  orders.push({id,type:'sale',statusSet:'sale',svcName:CART.map(c=>c.label.split(' (')[0]).join(', '),
+    name,phone:document.getElementById('c_phone').value.trim(),wa:document.getElementById('c_wa').value.trim(),
+    items:CART.slice(),amount:cartTotal(),payment:coPay,docs:coDocs.map(d=>({name:d.name})),
+    status:coDocs.length?'prog':'wait',ts:nowStamp()});
+  saveOrders(orders);
+  showDone(id,t('conf_t'),`${name} · ${cartTotal().toLocaleString()} GDES · ${payLabel(coPay)}`);
+  CART=[];coDocs=[];coPay=null;document.getElementById('c_name').value='';document.getElementById('c_phone').value='';document.getElementById('c_wa').value='';
   refreshBadges();
 }
 function payLabel(p){return ({cash:t('p_cash'),moncash:'MonCash',natcash:'NatCash',card:t('p_card')})[p]||p;}
+function showDone(id,title,summary){
+  document.getElementById('doneTitle').textContent=title;
+  document.getElementById('doneId').textContent=id;
+  document.getElementById('doneSummary').textContent=summary;
+  go('done');
+}
 
-/* ---------- time (no Date.now in build env, use runtime) ---------- */
-function nowStamp(){ return new Date().toISOString(); }
-function fmtDate(iso){ const d=new Date(iso); return d.toLocaleDateString(lang==='en'?'en-US':'fr-FR')+' '+d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}); }
-function isToday(iso){ const d=new Date(iso), n=new Date(); return d.toDateString()===n.toDateString(); }
+/* ---------- MsouWout registration ---------- */
+let regKind=null, regDocs=[];
+function startReg(){regKind=null;regDocs=[];document.getElementById('regForm').innerHTML='';
+  document.querySelectorAll('.regpick button').forEach(b=>b.classList.remove('on'));go('reg');}
+function pickReg(kind){
+  regKind=kind; regDocs=[];
+  document.querySelectorAll('.regpick button').forEach(b=>b.classList.toggle('on',b.dataset.reg===kind));
+  const f=document.getElementById('regForm');
+  let extra='';
+  if(kind==='driver'){
+    extra=`<label class="fl">${t('rd_vehicle')}</label>
+      <div class="row2" style="margin-bottom:14px">
+        <button class="cta ghost" id="veh_moto" style="margin:0">🏍️ ${t('rd_moto')}</button>
+        <button class="cta ghost" id="veh_car" style="margin:0">🚗 ${t('rd_car')}</button></div>
+      <label class="fl">${t('rd_plate')}</label><input type="text" id="r_plate">
+      <label class="fl">${t('rd_license')}</label><input type="text" id="r_license">`;
+  }
+  f.innerHTML=`<div class="card">
+      <label class="fl">${t('f_name')}</label><input type="text" id="r_name">
+      <label class="fl">${t('f_phone')}</label><input type="tel" id="r_phone" inputmode="tel" placeholder="+509 ...">
+      <label class="fl">${t('f_wa')}</label><input type="tel" id="r_wa" inputmode="tel" placeholder="+509 ...">
+      ${extra}
+      <label class="fl" style="margin-top:4px">${t('reg_fee')}</label><input type="number" id="r_fee" inputmode="numeric" value="0">
+    </div>
+    <label class="dropz" for="regDocInput"><span class="de">📎</span>${t('reg_docs')}</label>
+    <input type="file" id="regDocInput" accept="image/*,application/pdf" multiple capture="environment" style="display:none">
+    <div id="regFileList"></div>
+    <button class="cta" onclick="saveReg()">${t('reg_save')}</button>`;
+  f.dataset.veh='';
+  if(kind==='driver'){
+    f.querySelector('#veh_moto').onclick=()=>{f.dataset.veh='moto';f.querySelector('#veh_moto').classList.remove('ghost');f.querySelector('#veh_car').classList.add('ghost');};
+    f.querySelector('#veh_car').onclick=()=>{f.dataset.veh='car';f.querySelector('#veh_car').classList.remove('ghost');f.querySelector('#veh_moto').classList.add('ghost');};
+  }
+  f.querySelector('#regDocInput').addEventListener('change',e=>{
+    [...e.target.files].forEach(fl=>regDocs.push({name:fl.name,url:(fl.type.startsWith('image/')?URL.createObjectURL(fl):null)}));
+    e.target.value='';renderRegFiles();});
+}
+function renderRegFiles(){const l=document.getElementById('regFileList');if(!l)return;l.innerHTML='';
+  regDocs.forEach((d,i)=>{const r=document.createElement('div');r.className='filerow';
+    const th=d.url?`<img class="fi" src="${d.url}">`:`<span class="fi">📄</span>`;
+    r.innerHTML=`${th}<span>${d.name}</span><button class="fx">×</button>`;
+    r.querySelector('.fx').onclick=()=>{regDocs.splice(i,1);renderRegFiles();};l.appendChild(r);});}
+function saveReg(){
+  const f=document.getElementById('regForm');
+  const name=f.querySelector('#r_name').value.trim();
+  if(!name){alert(t('need_name'));return;}
+  const fee=+f.querySelector('#r_fee').value||0;
+  const kindLbl=regKind==='driver'?t('driver'):t('rider');
+  const orders=loadOrders(); const id=(regKind==='driver'?'DRV-':'RDR-')+String(1000+orders.length+1);
+  const meta=[];
+  if(regKind==='driver'){const v=f.dataset.veh;if(v)meta.push(v==='moto'?t('rd_moto'):t('rd_car'));
+    const pl=f.querySelector('#r_plate').value.trim();if(pl)meta.push(t('rd_plate')+': '+pl);
+    const li=f.querySelector('#r_license').value.trim();if(li)meta.push(t('rd_license')+': '+li);}
+  orders.push({id,type:'reg',regKind,statusSet:'reg',svcName:'MsouWout — '+kindLbl,
+    name,phone:f.querySelector('#r_phone').value.trim(),wa:f.querySelector('#r_wa').value.trim(),
+    items:meta.map(m=>({label:m,amt:0})),amount:fee,payment:fee>0?'cash':null,
+    docs:regDocs.map(d=>({name:d.name})),status:'pending',ts:nowStamp()});
+  saveOrders(orders);
+  showDone(id,t('conf_reg'),`${name} · MsouWout ${kindLbl}${fee>0?' · '+fee.toLocaleString()+' GDES':''}`);
+  refreshBadges();
+}
+
+/* ---------- time ---------- */
+function nowStamp(){return new Date().toISOString();}
+function fmtDate(iso){const d=new Date(iso);return d.toLocaleDateString(lang==='en'?'en-US':'fr-FR')+' '+d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
+function isToday(iso){const d=new Date(iso),n=new Date();return d.toDateString()===n.toDateString();}
 
 /* ---------- Orders board ---------- */
 let filter='all';
 function renderOrders(){
   const fb=document.getElementById('filterBar'); fb.innerHTML='';
-  const opts=[{id:'all',lbl:t('all')}].concat(STATUSES.map(s=>({id:s.id,lbl:t(s.k)})));
-  opts.forEach(o=>{
-    const b=document.createElement('button'); b.textContent=o.lbl;
-    b.className=filter===o.id?'on':''; b.onclick=()=>{filter=o.id;renderOrders();};
-    fb.appendChild(b);
-  });
+  const opts=[{id:'all',lbl:t('all')},{id:'wait',lbl:t('st_wait')},{id:'prog',lbl:t('st_prog')},{id:'ready',lbl:t('st_ready')},{id:'done',lbl:t('st_done')},{id:'reg',lbl:t('reg_word')}];
+  opts.forEach(o=>{const b=document.createElement('button');b.textContent=o.lbl;b.className=filter===o.id?'on':'';b.onclick=()=>{filter=o.id;renderOrders();};fb.appendChild(b);});
   const list=document.getElementById('ordersList'); list.innerHTML='';
   let orders=loadOrders().slice().reverse();
-  if(filter!=='all')orders=orders.filter(o=>o.status===filter);
+  if(filter==='reg')orders=orders.filter(o=>o.type==='reg');
+  else if(filter!=='all')orders=orders.filter(o=>o.status===filter);
   if(!orders.length){list.innerHTML=`<div class="empty"><div class="ee">📋</div>${t('empty_ord')}</div>`;return;}
   orders.forEach(o=>{
-    const st=statusOf(o.status);
+    const setName=o.statusSet||'sale'; const st=statusInfo(setName,o.status);
     const el=document.createElement('div'); el.className='order';
-    el.innerHTML=`<div class="top">
-        <div><div class="who">${o.name}</div><div class="meta">${o.id} · ${o.phone||''} · ${fmtDate(o.ts)}</div></div>
+    const tag=o.type==='reg'?`<span class="rtag">${t('reg_word')}</span>`:'';
+    el.innerHTML=`<div class="top"><div><div class="who">${o.name}${tag}</div>
+        <div class="meta">${o.id} · ${o.phone||''} · ${fmtDate(o.ts)}</div></div>
         <span class="badge ${st.cls}">${st.em} ${t(st.k)}</span></div>
       <div class="svc-t">${o.svcName} ${o.docs&&o.docs.length?('· 📎 '+o.docs.length):''}</div>
-      <div class="top"><div class="meta">${payLabel(o.payment)}</div><div class="amt2">${o.amount.toLocaleString()} GDES</div></div>
+      <div class="top"><div class="meta">${o.payment?payLabel(o.payment):''}</div><div class="amt2">${o.amount?o.amount.toLocaleString()+' GDES':''}</div></div>
       <div class="statusrow"></div>`;
     const sr=el.querySelector('.statusrow');
-    STATUSES.forEach(s=>{
-      const b=document.createElement('button'); b.className=o.status===s.id?'on':'';
-      b.innerHTML=`${s.em}<br>${t(s.k)}`;
-      b.onclick=()=>{setStatus(o.id,s.id);};
-      sr.appendChild(b);
-    });
+    (STATUS_SETS[setName]).forEach(s=>{const b=document.createElement('button');b.className=o.status===s.id?'on':'';
+      b.innerHTML=`${s.em}<br>${t(s.k)}`;b.onclick=()=>setStatus(o.id,s.id);sr.appendChild(b);});
     list.appendChild(el);
   });
 }
-function setStatus(id,st){
-  const orders=loadOrders(); const o=orders.find(x=>x.id===id); if(o){o.status=st;saveOrders(orders);renderOrders();refreshBadges();}
-}
+function setStatus(id,st){const o=loadOrders();const r=o.find(x=>x.id===id);if(r){r.status=st;saveOrders(o);renderOrders();refreshBadges();}}
 
 /* ---------- Dashboard ---------- */
 function renderDash(){
   const o=loadOrders();
   document.getElementById('dashDate').textContent=new Date().toLocaleDateString(lang==='en'?'en-US':'fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  const newN=o.filter(x=>x.status==='wait').length;
-  const progN=o.filter(x=>x.status==='prog').length;
-  const readyN=o.filter(x=>x.status==='ready').length;
-  const salesToday=o.filter(x=>isToday(x.ts)).reduce((a,b)=>a+b.amount,0);
-  const s=document.getElementById('dashStats');
-  s.innerHTML=`
+  const sales=o.filter(x=>x.type!=='reg');
+  const newN=sales.filter(x=>x.status==='wait').length;
+  const progN=sales.filter(x=>x.status==='prog').length;
+  const readyN=sales.filter(x=>x.status==='ready').length;
+  const regN=o.filter(x=>x.type==='reg').length;
+  const salesToday=o.filter(x=>isToday(x.ts)).reduce((a,b)=>a+(+b.amount||0),0);
+  document.getElementById('dashStats').innerHTML=`
     <div class="stat sales"><div class="n">${salesToday.toLocaleString()} <span style="font-size:16px">GDES</span></div><div class="l">${t('dash_sales')}</div></div>
     <div class="stat"><div class="n" style="color:var(--warn)">${newN}</div><div class="l">🟡 ${t('dash_new')}</div></div>
     <div class="stat"><div class="n" style="color:var(--blue)">${progN}</div><div class="l">🔵 ${t('dash_prog')}</div></div>
     <div class="stat"><div class="n" style="color:var(--good)">${readyN}</div><div class="l">🟢 ${t('dash_ready')}</div></div>
-    <div class="stat"><div class="n">${o.length}</div><div class="l">📦 ${t('order')}</div></div>`;
+    <div class="stat"><div class="n">${regN}</div><div class="l">🏍️ ${t('dash_reg')}</div></div>`;
 }
 
 /* ---------- Settings ---------- */
 function renderSettings(){
-  const cfg=getCfg(); const box=document.getElementById('setBody'); box.innerHTML='';
-  box.innerHTML=`<label class="fl">${t('fee_hb')}</label>
-    <input type="number" id="set_fee" value="${cfg.hbFeePct}">`;
-  cfg.reg.forEach((r,i)=>{
-    box.innerHTML+=`<div style="border-top:1px solid var(--line);padding-top:12px;margin-top:4px">
-      <div style="font-weight:800;margin-bottom:8px">${r.nm}</div>
-      <label class="fl">${t('base')} (GDES)</label><input type="number" data-base="${i}" value="${r.base}">
-      <label class="fl">${t('fee_press')} (GDES)</label><input type="number" data-press="${i}" value="${r.press}"></div>`;
-  });
+  const cfg=getCfg(); const box=document.getElementById('setBody');
+  box.innerHTML=`<label class="fl">${t('fee_hb')}</label><input type="number" id="set_fee" value="${cfg.hbFeePct}">`;
+  cfg.reg.forEach((r,i)=>{box.innerHTML+=`<div style="border-top:1px solid var(--line);padding-top:12px;margin-top:4px">
+    <div style="font-weight:800;margin-bottom:8px">${r.nm}</div>
+    <label class="fl">${t('base')} (GDES)</label><input type="number" data-base="${i}" value="${r.base}">
+    <label class="fl">${t('fee_press')} (GDES)</label><input type="number" data-press="${i}" value="${r.press}"></div>`;});
 }
-function saveSettings(){
-  const cfg=getCfg();
-  cfg.hbFeePct=+document.getElementById('set_fee').value||30;
-  document.querySelectorAll('[data-base]').forEach(el=>{cfg.reg[+el.dataset.base].base=+el.value||0;});
-  document.querySelectorAll('[data-press]').forEach(el=>{cfg.reg[+el.dataset.press].press=+el.value||0;});
-  setCfg(cfg);
-  const btn=event.target; const old=btn.textContent; btn.textContent='✓'; setTimeout(()=>btn.textContent=old,900);
-}
+function saveSettings(){const cfg=getCfg();cfg.hbFeePct=+document.getElementById('set_fee').value||30;
+  document.querySelectorAll('[data-base]').forEach(el=>cfg.reg[+el.dataset.base].base=+el.value||0);
+  document.querySelectorAll('[data-press]').forEach(el=>cfg.reg[+el.dataset.press].press=+el.value||0);
+  setCfg(cfg);const btn=event.target,old=btn.textContent;btn.textContent='✓';setTimeout(()=>btn.textContent=old,900);}
 
-/* ---------- Language switch ---------- */
-document.querySelectorAll('.lang button').forEach(b=>{
-  b.onclick=()=>{
-    lang=b.dataset.lang; localStorage.setItem('hb_pos_lang',lang);
-    document.querySelectorAll('.lang button').forEach(x=>x.classList.toggle('on',x===b));
-    applyI18n(); renderHome();
-    const cur=document.querySelector('.screen.on').id.replace('s-','');
-    if(cur==='orders')renderOrders(); if(cur==='dash')renderDash(); if(cur==='set')renderSettings();
-  };
-});
+/* ---------- Language ---------- */
+document.querySelectorAll('.lang button').forEach(b=>{b.onclick=()=>{lang=b.dataset.lang;localStorage.setItem('hb_pos_lang',lang);
+  document.querySelectorAll('.lang button').forEach(x=>x.classList.toggle('on',x===b));applyI18n();renderHome();
+  const cur=document.querySelector('.screen.on').id.replace('s-','');
+  if(cur==='menu')renderMenu();if(cur==='orders')renderOrders();if(cur==='dash')renderDash();if(cur==='set')renderSettings();};});
 
 /* ---------- Boot ---------- */
-document.querySelector('.lang button[data-lang="'+lang+'"]').click ? null : null;
 document.querySelectorAll('.lang button').forEach(x=>x.classList.toggle('on',x.dataset.lang===lang));
-applyI18n();
-renderHome();
-refreshBadges();
+applyI18n(); renderHome(); refreshBadges();
 </script>
 </body>
 </html>
