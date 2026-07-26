@@ -375,7 +375,7 @@ function sInfo(set,id){const s=STATUS[set]||STATUS.sale;return s.find(x=>x.id===
 const MODULES=[
  {id:'msouwout',nm:'MsouWout',logo:'assets/msouwout-logo.png',type:'sub'},
  {id:'myplopplop',nm:'MyPlopPlop',logo:'assets/myplopplop-logo.png',type:'sub'},
- {id:'parenaj',nm:'Parenaj Biznis',em:'🤝',type:'sub'},
+ {id:'parenaj',nm:'Parenaj Biznis',em:'🤝',type:'reg',reg:'affiliate'},
  {id:'tikelakay',nm:'Tikè Lakay',em:'🎟️',type:'tickets'},
  {id:'paymenthub',nm:'Payment Hub',em:'💳',type:'order'},
  {id:'pwofesyonel',nm:'Pwofesyonèl Lakay',em:'👨‍💼',type:'reg',reg:'pro'},
@@ -402,7 +402,7 @@ const REG_FORMS={
  rider:{title:'MsouWout — Enskri Pasaje',statusSet:'verify',prefix:'RDR',feeKey:'regFeeRider',
    fields:[['name','f_name',1],['phone','f_phone'],['wa','f_wa']],uploads:[]},
  merchant:{title:'MyPlopPlop — Enskri Machann',statusSet:'merch',prefix:'MRC',feeKey:'regFeeMerchant',
-   fields:[['biz','biz_name',1],['owner','owner'],['phone','f_phone'],['wa','f_wa'],['category','category','sel',MERCH_CATS],['addr','address']],
+   fields:[['name','f_name',1],['phone','f_phone'],['wa','f_wa'],['email','f_email'],['biz','biz_name'],['category','category','sel',MERCH_CATS],['addr','address']],
    uploads:['Business Documents']},
  pro:{title:'Pwofesyonèl Lakay',statusSet:'pro',prefix:'PRO',feeKey:'regFeePro',
    fields:[['name','f_name',1],['profession','profession'],['phone','f_phone'],['wa','f_wa'],['addr','address']],
@@ -440,8 +440,7 @@ function openModule(m){
 function openSubs(m){
   const subs={
     msouwout:[['driver','🏍️','Enskri Chofè'],['rider','🙋','Enskri Pasaje'],['verify','✅',t('verify_t')]],
-    myplopplop:[['merchant','🏪','Enskri Machann'],['delivery','🚚','Demann Livrezon']],
-    parenaj:[['affiliate','🤝',t('aff_reg')],['commission','💰',t('aff_comm')]]
+    myplopplop:[['merchant','🏪','Enskri Machann'],['delivery','🚚','Demann Livrezon']]
   }[m.id];
   document.getElementById('subTitle').textContent=m.nm;
   const list=document.getElementById('subList');list.innerHTML='';
@@ -532,17 +531,14 @@ function renderDetail(){
   }
   else if(m==='bizreg'){
     body.innerHTML=`<p class="sub">Baz an US$, frè Près an GDES. To: ${cfg.rate} GDES/US$</p>`;
-    cfg.bizreg.forEach(r=>{const on=flow.extra.reg===r.id;const fee=r.usd*cfg.hbFeePct/100;const row=document.createElement('div');row.className='choice radio'+(on?' on':'');
-      row.innerHTML=`<span class="dot"></span><span class="txt">${r.nm}<div style="font-size:11px;color:var(--muted);font-weight:600">US$${r.usd.toLocaleString()} + 30% (US$${fee.toLocaleString()})${r.press?' + '+r.press.toLocaleString()+' GDES Près':''}</div></span>`;
+    cfg.bizreg.forEach(r=>{const on=flow.extra.reg===r.id;const row=document.createElement('div');row.className='choice radio'+(on?' on':'');
+      row.innerHTML=`<span class="dot"></span><span class="txt">${r.nm}<div style="font-size:11px;color:var(--muted);font-weight:600">US$${r.usd.toLocaleString()}${r.press?' + '+r.press.toLocaleString()+' GDES Près':''}</div></span>`;
       row.onclick=()=>{flow.extra.reg=r.id;renderDetail();};body.appendChild(row);});
-    if(flow.extra.reg){const r=cfg.bizreg.find(x=>x.id===flow.extra.reg);const fee=r.usd*cfg.hbFeePct/100;const usd=r.usd+fee;const tot=usd*cfg.rate+r.press;
+    if(flow.extra.reg){const r=cfg.bizreg.find(x=>x.id===flow.extra.reg);const tot=r.usd*(1+cfg.hbFeePct/100)*cfg.rate+r.press;
       const bd=document.createElement('div');bd.className='card';bd.innerHTML=`<div class="breakdown">
         <div><span>${t('base')}</span><span>US$${r.usd.toLocaleString()}</span></div>
-        <div><span>${t('fee_hb')}</span><span>US$${fee.toLocaleString()}</span></div>
-        <div><span>${t('sub_usd')}</span><span>US$${usd.toLocaleString()}</span></div>
         ${r.press?`<div><span>${t('fee_press')}</span><span>${r.press.toLocaleString()} GDES</span></div>`:''}
-        <div class="tot"><span>${t('total')}</span><span>${gdes(tot)}</span></div>
-        <div style="font-size:11px;color:var(--muted);margin-top:4px">${t('rate_note')}: US$${usd.toLocaleString()} × ${cfg.rate}${r.press?(' + '+r.press.toLocaleString()):''}</div></div>`;
+        <div class="tot"><span>${t('total')}</span><span>${gdes(tot)}</span></div></div>`;
       body.appendChild(bd);}
   }
   else if(m==='paymenthub'){
@@ -557,7 +553,7 @@ function renderDetail(){
 }
 function computeAmount(){const m=flow.module;const cfg=getCfg();
   if(m==='48h'){if(flow.extra.pkg!==null){const p=FH_PACKAGES[flow.extra.pkg];flow.items=[{label:'48HoursReady — '+(flow.extra.sel.join(', ')||p.max+' '+t('services')),amt:p.amt}];flow.amount=p.amt;}else{flow.items=[];flow.amount=0;}}
-  else if(m==='bizreg'){if(flow.extra.reg){const r=cfg.bizreg.find(x=>x.id===flow.extra.reg);const usd=r.usd*(1+cfg.hbFeePct/100);const tot=usd*cfg.rate+r.press;flow.items=[{label:r.nm+' (US$'+usd.toLocaleString()+(r.press?' + '+r.press.toLocaleString()+' GDES Près':'')+')',amt:tot}];flow.amount=tot;}else{flow.items=[];flow.amount=0;}}
+  else if(m==='bizreg'){if(flow.extra.reg){const r=cfg.bizreg.find(x=>x.id===flow.extra.reg);const tot=r.usd*(1+cfg.hbFeePct/100)*cfg.rate+r.press;flow.items=[{label:r.nm+' (US$'+r.usd.toLocaleString()+(r.press?' + '+r.press.toLocaleString()+' GDES Près':'')+')',amt:tot}];flow.amount=tot;}else{flow.items=[];flow.amount=0;}}
   else {flow.amount=flow.items.reduce((a,b)=>a+(+b.amt||0),0);}
 }
 /* docs */
@@ -588,6 +584,7 @@ let reg=null;
 function startReg(kind){const sc=REG_FORMS[kind];reg={kind,docs:{},fee:0,vehType:'moto'};
   document.getElementById('regTitle').textContent=sc.title;document.getElementById('regSub').textContent='';
   const body=document.getElementById('regBody');body.innerHTML='';
+  if(kind==='affiliate'){const cl=document.createElement('button');cl.className='cta ghost';cl.style.marginBottom='12px';cl.textContent=t('aff_comm')+' →';cl.onclick=openCommission;body.appendChild(cl);}
   const card=document.createElement('div');card.className='card';
   sc.fields.forEach(f=>{const[key,lbl,type,opts]=f;
     if(type==='sel'){card.innerHTML+=`<label class="fl">${t(lbl)}</label><select id="rf_${key}">${opts.map(o=>`<option>${o}</option>`).join('')}</select>`;}
