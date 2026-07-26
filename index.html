@@ -8,148 +8,118 @@
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
 <meta name="theme-color" content="#00209F">
 <style>
-:root{
-  --blue:#00209F; --red:#D21034; --ink:#12151c; --muted:#6b7280;
-  --bg:#eef1f6; --card:#ffffff; --line:#e2e6ee; --good:#12a150; --warn:#e08a00;
-  --shadow:0 2px 10px rgba(20,30,60,.08); --shadow-lg:0 10px 30px rgba(20,30,60,.14); --r:16px;
-}
+:root{--blue:#00209F;--red:#D21034;--ink:#12151c;--muted:#6b7280;--bg:#eef1f6;--card:#fff;--line:#e2e6ee;
+  --good:#12a150;--warn:#e08a00;--shadow:0 2px 10px rgba(20,30,60,.08);--shadow-lg:0 10px 30px rgba(20,30,60,.14);--r:16px}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0}
-body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);
-  line-height:1.4;padding-bottom:150px;max-width:720px;margin:0 auto;min-height:100vh}
-button{font-family:inherit;cursor:pointer}
-img{display:block}
-.appbar{position:sticky;top:0;z-index:20;background:linear-gradient(120deg,var(--blue),#0b2fc4);color:#fff;
-  padding:12px 14px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow)}
+body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.4;padding-bottom:150px;max-width:720px;margin:0 auto;min-height:100vh}
+button{font-family:inherit;cursor:pointer}img{display:block}
+.appbar{position:sticky;top:0;z-index:20;background:linear-gradient(120deg,var(--blue),#0b2fc4);color:#fff;padding:12px 14px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow)}
 .appbar .logo{width:38px;height:38px;border-radius:10px;background:#fff;padding:3px;object-fit:contain}
-.appbar h1{font-size:16px;margin:0;line-height:1.15;font-weight:700;flex:1}
+.appbar h1{font-size:16px;margin:0;line-height:1.15;font-weight:800;flex:1}
 .appbar h1 small{display:block;font-weight:500;opacity:.85;font-size:11px;letter-spacing:.4px}
 .lang{display:flex;gap:4px;background:rgba(255,255,255,.15);border-radius:999px;padding:3px}
 .lang button{border:0;background:transparent;color:#fff;font-size:12px;font-weight:700;padding:5px 9px;border-radius:999px;opacity:.7}
 .lang button.on{background:#fff;color:var(--blue);opacity:1}
+.gear{border:0;background:rgba(255,255,255,.16);color:#fff;width:34px;height:34px;border-radius:10px;font-size:17px}
 main{padding:16px 14px}
-.screen{display:none;animation:fade .22s ease}
-.screen.on{display:block}
+.screen{display:none;animation:fade .2s ease}.screen.on{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.h2{font-size:20px;font-weight:800;margin:2px 0 4px}
-.sub{color:var(--muted);font-size:13px;margin:0 0 16px}
-.back{display:inline-flex;align-items:center;gap:6px;border:0;background:#fff;color:var(--blue);font-weight:700;
-  font-size:14px;padding:8px 12px;border-radius:999px;box-shadow:var(--shadow);margin-bottom:14px}
-/* home tiles */
+.h2{font-size:20px;font-weight:800;margin:2px 0 4px}.sub{color:var(--muted);font-size:13px;margin:0 0 16px}
+.back{display:inline-flex;align-items:center;gap:6px;border:0;background:#fff;color:var(--blue);font-weight:700;font-size:14px;padding:8px 12px;border-radius:999px;box-shadow:var(--shadow);margin-bottom:14px}
+/* module grid */
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.svc{border:1px solid var(--line);background:var(--card);border-radius:var(--r);padding:16px 12px;text-align:center;
-  box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:9px;min-height:140px;
-  justify-content:center;transition:transform .12s}
-.svc:active{transform:scale(.97)}
-.svc .em{font-size:38px;line-height:1}
-.svc .il{width:58px;height:58px;border-radius:14px;background:#fff;padding:5px;object-fit:contain;border:1px solid var(--line);box-shadow:0 3px 8px rgba(0,0,0,.08)}
-.svc .nm{font-weight:800;font-size:14px}
-.svc .tg{font-size:11px;color:var(--muted);font-weight:600}
-/* 2-step indicator */
-.steps{display:flex;gap:8px;margin-bottom:16px}
-.steps .st{flex:1;display:flex;align-items:center;gap:8px;font-weight:800;font-size:13px;color:var(--muted)}
-.steps .st .n{width:26px;height:26px;border-radius:50%;background:var(--line);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px}
-.steps .st.on{color:var(--blue)}
-.steps .st.on .n{background:var(--blue)}
-.steps .st.done .n{background:var(--good)}
-/* menu category tabs */
-.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px}
-.tabs button{white-space:nowrap;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:9px 15px;font-weight:700;font-size:13px;color:var(--muted)}
-.tabs button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.mod{border:1px solid var(--line);background:var(--card);border-radius:var(--r);padding:16px 10px;text-align:center;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:9px;min-height:120px;justify-content:center;transition:transform .12s}
+.mod:active{transform:scale(.96)}
+.mod .em{font-size:34px;line-height:1}
+.mod .il{width:52px;height:52px;border-radius:12px;background:#fff;padding:5px;object-fit:contain;border:1px solid var(--line);box-shadow:0 3px 8px rgba(0,0,0,.08)}
+.mod .nm{font-weight:800;font-size:13px;line-height:1.2}
+/* sub buttons */
+.subs{display:flex;flex-direction:column;gap:10px}
+.subbtn{display:flex;align-items:center;gap:12px;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:16px;box-shadow:var(--shadow);font-weight:800;font-size:15px;text-align:left}
+.subbtn .se{font-size:26px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);margin-bottom:14px}
 label.fl{display:block;font-weight:700;font-size:13px;margin:0 0 6px}
-input[type=text],input[type=tel],input[type=number],select,textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;
-  padding:13px 12px;font-size:16px;background:#fbfcfe;color:var(--ink);margin-bottom:14px;font-family:inherit}
+input[type=text],input[type=tel],input[type=number],input[type=email],select,textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:13px 12px;font-size:16px;background:#fbfcfe;color:var(--ink);margin-bottom:14px;font-family:inherit}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);background:#fff}
-textarea{min-height:64px;resize:vertical}
-.hint{font-size:12px;color:var(--muted);margin:-8px 0 14px}
-/* menu item rows (restaurant style) */
-.menu-item{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;
-  padding:12px 14px;box-shadow:var(--shadow);margin-bottom:10px}
-.menu-item .mi-t{flex:1}
-.menu-item .mi-t .nm{font-weight:700;font-size:15px}
-.menu-item .mi-t .ds{font-size:12px;color:var(--muted)}
-.menu-item .price-in{width:96px;margin:0;padding:9px;text-align:right;font-size:15px}
-.addbtn{border:0;background:var(--blue);color:#fff;font-weight:800;font-size:20px;width:40px;height:40px;border-radius:11px;flex:0 0 auto;line-height:1}
-.addbtn.on{background:var(--good)}
-/* checkable */
-.choice{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px;background:#fbfcfe;font-weight:600}
+textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted);margin:-8px 0 14px}
+.row2{display:flex;gap:10px}.row2>div{flex:1}
+.steps{display:flex;gap:6px;margin-bottom:16px}
+.steps .st{flex:1;height:6px;border-radius:999px;background:var(--line)}.steps .st.on{background:var(--blue)}.steps .st.done{background:var(--good)}
+/* customer search */
+.crow{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;background:#fbfcfe}
+.crow.on{border-color:var(--blue);background:#eef3ff}
+.crow .ci{width:40px;height:40px;border-radius:50%;background:#e7ecfa;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--blue);flex:0 0 auto}
+.crow .ct{flex:1}.crow .ct .nm{font-weight:800}.crow .ct .ds{font-size:12px;color:var(--muted)}
+/* choice */
+.choice{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:12px;padding:13px;margin-bottom:10px;background:#fbfcfe;font-weight:600}
 .choice.on{border-color:var(--blue);background:#eef3ff}
 .choice .dot{width:22px;height:22px;border-radius:6px;border:2px solid var(--line);flex:0 0 auto;position:relative}
-.choice.radio .dot{border-radius:50%}
-.choice.on .dot{border-color:var(--blue)}
-.choice.on .dot:after{content:"";position:absolute;inset:4px;border-radius:2px;background:var(--blue)}
-.choice.radio.on .dot:after{border-radius:50%}
+.choice.radio .dot{border-radius:50%}.choice.on .dot:after{content:"";position:absolute;inset:4px;border-radius:2px;background:var(--blue)}
+.choice.radio.on .dot:after{border-radius:50%}.choice.on .dot{border-color:var(--blue)}
 .choice .txt{flex:1}.choice .amt{font-weight:800;color:var(--blue);white-space:nowrap}
-.pkgbanner{background:#eef3ff;border:1px solid #cdd9ff;border-radius:12px;padding:12px 14px;margin:6px 0 14px;font-weight:700;color:var(--blue);display:flex;justify-content:space-between;align-items:center}
-.pkgbanner b{font-size:18px}
-/* cart bar */
-.cartbar{position:fixed;bottom:64px;left:0;right:0;max-width:720px;margin:0 auto;padding:0 14px;z-index:25;pointer-events:none}
-.cartbar .inner{background:#0e1830;color:#fff;border-radius:16px;padding:13px 18px;display:flex;align-items:center;gap:12px;
-  box-shadow:var(--shadow-lg);pointer-events:auto}
-.cartbar .cc{background:var(--red);border-radius:999px;min-width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;padding:0 7px}
-.cartbar .ct{flex:1;font-weight:800}.cartbar .ct span{opacity:.7;font-weight:600;font-size:12px}
-.cartbar .go{background:#fff;color:var(--blue);border:0;border-radius:10px;padding:10px 16px;font-weight:800;font-size:14px}
-/* cart lines in checkout */
-.cline{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px}
-.cline:last-child{border-bottom:0}.cline .cl-t{flex:1;font-weight:600}.cline .cl-a{font-weight:800}
-.cline .cl-x{border:0;background:none;color:var(--red);font-size:20px;font-weight:800}
+.choice .price-in{width:96px;margin:0;padding:8px;text-align:right}
+.pill{display:inline-block;font-size:11px;background:#eef3ff;color:var(--blue);border-radius:999px;padding:2px 8px;font-weight:700}
+.banner{background:#eef3ff;border:1px solid #cdd9ff;border-radius:12px;padding:12px 14px;margin:6px 0 14px;font-weight:700;color:var(--blue);display:flex;justify-content:space-between;align-items:center}
+.banner b{font-size:17px}
+.breakdown div{display:flex;justify-content:space-between;padding:3px 0;font-size:13px;color:var(--muted)}
+.breakdown div.tot{color:var(--ink);font-weight:800;font-size:16px;border-top:1px dashed var(--line);margin-top:6px;padding-top:8px}
 .totbar{display:flex;justify-content:space-between;align-items:center;background:#0e1830;color:#fff;border-radius:14px;padding:14px 16px;margin:6px 0 14px}
-.totbar b{font-size:22px}.totbar span{opacity:.8;font-size:13px}
-/* payment */
+.totbar b{font-size:20px}.totbar span{opacity:.8;font-size:13px}
 .pays{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.pay{border:1.5px solid var(--line);border-radius:14px;padding:16px 10px;text-align:center;background:#fbfcfe;font-weight:800;font-size:14px}
-.pay .pe{font-size:28px;display:block;margin-bottom:6px}.pay.on{border-color:var(--blue);background:#eef3ff}
-/* docs */
-.dropz{display:block;width:100%;border:2px dashed var(--blue);border-radius:16px;padding:20px 16px;text-align:center;background:#f4f7ff;color:var(--blue);font-weight:700;margin-bottom:12px}
-.dropz .de{font-size:32px;margin-bottom:4px}
+.pay{border:1.5px solid var(--line);border-radius:14px;padding:15px 10px;text-align:center;background:#fbfcfe;font-weight:800;font-size:14px}
+.pay .pe{font-size:26px;display:block;margin-bottom:5px}.pay.on{border-color:var(--blue);background:#eef3ff}
+.dropz{display:block;width:100%;border:2px dashed var(--blue);border-radius:14px;padding:16px;text-align:center;background:#f4f7ff;color:var(--blue);font-weight:700;margin-bottom:10px;font-size:13px}
+.dropz .de{font-size:28px;margin-bottom:2px}
 .filerow{display:flex;align-items:center;gap:10px;background:#fbfcfe;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-bottom:8px;font-size:13px}
-.filerow .fi{width:34px;height:34px;border-radius:8px;object-fit:cover;background:#eef1f6;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:18px}
-.filerow .fx{margin-left:auto;color:var(--red);font-weight:800;border:0;background:none;font-size:18px}
-/* primary buttons */
+.filerow .fi{width:32px;height:32px;border-radius:8px;object-fit:cover;background:#eef1f6;display:flex;align-items:center;justify-content:center;font-size:16px;flex:0 0 auto}
+.filerow .fx{margin-left:auto;color:var(--red);border:0;background:none;font-size:18px;font-weight:800}
+.upgroup{font-size:12px;font-weight:700;color:var(--muted);margin:2px 0 6px}
 .cta{width:100%;border:0;background:var(--blue);color:#fff;font-weight:800;font-size:17px;padding:16px;border-radius:14px;box-shadow:var(--shadow-lg);margin-top:4px}
-.cta:active{transform:scale(.99)}.cta.red{background:var(--red)}.cta.ghost{background:#fff;color:var(--blue);border:1.5px solid var(--line);box-shadow:var(--shadow)}
-.cta:disabled{opacity:.45}
-.row2{display:flex;gap:10px}.row2 .cta{margin-top:0}
-/* registration chooser */
-.regpick{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
-.regpick button{border:1.5px solid var(--line);background:#fff;border-radius:var(--r);padding:22px 12px;box-shadow:var(--shadow);
-  display:flex;flex-direction:column;align-items:center;gap:8px;font-weight:800;font-size:15px}
-.regpick button .re{font-size:38px}
-.regpick button.on{border-color:var(--blue);background:#eef3ff;color:var(--blue)}
+.cta:active{transform:scale(.99)}.cta.red{background:var(--red)}.cta.green{background:var(--good)}.cta.ghost{background:#fff;color:var(--blue);border:1.5px solid var(--line);box-shadow:var(--shadow)}.cta:disabled{opacity:.45}
+.row2 .cta{margin-top:0}
 /* orders */
+.searchbox{margin-bottom:12px}
 .filterbar{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px}
-.filterbar button{white-space:nowrap;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-weight:700;font-size:13px;color:var(--muted)}
+.filterbar button{white-space:nowrap;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 13px;font-weight:700;font-size:12px;color:var(--muted)}
 .filterbar button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
 .order{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow);margin-bottom:12px}
 .order .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
 .order .who{font-weight:800;font-size:15px}.order .meta{font-size:12px;color:var(--muted)}
 .order .svc-t{font-size:13px;font-weight:700;color:var(--blue);margin:6px 0}
 .badge{font-size:11px;font-weight:800;padding:5px 10px;border-radius:999px;white-space:nowrap}
-.b-wait{background:#fff6e6;color:#b57000}.b-prog{background:#e7f0ff;color:#1550c0}.b-ready{background:#e6f7ee;color:#0c8f45}.b-done{background:#eef1f6;color:#5a6272}
-.b-pending{background:#fff6e6;color:#b57000}.b-approved{background:#e7f0ff;color:#1550c0}.b-active{background:#e6f7ee;color:#0c8f45}
-.order .amt2{font-weight:800;font-size:16px}
+.order .amt2{font-weight:800;font-size:15px}
 .statusrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
-.statusrow button{flex:1;min-width:64px;border:1.5px solid var(--line);background:#fbfcfe;border-radius:10px;padding:8px 4px;font-size:11px;font-weight:700;color:var(--muted)}
+.statusrow button{flex:1;min-width:60px;border:1.5px solid var(--line);background:#fbfcfe;border-radius:10px;padding:7px 4px;font-size:10px;font-weight:700;color:var(--muted)}
 .statusrow button.on{border-color:var(--blue);background:#eef3ff;color:var(--blue)}
 .rtag{display:inline-block;font-size:10px;font-weight:800;background:#eef3ff;color:var(--blue);border-radius:6px;padding:2px 7px;margin-left:6px;vertical-align:middle}
-/* dashboard */
+.mini{font-size:12px;color:var(--blue);font-weight:700;border:0;background:none;padding:6px 0 0}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 14px;box-shadow:var(--shadow)}
-.stat .n{font-size:30px;font-weight:900;line-height:1}.stat .l{font-size:12px;color:var(--muted);font-weight:700;margin-top:6px}
-.stat.sales{grid-column:1/-1;background:linear-gradient(120deg,var(--blue),#0b2fc4);color:#fff;border:0}
-.stat.sales .l{color:#fff;opacity:.85}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 14px;box-shadow:var(--shadow)}
+.stat .n{font-size:26px;font-weight:900;line-height:1}.stat .l{font-size:12px;color:var(--muted);font-weight:700;margin-top:6px}
+.stat.sales{grid-column:1/-1;background:linear-gradient(120deg,var(--blue),#0b2fc4);color:#fff;border:0}.stat.sales .l{color:#fff;opacity:.85}
+.stat.rev{grid-column:1/-1;background:#0e1830;color:#fff;border:0}.stat.rev .l{color:#fff;opacity:.8}
 .empty{text-align:center;color:var(--muted);padding:40px 16px;font-weight:600}.empty .ee{font-size:44px;margin-bottom:10px}
-.confirm{text-align:center;padding:20px 10px}
-.confirm .ok{width:84px;height:84px;border-radius:50%;background:var(--good);color:#fff;font-size:44px;display:flex;align-items:center;justify-content:center;margin:6px auto 16px;box-shadow:0 8px 24px rgba(18,161,80,.4)}
-.confirm h3{font-size:22px;margin:0 0 4px}
-.confirm .oid{font-family:monospace;font-size:15px;background:#eef1f6;border-radius:8px;padding:6px 12px;display:inline-block;margin:8px 0;font-weight:700}
+.confirm{text-align:center;padding:6px}
+.confirm .ok{width:76px;height:76px;border-radius:50%;background:var(--good);color:#fff;font-size:40px;display:flex;align-items:center;justify-content:center;margin:6px auto 12px}
+.qrbox{text-align:center;margin:10px 0}.qrbox img{width:190px;height:190px;margin:0 auto;border:1px solid var(--line);border-radius:12px;padding:8px;background:#fff}
+.qrcode-txt{font-family:monospace;font-weight:800;font-size:16px;background:#eef1f6;border-radius:8px;padding:6px 12px;display:inline-block;margin-top:8px}
+.receipt{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow)}
+.receipt .rh{text-align:center;border-bottom:2px dashed var(--line);padding-bottom:12px;margin-bottom:12px}
+.receipt .rh img{width:50px;height:50px;object-fit:contain;margin:0 auto 6px;border-radius:10px}
+.receipt .rh .bt{font-weight:900;font-size:18px;color:var(--blue)}.receipt .rh .st{font-size:12px;color:var(--muted)}
+.receipt .rrow{display:flex;justify-content:space-between;font-size:13px;padding:3px 0}
+.receipt .ritem{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px dotted var(--line)}
+.receipt .rtot{display:flex;justify-content:space-between;font-weight:900;font-size:17px;border-top:2px dashed var(--line);margin-top:10px;padding-top:10px}
+.receipt .rf{text-align:center;font-size:11px;color:var(--muted);margin-top:14px}
+.settings-note{font-size:12px;color:var(--warn);background:#fff8ec;border:1px solid #ffe6b0;border-radius:10px;padding:10px 12px;margin-bottom:14px;font-weight:600}
+.partner{font-size:12px;color:var(--muted);background:#f4f7ff;border:1px solid #dce4f7;border-radius:10px;padding:10px 12px;margin-bottom:14px;font-weight:600}
 .nav{position:fixed;bottom:0;left:0;right:0;max-width:720px;margin:0 auto;background:#fff;border-top:1px solid var(--line);display:flex;box-shadow:0 -4px 16px rgba(20,30,60,.06);z-index:30}
 .nav button{flex:1;border:0;background:none;padding:9px 0 10px;color:var(--muted);font-size:11px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:3px}
 .nav button .ni{font-size:22px;line-height:1}.nav button.on{color:var(--blue)}
 .badge-dot{position:relative}
 .badge-dot[data-n]:not([data-n="0"]):after{content:attr(data-n);position:absolute;top:-3px;right:calc(50% - 22px);background:var(--red);color:#fff;font-size:10px;font-weight:800;min-width:16px;height:16px;border-radius:999px;display:flex;align-items:center;justify-content:center;padding:0 4px}
-.settings-note{font-size:12px;color:var(--warn);background:#fff8ec;border:1px solid #ffe6b0;border-radius:10px;padding:10px 12px;margin-bottom:14px;font-weight:600}
+@media print{.appbar,.nav,.back,.cta,.no-print{display:none!important}body{padding:0}}
 </style>
 </head>
 <body>
@@ -157,129 +127,126 @@ textarea{min-height:64px;resize:vertical}
 <div class="appbar">
   <img src="assets/haitibiznis-logo.png" class="logo" alt="HaitiBiznis">
   <h1 data-i18n="app_t">Sant HaitiBiznis<small data-i18n="app_s">POINT OF SALE</small></h1>
-  <div class="lang">
-    <button data-lang="ht" class="on">HT</button>
-    <button data-lang="fr">FR</button>
-    <button data-lang="en">EN</button>
-  </div>
+  <div class="lang"><button data-lang="ht" class="on">HT</button><button data-lang="fr">FR</button><button data-lang="en">EN</button></div>
+  <button class="gear" onclick="go('set')">⚙️</button>
 </div>
 
 <main>
-
-<!-- ===== HOME ===== -->
 <section id="s-home" class="screen on">
   <div class="h2" data-i18n="home_t">Chwazi yon sèvis</div>
-  <p class="sub" data-i18n="home_s">Peze yon sèvis pou kòmanse. Ou ka ajoute plizyè sèvis nan yon sèl kòmand.</p>
-  <div class="grid" id="svcGrid"></div>
+  <p class="sub" data-i18n="home_s">Kès la: enskri kliyan, vann sèvis, resevwa peman.</p>
+  <div class="grid" id="modGrid"></div>
 </section>
 
-<!-- ===== STEP 1 : MENU / ORDER ===== -->
-<section id="s-menu" class="screen">
+<section id="s-subs" class="screen">
   <button class="back" onclick="go('home')">‹ <span data-i18n="back">Retounen</span></button>
-  <div class="steps">
-    <div class="st on" id="ind1"><span class="n">1</span><span data-i18n="step_order">Kòmand</span></div>
-    <div class="st" id="ind2"><span class="n">2</span><span data-i18n="step_pay">Peman</span></div>
-  </div>
-  <div class="tabs" id="menuTabs"></div>
-  <div id="menuBody"></div>
+  <div class="h2" id="subTitle"></div>
+  <div class="subs" id="subList"></div>
 </section>
 
-<!-- ===== STEP 2 : CHECKOUT ===== -->
-<section id="s-checkout" class="screen">
-  <button class="back" onclick="go('menu')">‹ <span data-i18n="back">Retounen</span></button>
-  <div class="steps">
-    <div class="st done"><span class="n">✓</span><span data-i18n="step_order">Kòmand</span></div>
-    <div class="st on"><span class="n">2</span><span data-i18n="step_pay">Peman</span></div>
-  </div>
-  <div class="h2" data-i18n="checkout_t">Fini kòmand la</div>
+<!-- generic flow (customer -> detail -> docs -> payment) -->
+<section id="s-flow" class="screen">
+  <button class="back" onclick="flowBack()">‹ <span data-i18n="back">Retounen</span></button>
+  <div class="steps"><div class="st" data-fstep="1"></div><div class="st" data-fstep="2"></div><div class="st" data-fstep="3"></div><div class="st" data-fstep="4"></div></div>
 
-  <div class="card">
-    <label class="fl" data-i18n="f_name">Non konplè</label>
-    <input type="text" id="c_name" autocomplete="off">
-    <div class="row2">
-      <div style="flex:1"><label class="fl" data-i18n="f_phone">Telefòn</label><input type="tel" id="c_phone" inputmode="tel" placeholder="+509 ..."></div>
-      <div style="flex:1"><label class="fl" data-i18n="f_wa">WhatsApp</label><input type="tel" id="c_wa" inputmode="tel" placeholder="+509 ..."></div>
+  <div id="fstep-cust" class="fbox">
+    <div class="h2" data-i18n="cust_t">Kliyan</div>
+    <p class="sub" id="flowSvcLabel"></p>
+    <div class="card">
+      <input type="text" id="custSearch" data-i18n-ph="cust_search" placeholder="Chèche pa non / telefòn...">
+      <div id="custResults"></div>
+    </div>
+    <button class="cta ghost" onclick="showNewCust()" data-i18n="cust_new">+ Nouvo kliyan</button>
+    <div class="card" id="newCustCard" style="display:none;margin-top:14px">
+      <label class="fl" data-i18n="f_name">Non konplè</label><input type="text" id="c_name">
+      <div class="row2"><div><label class="fl" data-i18n="f_phone">Telefòn</label><input type="tel" id="c_phone" inputmode="tel"></div>
+      <div><label class="fl" data-i18n="f_wa">WhatsApp</label><input type="tel" id="c_wa" inputmode="tel"></div></div>
+      <label class="fl" data-i18n="f_email">Imel (opsyonèl)</label><input type="email" id="c_email">
+      <label class="fl" data-i18n="f_addr">Adrès (opsyonèl)</label><input type="text" id="c_addr">
+      <button class="cta" onclick="saveNewCust()" data-i18n="cust_save">Kontinye</button>
     </div>
   </div>
 
-  <div class="card" id="coSummary"></div>
-
-  <label class="dropz" for="docInput"><span class="de">📎</span><span data-i18n="docs_add">Ajoute Dokiman</span>
-    <div style="font-size:12px;font-weight:600;opacity:.75;margin-top:2px" data-i18n="docs_opt">Opsyonèl — foto oswa fichye</div></label>
-  <input type="file" id="docInput" accept="image/*,application/pdf" multiple capture="environment" style="display:none">
-  <div id="fileList"></div>
-
-  <div style="font-weight:800;margin:14px 0 8px" data-i18n="pay_t">Peman</div>
-  <div class="pays" id="payGrid">
-    <button class="pay" data-pay="cash"><span class="pe">💵</span><span data-i18n="p_cash">Kach</span></button>
-    <button class="pay" data-pay="moncash"><span class="pe">📱</span>MonCash</button>
-    <button class="pay" data-pay="natcash"><span class="pe">📲</span>NatCash</button>
-    <button class="pay" data-pay="card"><span class="pe">💳</span><span data-i18n="p_card">Kat</span></button>
+  <div id="fstep-detail" class="fbox" style="display:none">
+    <div class="h2" id="detailTitle"></div>
+    <p class="sub" id="detailCust"></p>
+    <div id="detailBody"></div>
+    <div class="totbar"><span data-i18n="subtotal">Total</span><b id="detailTot">0 GDES</b></div>
+    <button class="cta" onclick="flowStep(3)" data-i18n="next">Kontinye</button>
   </div>
-  <div style="height:12px"></div>
-  <button class="cta red" id="payBtn" onclick="completeOrder()" disabled data-i18n="pay_do">Konplete Peman</button>
+
+  <div id="fstep-docs" class="fbox" style="display:none">
+    <div class="h2" data-i18n="docs_t">Dokiman</div>
+    <p class="sub" data-i18n="docs_s">Ajoute fichye (PDF, JPG, PNG, DOCX). Y ap tache ak kòmand lan.</p>
+    <label class="dropz" for="docInput"><span class="de">📎</span><span data-i18n="docs_add">Ajoute Dokiman</span></label>
+    <input type="file" id="docInput" accept=".pdf,.jpg,.jpeg,.png,.docx,image/*" multiple capture="environment" style="display:none">
+    <div id="fileList"></div>
+    <button class="cta" onclick="flowStep(4)" data-i18n="next">Kontinye</button>
+  </div>
+
+  <div id="fstep-pay" class="fbox" style="display:none">
+    <div class="h2" data-i18n="pay_t">Peman</div>
+    <div class="card"><div class="breakdown" id="payBreak"></div></div>
+    <div class="pays" id="payGrid">
+      <button class="pay" data-pay="cash"><span class="pe">💵</span><span data-i18n="p_cash">Kach</span></button>
+      <button class="pay" data-pay="moncash"><span class="pe">📱</span>MonCash</button>
+      <button class="pay" data-pay="natcash"><span class="pe">📲</span>NatCash</button>
+      <button class="pay" data-pay="card"><span class="pe">💳</span><span data-i18n="p_card">Kat</span></button>
+    </div>
+    <div style="height:12px"></div>
+    <button class="cta red" id="payBtn" onclick="completeFlow()" disabled data-i18n="pay_do">Konplete & Resi</button>
+  </div>
 </section>
 
-<!-- ===== MSOUWOUT REGISTRATION ===== -->
+<!-- registration flow (person-first, data-driven) -->
 <section id="s-reg" class="screen">
   <button class="back" onclick="go('home')">‹ <span data-i18n="back">Retounen</span></button>
-  <div class="h2">MsouWout — <span data-i18n="reg_t">Enskripsyon</span></div>
-  <p class="sub" data-i18n="reg_s">Enskri yon chofè oswa yon pasaje nan MsouWout.</p>
-  <div class="regpick">
-    <button data-reg="driver" onclick="pickReg('driver')"><span class="re">🏍️</span><span data-i18n="reg_driver">Enskri Chofè</span></button>
-    <button data-reg="rider" onclick="pickReg('rider')"><span class="re">🙋</span><span data-i18n="reg_rider">Enskri Pasaje</span></button>
-  </div>
-  <div id="regForm"></div>
+  <div class="h2" id="regTitle"></div>
+  <p class="sub" id="regSub"></p>
+  <div id="regBody"></div>
 </section>
 
-<!-- ===== CONFIRMATION ===== -->
+<!-- receipt / confirmation -->
 <section id="s-done" class="screen">
-  <div class="confirm">
-    <div class="ok">✓</div>
-    <h3 id="doneTitle" data-i18n="conf_t">Kòmand kreye!</h3>
-    <div class="oid" id="doneId"></div>
-    <p class="sub" id="doneSummary"></p>
-    <div class="row2">
-      <button class="cta ghost" onclick="go('orders')" data-i18n="conf_view">Wè kòmand yo</button>
-      <button class="cta" onclick="go('home')" data-i18n="conf_new">Nouvo kòmand</button>
-    </div>
+  <div class="confirm no-print"><div class="ok">✓</div></div>
+  <div id="doneExtra"></div>
+  <div class="receipt" id="receiptBox"></div>
+  <div style="height:14px"></div>
+  <div class="row2 no-print">
+    <button class="cta ghost" onclick="window.print()" data-i18n="print">Enprime</button>
+    <button class="cta green" id="waBtn" data-i18n="wa_send">WhatsApp</button>
   </div>
+  <div style="height:10px"></div>
+  <button class="cta no-print" onclick="go('home')" data-i18n="conf_home">Akèy</button>
 </section>
 
-<!-- ===== ORDERS ===== -->
+<!-- tickets: event create / checkin -->
+<section id="s-tickets" class="screen">
+  <button class="back" onclick="go('home')">‹ <span data-i18n="back">Retounen</span></button>
+  <div id="ticketsBody"></div>
+</section>
+
 <section id="s-orders" class="screen">
   <div class="h2" data-i18n="ord_t">Kòmand yo</div>
-  <p class="sub" data-i18n="ord_s">Peze yon estati pou chanje l.</p>
+  <input type="text" id="ordSearch" class="searchbox" data-i18n-ph="ord_search" placeholder="Chèche non / tel / WhatsApp / Nº kòmand">
   <div class="filterbar" id="filterBar"></div>
   <div id="ordersList"></div>
 </section>
 
-<!-- ===== DASHBOARD ===== -->
 <section id="s-dash" class="screen">
   <div class="h2" data-i18n="dash_t">Tablodbò</div>
   <p class="sub" id="dashDate"></p>
   <div class="stats" id="dashStats"></div>
 </section>
 
-<!-- ===== SETTINGS ===== -->
 <section id="s-set" class="screen">
-  <div class="h2" data-i18n="set_t">Paramèt pri</div>
-  <p class="sub" data-i18n="set_s">Ajiste pri baz yo. Chanjman yo sere sou aparèy sa a.</p>
-  <div class="settings-note" data-i18n="set_note">⚠ Pri Anrejistreman Biznis yo se plas-tenir — antre vrè chif yo isit la.</div>
+  <button class="back" onclick="go('home')">‹ <span data-i18n="back">Retounen</span></button>
+  <div class="h2" data-i18n="set_t">Paramèt</div>
+  <div class="settings-note" data-i18n="set_note">Antre vrè pri yo. Chanjman yo sere sou aparèy sa a.</div>
   <div class="card" id="setBody"></div>
   <button class="cta" onclick="saveSettings()" data-i18n="set_save">Sere paramèt</button>
 </section>
-
 </main>
-
-<!-- floating cart bar (only on menu screen) -->
-<div class="cartbar" id="cartBar" style="display:none">
-  <div class="inner">
-    <span class="cc" id="cartCount">0</span>
-    <span class="ct"><span id="cartLbl">Total</span><br><span id="cartTot">0 GDES</span></span>
-    <button class="go" onclick="go('checkout')" data-i18n="pay_go">Peye ›</button>
-  </div>
-</div>
 
 <nav class="nav">
   <button data-nav="home" class="on" onclick="go('home')"><span class="ni">🏠</span><span data-i18n="n_home">Akèy</span></button>
@@ -288,471 +255,630 @@ textarea{min-height:64px;resize:vertical}
   <button data-nav="set" onclick="go('set')"><span class="ni">⚙️</span><span data-i18n="n_set">Paramèt</span></button>
 </nav>
 
+<script src="qrcode.js"></script>
 <script>
 /* ============================================================
-   HaitiBiznis Center — POS MVP  (v2: restaurant 2-step flow)
-   Single file, offline, localStorage. HT / FR / EN.
+   Sant HaitiBiznis — Unified POS (MVP v3)
+   10 modules, customer CRM, docs, payments, receipt(+WhatsApp),
+   orders, search, dashboard. Single file + qrcode.js. HT/FR/EN.
    ============================================================ */
-
-/* ---------- i18n ---------- */
 const T={
- ht:{app_t:'Sant HaitiBiznis',app_s:'POINT OF SALE',
-  home_t:'Chwazi yon sèvis',home_s:'Peze yon sèvis pou kòmanse. Ou ka ajoute plizyè sèvis nan yon sèl kòmand.',
-  back:'Retounen',step_order:'Kòmand',step_pay:'Peman',checkout_t:'Fini kòmand la',
-  f_name:'Non konplè',f_phone:'Telefòn',f_wa:'WhatsApp',
-  docs_add:'Ajoute Dokiman',docs_opt:'Opsyonèl — foto oswa fichye',
-  pay_t:'Peman',p_cash:'Kach',p_card:'Kat',pay_do:'Konplete Peman',pay_go:'Peye ›',
-  conf_t:'Kòmand kreye!',conf_reg:'Enskripsyon fèt!',conf_view:'Wè kòmand yo',conf_new:'Nouvo kòmand',
-  ord_t:'Kòmand yo',ord_s:'Peze yon estati pou chanje l.',dash_t:'Tablodbò',
-  set_t:'Paramèt pri',set_s:'Ajiste pri baz yo. Chanjman yo sere sou aparèy sa a.',
-  set_note:'⚠ Pri Anrejistreman Biznis yo se plas-tenir — antre vrè chif yo isit la.',set_save:'Sere paramèt',
+ ht:{app_t:'Sant HaitiBiznis',app_s:'POINT OF SALE',home_t:'Chwazi yon sèvis',home_s:'Kès la: enskri kliyan, vann sèvis, resevwa peman.',
+  back:'Retounen',next:'Kontinye',subtotal:'Total',cust_t:'Kliyan',cust_search:'Chèche pa non / telefòn...',cust_new:'+ Nouvo kliyan',
+  f_name:'Non konplè',f_phone:'Telefòn',f_wa:'WhatsApp',f_email:'Imel (opsyonèl)',f_addr:'Adrès (opsyonèl)',cust_save:'Kontinye',
+  docs_t:'Dokiman',docs_s:'Ajoute fichye (PDF, JPG, PNG, DOCX). Y ap tache ak kòmand lan.',docs_add:'Ajoute Dokiman',
+  pay_t:'Peman',p_cash:'Kach',p_card:'Kat',pay_do:'Konplete & Resi',print:'Enprime',wa_send:'Voye WhatsApp',conf_home:'Akèy',
+  ord_t:'Kòmand yo',ord_search:'Chèche non / tel / WhatsApp / Nº kòmand',dash_t:'Tablodbò',
+  set_t:'Paramèt',set_note:'Antre vrè pri yo. Chanjman yo sere sou aparèy sa a.',set_save:'Sere paramèt',
   n_home:'Akèy',n_orders:'Kòmand',n_dash:'Tablodbò',n_set:'Paramèt',
+  all:'Tout',add:'Ajoute',remove:'Retire',total:'TOTAL',save:'Anrejistre',
   st_wait:'Ap tann dokiman',st_prog:'An kou',st_ready:'Pare',st_done:'Fini',
-  st_pending:'An atant',st_approved:'Apwouve',st_active:'Aktif',
-  all:'Tout',add:'Ajoute',added:'Ajoute ✓',total:'TOTAL',subtotal:'Total',remove:'Retire',
-  cat_48h:'48HoursReady',cat_admin:'Administratif',cat_reg:'Anrejistreman',cat_legal:'Legal',cat_shop:'MyPlopPlop',
-  m48_pick:'Chwazi sèvis ki nan kòmand la — sistèm nan konte yo epi chwazi pakè a otomatikman.',
-  pkg:'Pakè',inc:'sèvis',fee_hb:'Frè sèvis HaitiBiznis (30%)',fee_press:'Frè Près Nasyonal',base:'Pri baz',presses_q:'Piblikasyon Près Nasyonal?',
-  admin_pick:'Antre pri a epi peze + pou ajoute nan kòmand la.',reg_pick_lbl:'Chwazi tip anrejistreman biznis:',
-  legal_lbl:'Deskripsyon sèvis legal la',amount:'Montan (GDES)',legal_hint:'Ekri sèvis la epi montan an, apre peze Ajoute.',
-  shop_note:'MyPlopPlop gen pwòp sistèm cashier li — n ap bati l apa. Pou kounye a, antre yon sèvis ak montan.',
-  reg_t:'Enskripsyon',reg_s:'Enskri yon chofè oswa yon pasaje nan MsouWout.',reg_driver:'Enskri Chofè',reg_rider:'Enskri Pasaje',
-  rd_vehicle:'Tip machin',rd_moto:'Moto',rd_car:'Machin',rd_plate:'Plak',rd_license:'Nº Lisans / Kondwi',reg_fee:'Frè enskripsyon (GDES)',reg_save:'Anrejistre',
-  reg_docs:'Dokiman (lisans, ID) — opsyonèl',cust_wa_hint:'Kite WhatsApp vid si menm ak telefòn.',
-  need_name:'Antre non kliyan an.',need_pay:'Chwazi metòd peman.',cart_empty:'Kòmand la vid — ajoute yon sèvis anvan.',
-  empty_ord:'Pa gen kòmand pou kounye a.',order:'Kòmand',reg_word:'Enskripsyon',
-  dash_new:'Nouvo',dash_prog:'An kou',dash_ready:'Pare',dash_sales:'Vant jodi a',dash_reg:'Enskripsyon',
-  driver:'Chofè',rider:'Pasaje'},
- fr:{app_t:'Centre HaitiBiznis',app_s:'POINT DE VENTE',
-  home_t:'Choisir un service',home_s:'Appuyez sur un service. Vous pouvez en ajouter plusieurs à une commande.',
-  back:'Retour',step_order:'Commande',step_pay:'Paiement',checkout_t:'Finaliser la commande',
-  f_name:'Nom complet',f_phone:'Téléphone',f_wa:'WhatsApp',
-  docs_add:'Ajouter des documents',docs_opt:'Optionnel — photo ou fichier',
-  pay_t:'Paiement',p_cash:'Espèces',p_card:'Carte',pay_do:'Terminer le paiement',pay_go:'Payer ›',
-  conf_t:'Commande créée !',conf_reg:'Inscription faite !',conf_view:'Voir les commandes',conf_new:'Nouvelle commande',
-  ord_t:'Commandes',ord_s:'Appuyez sur un statut pour le changer.',dash_t:'Tableau de bord',
-  set_t:'Paramètres de prix',set_s:'Ajustez les prix de base. Enregistré sur cet appareil.',
-  set_note:'⚠ Les prix d’enregistrement sont provisoires — saisissez les vrais chiffres ici.',set_save:'Enregistrer',
+  st_pending:'An atant',st_approved:'Apwouve',st_rejected:'Rejte',st_active:'Aktif',st_verified:'Verifye',
+  st_assigned:'Chofè bay',st_delivered:'Livre',st_checkin:'Antre',
+  receipt:'RESI',order_no:'Nº',date:'Dat',cashier:'Sant HaitiBiznis',thanks:'Mèsi! — HaitiBiznis.com',service:'Sèvis',customer:'Kliyan',
+  need_name:'Antre non an.',need_pay:'Chwazi metòd peman.',need_sel:'Chwazi omwen yon bagay.',
+  dash_sales:'Vant jodi a',dash_new:'Nouvo kòmand',dash_prog:'An kou',dash_done:'Fini',dash_rev:'Revni total',
+  pick_pkg:'Chwazi yon pakè',pkg_max:'Chwazi jiska',services:'sèvis',fee_hb:'Frè HaitiBiznis 30%',fee_press:'Frè Près Nasyonal',base:'Pri baz',sub_usd:'Sou-total',rate_note:'Egzanp konvèsyon',
+  partner_legal:'Patnè: Cabinet EX LEGE – PRO LEGE (Avoka Nasyonal & Entènasyonal)',
+  amount:'Montan (GDES)',desc:'Deskripsyon',verify_t:'Verifikasyon Chofè',bill_type:'Tip fakti',
+  qr_ticket:'Tikè QR',qr_ref:'Kòd Referans',checkin_ok:'Antre ✓',search_ticket:'Chèche Nº tikè...',
+  ev_create:'Kreye Evènman',ev_name:'Non Evènman',ev_date:'Dat',ev_price:'Pri tikè (GDES)',ev_sell:'Vann Tikè',ev_checkin:'Check-in',ev_sales:'Vant Tikè',ev_qty:'Kantite',no_event:'Kreye yon evènman anvan.',
+  aff_reg:'Enskri Afilye',aff_qr:'Kòd Referans QR',aff_hist:'Istwa Referans',aff_comm:'Balans Komisyon',aff_pay:'Anrejistre Peman Komisyon',balance:'Balans',record_pay:'Anrejistre peman',
+  set_rate:'To echanj (GDES pou 1 US$)',set_regfee_d:'Frè enskripsyon chofè (GDES)',set_regfee_r:'Frè enskripsyon pasaje (GDES)',set_regfee_m:'Frè enskripsyon machann (GDES)',set_regfee_p:'Frè enskripsyon pwofesyonèl (GDES)',
+  vehicle:'Tip machin',plate:'Plak',color:'Koulè',profession:'Pwofesyon',category:'Kategori',biz_name:'Non Biznis',owner:'Pwopriyetè',address:'Adrès',
+  pickup_addr:'Adrès Ranmasaj',drop_addr:'Adrès Livrezon',recip_phone:'Tel Resevè',pkg_desc:'Deskripsyon Pakè',deliv_fee:'Frè livrezon (GDES)',
+  wa_msg:'Bonjou {name}, men resi kòmand ou {id} nan Sant HaitiBiznis. Total: {total}. Mèsi!'},
+ fr:{app_t:'Centre HaitiBiznis',app_s:'POINT DE VENTE',home_t:'Choisir un service',home_s:'Caisse : enregistrer clients, vendre, encaisser.',
+  back:'Retour',next:'Continuer',subtotal:'Total',cust_t:'Client',cust_search:'Rechercher nom / téléphone...',cust_new:'+ Nouveau client',
+  f_name:'Nom complet',f_phone:'Téléphone',f_wa:'WhatsApp',f_email:'Email (optionnel)',f_addr:'Adresse (optionnel)',cust_save:'Continuer',
+  docs_t:'Documents',docs_s:'Ajoutez des fichiers (PDF, JPG, PNG, DOCX). Attachés à la commande.',docs_add:'Ajouter des documents',
+  pay_t:'Paiement',p_cash:'Espèces',p_card:'Carte',pay_do:'Terminer & Reçu',print:'Imprimer',wa_send:'Envoyer WhatsApp',conf_home:'Accueil',
+  ord_t:'Commandes',ord_search:'Rechercher nom / tél / WhatsApp / Nº',dash_t:'Tableau de bord',
+  set_t:'Réglages',set_note:'Saisissez les vrais prix. Enregistré sur cet appareil.',set_save:'Enregistrer',
   n_home:'Accueil',n_orders:'Commandes',n_dash:'Tableau',n_set:'Réglages',
-  st_wait:'En attente docs',st_prog:'En cours',st_ready:'Prêt',st_done:'Terminé',
-  st_pending:'En attente',st_approved:'Approuvé',st_active:'Actif',
-  all:'Toutes',add:'Ajouter',added:'Ajouté ✓',total:'TOTAL',subtotal:'Total',remove:'Retirer',
-  cat_48h:'48HoursReady',cat_admin:'Administratif',cat_reg:'Enregistrement',cat_legal:'Légal',cat_shop:'MyPlopPlop',
-  m48_pick:'Choisissez les services inclus — le système les compte et sélectionne le forfait automatiquement.',
-  pkg:'Forfait',inc:'services',fee_hb:'Frais de service HaitiBiznis (30%)',fee_press:'Frais Presses Nationales',base:'Prix de base',presses_q:'Publication Presses Nationales ?',
-  admin_pick:'Saisissez le prix puis appuyez sur + pour ajouter.',reg_pick_lbl:'Type d’enregistrement d’entreprise :',
-  legal_lbl:'Description du service légal',amount:'Montant (GDES)',legal_hint:'Décrivez le service et le montant, puis Ajouter.',
-  shop_note:'MyPlopPlop aura son propre système caisse — construit séparément. Pour l’instant, saisissez un service et un montant.',
-  reg_t:'Inscription',reg_s:'Inscrire un chauffeur ou un passager sur MsouWout.',reg_driver:'Inscrire Chauffeur',reg_rider:'Inscrire Passager',
-  rd_vehicle:'Type de véhicule',rd_moto:'Moto',rd_car:'Voiture',rd_plate:'Plaque',rd_license:'Nº Permis',reg_fee:'Frais d’inscription (GDES)',reg_save:'Enregistrer',
-  reg_docs:'Documents (permis, ID) — optionnel',cust_wa_hint:'Laissez WhatsApp vide si identique au téléphone.',
-  need_name:'Saisissez le nom du client.',need_pay:'Choisissez le mode de paiement.',cart_empty:'Commande vide — ajoutez un service.',
-  empty_ord:'Aucune commande pour l’instant.',order:'Commande',reg_word:'Inscription',
-  dash_new:'Nouvelles',dash_prog:'En cours',dash_ready:'Prêtes',dash_sales:'Ventes du jour',dash_reg:'Inscriptions',
-  driver:'Chauffeur',rider:'Passager'},
- en:{app_t:'HaitiBiznis Center',app_s:'POINT OF SALE',
-  home_t:'Choose a service',home_s:'Tap a service to start. You can add several to one order.',
-  back:'Back',step_order:'Order',step_pay:'Payment',checkout_t:'Complete the order',
-  f_name:'Full name',f_phone:'Phone',f_wa:'WhatsApp',
-  docs_add:'Add Documents',docs_opt:'Optional — photo or file',
-  pay_t:'Payment',p_cash:'Cash',p_card:'Card',pay_do:'Complete Payment',pay_go:'Pay ›',
-  conf_t:'Order created!',conf_reg:'Registration done!',conf_view:'View orders',conf_new:'New order',
-  ord_t:'Orders',ord_s:'Tap a status to change it.',dash_t:'Dashboard',
-  set_t:'Price settings',set_s:'Adjust base prices. Saved on this device.',
-  set_note:'⚠ Business Registration prices are placeholders — enter the real figures here.',set_save:'Save settings',
+  all:'Tout',add:'Ajouter',remove:'Retirer',total:'TOTAL',save:'Enregistrer',
+  st_wait:'Attente docs',st_prog:'En cours',st_ready:'Prêt',st_done:'Terminé',
+  st_pending:'En attente',st_approved:'Approuvé',st_rejected:'Rejeté',st_active:'Actif',st_verified:'Vérifié',
+  st_assigned:'Assigné',st_delivered:'Livré',st_checkin:'Entré',
+  receipt:'REÇU',order_no:'Nº',date:'Date',cashier:'Centre HaitiBiznis',thanks:'Merci ! — HaitiBiznis.com',service:'Service',customer:'Client',
+  need_name:'Saisissez le nom.',need_pay:'Choisissez le paiement.',need_sel:'Sélectionnez au moins un élément.',
+  dash_sales:'Ventes du jour',dash_new:'Nouvelles',dash_prog:'En cours',dash_done:'Terminées',dash_rev:'Revenu total',
+  pick_pkg:'Choisir un forfait',pkg_max:'Choisir jusqu’à',services:'services',fee_hb:'Frais HaitiBiznis 30%',fee_press:'Frais Presses Nationales',base:'Prix de base',sub_usd:'Sous-total',rate_note:'Conversion ex.',
+  partner_legal:'Partenaire : Cabinet EX LEGE – PRO LEGE (Avocats National & International)',
+  amount:'Montant (GDES)',desc:'Description',verify_t:'Vérification Chauffeur',bill_type:'Type de facture',
+  qr_ticket:'Billet QR',qr_ref:'Code de parrainage',checkin_ok:'Entré ✓',search_ticket:'Rechercher Nº billet...',
+  ev_create:'Créer un événement',ev_name:'Nom de l’événement',ev_date:'Date',ev_price:'Prix billet (GDES)',ev_sell:'Vendre',ev_checkin:'Check-in',ev_sales:'Ventes',ev_qty:'Quantité',no_event:'Créez un événement d’abord.',
+  aff_reg:'Inscrire Affilié',aff_qr:'Code QR de parrainage',aff_hist:'Historique',aff_comm:'Solde Commission',aff_pay:'Enregistrer paiement',balance:'Solde',record_pay:'Enregistrer paiement',
+  set_rate:'Taux de change (GDES pour 1 US$)',set_regfee_d:'Frais inscription chauffeur (GDES)',set_regfee_r:'Frais inscription passager (GDES)',set_regfee_m:'Frais inscription marchand (GDES)',set_regfee_p:'Frais inscription pro (GDES)',
+  vehicle:'Type de véhicule',plate:'Plaque',color:'Couleur',profession:'Profession',category:'Catégorie',biz_name:'Nom entreprise',owner:'Propriétaire',address:'Adresse',
+  pickup_addr:'Adresse ramassage',drop_addr:'Adresse livraison',recip_phone:'Tél destinataire',pkg_desc:'Description colis',deliv_fee:'Frais livraison (GDES)',
+  wa_msg:'Bonjour {name}, voici le reçu de votre commande {id} au Centre HaitiBiznis. Total : {total}. Merci !'},
+ en:{app_t:'HaitiBiznis Center',app_s:'POINT OF SALE',home_t:'Choose a service',home_s:'Cashier: onboard customers, sell services, take payment.',
+  back:'Back',next:'Continue',subtotal:'Total',cust_t:'Customer',cust_search:'Search name / phone...',cust_new:'+ New customer',
+  f_name:'Full name',f_phone:'Phone',f_wa:'WhatsApp',f_email:'Email (optional)',f_addr:'Address (optional)',cust_save:'Continue',
+  docs_t:'Documents',docs_s:'Add files (PDF, JPG, PNG, DOCX). Attached to the order.',docs_add:'Add Documents',
+  pay_t:'Payment',p_cash:'Cash',p_card:'Card',pay_do:'Complete & Receipt',print:'Print',wa_send:'Send WhatsApp',conf_home:'Home',
+  ord_t:'Orders',ord_search:'Search name / phone / WhatsApp / Order Nº',dash_t:'Dashboard',
+  set_t:'Settings',set_note:'Enter the real prices. Saved on this device.',set_save:'Save settings',
   n_home:'Home',n_orders:'Orders',n_dash:'Dashboard',n_set:'Settings',
+  all:'All',add:'Add',remove:'Remove',total:'TOTAL',save:'Save',
   st_wait:'Waiting for Docs',st_prog:'In Progress',st_ready:'Ready',st_done:'Completed',
-  st_pending:'Pending',st_approved:'Approved',st_active:'Active',
-  all:'All',add:'Add',added:'Added ✓',total:'TOTAL',subtotal:'Total',remove:'Remove',
-  cat_48h:'48HoursReady',cat_admin:'Administrative',cat_reg:'Registration',cat_legal:'Legal',cat_shop:'MyPlopPlop',
-  m48_pick:'Select the services in the order — the system counts them and picks the package automatically.',
-  pkg:'Package',inc:'services',fee_hb:'HaitiBiznis service fee (30%)',fee_press:'Presses Nationales fee',base:'Base price',presses_q:'Presses Nationales publication?',
-  admin_pick:'Enter the price then tap + to add to the order.',reg_pick_lbl:'Business registration type:',
-  legal_lbl:'Legal service description',amount:'Amount (GDES)',legal_hint:'Describe the service and amount, then Add.',
-  shop_note:'MyPlopPlop gets its own cashier system — built separately. For now, enter a service and amount.',
-  reg_t:'Registration',reg_s:'Register a driver or a rider on MsouWout.',reg_driver:'Register Driver',reg_rider:'Register Rider',
-  rd_vehicle:'Vehicle type',rd_moto:'Moto',rd_car:'Car',rd_plate:'Plate',rd_license:'License Nº',reg_fee:'Registration fee (GDES)',reg_save:'Save',
-  reg_docs:'Documents (license, ID) — optional',cust_wa_hint:'Leave WhatsApp blank if same as phone.',
-  need_name:'Enter the customer name.',need_pay:'Choose a payment method.',cart_empty:'Order is empty — add a service first.',
-  empty_ord:'No orders yet.',order:'Order',reg_word:'Registration',
-  dash_new:'New',dash_prog:'In progress',dash_ready:'Ready',dash_sales:'Today’s sales',dash_reg:'Registrations',
-  driver:'Driver',rider:'Rider'}
+  st_pending:'Pending',st_approved:'Approved',st_rejected:'Rejected',st_active:'Active',st_verified:'Verified',
+  st_assigned:'Assigned',st_delivered:'Delivered',st_checkin:'Checked-in',
+  receipt:'RECEIPT',order_no:'Nº',date:'Date',cashier:'HaitiBiznis Center',thanks:'Thank you! — HaitiBiznis.com',service:'Service',customer:'Customer',
+  need_name:'Enter the name.',need_pay:'Choose a payment method.',need_sel:'Select at least one item.',
+  dash_sales:'Today’s Sales',dash_new:'New Orders',dash_prog:'In Progress',dash_done:'Completed',dash_rev:'Total Revenue',
+  pick_pkg:'Choose a package',pkg_max:'Choose up to',services:'services',fee_hb:'HaitiBiznis fee 30%',fee_press:'Presses Nationales fee',base:'Base price',sub_usd:'Subtotal',rate_note:'Conversion approx',
+  partner_legal:'Partner: Cabinet EX LEGE – PRO LEGE (National & International Attorneys)',
+  amount:'Amount (GDES)',desc:'Description',verify_t:'Driver Verification',bill_type:'Bill type',
+  qr_ticket:'QR Ticket',qr_ref:'Referral Code',checkin_ok:'Checked-in ✓',search_ticket:'Search ticket Nº...',
+  ev_create:'Create Event',ev_name:'Event name',ev_date:'Date',ev_price:'Ticket price (GDES)',ev_sell:'Sell Tickets',ev_checkin:'Check-in',ev_sales:'Ticket Sales',ev_qty:'Quantity',no_event:'Create an event first.',
+  aff_reg:'Register Affiliate',aff_qr:'Referral QR Code',aff_hist:'Referral History',aff_comm:'Commission Balance',aff_pay:'Record Commission Payment',balance:'Balance',record_pay:'Record payment',
+  set_rate:'Exchange rate (GDES per US$1)',set_regfee_d:'Driver registration fee (GDES)',set_regfee_r:'Rider registration fee (GDES)',set_regfee_m:'Merchant registration fee (GDES)',set_regfee_p:'Professional registration fee (GDES)',
+  vehicle:'Vehicle type',plate:'License plate',color:'Color',profession:'Profession',category:'Category',biz_name:'Business Name',owner:'Owner',address:'Address',
+  pickup_addr:'Pickup Address',drop_addr:'Delivery Address',recip_phone:'Recipient Phone',pkg_desc:'Package Description',deliv_fee:'Delivery fee (GDES)',
+  wa_msg:'Hello {name}, here is your order receipt {id} at HaitiBiznis Center. Total: {total}. Thank you!'}
 };
-let lang=localStorage.getItem('hb_pos_lang')||'ht';
+let lang=localStorage.getItem('hb_lang')||'ht';
 function t(k){return (T[lang]&&T[lang][k])||T.ht[k]||k;}
-function applyI18n(){
-  document.documentElement.lang=lang;
-  document.querySelectorAll('[data-i18n]').forEach(el=>{
-    const k=el.getAttribute('data-i18n'); if(T[lang][k]===undefined)return;
-    if(k==='app_t'){el.childNodes[0].nodeValue=T[lang].app_t;} else el.textContent=T[lang][k];
-  });
-  const small=document.querySelector('.appbar h1 small'); if(small)small.textContent=T[lang].app_s;
-}
+function applyI18n(){document.documentElement.lang=lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(T[lang][k]===undefined)return;if(k==='app_t')el.childNodes[0].nodeValue=T[lang].app_t;else el.textContent=T[lang][k];});
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.getAttribute('data-i18n-ph');if(T[lang][k]!==undefined)el.placeholder=T[lang][k];});
+  const sm=document.querySelector('.appbar h1 small');if(sm)sm.textContent=t('app_s');}
 
-/* ---------- Home services ---------- */
-const SERVICES=[
-  {id:'48h',   cat:'48h',   nmk:'48HoursReady', em:'🚀', logo:'assets/48hoursready-logo.jpg', mode:'order'},
-  {id:'admin', cat:'admin', nm:{ht:'Sèvis Administratif',fr:'Services Administratifs',en:'Administrative Services'}, em:'📄', mode:'order'},
-  {id:'reg',   cat:'reg',   nm:{ht:'Anrejistreman Biznis',fr:'Enregistrement Entreprise',en:'Business Registration'}, em:'🏢', mode:'order'},
-  {id:'legal', cat:'legal', nm:{ht:'Sèvis Legal',fr:'Services Légaux',en:'Legal Services'}, em:'⚖️', mode:'order'},
-  {id:'msouwout', nm:{ht:'MsouWout — Enskri',fr:'MsouWout — Inscrire',en:'MsouWout — Register'}, em:'🏍️', logo:'assets/msouwout-logo.png', mode:'reg'},
-  {id:'shop',  cat:'shop',  nmk:'MyPlopPlop', em:'🛒', logo:'assets/myplopplop-logo.png', mode:'order'},
-];
-function svcName(s){return s.nmk||(s.nm&&s.nm[lang])||s.id;}
-const CATS=['48h','admin','reg','legal','shop'];
-function catLabel(c){return t('cat_'+c);}
+/* ---------- config ---------- */
+const DEF_CFG={rate:132,regFeeDriver:0,regFeeRider:0,regFeeMerchant:0,regFeePro:0,
+  bizreg:[{id:'nc',nm:'Nom Commercial',usd:500,press:0},{id:'ncol',nm:'Société en Nom Collectif',usd:1000,press:0},
+    {id:'sa',nm:'Société Anonyme',usd:2000,press:40000},{id:'sam',nm:'Société Anonyme Mixte',usd:3500,press:70000}],hbFeePct:30};
+function getCfg(){try{const c=JSON.parse(localStorage.getItem('hb_cfg'));if(c&&c.bizreg)return c;}catch(e){}return JSON.parse(JSON.stringify(DEF_CFG));}
+function setCfg(c){localStorage.setItem('hb_cfg',JSON.stringify(c));}
 
-/* 48HoursReady service list (from HaitiBiznis Center wall) — editable in Settings later */
-const FH_SERVICES=['Logo','Kat Biznis','Rezime Egzekitif','Pitch Deck','Prezantasyon Video','Profil Rezo Sosyal','Sit Entènèt Senp'];
-/* count -> package price (anchors 1/3/5/7 from client spec) */
-function pkgFor(n){ if(n<=1)return{amt:500,inc:1}; if(n<=3)return{amt:1000,inc:3}; if(n<=5)return{amt:5000,inc:5}; return{amt:10000,inc:7}; }
-const ADMIN_ITEMS=['Patente','Extrait d’Archive','Assurance','Permis','Matricule Fiscal','Légalisation','Mariage Civil'];
-
-/* ---------- Editable config ---------- */
-const DEFAULT_CFG={hbFeePct:30,reg:[
-  {id:'nc',nm:'Nom Commercial',base:0,press:0},
-  {id:'ncol',nm:'Nom Collectif',base:0,press:0},
-  {id:'sa',nm:'Société Anonyme',base:0,press:0},
-  {id:'sam',nm:'Société Anonyme Mixte',base:0,press:0}]};
-function getCfg(){try{const c=JSON.parse(localStorage.getItem('hb_pos_cfg'));if(c&&c.reg)return c;}catch(e){}return JSON.parse(JSON.stringify(DEFAULT_CFG));}
-function setCfg(c){localStorage.setItem('hb_pos_cfg',JSON.stringify(c));}
-
-/* ---------- Orders store ---------- */
-function loadOrders(){try{return JSON.parse(localStorage.getItem('hb_pos_orders'))||[];}catch(e){return[];}}
-function saveOrders(o){localStorage.setItem('hb_pos_orders',JSON.stringify(o));}
-const STATUS_SETS={
-  sale:[{id:'wait',k:'st_wait',em:'🟡',cls:'b-wait'},{id:'prog',k:'st_prog',em:'🔵',cls:'b-prog'},{id:'ready',k:'st_ready',em:'🟢',cls:'b-ready'},{id:'done',k:'st_done',em:'✅',cls:'b-done'}],
-  reg:[{id:'pending',k:'st_pending',em:'🟡',cls:'b-pending'},{id:'approved',k:'st_approved',em:'🔵',cls:'b-approved'},{id:'active',k:'st_active',em:'🟢',cls:'b-active'}]
-};
-function statusInfo(setName,id){const set=STATUS_SETS[setName]||STATUS_SETS.sale;return set.find(s=>s.id===id)||set[0];}
-
-/* ---------- CART (step 1) ---------- */
-let CART=[];               // {label, amt, cat}
-let activeCat='48h';
-let f48=[];                // selected 48h services
-let regSel=null, regPress=false;
-function cartTotal(){return CART.reduce((a,b)=>a+(+b.amt||0),0);}
-function refreshCartBar(){
-  const bar=document.getElementById('cartBar');
-  const onMenu=document.getElementById('s-menu').classList.contains('on');
-  if(onMenu && CART.length){bar.style.display='block';
-    document.getElementById('cartCount').textContent=CART.length;
-    document.getElementById('cartTot').textContent=cartTotal().toLocaleString()+' GDES';
-    document.getElementById('cartLbl').textContent=t('subtotal');
-  } else bar.style.display='none';
-}
-function addLine(label,amt,cat){CART.push({label,amt:+amt||0,cat});renderMenu();refreshCartBar();}
-
-/* ---------- Navigation ---------- */
-function go(name){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
-  document.getElementById('s-'+name).classList.add('on');
-  const navMap={home:'home',orders:'orders',dash:'dash',set:'set'};
-  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.nav===navMap[name]));
-  if(!navMap[name])document.querySelector('.nav button[data-nav="home"]').classList.add('on');
-  window.scrollTo(0,0);
-  if(name==='menu')renderMenu();
-  if(name==='checkout')renderCheckout();
-  if(name==='orders')renderOrders();
-  if(name==='dash')renderDash();
-  if(name==='set')renderSettings();
-  refreshCartBar(); refreshBadges();
-}
-function refreshBadges(){
-  const o=loadOrders(); const active=o.filter(x=>!(x.status==='done'||x.status==='active')).length;
-  document.querySelector('.nav button[data-nav="orders"]').setAttribute('data-n',active);
-}
-
-/* ---------- Home ---------- */
-function renderHome(){
-  const g=document.getElementById('svcGrid'); g.innerHTML='';
-  SERVICES.forEach(s=>{
-    const b=document.createElement('button'); b.className='svc';
-    const icon=s.logo?`<img class="il" src="${s.logo}" alt="">`:`<span class="em">${s.em}</span>`;
-    b.innerHTML=`${icon}<span class="nm">${svcName(s)}</span>`;
-    b.onclick=()=>{ if(s.mode==='reg'){startReg();} else {activeCat=s.cat; go('menu');} };
-    g.appendChild(b);
-  });
-}
-
-/* ---------- STEP 1 : menu ---------- */
-function renderMenu(){
-  const tabs=document.getElementById('menuTabs'); tabs.innerHTML='';
-  CATS.forEach(c=>{const b=document.createElement('button');b.textContent=catLabel(c);b.className=activeCat===c?'on':'';
-    b.onclick=()=>{activeCat=c;renderMenu();};tabs.appendChild(b);});
-  const body=document.getElementById('menuBody'); body.innerHTML='';
-  const cfg=getCfg();
-
-  if(activeCat==='48h'){
-    body.innerHTML=`<p class="sub">${t('m48_pick')}</p>`;
-    const pk=pkgFor(f48.length);
-    FH_SERVICES.forEach(name=>{
-      const on=f48.includes(name);
-      const row=document.createElement('div'); row.className='choice'+(on?' on':'');
-      row.innerHTML=`<span class="dot"></span><span class="txt">${name}</span>`;
-      row.onclick=()=>{const i=f48.indexOf(name); if(i>=0)f48.splice(i,1); else f48.push(name); renderMenu();};
-      body.appendChild(row);
-    });
-    if(f48.length){
-      const pkg=pkgFor(f48.length);
-      const banner=document.createElement('div'); banner.className='pkgbanner';
-      banner.innerHTML=`<span>${t('pkg')} ${pkg.inc} ${t('inc')} · ${f48.length} ${t('subtotal').toLowerCase()}</span><b>${pkg.amt.toLocaleString()} GDES</b>`;
-      body.appendChild(banner);
-      const add=document.createElement('button'); add.className='cta'; add.textContent=t('add')+' — 48HoursReady';
-      add.onclick=()=>{addLine('48HoursReady ('+f48.join(', ')+')',pkgFor(f48.length).amt,'48h'); f48=[];};
-      body.appendChild(add);
-    }
-  }
-  else if(activeCat==='admin'){
-    body.innerHTML=`<p class="sub">${t('admin_pick')}</p>`;
-    ADMIN_ITEMS.forEach((name,i)=>{
-      const row=document.createElement('div'); row.className='menu-item';
-      row.innerHTML=`<div class="mi-t"><div class="nm">${name}</div></div>
-        <input type="number" class="price-in" inputmode="numeric" placeholder="GDES" id="adm${i}">
-        <button class="addbtn">+</button>`;
-      row.querySelector('.addbtn').onclick=()=>{const amt=+row.querySelector('input').value||0; addLine(name,amt,'admin');};
-      body.appendChild(row);
-    });
-  }
-  else if(activeCat==='reg'){
-    body.innerHTML=`<p class="sub">${t('reg_pick_lbl')}</p>`;
-    cfg.reg.forEach(r=>{
-      const on=regSel===r.id, fee=Math.round(r.base*cfg.hbFeePct/100);
-      const row=document.createElement('div'); row.className='choice radio'+(on?' on':'');
-      row.innerHTML=`<span class="dot"></span><span class="txt">${r.nm}
-        <div style="font-size:11px;color:var(--muted);font-weight:600">${t('base')}: ${r.base.toLocaleString()} · ${t('fee_hb')}: ${fee.toLocaleString()}</div></span>`;
-      row.onclick=()=>{regSel=r.id;renderMenu();};
-      body.appendChild(row);
-    });
-    const pr=document.createElement('div'); pr.className='choice'+(regPress?' on':'');
-    pr.innerHTML=`<span class="dot"></span><span class="txt">${t('presses_q')}</span>`;
-    pr.onclick=()=>{regPress=!regPress;renderMenu();};
-    body.appendChild(pr);
-    if(regSel){
-      const r=cfg.reg.find(x=>x.id===regSel), fee=Math.round(r.base*cfg.hbFeePct/100), press=regPress?(r.press||0):0, tot=r.base+fee+press;
-      const banner=document.createElement('div'); banner.className='pkgbanner';
-      banner.innerHTML=`<span>${r.nm}</span><b>${tot.toLocaleString()} GDES</b>`;
-      body.appendChild(banner);
-      const add=document.createElement('button'); add.className='cta'; add.textContent=t('add');
-      add.onclick=()=>{let lbl=r.nm+' (+'+t('fee_hb')+(regPress?' + '+t('fee_press'):'')+')'; addLine(lbl,tot,'reg'); regSel=null;regPress=false;};
-      body.appendChild(add);
-    }
-  }
-  else if(activeCat==='legal'){
-    body.innerHTML=`<p class="sub">${t('legal_hint')}</p>
-      <div class="card"><label class="fl">${t('legal_lbl')}</label><textarea id="lgDesc"></textarea>
-      <label class="fl">${t('amount')}</label><input type="number" id="lgAmt" inputmode="numeric"></div>
-      <button class="cta" id="lgAdd">${t('add')}</button>`;
-    body.querySelector('#lgAdd').onclick=()=>{const d=body.querySelector('#lgDesc').value.trim()||t('cat_legal');const a=+body.querySelector('#lgAmt').value||0;addLine(d,a,'legal');};
-  }
-  else if(activeCat==='shop'){
-    body.innerHTML=`<div class="settings-note">${t('shop_note')}</div>
-      <div class="card"><label class="fl">${t('legal_lbl').replace('legal','MyPlopPlop').replace('légal','MyPlopPlop')}</label><textarea id="shDesc"></textarea>
-      <label class="fl">${t('amount')}</label><input type="number" id="shAmt" inputmode="numeric"></div>
-      <button class="cta" id="shAdd">${t('add')}</button>`;
-    body.querySelector('#shAdd').onclick=()=>{const d=body.querySelector('#shDesc').value.trim()||'MyPlopPlop';const a=+body.querySelector('#shAmt').value||0;addLine(d,a,'shop');};
-  }
-  // current cart preview under menu
-  if(CART.length){
-    const c=document.createElement('div'); c.className='card'; c.style.marginTop='16px';
-    c.innerHTML=`<div style="font-weight:800;margin-bottom:6px">${t('step_order')} (${CART.length})</div>`;
-    CART.forEach((l,i)=>{
-      const row=document.createElement('div'); row.className='cline';
-      row.innerHTML=`<span class="cl-t">${l.label}</span><span class="cl-a">${l.amt.toLocaleString()}</span><button class="cl-x">×</button>`;
-      row.querySelector('.cl-x').onclick=()=>{CART.splice(i,1);renderMenu();refreshCartBar();};
-      c.appendChild(row);
-    });
-    document.getElementById('menuBody').appendChild(c);
-  }
-  refreshCartBar();
-}
-
-/* ---------- STEP 2 : checkout ---------- */
-let coDocs=[], coPay=null;
-function renderCheckout(){
-  const s=document.getElementById('coSummary'); s.innerHTML=`<div style="font-weight:800;margin-bottom:6px">${t('step_order')}</div>`;
-  CART.forEach((l,i)=>{const row=document.createElement('div');row.className='cline';
-    row.innerHTML=`<span class="cl-t">${l.label}</span><span class="cl-a">${l.amt.toLocaleString()}</span><button class="cl-x">×</button>`;
-    row.querySelector('.cl-x').onclick=()=>{CART.splice(i,1); if(!CART.length){go('menu');return;} renderCheckout();};
-    s.appendChild(row);});
-  const tot=document.createElement('div'); tot.className='totbar'; tot.style.margin='12px 0 0';
-  tot.innerHTML=`<span>${t('total')}</span><b>${cartTotal().toLocaleString()} GDES</b>`; s.appendChild(tot);
-  renderFiles();
-  document.querySelectorAll('#payGrid .pay').forEach(p=>{p.classList.toggle('on',coPay===p.dataset.pay);
-    p.onclick=()=>{coPay=p.dataset.pay;renderCheckout();};});
-  document.getElementById('payBtn').disabled=!coPay;
-}
-function renderFiles(){
-  const l=document.getElementById('fileList'); l.innerHTML='';
-  coDocs.forEach((d,i)=>{const r=document.createElement('div');r.className='filerow';
-    const thumb=d.url?`<img class="fi" src="${d.url}">`:`<span class="fi">📄</span>`;
-    r.innerHTML=`${thumb}<span>${d.name}</span><button class="fx">×</button>`;
-    r.querySelector('.fx').onclick=()=>{coDocs.splice(i,1);renderFiles();};l.appendChild(r);});
-}
-document.getElementById('docInput').addEventListener('change',e=>{
-  [...e.target.files].forEach(f=>coDocs.push({name:f.name,url:(f.type.startsWith('image/')?URL.createObjectURL(f):null)}));
-  e.target.value=''; renderFiles();
-});
-function completeOrder(){
-  const name=document.getElementById('c_name').value.trim();
-  if(!name){alert(t('need_name'));return;}
-  if(!coPay){alert(t('need_pay'));return;}
-  if(!CART.length){alert(t('cart_empty'));return;}
-  const orders=loadOrders(); const id='HB-'+String(1000+orders.length+1);
-  orders.push({id,type:'sale',statusSet:'sale',svcName:CART.map(c=>c.label.split(' (')[0]).join(', '),
-    name,phone:document.getElementById('c_phone').value.trim(),wa:document.getElementById('c_wa').value.trim(),
-    items:CART.slice(),amount:cartTotal(),payment:coPay,docs:coDocs.map(d=>({name:d.name})),
-    status:coDocs.length?'prog':'wait',ts:nowStamp()});
-  saveOrders(orders);
-  showDone(id,t('conf_t'),`${name} · ${cartTotal().toLocaleString()} GDES · ${payLabel(coPay)}`);
-  CART=[];coDocs=[];coPay=null;document.getElementById('c_name').value='';document.getElementById('c_phone').value='';document.getElementById('c_wa').value='';
-  refreshBadges();
-}
-function payLabel(p){return ({cash:t('p_cash'),moncash:'MonCash',natcash:'NatCash',card:t('p_card')})[p]||p;}
-function showDone(id,title,summary){
-  document.getElementById('doneTitle').textContent=title;
-  document.getElementById('doneId').textContent=id;
-  document.getElementById('doneSummary').textContent=summary;
-  go('done');
-}
-
-/* ---------- MsouWout registration ---------- */
-let regKind=null, regDocs=[];
-function startReg(){regKind=null;regDocs=[];document.getElementById('regForm').innerHTML='';
-  document.querySelectorAll('.regpick button').forEach(b=>b.classList.remove('on'));go('reg');}
-function pickReg(kind){
-  regKind=kind; regDocs=[];
-  document.querySelectorAll('.regpick button').forEach(b=>b.classList.toggle('on',b.dataset.reg===kind));
-  const f=document.getElementById('regForm');
-  let extra='';
-  if(kind==='driver'){
-    extra=`<label class="fl">${t('rd_vehicle')}</label>
-      <div class="row2" style="margin-bottom:14px">
-        <button class="cta ghost" id="veh_moto" style="margin:0">🏍️ ${t('rd_moto')}</button>
-        <button class="cta ghost" id="veh_car" style="margin:0">🚗 ${t('rd_car')}</button></div>
-      <label class="fl">${t('rd_plate')}</label><input type="text" id="r_plate">
-      <label class="fl">${t('rd_license')}</label><input type="text" id="r_license">`;
-  }
-  f.innerHTML=`<div class="card">
-      <label class="fl">${t('f_name')}</label><input type="text" id="r_name">
-      <label class="fl">${t('f_phone')}</label><input type="tel" id="r_phone" inputmode="tel" placeholder="+509 ...">
-      <label class="fl">${t('f_wa')}</label><input type="tel" id="r_wa" inputmode="tel" placeholder="+509 ...">
-      ${extra}
-      <label class="fl" style="margin-top:4px">${t('reg_fee')}</label><input type="number" id="r_fee" inputmode="numeric" value="0">
-    </div>
-    <label class="dropz" for="regDocInput"><span class="de">📎</span>${t('reg_docs')}</label>
-    <input type="file" id="regDocInput" accept="image/*,application/pdf" multiple capture="environment" style="display:none">
-    <div id="regFileList"></div>
-    <button class="cta" onclick="saveReg()">${t('reg_save')}</button>`;
-  f.dataset.veh='';
-  if(kind==='driver'){
-    f.querySelector('#veh_moto').onclick=()=>{f.dataset.veh='moto';f.querySelector('#veh_moto').classList.remove('ghost');f.querySelector('#veh_car').classList.add('ghost');};
-    f.querySelector('#veh_car').onclick=()=>{f.dataset.veh='car';f.querySelector('#veh_car').classList.remove('ghost');f.querySelector('#veh_moto').classList.add('ghost');};
-  }
-  f.querySelector('#regDocInput').addEventListener('change',e=>{
-    [...e.target.files].forEach(fl=>regDocs.push({name:fl.name,url:(fl.type.startsWith('image/')?URL.createObjectURL(fl):null)}));
-    e.target.value='';renderRegFiles();});
-}
-function renderRegFiles(){const l=document.getElementById('regFileList');if(!l)return;l.innerHTML='';
-  regDocs.forEach((d,i)=>{const r=document.createElement('div');r.className='filerow';
-    const th=d.url?`<img class="fi" src="${d.url}">`:`<span class="fi">📄</span>`;
-    r.innerHTML=`${th}<span>${d.name}</span><button class="fx">×</button>`;
-    r.querySelector('.fx').onclick=()=>{regDocs.splice(i,1);renderRegFiles();};l.appendChild(r);});}
-function saveReg(){
-  const f=document.getElementById('regForm');
-  const name=f.querySelector('#r_name').value.trim();
-  if(!name){alert(t('need_name'));return;}
-  const fee=+f.querySelector('#r_fee').value||0;
-  const kindLbl=regKind==='driver'?t('driver'):t('rider');
-  const orders=loadOrders(); const id=(regKind==='driver'?'DRV-':'RDR-')+String(1000+orders.length+1);
-  const meta=[];
-  if(regKind==='driver'){const v=f.dataset.veh;if(v)meta.push(v==='moto'?t('rd_moto'):t('rd_car'));
-    const pl=f.querySelector('#r_plate').value.trim();if(pl)meta.push(t('rd_plate')+': '+pl);
-    const li=f.querySelector('#r_license').value.trim();if(li)meta.push(t('rd_license')+': '+li);}
-  orders.push({id,type:'reg',regKind,statusSet:'reg',svcName:'MsouWout — '+kindLbl,
-    name,phone:f.querySelector('#r_phone').value.trim(),wa:f.querySelector('#r_wa').value.trim(),
-    items:meta.map(m=>({label:m,amt:0})),amount:fee,payment:fee>0?'cash':null,
-    docs:regDocs.map(d=>({name:d.name})),status:'pending',ts:nowStamp()});
-  saveOrders(orders);
-  showDone(id,t('conf_reg'),`${name} · MsouWout ${kindLbl}${fee>0?' · '+fee.toLocaleString()+' GDES':''}`);
-  refreshBadges();
-}
-
-/* ---------- time ---------- */
+/* ---------- stores ---------- */
+function load(k,d){try{return JSON.parse(localStorage.getItem(k))||d;}catch(e){return d;}}
+function save(k,v){localStorage.setItem(k,JSON.stringify(v));}
 function nowStamp(){return new Date().toISOString();}
 function fmtDate(iso){const d=new Date(iso);return d.toLocaleDateString(lang==='en'?'en-US':'fr-FR')+' '+d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
 function isToday(iso){const d=new Date(iso),n=new Date();return d.toDateString()===n.toDateString();}
+function gdes(n){return (Math.round(n)||0).toLocaleString()+' GDES';}
 
-/* ---------- Orders board ---------- */
-let filter='all';
-function renderOrders(){
-  const fb=document.getElementById('filterBar'); fb.innerHTML='';
-  const opts=[{id:'all',lbl:t('all')},{id:'wait',lbl:t('st_wait')},{id:'prog',lbl:t('st_prog')},{id:'ready',lbl:t('st_ready')},{id:'done',lbl:t('st_done')},{id:'reg',lbl:t('reg_word')}];
-  opts.forEach(o=>{const b=document.createElement('button');b.textContent=o.lbl;b.className=filter===o.id?'on':'';b.onclick=()=>{filter=o.id;renderOrders();};fb.appendChild(b);});
-  const list=document.getElementById('ordersList'); list.innerHTML='';
-  let orders=loadOrders().slice().reverse();
-  if(filter==='reg')orders=orders.filter(o=>o.type==='reg');
-  else if(filter!=='all')orders=orders.filter(o=>o.status===filter);
-  if(!orders.length){list.innerHTML=`<div class="empty"><div class="ee">📋</div>${t('empty_ord')}</div>`;return;}
-  orders.forEach(o=>{
-    const setName=o.statusSet||'sale'; const st=statusInfo(setName,o.status);
-    const el=document.createElement('div'); el.className='order';
-    const tag=o.type==='reg'?`<span class="rtag">${t('reg_word')}</span>`:'';
-    el.innerHTML=`<div class="top"><div><div class="who">${o.name}${tag}</div>
-        <div class="meta">${o.id} · ${o.phone||''} · ${fmtDate(o.ts)}</div></div>
-        <span class="badge ${st.cls}">${st.em} ${t(st.k)}</span></div>
-      <div class="svc-t">${o.svcName} ${o.docs&&o.docs.length?('· 📎 '+o.docs.length):''}</div>
-      <div class="top"><div class="meta">${o.payment?payLabel(o.payment):''}</div><div class="amt2">${o.amount?o.amount.toLocaleString()+' GDES':''}</div></div>
-      <div class="statusrow"></div>`;
-    const sr=el.querySelector('.statusrow');
-    (STATUS_SETS[setName]).forEach(s=>{const b=document.createElement('button');b.className=o.status===s.id?'on':'';
-      b.innerHTML=`${s.em}<br>${t(s.k)}`;b.onclick=()=>setStatus(o.id,s.id);sr.appendChild(b);});
-    list.appendChild(el);
-  });
+/* ---------- status sets ---------- */
+const STATUS={
+ sale:[{id:'wait',k:'st_wait',em:'🟡',c:'#fff6e6',t:'#b57000'},{id:'prog',k:'st_prog',em:'🔵',c:'#e7f0ff',t:'#1550c0'},{id:'ready',k:'st_ready',em:'🟢',c:'#e6f7ee',t:'#0c8f45'},{id:'done',k:'st_done',em:'✅',c:'#eef1f6',t:'#5a6272'}],
+ verify:[{id:'pending',k:'st_pending',em:'🟡',c:'#fff6e6',t:'#b57000'},{id:'approved',k:'st_approved',em:'🟢',c:'#e6f7ee',t:'#0c8f45'},{id:'rejected',k:'st_rejected',em:'⛔',c:'#fdeaea',t:'#c02626'}],
+ merch:[{id:'pending',k:'st_pending',em:'🟡',c:'#fff6e6',t:'#b57000'},{id:'approved',k:'st_approved',em:'🔵',c:'#e7f0ff',t:'#1550c0'},{id:'active',k:'st_active',em:'🟢',c:'#e6f7ee',t:'#0c8f45'}],
+ pro:[{id:'pending',k:'st_pending',em:'🟡',c:'#fff6e6',t:'#b57000'},{id:'verified',k:'st_verified',em:'🔵',c:'#e7f0ff',t:'#1550c0'},{id:'active',k:'st_active',em:'🟢',c:'#e6f7ee',t:'#0c8f45'}],
+ deliv:[{id:'pending',k:'st_pending',em:'🟡',c:'#fff6e6',t:'#b57000'},{id:'assigned',k:'st_assigned',em:'🔵',c:'#e7f0ff',t:'#1550c0'},{id:'delivered',k:'st_delivered',em:'✅',c:'#e6f7ee',t:'#0c8f45'}]
+};
+function sInfo(set,id){const s=STATUS[set]||STATUS.sale;return s.find(x=>x.id===id)||s[0];}
+
+/* ---------- modules ---------- */
+const MODULES=[
+ {id:'msouwout',nm:'MsouWout',logo:'assets/msouwout-logo.png',type:'sub'},
+ {id:'myplopplop',nm:'MyPlopPlop',logo:'assets/myplopplop-logo.png',type:'sub'},
+ {id:'parenaj',nm:'Parenaj Biznis',em:'🤝',type:'sub'},
+ {id:'tikelakay',nm:'Tikè Lakay',em:'🎟️',type:'tickets'},
+ {id:'paymenthub',nm:'Payment Hub',em:'💳',type:'order'},
+ {id:'pwofesyonel',nm:'Pwofesyonèl Lakay',em:'👨‍💼',type:'reg',reg:'pro'},
+ {id:'48h',nm:'48HoursReady',logo:'assets/48hoursready-logo.jpg',type:'order'},
+ {id:'admin',nm:'Sèvis Administratif',em:'📄',type:'order'},
+ {id:'legal',nm:'Sèvis Legal',em:'⚖️',type:'order'},
+ {id:'bizreg',nm:'Anrejistreman Biznis',em:'🏢',type:'order'}
+];
+function modById(id){return MODULES.find(m=>m.id===id);}
+
+/* module data */
+const FH_SERVICES=['Logo','Business Card','Executive Summary','Pitch Deck','Website','Flipbook','Promotional Video','QR Code','Flyer','Social Media Banner','Google Business Profile','WhatsApp Business Setup','Resume / CV','Other digital service'];
+const FH_PACKAGES=[{amt:500,max:1},{amt:1000,max:3},{amt:5000,max:5},{amt:10000,max:7}];
+const ADMIN_ITEMS=['Patente','Extrait d’Archives','Légalisation','Permis de conduire','Matricule Fiscal','Immatriculation','Assurance','Mariage Civil','Birth Certificate Assistance','Passport Assistance','Other government service'];
+const LEGAL_ITEMS=['Legal Consultation','Contract Drafting','Property Transactions','Labour Law','Family Law','Business Agreements','Foundation Registration','NGO Registration','Association Registration'];
+const BILL_TYPES=['EDH','DINEPA','MonCash Services','NatCash Services','Mobile Recharge','Internet Bill','Other bill'];
+const MERCH_CATS=['Supermarket','Restaurant','Pharmacy','Hardware Store','Boutique','Other'];
+
+/* registration form schemas (person-first) */
+const REG_FORMS={
+ driver:{title:'MsouWout — Enskri Chofè',statusSet:'verify',prefix:'DRV',feeKey:'regFeeDriver',
+   fields:[['name','f_name',1],['phone','f_phone'],['wa','f_wa'],['vehicle','vehicle'],['plate','plate'],['color','color']],
+   uploads:['Driver License','National ID','Insurance','Vehicle Registration','Driver Photo']},
+ rider:{title:'MsouWout — Enskri Pasaje',statusSet:'verify',prefix:'RDR',feeKey:'regFeeRider',
+   fields:[['name','f_name',1],['phone','f_phone'],['wa','f_wa']],uploads:[]},
+ merchant:{title:'MyPlopPlop — Enskri Machann',statusSet:'merch',prefix:'MRC',feeKey:'regFeeMerchant',
+   fields:[['biz','biz_name',1],['owner','owner'],['phone','f_phone'],['wa','f_wa'],['category','category','sel',MERCH_CATS],['addr','address']],
+   uploads:['Business Documents']},
+ pro:{title:'Pwofesyonèl Lakay',statusSet:'pro',prefix:'PRO',feeKey:'regFeePro',
+   fields:[['name','f_name',1],['profession','profession'],['phone','f_phone'],['wa','f_wa'],['addr','address']],
+   uploads:['National ID','Diploma / Certification','Experience Documents']},
+ affiliate:{title:'Parenaj Biznis — Enskri Afilye',statusSet:null,prefix:'AFF',feeKey:null,
+   fields:[['name','f_name',1],['phone','f_phone'],['wa','f_wa'],['email','f_email']],uploads:[],referral:true}
+};
+
+/* ---------- navigation ---------- */
+function go(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.getElementById('s-'+name).classList.add('on');
+  const nm={home:'home',orders:'orders',dash:'dash',set:'set'};
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.nav===nm[name]));
+  if(!nm[name])document.querySelector('.nav button[data-nav="home"]').classList.add('on');
+  window.scrollTo(0,0);
+  if(name==='orders')renderOrders();if(name==='dash')renderDash();if(name==='set')renderSettings();
+  refreshBadges();
 }
-function setStatus(id,st){const o=loadOrders();const r=o.find(x=>x.id===id);if(r){r.status=st;saveOrders(o);renderOrders();refreshBadges();}}
+function refreshBadges(){const o=load('hb_orders',[]);
+  const active=o.filter(x=>!['done','delivered','active','approved','rejected'].includes(x.status)).length;
+  document.querySelector('.nav button[data-nav="orders"]').setAttribute('data-n',active);}
 
-/* ---------- Dashboard ---------- */
-function renderDash(){
-  const o=loadOrders();
+/* ---------- home ---------- */
+function renderHome(){const g=document.getElementById('modGrid');g.innerHTML='';
+  MODULES.forEach(m=>{const b=document.createElement('button');b.className='mod';
+    const icon=m.logo?`<img class="il" src="${m.logo}" alt="">`:`<span class="em">${m.em}</span>`;
+    b.innerHTML=`${icon}<span class="nm">${m.nm}</span>`;b.onclick=()=>openModule(m);g.appendChild(b);});}
+function openModule(m){
+  if(m.type==='order'){startFlow(m.id);}
+  else if(m.type==='reg'){startReg(m.reg);}
+  else if(m.type==='tickets'){openTickets();}
+  else if(m.type==='sub'){openSubs(m);}
+}
+function openSubs(m){
+  const subs={
+    msouwout:[['driver','🏍️','Enskri Chofè'],['rider','🙋','Enskri Pasaje'],['verify','✅',t('verify_t')]],
+    myplopplop:[['merchant','🏪','Enskri Machann'],['delivery','🚚','Demann Livrezon']],
+    parenaj:[['affiliate','🤝',t('aff_reg')],['commission','💰',t('aff_comm')]]
+  }[m.id];
+  document.getElementById('subTitle').textContent=m.nm;
+  const list=document.getElementById('subList');list.innerHTML='';
+  subs.forEach(([id,em,label])=>{const b=document.createElement('button');b.className='subbtn';
+    b.innerHTML=`<span class="se">${em}</span>${label}`;
+    b.onclick=()=>{
+      if(m.id==='msouwout'&&id==='verify'){openVerify();}
+      else if(m.id==='myplopplop'&&id==='delivery'){openDelivery();}
+      else if(m.id==='parenaj'&&id==='commission'){openCommission();}
+      else{startReg(id);}
+    };list.appendChild(b);});
+  go('subs');
+}
+
+/* ---------- CUSTOMERS ---------- */
+function customers(){return load('hb_customers',[]);}
+function findCust(q){q=q.toLowerCase();return customers().filter(c=>(c.name||'').toLowerCase().includes(q)||(c.phone||'').includes(q)||(c.wa||'').includes(q));}
+
+/* ===================================================================
+   GENERIC FLOW: customer -> detail -> docs -> payment -> receipt
+   =================================================================== */
+let flow=null;   // {module, customer, items[], amount, docs[], payment, extra}
+let fstep=1;
+function startFlow(moduleId,preItems){
+  flow={module:moduleId,customer:null,items:preItems||[],amount:0,docs:[],payment:null,extra:{}};
+  if(moduleId==='48h'){flow.extra.pkg=null;flow.extra.sel=[];}
+  if(moduleId==='bizreg'){flow.extra.reg=null;}
+  document.getElementById('flowSvcLabel').textContent=modById(moduleId)?modById(moduleId).nm:moduleId;
+  go('flow');fstep=1;showFlowStep();renderCustSearch();
+}
+function flowBack(){ if(fstep===1)go('home'); else {fstep--;showFlowStep();} }
+function setFlowSteps(){document.querySelectorAll('.steps .st').forEach(el=>{const n=+el.dataset.fstep;el.classList.toggle('on',n===fstep);el.classList.toggle('done',n<fstep);});}
+function showFlowStep(){setFlowSteps();
+  ['cust','detail','docs','pay'].forEach((x,i)=>document.getElementById('fstep-'+x).style.display=(i+1===fstep)?'block':'none');
+  if(fstep===2)renderDetail();if(fstep===4)renderPay();window.scrollTo(0,0);}
+function flowStep(n){
+  if(n===3){computeAmount();if(!flow.items.length){alert(t('need_sel'));return;}}
+  fstep=n;showFlowStep();
+}
+function renderCustSearch(){
+  document.getElementById('newCustCard').style.display='none';
+  const inp=document.getElementById('custSearch');inp.value='';
+  const res=document.getElementById('custResults');
+  function draw(){const q=inp.value.trim();res.innerHTML='';const list=q?findCust(q):customers().slice(-5).reverse();
+    list.forEach(c=>{const el=document.createElement('div');el.className='crow';
+      el.innerHTML=`<div class="ci">${(c.name||'?')[0].toUpperCase()}</div><div class="ct"><div class="nm">${c.name}</div><div class="ds">${c.phone||''} ${c.wa?('· '+c.wa):''}</div></div>`;
+      el.onclick=()=>{flow.customer=c;fstep=2;showFlowStep();};res.appendChild(el);});
+    if(q&&!list.length)res.innerHTML=`<div class="hint">—</div>`;}
+  inp.oninput=draw;draw();
+}
+function showNewCust(){document.getElementById('newCustCard').style.display='block';document.getElementById('c_name').focus();}
+function saveNewCust(){const name=document.getElementById('c_name').value.trim();if(!name){alert(t('need_name'));return;}
+  const c={id:'C-'+(customers().length+1),name,phone:document.getElementById('c_phone').value.trim(),wa:document.getElementById('c_wa').value.trim(),
+    email:document.getElementById('c_email').value.trim(),addr:document.getElementById('c_addr').value.trim(),ts:nowStamp()};
+  const list=customers();list.push(c);save('hb_customers',list);
+  ['c_name','c_phone','c_wa','c_email','c_addr'].forEach(i=>document.getElementById(i).value='');
+  flow.customer=c;fstep=2;showFlowStep();}
+
+/* ----- detail per module ----- */
+function renderDetail(){
+  const m=flow.module;document.getElementById('detailTitle').textContent=modById(m).nm;
+  document.getElementById('detailCust').textContent=flow.customer?flow.customer.name:'';
+  const body=document.getElementById('detailBody');body.innerHTML='';const cfg=getCfg();
+
+  if(m==='48h'){
+    body.innerHTML=`<p class="sub">${t('pick_pkg')}</p>`;
+    FH_PACKAGES.forEach((p,i)=>{const on=flow.extra.pkg===i;const row=document.createElement('div');row.className='choice radio'+(on?' on':'');
+      row.innerHTML=`<span class="dot"></span><span class="txt">${p.amt.toLocaleString()} GDES <span class="pill">${t('pkg_max')} ${p.max} ${t('services')}</span></span>`;
+      row.onclick=()=>{flow.extra.pkg=i;flow.extra.sel=flow.extra.sel.slice(0,p.max);renderDetail();};body.appendChild(row);});
+    if(flow.extra.pkg!==null){const max=FH_PACKAGES[flow.extra.pkg].max;
+      body.innerHTML+=`<p class="sub" style="margin-top:10px">${t('pkg_max')} ${max} ${t('services')} — ${flow.extra.sel.length}/${max}</p>`;
+      const wrap=document.createElement('div');
+      FH_SERVICES.forEach(s=>{const on=flow.extra.sel.includes(s);const row=document.createElement('div');row.className='choice'+(on?' on':'');
+        row.innerHTML=`<span class="dot"></span><span class="txt">${s}</span>`;
+        row.onclick=()=>{const idx=flow.extra.sel.indexOf(s);if(idx>=0)flow.extra.sel.splice(idx,1);else{if(flow.extra.sel.length>=max)return;flow.extra.sel.push(s);}renderDetail();};
+        wrap.appendChild(row);});body.appendChild(wrap);}
+  }
+  else if(m==='admin'||m==='legal'){
+    if(m==='legal')body.innerHTML=`<div class="partner">${t('partner_legal')}</div>`;
+    body.innerHTML+=`<p class="sub">${t('amount')}: antre pri, peze +</p>`;
+    (m==='admin'?ADMIN_ITEMS:LEGAL_ITEMS).forEach((name,i)=>{const ex=flow.items.find(it=>it.label===name);
+      const row=document.createElement('div');row.className='choice check'+(ex?' on':'');
+      row.innerHTML=`<span class="dot"></span><span class="txt">${name}</span><input type="number" class="price-in" inputmode="numeric" placeholder="GDES" value="${ex?ex.amt:''}">`;
+      const inp=row.querySelector('input');
+      row.onclick=(e)=>{if(e.target===inp)return;const idx=flow.items.findIndex(it=>it.label===name);if(idx>=0)flow.items.splice(idx,1);else flow.items.push({label:name,amt:+inp.value||0});renderDetail();};
+      inp.oninput=()=>{let it=flow.items.find(x=>x.label===name);if(!it){it={label:name,amt:0};flow.items.push(it);row.classList.add('on');}it.amt=+inp.value||0;computeAmount();document.getElementById('detailTot').textContent=gdes(flow.amount);};
+      body.appendChild(row);});
+  }
+  else if(m==='bizreg'){
+    body.innerHTML=`<p class="sub">Baz an US$, frè Près an GDES. To: ${cfg.rate} GDES/US$</p>`;
+    cfg.bizreg.forEach(r=>{const on=flow.extra.reg===r.id;const fee=r.usd*cfg.hbFeePct/100;const row=document.createElement('div');row.className='choice radio'+(on?' on':'');
+      row.innerHTML=`<span class="dot"></span><span class="txt">${r.nm}<div style="font-size:11px;color:var(--muted);font-weight:600">US$${r.usd.toLocaleString()} + 30% (US$${fee.toLocaleString()})${r.press?' + '+r.press.toLocaleString()+' GDES Près':''}</div></span>`;
+      row.onclick=()=>{flow.extra.reg=r.id;renderDetail();};body.appendChild(row);});
+    if(flow.extra.reg){const r=cfg.bizreg.find(x=>x.id===flow.extra.reg);const fee=r.usd*cfg.hbFeePct/100;const usd=r.usd+fee;const tot=usd*cfg.rate+r.press;
+      const bd=document.createElement('div');bd.className='card';bd.innerHTML=`<div class="breakdown">
+        <div><span>${t('base')}</span><span>US$${r.usd.toLocaleString()}</span></div>
+        <div><span>${t('fee_hb')}</span><span>US$${fee.toLocaleString()}</span></div>
+        <div><span>${t('sub_usd')}</span><span>US$${usd.toLocaleString()}</span></div>
+        ${r.press?`<div><span>${t('fee_press')}</span><span>${r.press.toLocaleString()} GDES</span></div>`:''}
+        <div class="tot"><span>${t('total')}</span><span>${gdes(tot)}</span></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">${t('rate_note')}: US$${usd.toLocaleString()} × ${cfg.rate}${r.press?(' + '+r.press.toLocaleString()):''}</div></div>`;
+      body.appendChild(bd);}
+  }
+  else if(m==='paymenthub'){
+    body.innerHTML=`<label class="fl">${t('bill_type')}</label><select id="billType">${BILL_TYPES.map(b=>`<option>${b}</option>`).join('')}</select>
+      <label class="fl">${t('desc')}</label><input type="text" id="billRef" placeholder="Nº kont / referans">
+      <label class="fl">${t('amount')}</label><input type="number" id="billAmt" inputmode="numeric">`;
+    const upd=()=>{const a=+document.getElementById('billAmt').value||0;const ty=document.getElementById('billType').value;const rf=document.getElementById('billRef').value.trim();
+      flow.items=a>0?[{label:ty+(rf?(' — '+rf):''),amt:a}]:[];computeAmount();document.getElementById('detailTot').textContent=gdes(flow.amount);};
+    body.querySelector('#billAmt').oninput=upd;body.querySelector('#billType').onchange=upd;body.querySelector('#billRef').oninput=upd;
+  }
+  computeAmount();document.getElementById('detailTot').textContent=gdes(flow.amount);
+}
+function computeAmount(){const m=flow.module;const cfg=getCfg();
+  if(m==='48h'){if(flow.extra.pkg!==null){const p=FH_PACKAGES[flow.extra.pkg];flow.items=[{label:'48HoursReady — '+(flow.extra.sel.join(', ')||p.max+' '+t('services')),amt:p.amt}];flow.amount=p.amt;}else{flow.items=[];flow.amount=0;}}
+  else if(m==='bizreg'){if(flow.extra.reg){const r=cfg.bizreg.find(x=>x.id===flow.extra.reg);const usd=r.usd*(1+cfg.hbFeePct/100);const tot=usd*cfg.rate+r.press;flow.items=[{label:r.nm+' (US$'+usd.toLocaleString()+(r.press?' + '+r.press.toLocaleString()+' GDES Près':'')+')',amt:tot}];flow.amount=tot;}else{flow.items=[];flow.amount=0;}}
+  else {flow.amount=flow.items.reduce((a,b)=>a+(+b.amt||0),0);}
+}
+/* docs */
+document.getElementById('docInput').addEventListener('change',e=>{[...e.target.files].forEach(f=>flow.docs.push({name:f.name,url:f.type.startsWith('image/')?URL.createObjectURL(f):null}));e.target.value='';renderFiles();});
+function renderFiles(){const l=document.getElementById('fileList');l.innerHTML='';flow.docs.forEach((d,i)=>{const r=document.createElement('div');r.className='filerow';
+  r.innerHTML=`${d.url?`<img class="fi" src="${d.url}">`:'<span class="fi">📄</span>'}<span>${d.name}</span><button class="fx">×</button>`;
+  r.querySelector('.fx').onclick=()=>{flow.docs.splice(i,1);renderFiles();};l.appendChild(r);});}
+/* pay */
+function renderPay(){const b=document.getElementById('payBreak');b.innerHTML='';
+  flow.items.forEach(it=>b.innerHTML+=`<div><span>${it.label}</span><span>${gdes(it.amt)}</span></div>`);
+  b.innerHTML+=`<div class="tot"><span>${t('total')}</span><span>${gdes(flow.amount)}</span></div>`;
+  document.querySelectorAll('#payGrid .pay').forEach(p=>{p.classList.toggle('on',flow.payment===p.dataset.pay);p.onclick=()=>{flow.payment=p.dataset.pay;renderPay();};});
+  document.getElementById('payBtn').disabled=!flow.payment;}
+function payLabel(p){return ({cash:t('p_cash'),moncash:'MonCash',natcash:'NatCash',card:t('p_card')})[p]||p||'';}
+function completeFlow(){if(!flow.payment){alert(t('need_pay'));return;}
+  const orders=load('hb_orders',[]);const id='HB-'+String(1000+orders.length+1);
+  const rec={id,type:'sale',statusSet:'sale',module:flow.module,svcName:modById(flow.module).nm,
+    custId:flow.customer.id,name:flow.customer.name,phone:flow.customer.phone,wa:flow.customer.wa,
+    items:flow.items.slice(),amount:flow.amount,payment:flow.payment,docs:flow.docs.map(d=>({name:d.name})),
+    status:flow.docs.length?'prog':'wait',ts:nowStamp()};
+  orders.push(rec);save('hb_orders',orders);showReceipt(rec);refreshBadges();
+}
+
+/* ===================================================================
+   REGISTRATION FLOW (person-first, data-driven)
+   =================================================================== */
+let reg=null;
+function startReg(kind){const sc=REG_FORMS[kind];reg={kind,docs:{},fee:0,vehType:'moto'};
+  document.getElementById('regTitle').textContent=sc.title;document.getElementById('regSub').textContent='';
+  const body=document.getElementById('regBody');body.innerHTML='';
+  const card=document.createElement('div');card.className='card';
+  sc.fields.forEach(f=>{const[key,lbl,type,opts]=f;
+    if(type==='sel'){card.innerHTML+=`<label class="fl">${t(lbl)}</label><select id="rf_${key}">${opts.map(o=>`<option>${o}</option>`).join('')}</select>`;}
+    else if(key==='vehicle'){card.innerHTML+=`<label class="fl">${t('vehicle')}</label><div class="row2" style="margin-bottom:14px"><button class="cta ghost" id="veh_moto" style="margin:0">🏍️ Moto</button><button class="cta ghost" id="veh_car" style="margin:0">🚗 Machin</button></div>`;}
+    else{card.innerHTML+=`<label class="fl">${t(lbl)}</label><input type="${key==='email'?'email':(key==='phone'||key==='wa'?'tel':'text')}" id="rf_${key}">`;}
+  });
+  const feeKey=sc.feeKey;if(feeKey){card.innerHTML+=`<label class="fl">${t('set_regfee_'+(kind==='driver'?'d':kind==='rider'?'r':kind==='merchant'?'m':'p'))||'Frè (GDES)'}</label><input type="number" id="rf_fee" inputmode="numeric" value="${getCfg()[feeKey]||0}">`;}
+  body.appendChild(card);
+  sc.uploads.forEach(u=>{const wrap=document.createElement('div');wrap.innerHTML=`<div class="upgroup">${u}</div>`;
+    const lab=document.createElement('label');lab.className='dropz';lab.style.padding='12px';lab.innerHTML=`📎 ${u}`;
+    const inp=document.createElement('input');inp.type='file';inp.accept='.pdf,.jpg,.jpeg,.png,.docx,image/*';inp.style.display='none';
+    lab.appendChild(inp);inp.onchange=e=>{reg.docs[u]=[...e.target.files].map(f=>f.name);const badge=wrap.querySelector('.upgroup');badge.textContent=u+' ✓ ('+e.target.files.length+')';};
+    wrap.appendChild(lab);body.appendChild(wrap);});
+  const btn=document.createElement('button');btn.className='cta';btn.textContent=sc.feeKey?t('pay_do'):t('save');btn.onclick=()=>saveReg(kind);body.appendChild(btn);
+  go('reg');
+  if(sc.fields.some(f=>f[0]==='vehicle')){document.getElementById('veh_moto').classList.remove('ghost');
+    document.getElementById('veh_moto').onclick=()=>{reg.vehType='moto';document.getElementById('veh_moto').classList.remove('ghost');document.getElementById('veh_car').classList.add('ghost');};
+    document.getElementById('veh_car').onclick=()=>{reg.vehType='car';document.getElementById('veh_car').classList.remove('ghost');document.getElementById('veh_moto').classList.add('ghost');};}
+}
+function saveReg(kind){const sc=REG_FORMS[kind];const name=document.getElementById('rf_name').value.trim();if(!name){alert(t('need_name'));return;}
+  const data={};sc.fields.forEach(f=>{const key=f[0];if(key==='vehicle'){data.vehicle=reg.vehType==='moto'?'Moto':'Machin';}else{const el=document.getElementById('rf_'+key);if(el)data[key]=el.value.trim();}});
+  const fee=sc.feeKey?(+document.getElementById('rf_fee').value||0):0;
+  const docsFlat=[];Object.keys(reg.docs).forEach(k=>reg.docs[k].forEach(n=>docsFlat.push({name:k+': '+n})));
+  const orders=load('hb_orders',[]);const id=sc.prefix+'-'+String(1000+orders.length+1);
+  const metaBits=[];sc.fields.forEach(f=>{const key=f[0];if(['vehicle','plate','color','profession','category','biz','owner','addr'].includes(key)&&data[key])metaBits.push(data[key]);});
+  const rec={id,type:'reg',regKind:kind,statusSet:sc.statusSet||'merch',module:kind,svcName:sc.title,
+    name,phone:data.phone||'',wa:data.wa||'',email:data.email||'',
+    items:metaBits.map(m=>({label:m,amt:0})),amount:fee,payment:fee>0?'cash':null,
+    docs:docsFlat,status:(sc.statusSet?STATUS[sc.statusSet][0].id:'pending'),ts:nowStamp()};
+  /* affiliate referral code */
+  if(sc.referral){rec.refCode='HB-'+name.replace(/[^A-Za-z]/g,'').slice(0,4).toUpperCase()+String(1000+orders.length+1);}
+  orders.push(rec);save('hb_orders',orders);
+  /* also add as customer for future lookup */
+  const custs=customers();if(!custs.find(c=>c.phone&&c.phone===rec.phone&&rec.phone)){custs.push({id:'C-'+(custs.length+1),name,phone:rec.phone,wa:rec.wa,email:rec.email,addr:'',ts:nowStamp()});save('hb_customers',custs);}
+  if(sc.referral){showReferral(rec);}else{showReceipt(rec);}
+  refreshBadges();
+}
+
+/* ---------- Driver Verification (checklist) ---------- */
+function openVerify(){const body=document.getElementById('regBody');document.getElementById('regTitle').textContent=t('verify_t');
+  document.getElementById('regSub').textContent='';
+  const drivers=load('hb_orders',[]).filter(o=>o.regKind==='driver');
+  body.innerHTML='';
+  if(!drivers.length){body.innerHTML=`<div class="empty"><div class="ee">🏍️</div>—</div>`;go('reg');return;}
+  drivers.slice().reverse().forEach(d=>{const st=sInfo('verify',d.status);const el=document.createElement('div');el.className='card';
+    el.innerHTML=`<div class="top"><div class="who">${d.name}</div><span class="badge" style="background:${st.c};color:${st.t}">${st.em} ${t(st.k)}</span></div>
+      <div class="meta" style="margin:4px 0">${d.id} · ${d.phone||''} · ${(d.items||[]).map(x=>x.label).join(' · ')}</div>
+      <div class="statusrow"></div>`;
+    const sr=el.querySelector('.statusrow');STATUS.verify.forEach(s=>{const b=document.createElement('button');b.className=d.status===s.id?'on':'';b.innerHTML=`${s.em} ${t(s.k)}`;
+      b.onclick=()=>{const os=load('hb_orders',[]);os.find(x=>x.id===d.id).status=s.id;save('hb_orders',os);openVerify();};sr.appendChild(b);});
+    body.appendChild(el);});
+  go('reg');
+}
+
+/* ---------- MyPlopPlop Delivery ---------- */
+function openDelivery(){document.getElementById('regTitle').textContent='MyPlopPlop — '+ (lang==='en'?'Delivery Request':'Demann Livrezon');document.getElementById('regSub').textContent='';
+  const body=document.getElementById('regBody');
+  body.innerHTML=`<div class="card">
+    <label class="fl">${t('f_name')}</label><input type="text" id="dl_name">
+    <label class="fl">${t('pickup_addr')}</label><input type="text" id="dl_pick">
+    <label class="fl">${t('drop_addr')}</label><input type="text" id="dl_drop">
+    <div class="row2"><div><label class="fl">${t('f_phone')}</label><input type="tel" id="dl_phone"></div><div><label class="fl">${t('recip_phone')}</label><input type="tel" id="dl_rphone"></div></div>
+    <label class="fl">${t('pkg_desc')}</label><textarea id="dl_desc"></textarea>
+    <label class="fl">${t('vehicle')}</label><div class="row2" style="margin-bottom:14px"><button class="cta ghost" id="dveh_moto" style="margin:0">🏍️ Moto</button><button class="cta ghost" id="dveh_car" style="margin:0">🚗 Machin</button></div>
+    <label class="fl">${t('deliv_fee')}</label><input type="number" id="dl_fee" inputmode="numeric" value="100">
+  </div>
+  <div style="font-weight:800;margin:6px 0 8px">${t('pay_t')}</div>
+  <div class="pays" id="dPayGrid">
+    <button class="pay" data-pay="cash"><span class="pe">💵</span>${t('p_cash')}</button>
+    <button class="pay" data-pay="moncash"><span class="pe">📱</span>MonCash</button>
+    <button class="pay" data-pay="natcash"><span class="pe">📲</span>NatCash</button>
+    <button class="pay" data-pay="card"><span class="pe">💳</span>${t('p_card')}</button></div>
+  <div style="height:12px"></div><button class="cta red" onclick="saveDelivery()">${t('pay_do')}</button>`;
+  reg={vehType:'moto',payment:null};
+  document.getElementById('dveh_moto').classList.remove('ghost');
+  document.getElementById('dveh_moto').onclick=()=>{reg.vehType='moto';document.getElementById('dveh_moto').classList.remove('ghost');document.getElementById('dveh_car').classList.add('ghost');};
+  document.getElementById('dveh_car').onclick=()=>{reg.vehType='car';document.getElementById('dveh_car').classList.remove('ghost');document.getElementById('dveh_moto').classList.add('ghost');};
+  document.querySelectorAll('#dPayGrid .pay').forEach(p=>p.onclick=()=>{reg.payment=p.dataset.pay;document.querySelectorAll('#dPayGrid .pay').forEach(x=>x.classList.toggle('on',x===p));});
+  go('reg');
+}
+function saveDelivery(){const name=document.getElementById('dl_name').value.trim();if(!name){alert(t('need_name'));return;}
+  const fee=+document.getElementById('dl_fee').value||0;const orders=load('hb_orders',[]);const id='DL-'+String(1000+orders.length+1);
+  const rec={id,type:'delivery',statusSet:'deliv',module:'myplopplop',svcName:'MyPlopPlop — Livrezon',name,
+    phone:document.getElementById('dl_phone').value.trim(),wa:'',
+    items:[{label:(document.getElementById('dl_pick').value.trim()||'—')+' → '+(document.getElementById('dl_drop').value.trim()||'—'),amt:0},{label:reg.vehType==='moto'?'Moto':'Machin',amt:0}],
+    amount:fee,payment:reg.payment||'cash',docs:[],status:'pending',ts:nowStamp(),
+    desc:document.getElementById('dl_desc').value.trim(),rphone:document.getElementById('dl_rphone').value.trim()};
+  orders.push(rec);save('hb_orders',orders);showReceipt(rec);refreshBadges();
+}
+
+/* ---------- Parenaj commission ---------- */
+function openCommission(){document.getElementById('regTitle').textContent=t('aff_comm');document.getElementById('regSub').textContent='';
+  const affs=load('hb_orders',[]).filter(o=>o.regKind==='affiliate');const body=document.getElementById('regBody');body.innerHTML='';
+  if(!affs.length){body.innerHTML=`<div class="empty"><div class="ee">🤝</div>—</div>`;go('reg');return;}
+  const pays=load('hb_commissions',[]);
+  affs.slice().reverse().forEach(a=>{const paid=pays.filter(p=>p.aff===a.id).reduce((x,y)=>x+y.amt,0);
+    const el=document.createElement('div');el.className='card';
+    el.innerHTML=`<div class="top"><div class="who">${a.name}</div><div class="amt2">${gdes(paid)}</div></div>
+      <div class="meta">${a.id} · ${a.refCode||''}</div>
+      <button class="mini">＋ ${t('record_pay')}</button>`;
+    el.querySelector('.mini').onclick=()=>{const v=prompt(t('record_pay')+' (GDES)','');if(v){const amt=+v||0;if(amt>0){const ps=load('hb_commissions',[]);ps.push({aff:a.id,amt,ts:nowStamp()});save('hb_commissions',ps);openCommission();}}};
+    body.appendChild(el);});
+  go('reg');
+}
+
+/* ===================================================================
+   TIKÈ LAKAY
+   =================================================================== */
+function openTickets(){renderTicketsHome();go('tickets');}
+function renderTicketsHome(){const body=document.getElementById('ticketsBody');
+  body.innerHTML=`<div class="h2">Tikè Lakay</div>
+    <div class="subs">
+      <button class="subbtn" onclick="ticketCreate()"><span class="se">➕</span>${t('ev_create')}</button>
+      <button class="subbtn" onclick="ticketSell()"><span class="se">🎟️</span>${t('ev_sell')}</button>
+      <button class="subbtn" onclick="ticketCheckin()"><span class="se">📷</span>${t('ev_checkin')}</button>
+      <button class="subbtn" onclick="ticketSales()"><span class="se">📊</span>${t('ev_sales')}</button>
+    </div>`;
+}
+function ticketCreate(){const body=document.getElementById('ticketsBody');
+  body.innerHTML=`<button class="back" onclick="renderTicketsHome()">‹ ${t('back')}</button><div class="h2">${t('ev_create')}</div>
+    <div class="card"><label class="fl">${t('ev_name')}</label><input type="text" id="ev_name">
+    <label class="fl">${t('ev_date')}</label><input type="text" id="ev_date" placeholder="2026-08-15">
+    <label class="fl">${t('ev_price')}</label><input type="number" id="ev_price" inputmode="numeric"></div>
+    <button class="cta" onclick="saveEvent()">${t('save')}</button>`;
+}
+function saveEvent(){const nm=document.getElementById('ev_name').value.trim();if(!nm){alert(t('need_name'));return;}
+  const evs=load('hb_events',[]);evs.push({id:'EV-'+(evs.length+1),name:nm,date:document.getElementById('ev_date').value.trim(),price:+document.getElementById('ev_price').value||0,ts:nowStamp()});
+  save('hb_events',evs);renderTicketsHome();}
+function ticketSell(){const evs=load('hb_events',[]);const body=document.getElementById('ticketsBody');
+  if(!evs.length){body.innerHTML=`<button class="back" onclick="renderTicketsHome()">‹ ${t('back')}</button><div class="empty"><div class="ee">🎟️</div>${t('no_event')}</div>`;return;}
+  body.innerHTML=`<button class="back" onclick="renderTicketsHome()">‹ ${t('back')}</button><div class="h2">${t('ev_sell')}</div>
+    <div class="card"><label class="fl">Evènman</label><select id="ts_ev">${evs.map(e=>`<option value="${e.id}">${e.name} — ${e.price.toLocaleString()} GDES</option>`).join('')}</select>
+    <label class="fl">${t('f_name')}</label><input type="text" id="ts_name">
+    <label class="fl">${t('f_phone')}</label><input type="tel" id="ts_phone">
+    <label class="fl">${t('ev_qty')}</label><input type="number" id="ts_qty" value="1" inputmode="numeric"></div>
+    <div style="font-weight:800;margin:6px 0 8px">${t('pay_t')}</div>
+    <div class="pays" id="tPayGrid">
+      <button class="pay on" data-pay="cash"><span class="pe">💵</span>${t('p_cash')}</button>
+      <button class="pay" data-pay="moncash"><span class="pe">📱</span>MonCash</button>
+      <button class="pay" data-pay="natcash"><span class="pe">📲</span>NatCash</button>
+      <button class="pay" data-pay="card"><span class="pe">💳</span>${t('p_card')}</button></div>
+    <div style="height:12px"></div><button class="cta red" onclick="sellTicket()">${t('pay_do')}</button>`;
+  reg={payment:'cash'};
+  document.querySelectorAll('#tPayGrid .pay').forEach(p=>p.onclick=()=>{reg.payment=p.dataset.pay;document.querySelectorAll('#tPayGrid .pay').forEach(x=>x.classList.toggle('on',x===p));});
+}
+function sellTicket(){const evs=load('hb_events',[]);const ev=evs.find(e=>e.id===document.getElementById('ts_ev').value);
+  const name=document.getElementById('ts_name').value.trim();if(!name){alert(t('need_name'));return;}
+  const qty=Math.max(1,+document.getElementById('ts_qty').value||1);const orders=load('hb_orders',[]);const id='TK-'+String(1000+orders.length+1);
+  const rec={id,type:'ticket',statusSet:'sale',module:'tikelakay',svcName:'Tikè: '+ev.name,name,phone:document.getElementById('ts_phone').value.trim(),wa:'',
+    items:[{label:ev.name+' × '+qty,amt:ev.price*qty}],amount:ev.price*qty,payment:reg.payment,docs:[],status:'ready',ts:nowStamp(),
+    eventId:ev.id,qty,checkedIn:0,ticketCode:id};
+  orders.push(rec);save('hb_orders',orders);showTicket(rec,ev);refreshBadges();
+}
+function ticketCheckin(){const body=document.getElementById('ticketsBody');
+  body.innerHTML=`<button class="back" onclick="renderTicketsHome()">‹ ${t('back')}</button><div class="h2">${t('ev_checkin')}</div>
+    <input type="text" id="ci_search" class="searchbox" placeholder="${t('search_ticket')}"><div id="ci_res"></div>`;
+  const draw=()=>{const q=(document.getElementById('ci_search').value||'').toUpperCase();const res=document.getElementById('ci_res');res.innerHTML='';
+    const tks=load('hb_orders',[]).filter(o=>o.type==='ticket'&&(!q||o.id.includes(q)||(o.name||'').toUpperCase().includes(q)));
+    tks.slice().reverse().forEach(tk=>{const done=tk.checkedIn>=tk.qty;const el=document.createElement('div');el.className='card';
+      el.innerHTML=`<div class="top"><div class="who">${tk.name}</div><span class="badge" style="background:${done?'#e6f7ee':'#fff6e6'};color:${done?'#0c8f45':'#b57000'}">${done?t('checkin_ok'):tk.checkedIn+'/'+tk.qty}</span></div>
+        <div class="meta">${tk.id} · ${tk.svcName}</div>${done?'':`<button class="mini">✓ ${t('ev_checkin')}</button>`}`;
+      const btn=el.querySelector('.mini');if(btn)btn.onclick=()=>{const os=load('hb_orders',[]);const r=os.find(x=>x.id===tk.id);r.checkedIn=(r.checkedIn||0)+1;save('hb_orders',os);draw();};
+      res.appendChild(el);});
+    if(!tks.length)res.innerHTML=`<div class="empty"><div class="ee">🎟️</div>—</div>`;};
+  document.getElementById('ci_search').oninput=draw;draw();
+}
+function ticketSales(){const body=document.getElementById('ticketsBody');const tks=load('hb_orders',[]).filter(o=>o.type==='ticket');
+  const total=tks.reduce((a,b)=>a+b.amount,0);const qty=tks.reduce((a,b)=>a+b.qty,0);
+  body.innerHTML=`<button class="back" onclick="renderTicketsHome()">‹ ${t('back')}</button><div class="h2">${t('ev_sales')}</div>
+    <div class="stats" style="margin-bottom:14px"><div class="stat sales"><div class="n">${gdes(total)}</div><div class="l">${t('ev_sales')}</div></div>
+    <div class="stat"><div class="n">${qty}</div><div class="l">🎟️ Tikè</div></div><div class="stat"><div class="n">${tks.reduce((a,b)=>a+(b.checkedIn||0),0)}</div><div class="l">✓ ${t('st_checkin')}</div></div></div>
+    ${tks.slice().reverse().map(tk=>`<div class="order"><div class="top"><div><div class="who">${tk.name}</div><div class="meta">${tk.id} · ${tk.svcName}</div></div><div class="amt2">${gdes(tk.amount)}</div></div></div>`).join('')||`<div class="empty">${t('need_sel')}</div>`}`;
+}
+
+/* ===================================================================
+   RECEIPT / QR
+   =================================================================== */
+function qrDataURL(text){try{const q=qrcode(0,'M');q.addData(text);q.make();return q.createDataURL(5,8);}catch(e){return null;}}
+function showReceipt(o){const cust=o.name;const items=(o.items||[]).map(it=>`<div class="ritem"><span>${it.label}</span><span>${it.amt?gdes(it.amt):''}</span></div>`).join('');
+  document.getElementById('doneExtra').innerHTML='';
+  document.getElementById('receiptBox').innerHTML=`
+    <div class="rh"><img src="assets/haitibiznis-logo.png" alt=""><div class="bt">HaitiBiznis</div><div class="st">${t('cashier')}</div></div>
+    <div class="rrow"><span>${t('order_no')}</span><b>${o.id}</b></div>
+    <div class="rrow"><span>${t('date')}</span><span>${fmtDate(o.ts)}</span></div>
+    <div class="rrow"><span>${t('customer')}</span><span>${cust}</span></div>
+    <div class="rrow"><span>${t('service')}</span><span>${o.svcName}</span></div>
+    <div style="height:8px"></div>${items}
+    <div class="rtot"><span>${t('total')}</span><span>${gdes(o.amount)}</span></div>
+    ${o.payment?`<div class="rrow" style="margin-top:6px"><span>${t('pay_t')}</span><span>${payLabel(o.payment)}</span></div>`:''}
+    ${o.docs&&o.docs.length?`<div class="rrow"><span>📎</span><span>${o.docs.length}</span></div>`:''}
+    <div class="rf">${t('thanks')}</div>`;
+  setupWA(o);go('done');
+}
+function showTicket(o,ev){const url=qrDataURL(o.ticketCode);
+  document.getElementById('doneExtra').innerHTML=`<div class="qrbox">${url?`<img src="${url}" alt="QR">`:''}<div class="qrcode-txt">${o.ticketCode}</div></div>`;
+  document.getElementById('receiptBox').innerHTML=`
+    <div class="rh"><img src="assets/haitibiznis-logo.png" alt=""><div class="bt">${t('qr_ticket')}</div><div class="st">${ev.name}</div></div>
+    <div class="rrow"><span>${t('order_no')}</span><b>${o.id}</b></div>
+    <div class="rrow"><span>${t('ev_date')}</span><span>${ev.date||'—'}</span></div>
+    <div class="rrow"><span>${t('customer')}</span><span>${o.name}</span></div>
+    <div class="rrow"><span>${t('ev_qty')}</span><span>${o.qty}</span></div>
+    <div class="rtot"><span>${t('total')}</span><span>${gdes(o.amount)}</span></div>
+    <div class="rrow"><span>${t('pay_t')}</span><span>${payLabel(o.payment)}</span></div>
+    <div class="rf">${t('thanks')}</div>`;
+  setupWA(o);go('done');
+}
+function showReferral(o){const url=qrDataURL(o.refCode);
+  document.getElementById('doneExtra').innerHTML=`<div class="qrbox">${url?`<img src="${url}" alt="QR">`:''}<div class="qrcode-txt">${o.refCode}</div></div>`;
+  document.getElementById('receiptBox').innerHTML=`
+    <div class="rh"><img src="assets/haitibiznis-logo.png" alt=""><div class="bt">${t('aff_qr')}</div><div class="st">Parenaj Biznis</div></div>
+    <div class="rrow"><span>${t('order_no')}</span><b>${o.id}</b></div>
+    <div class="rrow"><span>${t('customer')}</span><span>${o.name}</span></div>
+    <div class="rrow"><span>${t('qr_ref')}</span><b>${o.refCode}</b></div>
+    <div class="rf">${t('thanks')}</div>`;
+  setupWA(o);go('done');
+}
+function setupWA(o){const btn=document.getElementById('waBtn');const num=(o.wa||o.phone||'').replace(/[^0-9]/g,'');
+  const msg=t('wa_msg').replace('{name}',o.name).replace('{id}',o.id).replace('{total}',gdes(o.amount));
+  btn.onclick=()=>{const base=num?('https://wa.me/'+num):'https://wa.me/';window.open(base+'?text='+encodeURIComponent(msg),'_blank');};}
+
+/* ===================================================================
+   ORDERS + SEARCH
+   =================================================================== */
+let filter='all';
+function renderOrders(){const fb=document.getElementById('filterBar');fb.innerHTML='';
+  const opts=[{id:'all',lbl:t('all')},{id:'wait',lbl:t('st_wait')},{id:'prog',lbl:t('st_prog')},{id:'ready',lbl:t('st_ready')},{id:'done',lbl:t('st_done')},{id:'reg',lbl:'Enskripsyon'}];
+  opts.forEach(o=>{const b=document.createElement('button');b.textContent=o.lbl;b.className=filter===o.id?'on':'';b.onclick=()=>{filter=o.id;renderOrders();};fb.appendChild(b);});
+  const q=(document.getElementById('ordSearch').value||'').toLowerCase();
+  let orders=load('hb_orders',[]).slice().reverse();
+  if(q)orders=orders.filter(o=>(o.name||'').toLowerCase().includes(q)||(o.phone||'').includes(q)||(o.wa||'').includes(q)||o.id.toLowerCase().includes(q));
+  if(filter==='reg')orders=orders.filter(o=>o.type==='reg'||o.type==='delivery');
+  else if(filter!=='all')orders=orders.filter(o=>o.status===filter);
+  const list=document.getElementById('ordersList');list.innerHTML='';
+  if(!orders.length){list.innerHTML=`<div class="empty"><div class="ee">📋</div>—</div>`;return;}
+  orders.forEach(o=>{const setName=o.statusSet||'sale';const st=sInfo(setName,o.status);
+    const el=document.createElement('div');el.className='order';const tag=o.type!=='sale'?`<span class="rtag">${o.type==='reg'?'Enskri':o.type}</span>`:'';
+    el.innerHTML=`<div class="top"><div><div class="who">${o.name}${tag}</div><div class="meta">${o.id} · ${o.phone||''} · ${fmtDate(o.ts)}</div></div>
+      <span class="badge" style="background:${st.c};color:${st.t}">${st.em} ${t(st.k)}</span></div>
+      <div class="svc-t">${o.svcName} ${o.docs&&o.docs.length?('· 📎 '+o.docs.length):''}</div>
+      <div class="top"><div class="meta">${o.payment?payLabel(o.payment):''}</div><div class="amt2">${o.amount?gdes(o.amount):''}</div></div>
+      <div class="statusrow"></div>`;
+    const sr=el.querySelector('.statusrow');STATUS[setName].forEach(s=>{const b=document.createElement('button');b.className=o.status===s.id?'on':'';b.innerHTML=`${s.em}<br>${t(s.k)}`;
+      b.onclick=()=>{const os=load('hb_orders',[]);os.find(x=>x.id===o.id).status=s.id;save('hb_orders',os);renderOrders();refreshBadges();};sr.appendChild(b);});
+    list.appendChild(el);});
+}
+document.getElementById('ordSearch').addEventListener('input',renderOrders);
+
+/* ---------- dashboard ---------- */
+function renderDash(){const o=load('hb_orders',[]);
   document.getElementById('dashDate').textContent=new Date().toLocaleDateString(lang==='en'?'en-US':'fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  const sales=o.filter(x=>x.type!=='reg');
+  const sales=o.filter(x=>x.type==='sale'||x.type==='ticket');
+  const salesToday=o.filter(x=>isToday(x.ts)).reduce((a,b)=>a+(+b.amount||0),0);
+  const totalRev=o.reduce((a,b)=>a+(+b.amount||0),0);
   const newN=sales.filter(x=>x.status==='wait').length;
   const progN=sales.filter(x=>x.status==='prog').length;
-  const readyN=sales.filter(x=>x.status==='ready').length;
-  const regN=o.filter(x=>x.type==='reg').length;
-  const salesToday=o.filter(x=>isToday(x.ts)).reduce((a,b)=>a+(+b.amount||0),0);
+  const doneN=sales.filter(x=>x.status==='done').length;
   document.getElementById('dashStats').innerHTML=`
-    <div class="stat sales"><div class="n">${salesToday.toLocaleString()} <span style="font-size:16px">GDES</span></div><div class="l">${t('dash_sales')}</div></div>
+    <div class="stat sales"><div class="n">${gdes(salesToday)}</div><div class="l">${t('dash_sales')}</div></div>
     <div class="stat"><div class="n" style="color:var(--warn)">${newN}</div><div class="l">🟡 ${t('dash_new')}</div></div>
     <div class="stat"><div class="n" style="color:var(--blue)">${progN}</div><div class="l">🔵 ${t('dash_prog')}</div></div>
-    <div class="stat"><div class="n" style="color:var(--good)">${readyN}</div><div class="l">🟢 ${t('dash_ready')}</div></div>
-    <div class="stat"><div class="n">${regN}</div><div class="l">🏍️ ${t('dash_reg')}</div></div>`;
+    <div class="stat"><div class="n" style="color:var(--good)">${doneN}</div><div class="l">✅ ${t('dash_done')}</div></div>
+    <div class="stat rev"><div class="n">${gdes(totalRev)}</div><div class="l">💰 ${t('dash_rev')}</div></div>`;
 }
 
-/* ---------- Settings ---------- */
-function renderSettings(){
-  const cfg=getCfg(); const box=document.getElementById('setBody');
-  box.innerHTML=`<label class="fl">${t('fee_hb')}</label><input type="number" id="set_fee" value="${cfg.hbFeePct}">`;
-  cfg.reg.forEach((r,i)=>{box.innerHTML+=`<div style="border-top:1px solid var(--line);padding-top:12px;margin-top:4px">
-    <div style="font-weight:800;margin-bottom:8px">${r.nm}</div>
-    <label class="fl">${t('base')} (GDES)</label><input type="number" data-base="${i}" value="${r.base}">
+/* ---------- settings ---------- */
+function renderSettings(){const cfg=getCfg();const box=document.getElementById('setBody');
+  box.innerHTML=`<label class="fl">${t('set_rate')}</label><input type="number" id="set_rate" value="${cfg.rate}">
+    <label class="fl">${t('set_regfee_d')}</label><input type="number" id="set_rfd" value="${cfg.regFeeDriver}">
+    <label class="fl">${t('set_regfee_r')}</label><input type="number" id="set_rfr" value="${cfg.regFeeRider}">
+    <label class="fl">${t('set_regfee_m')}</label><input type="number" id="set_rfm" value="${cfg.regFeeMerchant}">
+    <label class="fl">${t('set_regfee_p')}</label><input type="number" id="set_rfp" value="${cfg.regFeePro}">
+    <div style="font-weight:800;margin:8px 0 6px">${t('fee_hb')} — ${modById('bizreg').nm}</div>`;
+  cfg.bizreg.forEach((r,i)=>{box.innerHTML+=`<div style="border-top:1px solid var(--line);padding-top:10px;margin-top:4px"><div style="font-weight:700;margin-bottom:6px">${r.nm}</div>
+    <label class="fl">Base (US$)</label><input type="number" data-usd="${i}" value="${r.usd}">
     <label class="fl">${t('fee_press')} (GDES)</label><input type="number" data-press="${i}" value="${r.press}"></div>`;});
 }
-function saveSettings(){const cfg=getCfg();cfg.hbFeePct=+document.getElementById('set_fee').value||30;
-  document.querySelectorAll('[data-base]').forEach(el=>cfg.reg[+el.dataset.base].base=+el.value||0);
-  document.querySelectorAll('[data-press]').forEach(el=>cfg.reg[+el.dataset.press].press=+el.value||0);
+function saveSettings(){const cfg=getCfg();cfg.rate=+document.getElementById('set_rate').value||132;
+  cfg.regFeeDriver=+document.getElementById('set_rfd').value||0;cfg.regFeeRider=+document.getElementById('set_rfr').value||0;
+  cfg.regFeeMerchant=+document.getElementById('set_rfm').value||0;cfg.regFeePro=+document.getElementById('set_rfp').value||0;
+  document.querySelectorAll('[data-usd]').forEach(el=>cfg.bizreg[+el.dataset.usd].usd=+el.value||0);
+  document.querySelectorAll('[data-press]').forEach(el=>cfg.bizreg[+el.dataset.press].press=+el.value||0);
   setCfg(cfg);const btn=event.target,old=btn.textContent;btn.textContent='✓';setTimeout(()=>btn.textContent=old,900);}
 
-/* ---------- Language ---------- */
-document.querySelectorAll('.lang button').forEach(b=>{b.onclick=()=>{lang=b.dataset.lang;localStorage.setItem('hb_pos_lang',lang);
+/* ---------- language ---------- */
+document.querySelectorAll('.lang button').forEach(b=>{b.onclick=()=>{lang=b.dataset.lang;localStorage.setItem('hb_lang',lang);
   document.querySelectorAll('.lang button').forEach(x=>x.classList.toggle('on',x===b));applyI18n();renderHome();
-  const cur=document.querySelector('.screen.on').id.replace('s-','');
-  if(cur==='menu')renderMenu();if(cur==='orders')renderOrders();if(cur==='dash')renderDash();if(cur==='set')renderSettings();};});
+  const cur=document.querySelector('.screen.on').id.replace('s-','');if(cur==='orders')renderOrders();if(cur==='dash')renderDash();if(cur==='set')renderSettings();};});
 
-/* ---------- Boot ---------- */
+/* ---------- boot ---------- */
 document.querySelectorAll('.lang button').forEach(x=>x.classList.toggle('on',x.dataset.lang===lang));
-applyI18n(); renderHome(); refreshBadges();
+applyI18n();renderHome();refreshBadges();
 </script>
 </body>
 </html>
