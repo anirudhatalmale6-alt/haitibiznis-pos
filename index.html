@@ -40,6 +40,26 @@ main{padding:16px 14px}
 .mod .em{font-size:34px;line-height:1}
 .mod .il{width:52px;height:52px;border-radius:12px;background:#fff;padding:5px;object-fit:contain;border:1px solid var(--line);box-shadow:0 3px 8px rgba(0,0,0,.08)}
 .mod .nm{font-weight:800;font-size:13px;line-height:1.2}
+/* featured module (Sistèm Vant) */
+.mod.feat{grid-column:1/-1;flex-direction:row;justify-content:flex-start;gap:14px;text-align:left;min-height:0;padding:18px 18px;
+  background:linear-gradient(120deg,var(--blue),#0b2fc4);color:#fff;border:0;box-shadow:0 10px 26px rgba(0,33,92,.28)}
+.mod.feat .fem{font-size:34px;background:rgba(255,255,255,.16);width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.mod.feat .ft{flex:1;display:flex;flex-direction:column;gap:3px}
+.mod.feat .ft .nm{font-size:18px}
+.mod.feat .fs{font-weight:600;font-size:12px;opacity:.85;line-height:1.25}
+.mod.feat .fgo{font-size:28px;opacity:.8;font-weight:400}
+/* Sistèm Vant hub tiles */
+.svgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.svtile{position:relative;border:1px solid var(--line);background:var(--card);border-radius:var(--r);padding:16px 12px;text-align:center;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:8px;min-height:112px;justify-content:center}
+.svtile .se{font-size:30px;line-height:1}.svtile .sn{font-weight:800;font-size:13px;line-height:1.2}
+.svtile.soon{opacity:.62;background:#f6f8fc}
+.svtile.soon .badge-soon{position:absolute;top:8px;right:8px;background:#eef1f6;color:var(--muted);font-size:9px;font-weight:800;padding:2px 7px;border-radius:999px;letter-spacing:.03em}
+/* floating new-sale button */
+.fab{position:fixed;right:16px;bottom:78px;z-index:29;max-width:none;background:var(--red);color:#fff;border:0;border-radius:999px;
+  padding:14px 20px;font-weight:800;font-size:15px;display:flex;align-items:center;gap:8px;box-shadow:0 10px 24px rgba(210,16,52,.4)}
+.fab .fp{font-size:20px;font-weight:900;line-height:1}
+.fab:active{transform:scale(.96)}
+@media(min-width:721px){.fab{right:calc(50% - 344px)}}
 /* sub buttons */
 .subs{display:flex;flex-direction:column;gap:10px}
 .subbtn{display:flex;align-items:center;gap:12px;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:16px;box-shadow:var(--shadow);font-weight:800;font-size:15px;text-align:left}
@@ -228,6 +248,11 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
   <button class="cta no-print" onclick="go('home')" data-i18n="conf_home">Akèy</button>
 </section>
 
+<!-- Sistèm Vant (Digital Sales System) hub -->
+<section id="s-sv" class="screen">
+  <div id="svBody"></div>
+</section>
+
 <!-- tickets: event create / checkin -->
 <section id="s-tickets" class="screen">
   <button class="back" onclick="go('home')">‹ <span data-i18n="back">Retounen</span></button>
@@ -269,6 +294,8 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
   <button class="cta" onclick="saveSettings()" data-i18n="set_save">Sere paramèt</button>
 </section>
 </main>
+
+<button class="fab" id="fabNewSale" onclick="newSale()"><span class="fp">＋</span><span data-i18n="fab_newsale">Nouvo Vant</span></button>
 
 <nav class="nav">
   <button data-nav="home" class="on" onclick="go('home')"><span class="ni">🏠</span><span data-i18n="n_home">Akèy</span></button>
@@ -367,17 +394,32 @@ const T_EXT={
   rp_today:'Jodi a',rp_7:'7 jou',rp_30:'30 jou',rp_all:'Tout',rep_revenue:'Revni',rep_txn:'Tranzaksyon',rep_avg:'Mwayèn',
   rep_bysvc:'Pa sèvis',rep_bypay:'Pa metòd peman',rep_bystat:'Pa estati',rep_none:'Pa gen done pou peryòd sa a.',
   notify:'📲 Fè kliyan an konnen',notify_t:'Fè konnen kliyan',notify_wa:'WhatsApp',notify_email:'Imel',notify_no:'Pa gen telefòn/imel pou kliyan sa a.',
-  ready_msg:'Bonjou {name}, kòmand ou {id} nan Sant HaitiBiznis PARE. Ou ka vin chèche l. Mèsi!',ready_subj:'Kòmand ou pare — HaitiBiznis'},
+  ready_msg:'Bonjou {name}, kòmand ou {id} nan Sant HaitiBiznis PARE. Ou ka vin chèche l. Mèsi!',ready_subj:'Kòmand ou pare — HaitiBiznis',
+  home_t:'Byenvini! Kisa ou vle fè jodi a?',sv_tag:'Sistèm prensipal — vann & jere tout',fab_newsale:'Nouvo Vant',
+  sv_t:'Sistèm Vant',sv_sub:'Sistèm vant dijital ou a — vann, jere kliyan ak resi.',soon:'Byento',pick_service:'Chwazi sèvis pou vann',
+  sv_newsale:'Nouvo Vant',sv_customers:'Jesyon Kliyan',sv_history:'Istwa Vant',sv_receipts:'Resi Dijital',
+  sv_products:'Jesyon Pwodwi',sv_inventory:'Envantè',sv_notifs:'Notifikasyon Tan Reyèl',sv_payments:'Peman MonCash/NatCash',
+  dash_orders:'Kòmand',dash_customers:'Kliyan',dash_notifs:'Notifikasyon',sv_none_cust:'Pa gen kliyan ankò.',sv_none_sales:'Pa gen vant ankò.',reopen_receipt:'Wè resi'},
  fr:{install:'Installer',offline_on:'Mode hors-ligne — enregistré sur l’appareil',rep_open:'📈 Rapport détaillé',rep_t:'Rapports',rep_csv:'⬇️ CSV',
   rp_today:'Aujourd’hui',rp_7:'7 jours',rp_30:'30 jours',rp_all:'Tout',rep_revenue:'Revenu',rep_txn:'Transactions',rep_avg:'Moyenne',
   rep_bysvc:'Par service',rep_bypay:'Par paiement',rep_bystat:'Par statut',rep_none:'Aucune donnée pour cette période.',
   notify:'📲 Notifier le client',notify_t:'Notifier le client',notify_wa:'WhatsApp',notify_email:'Email',notify_no:'Aucun téléphone/email pour ce client.',
-  ready_msg:'Bonjour {name}, votre commande {id} au Centre HaitiBiznis est PRÊTE. Vous pouvez venir la chercher. Merci !',ready_subj:'Votre commande est prête — HaitiBiznis'},
+  ready_msg:'Bonjour {name}, votre commande {id} au Centre HaitiBiznis est PRÊTE. Vous pouvez venir la chercher. Merci !',ready_subj:'Votre commande est prête — HaitiBiznis',
+  home_t:'Bienvenue ! Que voulez-vous faire aujourd’hui ?',sv_tag:'Système principal — vendre & tout gérer',fab_newsale:'Nouvelle vente',
+  sv_t:'Système de Vente',sv_sub:'Votre système de vente numérique — vendre, gérer clients et reçus.',soon:'Bientôt',pick_service:'Choisir un service à vendre',
+  sv_newsale:'Nouvelle vente',sv_customers:'Gestion des clients',sv_history:'Historique des ventes',sv_receipts:'Reçus numériques',
+  sv_products:'Gestion des produits',sv_inventory:'Inventaire',sv_notifs:'Notifications en temps réel',sv_payments:'Paiement MonCash/NatCash',
+  dash_orders:'Commandes',dash_customers:'Clients',dash_notifs:'Notifications',sv_none_cust:'Aucun client pour le moment.',sv_none_sales:'Aucune vente pour le moment.',reopen_receipt:'Voir le reçu'},
  en:{install:'Install',offline_on:'Offline mode — saved on this device',rep_open:'📈 Detailed Report',rep_t:'Reports',rep_csv:'⬇️ CSV',
   rp_today:'Today',rp_7:'7 days',rp_30:'30 days',rp_all:'All',rep_revenue:'Revenue',rep_txn:'Transactions',rep_avg:'Average',
   rep_bysvc:'By service',rep_bypay:'By payment',rep_bystat:'By status',rep_none:'No data for this period.',
   notify:'📲 Notify customer',notify_t:'Notify customer',notify_wa:'WhatsApp',notify_email:'Email',notify_no:'No phone/email for this customer.',
-  ready_msg:'Hello {name}, your order {id} at HaitiBiznis Center is READY. You can come pick it up. Thank you!',ready_subj:'Your order is ready — HaitiBiznis'}
+  ready_msg:'Hello {name}, your order {id} at HaitiBiznis Center is READY. You can come pick it up. Thank you!',ready_subj:'Your order is ready — HaitiBiznis',
+  home_t:'Welcome! What would you like to do today?',sv_tag:'Main system — sell & manage everything',fab_newsale:'New Sale',
+  sv_t:'Sales System',sv_sub:'Your digital sales system — sell, manage customers and receipts.',soon:'Soon',pick_service:'Choose a service to sell',
+  sv_newsale:'New Sale',sv_customers:'Customer Management',sv_history:'Sales History',sv_receipts:'Digital Receipts',
+  sv_products:'Product Management',sv_inventory:'Inventory',sv_notifs:'Real-time Notifications',sv_payments:'MonCash/NatCash Payment',
+  dash_orders:'Orders',dash_customers:'Customers',dash_notifs:'Notifications',sv_none_cust:'No customers yet.',sv_none_sales:'No sales yet.',reopen_receipt:'View receipt'}
 };
 Object.keys(T_EXT).forEach(function(l){Object.assign(T[l],T_EXT[l]);});
 
@@ -415,16 +457,18 @@ function sInfo(set,id){const s=STATUS[set]||STATUS.sale;return s.find(x=>x.id===
 
 /* ---------- modules ---------- */
 const MODULES=[
- {id:'msouwout',nm:'MsouWout',logo:'assets/msouwout-logo.png',type:'sub'},
+ {id:'sistemvant',nm:'Sistèm Vant',em:'🧾',type:'sv',feat:true},
  {id:'myplopplop',nm:'MyPlopPlop',logo:'assets/myplopplop-logo.png',type:'sub'},
+ {id:'msouwout',nm:'MsouWout',logo:'assets/msouwout-logo.png',type:'sub'},
  {id:'parenaj',nm:'Parenaj Biznis',em:'🤝',type:'reg',reg:'affiliate'},
  {id:'tikelakay',nm:'Tikè Lakay',em:'🎟️',type:'tickets'},
- {id:'paymenthub',nm:'Payment Hub',em:'💳',type:'order'},
  {id:'pwofesyonel',nm:'Pwofesyonèl Lakay',em:'👨‍💼',type:'reg',reg:'pro'},
  {id:'48h',nm:'48HoursReady',logo:'assets/48hoursready-logo.jpg',type:'order'},
  {id:'admin',nm:'Sèvis Administratif',em:'📄',type:'order'},
  {id:'legal',nm:'Sèvis Legal',em:'⚖️',type:'order'},
  {id:'bizreg',nm:'Anrejistreman Biznis',em:'🏢',type:'order'}
+ /* Payment Hub temporarily hidden from home (not ready) — code kept, re-add later:
+    {id:'paymenthub',nm:'Payment Hub',em:'💳',type:'order'} */
 ];
 function modById(id){return MODULES.find(m=>m.id===id);}
 
@@ -461,6 +505,7 @@ function go(name){
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.nav===nm[name]));
   if(!nm[name])document.querySelector('.nav button[data-nav="home"]').classList.add('on');
   window.scrollTo(0,0);
+  const fab=document.getElementById('fabNewSale');if(fab)fab.style.display=['home','orders','dash','reports'].includes(name)?'flex':'none';
   if(name==='orders')renderOrders();if(name==='dash')renderDash();if(name==='set')renderSettings();if(name==='reports')renderReports();
   refreshBadges();
 }
@@ -470,14 +515,18 @@ function refreshBadges(){const o=load('hb_orders',[]);
 
 /* ---------- home ---------- */
 function renderHome(){const g=document.getElementById('modGrid');g.innerHTML='';
-  MODULES.forEach(m=>{const b=document.createElement('button');b.className='mod';
-    const icon=m.logo?`<img class="il" src="${m.logo}" alt="">`:`<span class="em">${m.em}</span>`;
-    b.innerHTML=`${icon}<span class="nm">${m.nm}</span>`;b.onclick=()=>openModule(m);g.appendChild(b);});}
+  MODULES.forEach(m=>{const b=document.createElement('button');b.className='mod'+(m.feat?' feat':'');
+    if(m.feat){b.innerHTML=`<span class="fem">${m.em}</span><span class="ft"><span class="nm">${m.nm}</span><span class="fs" data-i18n="sv_tag">Sistèm prensipal — vann & jere tout</span></span><span class="fgo">›</span>`;}
+    else{const icon=m.logo?`<img class="il" src="${m.logo}" alt="">`:`<span class="em">${m.em}</span>`;
+      b.innerHTML=`${icon}<span class="nm">${m.nm}</span>`;}
+    b.onclick=()=>openModule(m);g.appendChild(b);});
+  applyI18n();}
 function openModule(m){
   if(m.type==='order'){startFlow(m.id);}
   else if(m.type==='reg'){startReg(m.reg);}
   else if(m.type==='tickets'){openTickets();}
   else if(m.type==='sub'){openSubs(m);}
+  else if(m.type==='sv'){openSV();}
 }
 function openSubs(m){
   const subs={
@@ -882,15 +931,21 @@ function renderDash(){const o=load('hb_orders',[]);
   const sales=o.filter(x=>x.type==='sale'||x.type==='ticket');
   const salesToday=o.filter(x=>isToday(x.ts)).reduce((a,b)=>a+(+b.amount||0),0);
   const totalRev=o.reduce((a,b)=>a+(+b.amount||0),0);
+  const ordN=o.length,custN=customers().length,notifN=o.filter(x=>x.status==='ready').length;
   const newN=sales.filter(x=>x.status==='wait').length;
   const progN=sales.filter(x=>x.status==='prog').length;
   const doneN=sales.filter(x=>x.status==='done').length;
   document.getElementById('dashStats').innerHTML=`
-    <div class="stat sales"><div class="n">${gdes(salesToday)}</div><div class="l">${t('dash_sales')}</div></div>
-    <div class="stat"><div class="n" style="color:var(--warn)">${newN}</div><div class="l">🟡 ${t('dash_new')}</div></div>
-    <div class="stat"><div class="n" style="color:var(--blue)">${progN}</div><div class="l">🔵 ${t('dash_prog')}</div></div>
-    <div class="stat"><div class="n" style="color:var(--good)">${doneN}</div><div class="l">✅ ${t('dash_done')}</div></div>
-    <div class="stat rev"><div class="n">${gdes(totalRev)}</div><div class="l">💰 ${t('dash_rev')}</div></div>`;
+    <div class="stat" style="background:linear-gradient(120deg,var(--blue),#0b2fc4);color:#fff;border:0;cursor:pointer" onclick="go('reports')"><div class="n">${gdes(salesToday)}</div><div class="l" style="color:#fff;opacity:.85">💰 ${t('dash_sales')}</div></div>
+    <div class="stat" style="cursor:pointer" onclick="go('orders')"><div class="n">${ordN}</div><div class="l">📦 ${t('dash_orders')}</div></div>
+    <div class="stat" style="cursor:pointer" onclick="go('sv');svCustomers()"><div class="n">${custN}</div><div class="l">👥 ${t('dash_customers')}</div></div>
+    <div class="stat" style="cursor:pointer" onclick="filter='ready';go('orders')"><div class="n" style="color:${notifN?'var(--red)':'var(--ink)'}">${notifN}</div><div class="l">🔔 ${t('dash_notifs')}</div></div>
+    <div class="stat rev"><div class="n">${gdes(totalRev)}</div><div class="l">💰 ${t('dash_rev')}</div></div>
+    <div style="grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+      <div class="stat" style="padding:13px 8px"><div class="n" style="font-size:21px;color:var(--warn)">${newN}</div><div class="l">🟡 ${t('dash_new')}</div></div>
+      <div class="stat" style="padding:13px 8px"><div class="n" style="font-size:21px;color:var(--blue)">${progN}</div><div class="l">🔵 ${t('dash_prog')}</div></div>
+      <div class="stat" style="padding:13px 8px"><div class="n" style="font-size:21px;color:var(--good)">${doneN}</div><div class="l">✅ ${t('dash_done')}</div></div>
+    </div>`;
 }
 
 /* ---------- settings ---------- */
@@ -911,6 +966,70 @@ function saveSettings(){const cfg=getCfg();cfg.rate=+document.getElementById('se
   document.querySelectorAll('[data-usd]').forEach(el=>cfg.bizreg[+el.dataset.usd].usd=+el.value||0);
   document.querySelectorAll('[data-press]').forEach(el=>cfg.bizreg[+el.dataset.press].press=+el.value||0);
   setCfg(cfg);const btn=event.target,old=btn.textContent;btn.textContent='✓';setTimeout(()=>btn.textContent=old,900);}
+
+/* ===================================================================
+   Shared bottom sheet
+   =================================================================== */
+function sheet(title,options){
+  const ov=document.createElement('div');ov.style.cssText='position:fixed;inset:0;background:rgba(10,16,32,.5);z-index:60;display:flex;align-items:flex-end;justify-content:center';
+  const box=document.createElement('div');box.style.cssText='background:#fff;width:100%;max-width:720px;border-radius:18px 18px 0 0;padding:18px 16px 24px;max-height:82vh;overflow:auto';
+  box.innerHTML=`<div style="font-weight:800;font-size:16px;margin-bottom:12px">${title}</div>`;
+  options.forEach(([lbl,fn,ghost])=>{const b=document.createElement('button');b.className='cta'+(ghost?' ghost':'');b.style.marginBottom='10px';b.innerHTML=lbl;
+    b.onclick=()=>{document.body.removeChild(ov);fn&&fn();};box.appendChild(b);});
+  const c=document.createElement('button');c.className='cta ghost';c.textContent='✕';c.onclick=()=>document.body.removeChild(ov);box.appendChild(c);
+  ov.appendChild(box);ov.onclick=e=>{if(e.target===ov)document.body.removeChild(ov);};document.body.appendChild(ov);
+}
+/* Quick new sale — pick a sellable service */
+function newSale(){const sellable=MODULES.filter(m=>m.type==='order');
+  sheet(t('pick_service'),sellable.map(m=>[`${m.logo?'🧾':m.em} ${m.nm}`,()=>startFlow(m.id)]));
+}
+
+/* ===================================================================
+   SISTÈM VANT (Digital Sales System) hub
+   =================================================================== */
+const SV_TILES=[
+  {id:'newsale',em:'➕',k:'sv_newsale',open:()=>newSale()},
+  {id:'customers',em:'👥',k:'sv_customers',open:()=>svCustomers()},
+  {id:'history',em:'🧾',k:'sv_history',open:()=>{go('orders');}},
+  {id:'receipts',em:'📩',k:'sv_receipts',open:()=>svReceipts()},
+  {id:'products',em:'📦',k:'sv_products',soon:true},
+  {id:'inventory',em:'🗃️',k:'sv_inventory',soon:true},
+  {id:'notifications',em:'🔔',k:'sv_notifs',soon:true},
+  {id:'payments',em:'💳',k:'sv_payments',soon:true}
+];
+function svHeader(back){return `<button class="back" onclick="${back||"go('home')"}">‹ ${t('back')}</button>`;}
+function openSV(){const body=document.getElementById('svBody');
+  body.innerHTML=`${svHeader()}<div class="h2">${t('sv_t')}</div><p class="sub">${t('sv_sub')}</p><div class="svgrid" id="svGrid"></div>`;
+  const g=body.querySelector('#svGrid');
+  SV_TILES.forEach(tile=>{const el=document.createElement('button');el.className='svtile'+(tile.soon?' soon':'');
+    el.innerHTML=`${tile.soon?`<span class="badge-soon">${t('soon')}</span>`:''}<span class="se">${tile.em}</span><span class="sn">${t(tile.k)}</span>`;
+    if(!tile.soon)el.onclick=tile.open;else el.disabled=true;g.appendChild(el);});
+  go('sv');
+}
+function svCustomers(){const body=document.getElementById('svBody');const cs=customers().slice().reverse();const orders=load('hb_orders',[]);
+  body.innerHTML=`${svHeader('openSV()')}<div class="h2">${t('sv_customers')}</div>
+    <input type="text" id="svCustSearch" class="searchbox" placeholder="${t('cust_search')}"><div id="svCustList"></div>`;
+  const draw=()=>{const q=(document.getElementById('svCustSearch').value||'').toLowerCase();
+    const list=(q?cs.filter(c=>(c.name||'').toLowerCase().includes(q)||(c.phone||'').includes(q)||(c.wa||'').includes(q)):cs);
+    const wrap=document.getElementById('svCustList');wrap.innerHTML='';
+    if(!list.length){wrap.innerHTML=`<div class="empty"><div class="ee">👥</div>${t('sv_none_cust')}</div>`;return;}
+    list.forEach(c=>{const n=orders.filter(o=>(o.custId&&o.custId===c.id)||(c.phone&&o.phone===c.phone)).length;
+      const el=document.createElement('div');el.className='crow';
+      el.innerHTML=`<div class="ci">${(c.name||'?')[0].toUpperCase()}</div><div class="ct"><div class="nm">${c.name}</div>
+        <div class="ds">${c.phone||''} ${c.email?('· '+c.email):''}</div></div><div class="amt2">${n}</div>`;
+      el.onclick=()=>{document.getElementById('ordSearch').value=c.phone||c.name;go('orders');};wrap.appendChild(el);});};
+  document.getElementById('svCustSearch').oninput=draw;draw();
+}
+function svReceipts(){const body=document.getElementById('svBody');
+  const sales=load('hb_orders',[]).filter(o=>o.amount>0).slice().reverse();
+  body.innerHTML=`${svHeader('openSV()')}<div class="h2">${t('sv_receipts')}</div><div id="svRecList"></div>`;
+  const wrap=document.getElementById('svRecList');
+  if(!sales.length){wrap.innerHTML=`<div class="empty"><div class="ee">📩</div>${t('sv_none_sales')}</div>`;return;}
+  sales.forEach(o=>{const el=document.createElement('div');el.className='order';
+    el.innerHTML=`<div class="top"><div><div class="who">${o.name}</div><div class="meta">${o.id} · ${o.svcName} · ${fmtDate(o.ts)}</div></div><div class="amt2">${gdes(o.amount)}</div></div>
+      <button class="mini">🧾 ${t('reopen_receipt')}</button>`;
+    el.querySelector('.mini').onclick=()=>showReceipt(o);wrap.appendChild(el);});
+}
 
 /* ===================================================================
    NOTIFY CUSTOMER (WhatsApp / Email) — e.g. "package ready"
