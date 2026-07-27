@@ -443,7 +443,8 @@ const T_CA={
   ca_reserved:'Retrè Rezève',ca_res_sub:'Bay kliyan an kòd sa a. Li ekspire nan 10 minit.',ca_expires:'Ekspire nan',ca_expired:'Kòd la ekspire.',
   ca_notfound:'Kòd pa jwenn sou aparèy sa a. Antre montan an alamen.',ca_paid_ok:'Kach peye!',ca_none:'Pa gen retrè ankò.',ca_receipt:'RESI RETRÈ',
   ca_insufficient:'Pa gen ase kach nan kès la.',ca_add_amt:'Konbyen kach pou ajoute? (GDES)',ca_sub_amt:'Konbyen kach pou retire? (GDES)',
-  ca_set_h:'Aksè Kach (Retrè)',ca_set_feetype:'Tip komisyon machann',ca_set_feefixed:'Frè fiks (GDES/retrè)',ca_set_feepct:'oswa Komisyon (%)',ca_set_low:'Sèy likidite ba (GDES)',ca_fixed:'Fiks (GDES)',ca_pct:'Pousantaj (%)'},
+  ca_set_h:'Aksè Kach (Retrè)',ca_set_feetype:'Tip komisyon machann',ca_set_feefixed:'Frè fiks (GDES/retrè)',ca_set_feepct:'oswa Komisyon (%)',ca_set_low:'Sèy likidite ba (GDES)',ca_fixed:'Fiks (GDES)',ca_pct:'Pousantaj (%)',
+  ca_soon_msg:'Byento ou pral ka retire lajan MonCash/NatCash ou an kach nan machann HaitiBiznis toupatou — san ATM.'},
  fr:{ca_title:'Accès Cash',ca_sub:'Remettez du cash aux clients au Centre — sans DAB.',
   ca_avail:'Cash Disponible',ca_redeem:'Payer un Retrait',ca_reserve:'Réserver un Retrait',
   ca_increase:'Augmenter',ca_decrease:'Diminuer',ca_pause:'Suspendre les retraits',ca_resume:'Reprendre',ca_paused:'Retraits suspendus',
@@ -455,7 +456,8 @@ const T_CA={
   ca_reserved:'Retrait Réservé',ca_res_sub:'Donnez ce code au client. Il expire dans 10 minutes.',ca_expires:'Expire dans',ca_expired:'Code expiré.',
   ca_notfound:'Code introuvable sur cet appareil. Saisissez le montant.',ca_paid_ok:'Cash remis !',ca_none:'Aucun retrait.',ca_receipt:'REÇU DE RETRAIT',
   ca_insufficient:'Cash insuffisant dans la caisse.',ca_add_amt:'Combien ajouter ? (GDES)',ca_sub_amt:'Combien retirer ? (GDES)',
-  ca_set_h:'Accès Cash (Retraits)',ca_set_feetype:'Type de commission',ca_set_feefixed:'Frais fixe (GDES/retrait)',ca_set_feepct:'ou Commission (%)',ca_set_low:'Seuil de liquidité (GDES)',ca_fixed:'Fixe (GDES)',ca_pct:'Pourcentage (%)'},
+  ca_set_h:'Accès Cash (Retraits)',ca_set_feetype:'Type de commission',ca_set_feefixed:'Frais fixe (GDES/retrait)',ca_set_feepct:'ou Commission (%)',ca_set_low:'Seuil de liquidité (GDES)',ca_fixed:'Fixe (GDES)',ca_pct:'Pourcentage (%)',
+  ca_soon_msg:'Bientôt, vous pourrez retirer votre argent MonCash/NatCash en espèces chez les marchands HaitiBiznis — sans DAB.'},
  en:{ca_title:'Cash Access',ca_sub:'Hand out cash to customers at the Center — no ATM needed.',
   ca_avail:'Available Cash',ca_redeem:'Process Withdrawal',ca_reserve:'Reserve Withdrawal',
   ca_increase:'Increase Cash',ca_decrease:'Decrease Cash',ca_pause:'Pause Withdrawals',ca_resume:'Resume Withdrawals',ca_paused:'Withdrawals paused',
@@ -467,7 +469,8 @@ const T_CA={
   ca_reserved:'Withdrawal Reserved',ca_res_sub:'Give the customer this code. Expires in 10 minutes.',ca_expires:'Expires in',ca_expired:'Code expired.',
   ca_notfound:'Code not found on this device. Enter the amount manually.',ca_paid_ok:'Cash paid out!',ca_none:'No withdrawals yet.',ca_receipt:'WITHDRAWAL RECEIPT',
   ca_insufficient:'Not enough cash in the drawer.',ca_add_amt:'How much cash to add? (GDES)',ca_sub_amt:'How much cash to remove? (GDES)',
-  ca_set_h:'Cash Access (Withdrawals)',ca_set_feetype:'Merchant commission type',ca_set_feefixed:'Fixed fee (GDES/withdrawal)',ca_set_feepct:'or Commission (%)',ca_set_low:'Low-liquidity threshold (GDES)',ca_fixed:'Fixed (GDES)',ca_pct:'Percentage (%)'}
+  ca_set_h:'Cash Access (Withdrawals)',ca_set_feetype:'Merchant commission type',ca_set_feefixed:'Fixed fee (GDES/withdrawal)',ca_set_feepct:'or Commission (%)',ca_set_low:'Low-liquidity threshold (GDES)',ca_fixed:'Fixed (GDES)',ca_pct:'Percentage (%)',
+  ca_soon_msg:'Soon you’ll be able to withdraw your MonCash/NatCash money as cash at HaitiBiznis merchants anywhere — no ATM needed.'}
 };
 Object.keys(T_CA).forEach(function(l){Object.assign(T[l],T_CA[l]);});
 
@@ -507,7 +510,6 @@ function sInfo(set,id){const s=STATUS[set]||STATUS.sale;return s.find(x=>x.id===
 /* ---------- modules ---------- */
 const MODULES=[
  {id:'sistemvant',nm:'Sistèm Vant',em:'🧾',type:'sv',feat:true},
- {id:'cashaccess',nm:'Aksè Kach',em:'💵',type:'cash'},
  {id:'myplopplop',nm:'MyPlopPlop',logo:'assets/myplopplop-logo.png',type:'sub'},
  {id:'msouwout',nm:'MsouWout',logo:'assets/msouwout-logo.png',type:'sub'},
  {id:'parenaj',nm:'Parenaj Biznis',em:'🤝',type:'reg',reg:'affiliate'},
@@ -516,7 +518,8 @@ const MODULES=[
  {id:'48h',nm:'48HoursReady',logo:'assets/48hoursready-logo.jpg',type:'order'},
  {id:'admin',nm:'Sèvis Administratif',em:'📄',type:'order'},
  {id:'legal',nm:'Sèvis Legal',em:'⚖️',type:'order'},
- {id:'bizreg',nm:'Anrejistreman Biznis',em:'🏢',type:'order'}
+ {id:'bizreg',nm:'Anrejistreman Biznis',em:'🏢',type:'order'},
+ {id:'cashaccess',nm:'Aksè Kach',em:'💵',type:'cash',soon:true}
  /* Payment Hub temporarily hidden from home (not ready) — code kept, re-add later:
     {id:'paymenthub',nm:'Payment Hub',em:'💳',type:'order'} */
 ];
@@ -565,11 +568,14 @@ function refreshBadges(){const o=load('hb_orders',[]);
 
 /* ---------- home ---------- */
 function renderHome(){const g=document.getElementById('modGrid');g.innerHTML='';
-  MODULES.forEach(m=>{const b=document.createElement('button');b.className='mod'+(m.feat?' feat':'');
+  MODULES.forEach(m=>{const b=document.createElement('button');b.className='mod'+(m.feat?' feat':'')+(m.soon?' soon':'');
+    const badge=m.soon?`<span style="position:absolute;top:8px;right:8px;background:#f59e0b;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:20px;letter-spacing:.3px">${t('soon')}</span>`:'';
     if(m.feat){b.innerHTML=`<span class="fem">${m.em}</span><span class="ft"><span class="nm">${m.nm}</span><span class="fs" data-i18n="sv_tag">Sistèm prensipal — vann & jere tout</span></span><span class="fgo">›</span>`;}
     else{const icon=m.logo?`<img class="il" src="${m.logo}" alt="">`:`<span class="em">${m.em}</span>`;
-      b.innerHTML=`${icon}<span class="nm">${m.nm}</span>`;}
-    b.onclick=()=>openModule(m);g.appendChild(b);});
+      b.innerHTML=`${badge}${icon}<span class="nm">${m.nm}</span>`;}
+    if(m.soon){b.style.position='relative';b.style.opacity='.72';b.onclick=()=>caSoon();}
+    else b.onclick=()=>openModule(m);
+    g.appendChild(b);});
   applyI18n();}
 function openModule(m){
   if(m.type==='order'){startFlow(m.id);}
@@ -1365,6 +1371,19 @@ function caHistory(){
     el.innerHTML=`<div class="top"><div><div class="who">${o.name||'—'} · ${payLabel(o.method)}</div><div class="meta">${o.id} · ${o.code} · ${fmtDate(o.ts)}</div></div>
       <div style="text-align:right"><div class="amt2">${gdes(o.amount)}</div><div style="font-size:11px;color:#16a34a;font-weight:800">+${gdes(o.fee)}</div></div></div>`;
     wrap.appendChild(el);});
+}
+
+function caSoon(){
+  const m=caOverlay(`
+    <div style="text-align:center">
+      <div style="font-size:42px">💵</div>
+      <div style="font-weight:900;font-size:18px;margin-top:4px">${t('ca_title')}</div>
+      <div style="display:inline-block;background:#f59e0b;color:#fff;font-size:11px;font-weight:800;padding:3px 12px;border-radius:20px;margin:8px 0">${t('soon')}</div>
+      <div class="sub" style="margin-top:6px">${t('ca_soon_msg')}</div>
+      <div style="height:14px"></div>
+      <button class="cta ghost" id="caSoon_x">${t('back')}</button>
+    </div>`);
+  m.box.querySelector('#caSoon_x').onclick=m.close;
 }
 
 /* ===================================================================
