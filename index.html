@@ -253,6 +253,11 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
   <div id="svBody"></div>
 </section>
 
+<!-- Cash Access Network — merchant/agent cash-out station -->
+<section id="s-cash" class="screen">
+  <div id="cashBody"></div>
+</section>
+
 <!-- tickets: event create / checkin -->
 <section id="s-tickets" class="screen">
   <button class="back" onclick="go('home')">‹ <span data-i18n="back">Retounen</span></button>
@@ -425,6 +430,46 @@ const T_EXT={
   pg_creating:'Creating payment…',pg_scan:'Have the customer scan the code with their phone, or open the payment page.',pg_open:'Open payment page',pg_waiting:'Waiting for payment…',pg_paid:'✓ Payment received!',pg_manual:'Mark paid manually',pg_fail:'Payment not created',pg_fail_sub:'Could not reach the payment service. You can mark it paid manually or try again.',cancel:'Cancel',set_pay_h:'Electronic payment',set_payclient:'Payment Merchant ID (MonCash/NatCash)',pay_active:'MonCash & NatCash active',pay_active_sub:'Choose MonCash or NatCash when making a sale — the customer pays on their phone and the sale is marked paid automatically.',pay_status_paid:'Paid',pay_status_manual:'Paid (manual)',pay_none:'No electronic payments yet.'}
 };
 Object.keys(T_EXT).forEach(function(l){Object.assign(T[l],T_EXT[l]);});
+/* ---- Cash Access Network strings ---- */
+const T_CA={
+ ht:{ca_title:'Aksè Kach',ca_sub:'Bay kliyan kach nan Sant lan — san ATM.',
+  ca_avail:'Kach Disponib',ca_redeem:'Peye yon Retrè',ca_reserve:'Rezève yon Retrè',
+  ca_increase:'Ogmante Kach',ca_decrease:'Diminye Kach',ca_pause:'Kanpe Retrè',ca_resume:'Reprann Retrè',ca_paused:'Retrè an poz',
+  ca_history:'Istwa Retrè',ca_low:'Kach ba (anba {n}) — ajoute likidite oswa kanpe retrè.',
+  ca_today_out:'Peye jodi a',ca_today_fee:'Komisyon jodi a',ca_count:'Retrè jodi a',
+  ca_code:'Kòd Retrè',ca_enter_code:'Antre oswa eskane kòd 6 chif kliyan an.',
+  ca_cust:'Non kliyan',ca_method:'Metòd',ca_confirm_id:'Mwen verifye idantite kliyan an',
+  ca_approve:'Apwouve & Bay Kach',ca_fee:'Komisyon',ca_net:'Kliyan resevwa',
+  ca_reserved:'Retrè Rezève',ca_res_sub:'Bay kliyan an kòd sa a. Li ekspire nan 10 minit.',ca_expires:'Ekspire nan',ca_expired:'Kòd la ekspire.',
+  ca_notfound:'Kòd pa jwenn sou aparèy sa a. Antre montan an alamen.',ca_paid_ok:'Kach peye!',ca_none:'Pa gen retrè ankò.',ca_receipt:'RESI RETRÈ',
+  ca_insufficient:'Pa gen ase kach nan kès la.',ca_add_amt:'Konbyen kach pou ajoute? (GDES)',ca_sub_amt:'Konbyen kach pou retire? (GDES)',
+  ca_set_h:'Aksè Kach (Retrè)',ca_set_feetype:'Tip komisyon machann',ca_set_feefixed:'Frè fiks (GDES/retrè)',ca_set_feepct:'oswa Komisyon (%)',ca_set_low:'Sèy likidite ba (GDES)',ca_fixed:'Fiks (GDES)',ca_pct:'Pousantaj (%)'},
+ fr:{ca_title:'Accès Cash',ca_sub:'Remettez du cash aux clients au Centre — sans DAB.',
+  ca_avail:'Cash Disponible',ca_redeem:'Payer un Retrait',ca_reserve:'Réserver un Retrait',
+  ca_increase:'Augmenter',ca_decrease:'Diminuer',ca_pause:'Suspendre les retraits',ca_resume:'Reprendre',ca_paused:'Retraits suspendus',
+  ca_history:'Historique',ca_low:'Cash bas (sous {n}) — ajoutez de la liquidité ou suspendez.',
+  ca_today_out:'Payé aujourd’hui',ca_today_fee:'Commission du jour',ca_count:'Retraits du jour',
+  ca_code:'Code de retrait',ca_enter_code:'Saisissez ou scannez le code à 6 chiffres du client.',
+  ca_cust:'Nom du client',ca_method:'Méthode',ca_confirm_id:'J’ai vérifié l’identité du client',
+  ca_approve:'Approuver & Remettre',ca_fee:'Commission',ca_net:'Le client reçoit',
+  ca_reserved:'Retrait Réservé',ca_res_sub:'Donnez ce code au client. Il expire dans 10 minutes.',ca_expires:'Expire dans',ca_expired:'Code expiré.',
+  ca_notfound:'Code introuvable sur cet appareil. Saisissez le montant.',ca_paid_ok:'Cash remis !',ca_none:'Aucun retrait.',ca_receipt:'REÇU DE RETRAIT',
+  ca_insufficient:'Cash insuffisant dans la caisse.',ca_add_amt:'Combien ajouter ? (GDES)',ca_sub_amt:'Combien retirer ? (GDES)',
+  ca_set_h:'Accès Cash (Retraits)',ca_set_feetype:'Type de commission',ca_set_feefixed:'Frais fixe (GDES/retrait)',ca_set_feepct:'ou Commission (%)',ca_set_low:'Seuil de liquidité (GDES)',ca_fixed:'Fixe (GDES)',ca_pct:'Pourcentage (%)'},
+ en:{ca_title:'Cash Access',ca_sub:'Hand out cash to customers at the Center — no ATM needed.',
+  ca_avail:'Available Cash',ca_redeem:'Process Withdrawal',ca_reserve:'Reserve Withdrawal',
+  ca_increase:'Increase Cash',ca_decrease:'Decrease Cash',ca_pause:'Pause Withdrawals',ca_resume:'Resume Withdrawals',ca_paused:'Withdrawals paused',
+  ca_history:'History',ca_low:'Cash low (below {n}) — add liquidity or pause withdrawals.',
+  ca_today_out:'Paid out today',ca_today_fee:'Earnings today',ca_count:'Withdrawals today',
+  ca_code:'Withdrawal code',ca_enter_code:'Enter or scan the customer’s 6-digit code.',
+  ca_cust:'Customer name',ca_method:'Method',ca_confirm_id:'I verified the customer’s identity',
+  ca_approve:'Approve & Give Cash',ca_fee:'Commission',ca_net:'Customer receives',
+  ca_reserved:'Withdrawal Reserved',ca_res_sub:'Give the customer this code. Expires in 10 minutes.',ca_expires:'Expires in',ca_expired:'Code expired.',
+  ca_notfound:'Code not found on this device. Enter the amount manually.',ca_paid_ok:'Cash paid out!',ca_none:'No withdrawals yet.',ca_receipt:'WITHDRAWAL RECEIPT',
+  ca_insufficient:'Not enough cash in the drawer.',ca_add_amt:'How much cash to add? (GDES)',ca_sub_amt:'How much cash to remove? (GDES)',
+  ca_set_h:'Cash Access (Withdrawals)',ca_set_feetype:'Merchant commission type',ca_set_feefixed:'Fixed fee (GDES/withdrawal)',ca_set_feepct:'or Commission (%)',ca_set_low:'Low-liquidity threshold (GDES)',ca_fixed:'Fixed (GDES)',ca_pct:'Percentage (%)'}
+};
+Object.keys(T_CA).forEach(function(l){Object.assign(T[l],T_CA[l]);});
 
 let lang=localStorage.getItem('hb_lang')||'ht';
 function t(k){return (T[lang]&&T[lang][k])||T.ht[k]||k;}
@@ -437,7 +482,7 @@ function applyI18n(){document.documentElement.lang=lang;
 const DEF_CFG={rate:132,regFeeDriver:0,regFeeRider:0,regFeeMerchant:0,regFeePro:0,
   bizreg:[{id:'nc',nm:'Nom Commercial',usd:500,press:0},{id:'ncol',nm:'Société en Nom Collectif',usd:1000,press:0},
     {id:'sa',nm:'Société Anonyme',usd:2000,press:40000},{id:'sam',nm:'Société Anonyme Mixte',usd:3500,press:70000}],hbFeePct:30,
-  payClient:'pp_1ohu5zz2tcx'};
+  payClient:'pp_1ohu5zz2tcx',caFeeType:'fixed',caFeeVal:25,caLow:20000};
 function getCfg(){try{const c=JSON.parse(localStorage.getItem('hb_cfg'));if(c&&c.bizreg)return c;}catch(e){}return JSON.parse(JSON.stringify(DEF_CFG));}
 function setCfg(c){localStorage.setItem('hb_cfg',JSON.stringify(c));}
 
@@ -462,6 +507,7 @@ function sInfo(set,id){const s=STATUS[set]||STATUS.sale;return s.find(x=>x.id===
 /* ---------- modules ---------- */
 const MODULES=[
  {id:'sistemvant',nm:'Sistèm Vant',em:'🧾',type:'sv',feat:true},
+ {id:'cashaccess',nm:'Aksè Kach',em:'💵',type:'cash'},
  {id:'myplopplop',nm:'MyPlopPlop',logo:'assets/myplopplop-logo.png',type:'sub'},
  {id:'msouwout',nm:'MsouWout',logo:'assets/msouwout-logo.png',type:'sub'},
  {id:'parenaj',nm:'Parenaj Biznis',em:'🤝',type:'reg',reg:'affiliate'},
@@ -531,6 +577,7 @@ function openModule(m){
   else if(m.type==='tickets'){openTickets();}
   else if(m.type==='sub'){openSubs(m);}
   else if(m.type==='sv'){openSV();}
+  else if(m.type==='cash'){openCash();}
 }
 function openSubs(m){
   const subs={
@@ -1022,6 +1069,11 @@ function renderSettings(){const cfg=getCfg();const box=document.getElementById('
     <label class="fl">${t('set_regfee_p')}</label><input type="number" id="set_rfp" value="${cfg.regFeePro}">
     <div style="font-weight:800;margin:10px 0 6px">${t('set_pay_h')}</div>
     <label class="fl">${t('set_payclient')}</label><input id="set_payclient" value="${cfg.payClient||'pp_1ohu5zz2tcx'}">
+    <div style="font-weight:800;margin:10px 0 6px">💵 ${t('ca_set_h')}</div>
+    <label class="fl">${t('ca_set_feetype')}</label>
+    <select id="set_cafeetype"><option value="fixed"${cfg.caFeeType!=='pct'?' selected':''}>${t('ca_fixed')}</option><option value="pct"${cfg.caFeeType==='pct'?' selected':''}>${t('ca_pct')}</option></select>
+    <label class="fl">${t('ca_set_feefixed')} ${t('ca_set_feepct')}</label><input type="number" id="set_cafeeval" value="${cfg.caFeeVal!=null?cfg.caFeeVal:25}">
+    <label class="fl">${t('ca_set_low')}</label><input type="number" id="set_calow" value="${cfg.caLow!=null?cfg.caLow:20000}">
     <div style="font-weight:800;margin:8px 0 6px">${t('fee_hb')} — ${modById('bizreg').nm}</div>`;
   cfg.bizreg.forEach((r,i)=>{box.innerHTML+=`<div style="border-top:1px solid var(--line);padding-top:10px;margin-top:4px"><div style="font-weight:700;margin-bottom:6px">${r.nm}</div>
     <label class="fl">Base (US$)</label><input type="number" data-usd="${i}" value="${r.usd}">
@@ -1031,6 +1083,9 @@ function saveSettings(){const cfg=getCfg();cfg.rate=+document.getElementById('se
   cfg.regFeeDriver=+document.getElementById('set_rfd').value||0;cfg.regFeeRider=+document.getElementById('set_rfr').value||0;
   cfg.regFeeMerchant=+document.getElementById('set_rfm').value||0;cfg.regFeePro=+document.getElementById('set_rfp').value||0;
   cfg.payClient=(document.getElementById('set_payclient').value||'').trim()||'pp_1ohu5zz2tcx';
+  cfg.caFeeType=document.getElementById('set_cafeetype').value||'fixed';
+  cfg.caFeeVal=+document.getElementById('set_cafeeval').value||0;
+  cfg.caLow=+document.getElementById('set_calow').value||0;
   document.querySelectorAll('[data-usd]').forEach(el=>cfg.bizreg[+el.dataset.usd].usd=+el.value||0);
   document.querySelectorAll('[data-press]').forEach(el=>cfg.bizreg[+el.dataset.press].press=+el.value||0);
   setCfg(cfg);const btn=event.target,old=btn.textContent;btn.textContent='✓';setTimeout(()=>btn.textContent=old,900);}
@@ -1114,6 +1169,202 @@ function svPayments(){const body=document.getElementById('svBody');
       <div style="text-align:right"><div class="amt2">${gdes(o.amount)}</div><div style="font-size:11px;font-weight:800;color:${col}">${st}</div></div></div>
       <button class="mini">🧾 ${t('reopen_receipt')}</button>`;
     el.querySelector('.mini').onclick=()=>showReceipt(o);wrap.appendChild(el);});
+}
+
+/* ===================================================================
+   CASH ACCESS NETWORK — merchant/agent cash-out station (ATM alternative)
+   Phase 1 (this device): drawer management + reserve/redeem withdrawal
+   codes. Cross-device reservations + real wallet settlement = backend.
+   =================================================================== */
+function caState(){return load('hb_cash',{avail:0,paused:false});}
+function caSetState(s){save('hb_cash',s);}
+function caTxs(){return load('hb_cashtx',[]);}
+function caRes(){return load('hb_cashres',[]);}
+function caFee(amt){const c=getCfg();return c.caFeeType==='pct'?Math.round(amt*(+c.caFeeVal||0)/100):Math.round(+c.caFeeVal||0);}
+function caCode(){var s='';for(var i=0;i<6;i++)s+=Math.floor(Math.random()*10);return s;}
+function caRef(){return 'CW-'+Date.now().toString(36).toUpperCase();}
+function caOverlay(inner){
+  const ov=document.createElement('div');ov.style.cssText='position:fixed;inset:0;background:rgba(10,16,32,.55);z-index:70;display:flex;align-items:center;justify-content:center;padding:16px';
+  const box=document.createElement('div');box.style.cssText='background:#fff;width:100%;max-width:430px;border-radius:18px;padding:20px 18px;max-height:90vh;overflow:auto';
+  box.innerHTML=inner;ov.appendChild(box);document.body.appendChild(ov);
+  ov.onclick=e=>{if(e.target===ov)document.body.removeChild(ov);};
+  return {ov,box,close:()=>{if(ov.parentNode)document.body.removeChild(ov);}};
+}
+function openCash(){
+  const body=document.getElementById('cashBody');const st=caState();const cfg=getCfg();
+  const txs=caTxs();const today=txs.filter(x=>isToday(x.ts));
+  const outToday=today.reduce((a,b)=>a+(+b.amount||0),0);
+  const feeToday=today.reduce((a,b)=>a+(+b.fee||0),0);
+  const low=st.avail<(+cfg.caLow||0);
+  body.innerHTML=`
+    <button class="back" onclick="go('home')">‹ ${t('back')}</button>
+    <div class="h2">💵 ${t('ca_title')}</div>
+    <p class="sub">${t('ca_sub')}</p>
+    ${st.paused?`<div class="card" style="background:#fff7ed;border-color:#f59e0b;color:#b45309;font-weight:800">⏸ ${t('ca_paused')}</div>`:''}
+    ${low?`<div class="card" style="background:#fef2f2;border-color:#ef4444;color:#b91c1c;font-weight:700">⚠️ ${t('ca_low').replace('{n}',gdes(cfg.caLow))}</div>`:''}
+    <div class="card" style="background:linear-gradient(135deg,#00209F,#0038d1);border:none;color:#fff;text-align:center;padding:22px">
+      <div style="font-size:12px;opacity:.85;font-weight:700;letter-spacing:.6px">${t('ca_avail')}</div>
+      <div style="font-size:34px;font-weight:900;margin-top:4px">${gdes(st.avail)}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:0 0 12px;text-align:center">
+      <div class="card" style="padding:12px 4px"><div style="font-weight:900;font-size:14px">${gdes(outToday)}</div><div style="font-size:10px;color:var(--muted)">${t('ca_today_out')}</div></div>
+      <div class="card" style="padding:12px 4px"><div style="font-weight:900;font-size:14px;color:#16a34a">${gdes(feeToday)}</div><div style="font-size:10px;color:var(--muted)">${t('ca_today_fee')}</div></div>
+      <div class="card" style="padding:12px 4px"><div style="font-weight:900;font-size:14px">${today.length}</div><div style="font-size:10px;color:var(--muted)">${t('ca_count')}</div></div>
+    </div>
+    <button class="cta" ${st.paused?'disabled style="opacity:.5"':''} onclick="caRedeem()">💸 ${t('ca_redeem')}</button>
+    <button class="cta ghost" onclick="caReserve()">🎫 ${t('ca_reserve')}</button>
+    <div class="row2">
+      <button class="cta ghost" onclick="caAdjust(1)">➕ ${t('ca_increase')}</button>
+      <button class="cta ghost" onclick="caAdjust(-1)">➖ ${t('ca_decrease')}</button>
+    </div>
+    <button class="cta ${st.paused?'green':'ghost'}" onclick="caTogglePause()">${st.paused?'▶ '+t('ca_resume'):'⏸ '+t('ca_pause')}</button>
+    <button class="cta ghost" onclick="caHistory()">🧾 ${t('ca_history')}</button>`;
+  go('cash');
+}
+function caAdjust(dir){
+  const st=caState();const v=prompt(dir>0?t('ca_add_amt'):t('ca_sub_amt'),'');if(v===null)return;
+  const amt=Math.round(+v||0);if(amt<=0)return;
+  if(dir<0&&amt>st.avail){alert(t('ca_insufficient'));return;}
+  st.avail=Math.max(0,st.avail+dir*amt);caSetState(st);openCash();
+}
+function caTogglePause(){const st=caState();st.paused=!st.paused;caSetState(st);openCash();}
+function caReserve(){
+  const m=caOverlay(`
+    <div style="font-weight:900;font-size:17px;margin-bottom:8px">🎫 ${t('ca_reserve')}</div>
+    <label class="fl">${t('amount')}</label><input type="number" id="caR_amt" inputmode="numeric" placeholder="GDES">
+    <label class="fl">${t('ca_cust')}</label><input id="caR_name">
+    <label class="fl">${t('f_phone')}</label><input id="caR_phone" inputmode="tel">
+    <label class="fl">${t('ca_method')}</label>
+    <select id="caR_method"><option value="moncash">MonCash</option><option value="natcash">NatCash</option></select>
+    <div style="height:12px"></div>
+    <button class="cta" id="caR_go">${t('ca_reserve')}</button>
+    <button class="cta ghost" id="caR_x">${t('cancel')}</button>`);
+  m.box.querySelector('#caR_x').onclick=m.close;
+  m.box.querySelector('#caR_go').onclick=()=>{
+    const amt=Math.round(+m.box.querySelector('#caR_amt').value||0);
+    if(amt<=0){alert(t('need_sel'));return;}
+    const r={ref:caRef(),code:caCode(),amount:amt,name:(m.box.querySelector('#caR_name').value||'').trim(),
+      phone:(m.box.querySelector('#caR_phone').value||'').trim(),method:m.box.querySelector('#caR_method').value,
+      status:'pending',exp:Date.now()+10*60*1000,ts:nowStamp()};
+    const res=caRes();res.push(r);save('hb_cashres',res);
+    m.close();caShowCode(r);
+  };
+}
+function caShowCode(r){
+  const qr=qrDataURL(r.code);
+  const m=caOverlay(`
+    <div style="text-align:center">
+      <div style="font-weight:900;font-size:17px">🎫 ${t('ca_reserved')}</div>
+      <div class="sub" style="margin:6px 0 12px">${t('ca_res_sub')}</div>
+      <div style="font-size:40px;font-weight:900;letter-spacing:8px;color:#00209F">${r.code}</div>
+      ${qr?`<img src="${qr}" alt="QR" style="width:170px;height:170px;margin:8px auto;display:block">`:''}
+      <div style="font-weight:900;font-size:20px;margin-top:4px">${gdes(r.amount)}</div>
+      <div class="sub">${(r.name||'')} ${r.name?'· ':''}${payLabel(r.method)}</div>
+      <div id="caTimer" style="font-weight:800;color:#b45309;margin-top:10px"></div>
+      <div style="height:12px"></div>
+      <button class="cta ghost" id="caCode_x">${t('back')}</button>
+    </div>`);
+  m.box.querySelector('#caCode_x').onclick=m.close;
+  const tick=()=>{const el=m.box.querySelector('#caTimer');if(!el)return;const left=Math.max(0,r.exp-Date.now());
+    const mm=Math.floor(left/60000),ss=Math.floor((left%60000)/1000);
+    el.textContent=t('ca_expires')+': '+mm+':'+String(ss).padStart(2,'0');
+    if(left<=0){el.textContent=t('ca_expired');clearInterval(iv);}};
+  const iv=setInterval(tick,1000);tick();
+}
+function caRedeem(){
+  const st=caState();if(st.paused){alert(t('ca_paused'));return;}
+  const m=caOverlay(`
+    <div style="font-weight:900;font-size:17px;margin-bottom:6px">💸 ${t('ca_redeem')}</div>
+    <div class="sub" style="margin-bottom:8px">${t('ca_enter_code')}</div>
+    <input id="caD_code" inputmode="numeric" maxlength="6" placeholder="000000" style="font-size:26px;letter-spacing:6px;text-align:center">
+    <div style="height:10px"></div>
+    <button class="cta" id="caD_go">${t('next')}</button>
+    <button class="cta ghost" id="caD_x">${t('cancel')}</button>`);
+  m.box.querySelector('#caD_x').onclick=m.close;
+  m.box.querySelector('#caD_go').onclick=()=>{
+    const code=(m.box.querySelector('#caD_code').value||'').trim();if(code.length<4)return;
+    const res=caRes();const r=res.find(x=>x.code===code&&x.status==='pending');
+    if(r&&r.exp&&Date.now()>r.exp){alert(t('ca_expired'));return;}
+    m.close();
+    if(r)caConfirm(r,()=>{r.status='paid';save('hb_cashres',res);});
+    else caManual(code);
+  };
+}
+function caManual(code){
+  const m=caOverlay(`
+    <div style="font-weight:900;font-size:17px;margin-bottom:6px">💸 ${t('ca_redeem')}</div>
+    <div class="card" style="background:#fff7ed;border-color:#f59e0b;color:#b45309;font-size:13px">${t('ca_notfound')}</div>
+    <label class="fl">${t('amount')}</label><input type="number" id="caM_amt" inputmode="numeric" placeholder="GDES">
+    <label class="fl">${t('ca_cust')}</label><input id="caM_name">
+    <label class="fl">${t('ca_method')}</label><select id="caM_method"><option value="moncash">MonCash</option><option value="natcash">NatCash</option></select>
+    <div style="height:10px"></div>
+    <button class="cta" id="caM_go">${t('next')}</button>
+    <button class="cta ghost" id="caM_x">${t('cancel')}</button>`);
+  m.box.querySelector('#caM_x').onclick=m.close;
+  m.box.querySelector('#caM_go').onclick=()=>{
+    const amt=Math.round(+m.box.querySelector('#caM_amt').value||0);if(amt<=0)return;
+    const r={ref:caRef(),code,amount:amt,name:(m.box.querySelector('#caM_name').value||'').trim(),method:m.box.querySelector('#caM_method').value};
+    m.close();caConfirm(r,()=>{});
+  };
+}
+function caConfirm(r,onPaid){
+  const st=caState();const fee=caFee(r.amount);
+  if(r.amount>st.avail){alert(t('ca_insufficient'));return;}
+  const m=caOverlay(`
+    <div style="text-align:center">
+      <div style="font-weight:900;font-size:17px">💸 ${t('ca_redeem')}</div>
+      <div style="font-size:34px;font-weight:900;color:#00209F;margin:10px 0">${gdes(r.amount)}</div>
+      <div class="sub">${r.name||'—'} · ${payLabel(r.method)} · ${r.code}</div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin:12px 4px 0"><span>${t('ca_net')}</span><b>${gdes(r.amount)}</b></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin:4px 4px 0;color:#16a34a"><span>${t('ca_fee')}</span><b>+${gdes(fee)}</b></div>
+    </div>
+    <label style="display:flex;gap:8px;align-items:center;margin:14px 0;font-size:13px;font-weight:700"><input type="checkbox" id="caC_id" style="width:auto"> ${t('ca_confirm_id')}</label>
+    <button class="cta green" id="caC_go" disabled style="opacity:.5">✓ ${t('ca_approve')}</button>
+    <button class="cta ghost" id="caC_x">${t('cancel')}</button>`);
+  const chk=m.box.querySelector('#caC_id'),go2=m.box.querySelector('#caC_go');
+  chk.onchange=()=>{go2.disabled=!chk.checked;go2.style.opacity=chk.checked?'1':'.5';};
+  m.box.querySelector('#caC_x').onclick=m.close;
+  go2.onclick=()=>{
+    const st2=caState();st2.avail=Math.max(0,st2.avail-r.amount);caSetState(st2);
+    const txs=caTxs();const tx={id:'CW'+String(1000+txs.length+1),code:r.code,ref:r.ref||caRef(),
+      amount:r.amount,fee,method:r.method,name:r.name||'',phone:r.phone||'',ts:nowStamp()};
+    txs.push(tx);save('hb_cashtx',txs);onPaid&&onPaid();
+    m.close();caReceipt(tx);openCash();
+  };
+}
+function caReceipt(tx){
+  const m=caOverlay(`
+    <div style="text-align:center"><div style="font-size:38px">✅</div>
+      <div style="font-weight:900;font-size:18px;color:#16a34a">${t('ca_paid_ok')}</div></div>
+    <div class="receipt" style="margin-top:12px">
+      <div style="text-align:center;font-weight:900">${t('ca_receipt')}</div>
+      <div style="text-align:center;font-size:12px;color:var(--muted);margin-bottom:8px">HaitiBiznis · ${t('ca_title')}</div>
+      <div class="ritem"><span>${t('order_no')}</span><span>${tx.id}</span></div>
+      <div class="ritem"><span>${t('ca_code')}</span><span>${tx.code}</span></div>
+      <div class="ritem"><span>${t('customer')}</span><span>${tx.name||'—'}</span></div>
+      <div class="ritem"><span>${t('ca_method')}</span><span>${payLabel(tx.method)}</span></div>
+      <div class="ritem"><span>${t('date')}</span><span>${fmtDate(tx.ts)}</span></div>
+      <div class="ritem" style="font-weight:900;border-top:1px solid var(--line);margin-top:6px;padding-top:6px"><span>${t('ca_net')}</span><span>${gdes(tx.amount)}</span></div>
+      <div class="ritem" style="color:#16a34a"><span>${t('ca_fee')}</span><span>+${gdes(tx.fee)}</span></div>
+    </div>
+    <div style="height:12px"></div>
+    <button class="cta" onclick="window.print()">${t('print')}</button>
+    <button class="cta ghost" id="caRc_x">${t('conf_home')}</button>`);
+  m.box.querySelector('#caRc_x').onclick=m.close;
+}
+function caHistory(){
+  const txs=caTxs().slice().reverse();
+  const m=caOverlay(`
+    <div style="font-weight:900;font-size:17px;margin-bottom:8px">🧾 ${t('ca_history')}</div>
+    <div id="caHList"></div><div style="height:8px"></div>
+    <button class="cta ghost" id="caH_x">${t('back')}</button>`);
+  m.box.querySelector('#caH_x').onclick=m.close;
+  const wrap=m.box.querySelector('#caHList');
+  if(!txs.length){wrap.innerHTML=`<div class="empty"><div class="ee">💵</div>${t('ca_none')}</div>`;return;}
+  txs.forEach(o=>{const el=document.createElement('div');el.className='order';
+    el.innerHTML=`<div class="top"><div><div class="who">${o.name||'—'} · ${payLabel(o.method)}</div><div class="meta">${o.id} · ${o.code} · ${fmtDate(o.ts)}</div></div>
+      <div style="text-align:right"><div class="amt2">${gdes(o.amount)}</div><div style="font-size:11px;color:#16a34a;font-weight:800">+${gdes(o.fee)}</div></div></div>`;
+    wrap.appendChild(el);});
 }
 
 /* ===================================================================
