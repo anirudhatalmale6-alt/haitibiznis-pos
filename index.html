@@ -258,6 +258,11 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
   <div id="cashBody"></div>
 </section>
 
+<!-- POS Licensing & Subscription -->
+<section id="s-license" class="screen">
+  <div id="licBody"></div>
+</section>
+
 <!-- tickets: event create / checkin -->
 <section id="s-tickets" class="screen">
   <button class="back" onclick="go('home')">‹ <span data-i18n="back">Retounen</span></button>
@@ -473,6 +478,43 @@ const T_CA={
   ca_soon_msg:'Soon you’ll be able to withdraw your MonCash/NatCash money as cash at HaitiBiznis merchants anywhere — no ATM needed.'}
 };
 Object.keys(T_CA).forEach(function(l){Object.assign(T[l],T_CA[l]);});
+/* ---- Licensing / Subscription strings ---- */
+const T_LIC={
+ ht:{lic_title:'Abònman',lic_sub:'Plan lisans POS ou a.',lic_current:'Plan Aktyèl',lic_status:'Estati',
+  lic_start:'Dat kòmansman',lic_exp:'Dat ekspirasyon',lic_days:'Jou ki rete',
+  lic_active:'Aktif',lic_expired:'Ekspire',lic_trial:'Esè',lic_suspended:'Sispann',
+  lic_expired_msg:'Abònman ou ekspire.',lic_expired_sub:'Renouvle pou kontinye fè vant.',
+  lic_renew:'Renouvle Abònman',lic_upgrade:'Chanje / Amelyore Plan',lic_choose:'Chwazi Plan sa a',lic_current_tag:'Plan ou',
+  lic_month:'/mwa',lic_year:'/an',lic_monthly:'Chak mwa',lic_annual:'Chak ane (2 mwa gratis)',lic_custom:'Sou mezi',
+  lic_enterprise_note:'Kontakte HaitiBiznis pou yon plan Enterprise.',lic_history:'Istwa Peman',lic_no_history:'Pa gen peman ankò.',
+  lic_pay_method:'Chwazi metòd peman',lic_activated:'Abònman aktive!',lic_autorenew:'Renouvèlman otomatik',lic_feats:'Sa ki ladan l',
+  lic_banner_trial:'Esè: {n} jou ki rete — tape pou wè plan yo',lic_banner_soon:'Abònman ekspire nan {n} jou',
+  lic_settings_h:'Abònman / Lisans (Admin)',lic_open:'Louvri paj Abònman',lic_extend:'Pwolonje +30 jou',lic_grant_trial:'Bay Esè 30 jou',
+  lic_set_active:'Make Aktif',lic_set_expired:'Make Ekspire (tès)',lic_suspend:'Sispann',lic_reactivate:'Reaktive'},
+ fr:{lic_title:'Abonnement',lic_sub:'Votre plan de licence POS.',lic_current:'Plan actuel',lic_status:'Statut',
+  lic_start:'Date de début',lic_exp:'Date d’expiration',lic_days:'Jours restants',
+  lic_active:'Actif',lic_expired:'Expiré',lic_trial:'Essai',lic_suspended:'Suspendu',
+  lic_expired_msg:'Votre abonnement a expiré.',lic_expired_sub:'Renouvelez pour continuer à vendre.',
+  lic_renew:'Renouveler',lic_upgrade:'Changer / Améliorer le plan',lic_choose:'Choisir ce plan',lic_current_tag:'Votre plan',
+  lic_month:'/mois',lic_year:'/an',lic_monthly:'Mensuel',lic_annual:'Annuel (2 mois gratuits)',lic_custom:'Sur mesure',
+  lic_enterprise_note:'Contactez HaitiBiznis pour un plan Enterprise.',lic_history:'Historique de paiement',lic_no_history:'Aucun paiement.',
+  lic_pay_method:'Choisir le mode de paiement',lic_activated:'Abonnement activé !',lic_autorenew:'Renouvellement auto',lic_feats:'Inclus',
+  lic_banner_trial:'Essai : {n} jours restants — appuyez pour voir les plans',lic_banner_soon:'Abonnement expire dans {n} jours',
+  lic_settings_h:'Abonnement / Licence (Admin)',lic_open:'Ouvrir l’abonnement',lic_extend:'Prolonger +30j',lic_grant_trial:'Accorder essai 30j',
+  lic_set_active:'Marquer actif',lic_set_expired:'Marquer expiré (test)',lic_suspend:'Suspendre',lic_reactivate:'Réactiver'},
+ en:{lic_title:'Subscription',lic_sub:'Your POS license plan.',lic_current:'Current Plan',lic_status:'Status',
+  lic_start:'Start date',lic_exp:'Expiration',lic_days:'Days remaining',
+  lic_active:'Active',lic_expired:'Expired',lic_trial:'Trial',lic_suspended:'Suspended',
+  lic_expired_msg:'Your subscription has expired.',lic_expired_sub:'Renew to continue making sales.',
+  lic_renew:'Renew Subscription',lic_upgrade:'Change / Upgrade Plan',lic_choose:'Choose this plan',lic_current_tag:'Your plan',
+  lic_month:'/mo',lic_year:'/yr',lic_monthly:'Monthly',lic_annual:'Annual (2 months free)',lic_custom:'Custom',
+  lic_enterprise_note:'Contact HaitiBiznis for an Enterprise plan.',lic_history:'Billing History',lic_no_history:'No payments yet.',
+  lic_pay_method:'Choose payment method',lic_activated:'Subscription activated!',lic_autorenew:'Auto-renew',lic_feats:'Included',
+  lic_banner_trial:'Trial: {n} days left — tap to see plans',lic_banner_soon:'Subscription expires in {n} days',
+  lic_settings_h:'Subscription / License (Admin)',lic_open:'Open Subscription page',lic_extend:'Extend +30 days',lic_grant_trial:'Grant 30-day Trial',
+  lic_set_active:'Set Active',lic_set_expired:'Set Expired (test)',lic_suspend:'Suspend',lic_reactivate:'Reactivate'}
+};
+Object.keys(T_LIC).forEach(function(l){Object.assign(T[l],T_LIC[l]);});
 
 let lang=localStorage.getItem('hb_lang')||'ht';
 function t(k){return (T[lang]&&T[lang][k])||T.ht[k]||k;}
@@ -568,6 +610,11 @@ function refreshBadges(){const o=load('hb_orders',[]);
 
 /* ---------- home ---------- */
 function renderHome(){const g=document.getElementById('modGrid');g.innerHTML='';
+  (function(){const l=lic();const days=licDays(l);const es=licEffStatus(l);
+   if(es==='expired'||es==='suspended'||es==='trial'||days<=5){const bn=document.createElement('button');
+     bn.style.cssText='grid-column:1/-1;border:none;border-radius:14px;padding:12px 14px;font-weight:800;text-align:left;cursor:pointer;color:#fff;font-size:13px;background:'+((es==='expired'||es==='suspended')?'#b91c1c':es==='trial'?'#2563eb':'#f59e0b');
+     bn.innerHTML=(es==='expired'||es==='suspended')?('⚠️ '+t('lic_expired_msg')+' — '+t('lic_renew')):es==='trial'?('⭐ '+t('lic_banner_trial').replace('{n}',Math.max(0,days))):('⏳ '+t('lic_banner_soon').replace('{n}',Math.max(0,days)));
+     bn.onclick=()=>openLicense();g.appendChild(bn);}})();
   MODULES.forEach(m=>{const b=document.createElement('button');b.className='mod'+(m.feat?' feat':'')+(m.soon?' soon':'');
     const badge=m.soon?`<span style="position:absolute;top:8px;right:8px;background:#f59e0b;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:20px;letter-spacing:.3px">${t('soon')}</span>`:'';
     if(m.feat){b.innerHTML=`<span class="fem">${m.em}</span><span class="ft"><span class="nm">${m.nm}</span><span class="fs" data-i18n="sv_tag">Sistèm prensipal — vann & jere tout</span></span><span class="fgo">›</span>`;}
@@ -578,6 +625,7 @@ function renderHome(){const g=document.getElementById('modGrid');g.innerHTML='';
     g.appendChild(b);});
   applyI18n();}
 function openModule(m){
+  if(!m.soon&&!licGate())return;
   if(m.type==='order'){startFlow(m.id);}
   else if(m.type==='reg'){startReg(m.reg);}
   else if(m.type==='tickets'){openTickets();}
@@ -1067,8 +1115,15 @@ function renderDash(){const o=load('hb_orders',[]);
 }
 
 /* ---------- settings ---------- */
-function renderSettings(){const cfg=getCfg();const box=document.getElementById('setBody');
-  box.innerHTML=`<label class="fl">${t('set_rate')}</label><input type="number" id="set_rate" value="${cfg.rate}">
+function renderSettings(){const cfg=getCfg();const box=document.getElementById('setBody');const _si=licStatusInfo();
+  box.innerHTML=`<button class="cta" style="margin-bottom:12px" onclick="openLicense()">💳 ${t('lic_open')}</button>
+    <div style="font-weight:800;margin:2px 0 4px">${t('lic_settings_h')}</div>
+    <div class="sub" style="margin-bottom:8px">${planName(lic().plan)} · ${_si[1]} · ${Math.max(0,licDays())} ${t('lic_days').toLowerCase()}</div>
+    <div class="row2"><button class="cta ghost" onclick="licAdmin('extend')">${t('lic_extend')}</button><button class="cta ghost" onclick="licAdmin('trial')">${t('lic_grant_trial')}</button></div>
+    <div class="row2"><button class="cta ghost" onclick="licAdmin('active')">${t('lic_set_active')}</button><button class="cta ghost" onclick="licAdmin('expired')">${t('lic_set_expired')}</button></div>
+    <div class="row2"><button class="cta ghost" onclick="licAdmin('suspend')">${t('lic_suspend')}</button><button class="cta ghost" onclick="licAdmin('reactivate')">${t('lic_reactivate')}</button></div>
+    <hr style="border:none;border-top:1px solid var(--line);margin:14px 0">
+    <label class="fl">${t('set_rate')}</label><input type="number" id="set_rate" value="${cfg.rate}">
     <label class="fl">${t('set_regfee_d')}</label><input type="number" id="set_rfd" value="${cfg.regFeeDriver}">
     <label class="fl">${t('set_regfee_r')}</label><input type="number" id="set_rfr" value="${cfg.regFeeRider}">
     <label class="fl">${t('set_regfee_m')}</label><input type="number" id="set_rfm" value="${cfg.regFeeMerchant}">
@@ -1109,7 +1164,7 @@ function sheet(title,options){
   ov.appendChild(box);ov.onclick=e=>{if(e.target===ov)document.body.removeChild(ov);};document.body.appendChild(ov);
 }
 /* Quick new sale — pick a sellable service */
-function newSale(){const sellable=MODULES.filter(m=>m.type==='order');
+function newSale(){if(!licGate())return;const sellable=MODULES.filter(m=>m.type==='order');
   sheet(t('pick_service'),sellable.map(m=>[`${m.logo?'🧾':m.em} ${m.nm}`,()=>startFlow(m.id)]));
 }
 
@@ -1384,6 +1439,115 @@ function caSoon(){
       <button class="cta ghost" id="caSoon_x">${t('back')}</button>
     </div>`);
   m.box.querySelector('#caSoon_x').onclick=m.close;
+}
+
+/* ===================================================================
+   POS LICENSING & SUBSCRIPTION (Phase 1, per-device)
+   Independent module — license state in hb_license; renew via the
+   existing MonCash/NatCash gateway. Cross-merchant admin = backend.
+   =================================================================== */
+const PLANS=[
+ {id:'basic',price:5000,feats:{
+   ht:['1 biznis','Vant','Envantè','Jesyon kliyan','Rapò','MonCash/NatCash'],
+   fr:['1 établissement','Ventes','Inventaire','Gestion clients','Rapports','MonCash/NatCash'],
+   en:['1 business location','Sales','Inventory','Customer management','Reports','MonCash/NatCash']}},
+ {id:'pro',price:10000,feats:{
+   ht:['Tout nan Basic','Plizyè itilizatè','Jesyon depans','Peman QR','Analytics','Resi WhatsApp/SMS'],
+   fr:['Tout de Basic','Plusieurs utilisateurs','Gestion des dépenses','Paiements QR','Analytics','Reçus WhatsApp/SMS'],
+   en:['Everything in Basic','Multiple users','Expense management','QR payments','Analytics dashboard','WhatsApp/SMS receipts']}},
+ {id:'enterprise',price:0,custom:true,feats:{
+   ht:['Milti-branch','Entegrasyon API','Branding pèsonalize','Pèmisyon avanse','Sipò dedye'],
+   fr:['Multi-succursale','Intégrations API','Branding personnalisé','Permissions avancées','Support dédié'],
+   en:['Multi-branch','API integrations','Custom branding','Advanced permissions','Dedicated support']}}
+];
+let licCycle='monthly';
+function planName(id){return id==='trial'?t('lic_trial'):({basic:'Basic',pro:'Professional',enterprise:'Enterprise'})[id]||id;}
+function lic(){var l=load('hb_license',null);if(!l||!l.exp){l={plan:'trial',cycle:'monthly',start:nowStamp(),exp:new Date(Date.now()+30*864e5).toISOString(),status:'trial',autoRenew:false,history:[]};save('hb_license',l);}return l;}
+function licSave(l){save('hb_license',l);}
+function licDays(l){l=l||lic();return Math.ceil((new Date(l.exp).getTime()-Date.now())/864e5);}
+function licEffStatus(l){l=l||lic();if(l.status==='suspended')return'suspended';if(licDays(l)<0)return'expired';if(l.plan==='trial')return'trial';return'active';}
+function licExpired(l){var s=licEffStatus(l);return s==='expired'||s==='suspended';}
+function licStatusInfo(l){var s=licEffStatus(l);return {suspended:['#b45309',t('lic_suspended')],expired:['#b91c1c',t('lic_expired')],trial:['#2563eb',t('lic_trial')],active:['#16a34a',t('lic_active')]}[s];}
+function licGate(){if(licExpired()){openLicense(true);return false;}return true;}
+function openLicense(fromGate){
+  const body=document.getElementById('licBody');const l=lic();const days=licDays(l);const si=licStatusInfo(l);const exp=licExpired(l);
+  let html=`<button class="back" onclick="go('set')">‹ ${t('back')}</button>
+    <div class="h2">💳 ${t('lic_title')}</div><p class="sub">${t('lic_sub')}</p>`;
+  if(exp)html+=`<div class="card" style="background:#fef2f2;border-color:#ef4444">
+     <div style="font-weight:900;color:#b91c1c">${t('lic_expired_msg')}</div>
+     <div class="sub" style="margin-top:2px">${t('lic_expired_sub')}</div></div>`;
+  html+=`<div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div><div style="font-size:12px;color:var(--muted);font-weight:700">${t('lic_current')}</div>
+      <div style="font-size:20px;font-weight:900">${planName(l.plan)}</div></div>
+      <span style="background:${si[0]};color:#fff;font-size:12px;font-weight:800;padding:4px 12px;border-radius:20px">${si[1]}</span></div>
+    <div style="display:flex;justify-content:space-between;font-size:13px;margin-top:10px"><span>${t('lic_start')}</span><b>${fmtDate(l.start).split(' ')[0]}</b></div>
+    <div style="display:flex;justify-content:space-between;font-size:13px;margin-top:4px"><span>${t('lic_exp')}</span><b>${fmtDate(l.exp).split(' ')[0]}</b></div>
+    <div style="display:flex;justify-content:space-between;font-size:13px;margin-top:4px"><span>${t('lic_days')}</span><b style="color:${days<0?'#b91c1c':days<=5?'#b45309':'#16a34a'}">${Math.max(0,days)}</b></div>
+    <label style="display:flex;gap:8px;align-items:center;margin-top:10px;font-size:13px;font-weight:600"><input type="checkbox" id="licAR" ${l.autoRenew?'checked':''} style="width:auto"> ${t('lic_autorenew')}</label>
+  </div>
+  <button class="cta" onclick="licRenew()">🔄 ${t('lic_renew')}</button>
+  <div class="h2" style="font-size:17px;margin-top:14px">${t('lic_upgrade')}</div>
+  <div class="filterbar" style="margin-bottom:8px"><button id="licCycM" class="${licCycle==='monthly'?'on':''}" onclick="licSetCycle('monthly')">${t('lic_monthly')}</button><button id="licCycA" class="${licCycle==='annual'?'on':''}" onclick="licSetCycle('annual')">${t('lic_annual')}</button></div>
+  <div id="licPlans"></div>
+  <div class="h2" style="font-size:17px;margin-top:14px">${t('lic_history')}</div>
+  <div id="licHist"></div>`;
+  body.innerHTML=html;
+  document.getElementById('licAR').onchange=e=>{const x=lic();x.autoRenew=e.target.checked;licSave(x);};
+  licRenderPlans();licRenderHist();go('license');
+}
+function licSetCycle(c){licCycle=c;const m=document.getElementById('licCycM'),a=document.getElementById('licCycA');if(m)m.className=c==='monthly'?'on':'';if(a)a.className=c==='annual'?'on':'';licRenderPlans();}
+function licRenderPlans(){const wrap=document.getElementById('licPlans');if(!wrap)return;const l=lic();wrap.innerHTML='';
+  PLANS.forEach(p=>{const cur=l.plan===p.id;const price=p.custom?null:(licCycle==='annual'?p.price*10:p.price);
+    const per=licCycle==='annual'?t('lic_year'):t('lic_month');
+    const el=document.createElement('div');el.className='card';if(cur)el.style.borderColor='var(--blue)';
+    el.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:baseline">
+      <div style="font-size:17px;font-weight:900">${planName(p.id)}</div>
+      <div style="font-weight:900;color:var(--blue)">${p.custom?t('lic_custom'):gdes(price)+'<span style=\"font-size:11px;color:var(--muted)\">'+per+'</span>'}</div></div>
+      <div style="font-size:12px;color:var(--muted);font-weight:700;margin:8px 0 4px">${t('lic_feats')}</div>
+      <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.7">${p.feats[lang].map(f=>`<li>${f}</li>`).join('')}</ul>
+      <div style="height:8px"></div>
+      ${cur?`<div style="text-align:center;font-weight:800;color:var(--blue);font-size:13px">✓ ${t('lic_current_tag')}</div>`:`<button class="cta${p.custom?' ghost':''}" onclick="licChoose('${p.id}')">${p.custom?t('lic_enterprise_note'):t('lic_choose')}</button>`}`;
+    wrap.appendChild(el);});
+}
+function licRenderHist(){const wrap=document.getElementById('licHist');if(!wrap)return;const l=lic();const h=(l.history||[]).slice().reverse();
+  if(!h.length){wrap.innerHTML=`<div class="empty"><div class="ee">🧾</div>${t('lic_no_history')}</div>`;return;}
+  wrap.innerHTML='';h.forEach(x=>{const el=document.createElement('div');el.className='order';
+    el.innerHTML=`<div class="top"><div><div class="who">${planName(x.plan)} · ${x.cycle==='annual'?t('lic_annual'):t('lic_monthly')}</div><div class="meta">${x.ref} · ${payLabel(x.method)} · ${fmtDate(x.date)}</div></div><div class="amt2">${gdes(x.amount)}</div></div>`;
+    wrap.appendChild(el);});
+}
+function licChoose(planId){const p=PLANS.find(x=>x.id===planId);if(!p)return;if(p.custom){alert(t('lic_enterprise_note'));return;}licPay(planId);}
+function licRenew(){const l=lic();licPay(l.plan==='trial'?'basic':l.plan);}
+function licPickMethod(){return new Promise(resolve=>{
+  const ov=document.createElement('div');ov.style.cssText='position:fixed;inset:0;background:rgba(10,16,32,.5);z-index:65;display:flex;align-items:flex-end;justify-content:center';
+  const box=document.createElement('div');box.style.cssText='background:#fff;width:100%;max-width:720px;border-radius:18px 18px 0 0;padding:18px 16px 24px';
+  box.innerHTML=`<div style="font-weight:800;font-size:16px;margin-bottom:12px">${t('lic_pay_method')}</div>`;
+  [['MonCash','moncash'],['NatCash','natcash']].forEach(([lbl,v])=>{const b=document.createElement('button');b.className='cta';b.style.marginBottom='10px';b.textContent=lbl;b.onclick=()=>{document.body.removeChild(ov);resolve(v);};box.appendChild(b);});
+  const c=document.createElement('button');c.className='cta ghost';c.textContent=t('cancel');c.onclick=()=>{document.body.removeChild(ov);resolve(null);};box.appendChild(c);
+  ov.appendChild(box);ov.onclick=e=>{if(e.target===ov){document.body.removeChild(ov);resolve(null);}};document.body.appendChild(ov);
+});}
+async function licPay(planId){
+  const p=PLANS.find(x=>x.id===planId);if(!p||p.custom)return;
+  const amount=licCycle==='annual'?p.price*10:p.price;
+  const method=await licPickMethod();if(!method)return;
+  const ref='LIC-'+Date.now().toString(36).toUpperCase();
+  const res=await collectPayment(ref,amount,method);
+  if(res==='cancel')return;
+  const l=lic();const base=licExpired(l)?Date.now():Math.max(Date.now(),new Date(l.exp).getTime());
+  const add=(licCycle==='annual'?365:30)*864e5;
+  l.plan=planId;l.cycle=licCycle;l.status='active';if(!l.start)l.start=nowStamp();
+  l.exp=new Date(base+add).toISOString();
+  l.history=l.history||[];l.history.push({date:nowStamp(),plan:planId,cycle:licCycle,amount,method,ref,status:res});
+  licSave(l);alert(t('lic_activated'));openLicense();refreshBadges();
+}
+function licAdmin(action){const l=lic();
+  if(action==='extend')l.exp=new Date(Math.max(Date.now(),new Date(l.exp).getTime())+30*864e5).toISOString();
+  else if(action==='trial'){l.plan='trial';l.status='trial';l.start=nowStamp();l.exp=new Date(Date.now()+30*864e5).toISOString();}
+  else if(action==='active'){l.status='active';if(l.plan==='trial')l.plan='basic';if(licDays(l)<0)l.exp=new Date(Date.now()+30*864e5).toISOString();}
+  else if(action==='expired'){l.exp=new Date(Date.now()-864e5).toISOString();l.status='active';}
+  else if(action==='suspend')l.status='suspended';
+  else if(action==='reactivate'){l.status='active';if(licDays(l)<0)l.exp=new Date(Date.now()+30*864e5).toISOString();}
+  licSave(l);renderSettings();
 }
 
 /* ===================================================================
