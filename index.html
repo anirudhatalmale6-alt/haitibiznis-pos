@@ -6,6 +6,12 @@
 <title>Sant HaitiBiznis — POS</title>
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="HaitiBiznis POS">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#00209F">
 <style>
 :root{--blue:#00209F;--red:#D21034;--ink:#12151c;--muted:#6b7280;--bg:#eef1f6;--card:#fff;--line:#e2e6ee;
@@ -128,8 +134,10 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
   <img src="assets/haitibiznis-logo.png" class="logo" alt="HaitiBiznis">
   <h1 data-i18n="app_t">Sant HaitiBiznis<small data-i18n="app_s">POINT OF SALE</small></h1>
   <div class="lang"><button data-lang="ht" class="on">HT</button><button data-lang="fr">FR</button><button data-lang="en">EN</button></div>
+  <button class="gear" id="installBtn" style="display:none;width:auto;padding:0 12px;font-size:12px;font-weight:800;gap:4px">⬇️ <span data-i18n="install">Enstale</span></button>
   <button class="gear" onclick="go('set')">⚙️</button>
 </div>
+<div id="offlineBar" style="display:none;background:#e08a00;color:#fff;text-align:center;font-size:12px;font-weight:700;padding:5px 8px" data-i18n="offline_on">Mòd offline — sere sou aparèy la</div>
 
 <main>
 <section id="s-home" class="screen on">
@@ -237,6 +245,20 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
   <div class="h2" data-i18n="dash_t">Tablodbò</div>
   <p class="sub" id="dashDate"></p>
   <div class="stats" id="dashStats"></div>
+  <div style="height:14px"></div>
+  <button class="cta ghost" onclick="go('reports')" data-i18n="rep_open">📈 Rapò detaye</button>
+</section>
+
+<section id="s-reports" class="screen">
+  <button class="back" onclick="go('dash')">‹ <span data-i18n="back">Retounen</span></button>
+  <div class="h2" data-i18n="rep_t">Rapò</div>
+  <div class="filterbar" id="repRange"></div>
+  <div id="reportBody"></div>
+  <div style="height:12px"></div>
+  <div class="row2 no-print">
+    <button class="cta ghost" onclick="window.print()" data-i18n="print">Enprime</button>
+    <button class="cta" onclick="exportCSV()" data-i18n="rep_csv">⬇️ CSV</button>
+  </div>
 </section>
 
 <section id="s-set" class="screen">
@@ -339,6 +361,26 @@ const T={
   pickup_addr:'Pickup Address',drop_addr:'Delivery Address',recip_phone:'Recipient Phone',pkg_desc:'Package Description',deliv_fee:'Delivery fee (GDES)',
   wa_msg:'Hello {name}, here is your order receipt {id} at HaitiBiznis Center. Total: {total}. Thank you!'}
 };
+/* ---- added strings (install/offline, reports, notify) ---- */
+const T_EXT={
+ ht:{install:'Enstale',offline_on:'Mòd offline — sere sou aparèy la',rep_open:'📈 Rapò detaye',rep_t:'Rapò',rep_csv:'⬇️ CSV',
+  rp_today:'Jodi a',rp_7:'7 jou',rp_30:'30 jou',rp_all:'Tout',rep_revenue:'Revni',rep_txn:'Tranzaksyon',rep_avg:'Mwayèn',
+  rep_bysvc:'Pa sèvis',rep_bypay:'Pa metòd peman',rep_bystat:'Pa estati',rep_none:'Pa gen done pou peryòd sa a.',
+  notify:'📲 Fè kliyan an konnen',notify_t:'Fè konnen kliyan',notify_wa:'WhatsApp',notify_email:'Imel',notify_no:'Pa gen telefòn/imel pou kliyan sa a.',
+  ready_msg:'Bonjou {name}, kòmand ou {id} nan Sant HaitiBiznis PARE. Ou ka vin chèche l. Mèsi!',ready_subj:'Kòmand ou pare — HaitiBiznis'},
+ fr:{install:'Installer',offline_on:'Mode hors-ligne — enregistré sur l’appareil',rep_open:'📈 Rapport détaillé',rep_t:'Rapports',rep_csv:'⬇️ CSV',
+  rp_today:'Aujourd’hui',rp_7:'7 jours',rp_30:'30 jours',rp_all:'Tout',rep_revenue:'Revenu',rep_txn:'Transactions',rep_avg:'Moyenne',
+  rep_bysvc:'Par service',rep_bypay:'Par paiement',rep_bystat:'Par statut',rep_none:'Aucune donnée pour cette période.',
+  notify:'📲 Notifier le client',notify_t:'Notifier le client',notify_wa:'WhatsApp',notify_email:'Email',notify_no:'Aucun téléphone/email pour ce client.',
+  ready_msg:'Bonjour {name}, votre commande {id} au Centre HaitiBiznis est PRÊTE. Vous pouvez venir la chercher. Merci !',ready_subj:'Votre commande est prête — HaitiBiznis'},
+ en:{install:'Install',offline_on:'Offline mode — saved on this device',rep_open:'📈 Detailed Report',rep_t:'Reports',rep_csv:'⬇️ CSV',
+  rp_today:'Today',rp_7:'7 days',rp_30:'30 days',rp_all:'All',rep_revenue:'Revenue',rep_txn:'Transactions',rep_avg:'Average',
+  rep_bysvc:'By service',rep_bypay:'By payment',rep_bystat:'By status',rep_none:'No data for this period.',
+  notify:'📲 Notify customer',notify_t:'Notify customer',notify_wa:'WhatsApp',notify_email:'Email',notify_no:'No phone/email for this customer.',
+  ready_msg:'Hello {name}, your order {id} at HaitiBiznis Center is READY. You can come pick it up. Thank you!',ready_subj:'Your order is ready — HaitiBiznis'}
+};
+Object.keys(T_EXT).forEach(function(l){Object.assign(T[l],T_EXT[l]);});
+
 let lang=localStorage.getItem('hb_lang')||'ht';
 function t(k){return (T[lang]&&T[lang][k])||T.ht[k]||k;}
 function applyI18n(){document.documentElement.lang=lang;
@@ -415,11 +457,11 @@ const REG_FORMS={
 function go(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
   document.getElementById('s-'+name).classList.add('on');
-  const nm={home:'home',orders:'orders',dash:'dash',set:'set'};
+  const nm={home:'home',orders:'orders',dash:'dash',reports:'dash',set:'set'};
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.nav===nm[name]));
   if(!nm[name])document.querySelector('.nav button[data-nav="home"]').classList.add('on');
   window.scrollTo(0,0);
-  if(name==='orders')renderOrders();if(name==='dash')renderDash();if(name==='set')renderSettings();
+  if(name==='orders')renderOrders();if(name==='dash')renderDash();if(name==='set')renderSettings();if(name==='reports')renderReports();
   refreshBadges();
 }
 function refreshBadges(){const o=load('hb_orders',[]);
@@ -828,6 +870,8 @@ function renderOrders(){const fb=document.getElementById('filterBar');fb.innerHT
       <div class="statusrow"></div>`;
     const sr=el.querySelector('.statusrow');STATUS[setName].forEach(s=>{const b=document.createElement('button');b.className=o.status===s.id?'on':'';b.innerHTML=`${s.em}<br>${t(s.k)}`;
       b.onclick=()=>{const os=load('hb_orders',[]);os.find(x=>x.id===o.id).status=s.id;save('hb_orders',os);renderOrders();refreshBadges();};sr.appendChild(b);});
+    const nb=document.createElement('button');nb.className='mini';nb.textContent=t('notify');nb.style.marginTop='8px';
+    nb.onclick=()=>openNotify(o);el.appendChild(nb);
     list.appendChild(el);});
 }
 document.getElementById('ordSearch').addEventListener('input',renderOrders);
@@ -867,6 +911,80 @@ function saveSettings(){const cfg=getCfg();cfg.rate=+document.getElementById('se
   document.querySelectorAll('[data-usd]').forEach(el=>cfg.bizreg[+el.dataset.usd].usd=+el.value||0);
   document.querySelectorAll('[data-press]').forEach(el=>cfg.bizreg[+el.dataset.press].press=+el.value||0);
   setCfg(cfg);const btn=event.target,old=btn.textContent;btn.textContent='✓';setTimeout(()=>btn.textContent=old,900);}
+
+/* ===================================================================
+   NOTIFY CUSTOMER (WhatsApp / Email) — e.g. "package ready"
+   =================================================================== */
+function custEmail(o){if(o.email)return o.email;const c=customers().find(c=>(o.custId&&c.id===o.custId)||(o.phone&&c.phone===o.phone));return c?c.email:'';}
+function openNotify(o){
+  const num=(o.wa||o.phone||'').replace(/[^0-9]/g,'');const email=custEmail(o);
+  if(!num&&!email){alert(t('notify_no'));return;}
+  const msg=t('ready_msg').replace('{name}',o.name||'').replace('{id}',o.id);
+  const choose=[];
+  if(num)choose.push([t('notify_wa'),()=>window.open('https://wa.me/'+num+'?text='+encodeURIComponent(msg),'_blank')]);
+  if(email)choose.push([t('notify_email'),()=>window.open('mailto:'+email+'?subject='+encodeURIComponent(t('ready_subj'))+'&body='+encodeURIComponent(msg),'_blank')]);
+  if(choose.length===1){choose[0][1]();return;}
+  /* simple two-option sheet */
+  const ov=document.createElement('div');ov.style.cssText='position:fixed;inset:0;background:rgba(10,16,32,.5);z-index:60;display:flex;align-items:flex-end;justify-content:center';
+  const sheet=document.createElement('div');sheet.style.cssText='background:#fff;width:100%;max-width:720px;border-radius:18px 18px 0 0;padding:18px 16px 24px';
+  sheet.innerHTML=`<div style="font-weight:800;font-size:16px;margin-bottom:12px">${t('notify_t')} — ${o.name||o.id}</div>`;
+  choose.forEach(([lbl,fn])=>{const b=document.createElement('button');b.className='cta';b.style.marginBottom='10px';b.textContent=lbl;
+    b.onclick=()=>{fn();document.body.removeChild(ov);};sheet.appendChild(b);});
+  const c=document.createElement('button');c.className='cta ghost';c.textContent='✕';c.onclick=()=>document.body.removeChild(ov);sheet.appendChild(c);
+  ov.appendChild(sheet);ov.onclick=e=>{if(e.target===ov)document.body.removeChild(ov);};document.body.appendChild(ov);
+}
+
+/* ===================================================================
+   REPORTS (per-device) — period totals, breakdowns, CSV export
+   =================================================================== */
+let repRange='today';
+function inRange(iso,r){const d=new Date(iso),n=new Date();
+  if(r==='today')return d.toDateString()===n.toDateString();
+  if(r==='7')return (n-d)<=7*864e5;if(r==='30')return (n-d)<=30*864e5;return true;}
+function repOrders(){return load('hb_orders',[]).filter(o=>inRange(o.ts,repRange));}
+function renderReports(){
+  const rb=document.getElementById('repRange');rb.innerHTML='';
+  [['today','rp_today'],['7','rp_7'],['30','rp_30'],['all','rp_all']].forEach(([id,k])=>{const b=document.createElement('button');
+    b.textContent=t(k);b.className=repRange===id?'on':'';b.onclick=()=>{repRange=id;renderReports();};rb.appendChild(b);});
+  const os=repOrders();const rev=os.reduce((a,b)=>a+(+b.amount||0),0);const txn=os.length;const avg=txn?rev/txn:0;
+  const bySvc={},byPay={},byStat={};
+  os.forEach(o=>{const s=o.svcName||o.module||'—';bySvc[s]=(bySvc[s]||0)+(+o.amount||0);
+    const p=o.payment?payLabel(o.payment):'—';byPay[p]=(byPay[p]||0)+(+o.amount||0);
+    const st=t((sInfo(o.statusSet||'sale',o.status)||{}).k||'st_wait');byStat[st]=(byStat[st]||0)+1;});
+  const body=document.getElementById('reportBody');
+  if(!txn){body.innerHTML=`<div class="empty"><div class="ee">📊</div>${t('rep_none')}</div>`;return;}
+  function rows(obj,money){return Object.keys(obj).sort((a,b)=>obj[b]-obj[a]).map(k=>
+    `<div style="display:flex;justify-content:space-between;gap:12px;padding:4px 0;font-size:14px;border-bottom:1px dotted var(--line)"><span>${k}</span><b>${money?gdes(obj[k]):obj[k]}</b></div>`).join('');}
+  body.innerHTML=`
+    <div class="stats" style="margin-bottom:14px">
+      <div class="stat rev"><div class="n">${gdes(rev)}</div><div class="l">💰 ${t('rep_revenue')}</div></div>
+      <div class="stat"><div class="n">${txn}</div><div class="l">🧾 ${t('rep_txn')}</div></div>
+      <div class="stat"><div class="n">${gdes(avg)}</div><div class="l">📊 ${t('rep_avg')}</div></div>
+    </div>
+    <div class="card"><div style="font-weight:800;margin-bottom:8px">${t('rep_bysvc')}</div>${rows(bySvc,true)}</div>
+    <div class="card"><div style="font-weight:800;margin-bottom:8px">${t('rep_bypay')}</div>${rows(byPay,true)}</div>
+    <div class="card"><div style="font-weight:800;margin-bottom:8px">${t('rep_bystat')}</div>${rows(byStat,false)}</div>`;
+}
+function csvCell(v){v=(v==null?'':String(v)).replace(/"/g,'""');return /[",\n]/.test(v)?'"'+v+'"':v;}
+function exportCSV(){const os=repOrders();
+  const head=['Order','Type','Service','Customer','Phone','WhatsApp','Amount_GDES','Payment','Status','Date'];
+  const lines=[head.join(',')];
+  os.forEach(o=>{const st=t((sInfo(o.statusSet||'sale',o.status)||{}).k||'');
+    lines.push([o.id,o.type||'',o.svcName||'',o.name||'',o.phone||'',o.wa||'',Math.round(o.amount||0),o.payment?payLabel(o.payment):'',st,fmtDate(o.ts)].map(csvCell).join(','));});
+  const blob=new Blob(['﻿'+lines.join('\n')],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='haitibiznis-report-'+repRange+'.csv';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);}
+
+/* ===================================================================
+   PWA: service worker + install prompt + offline indicator
+   =================================================================== */
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;document.getElementById('installBtn').style.display='inline-flex';});
+document.getElementById('installBtn').onclick=function(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.finally(function(){deferredPrompt=null;document.getElementById('installBtn').style.display='none';});};
+window.addEventListener('appinstalled',function(){document.getElementById('installBtn').style.display='none';});
+function updateOnline(){document.getElementById('offlineBar').style.display=navigator.onLine?'none':'block';}
+window.addEventListener('online',updateOnline);window.addEventListener('offline',updateOnline);updateOnline();
 
 /* ---------- language ---------- */
 document.querySelectorAll('.lang button').forEach(b=>{b.onclick=()=>{lang=b.dataset.lang;localStorage.setItem('hb_lang',lang);
