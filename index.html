@@ -399,7 +399,8 @@ const T_EXT={
   sv_t:'Sistèm Vant',sv_sub:'Sistèm vant dijital ou a — vann, jere kliyan ak resi.',soon:'Byento',pick_service:'Chwazi sèvis pou vann',
   sv_newsale:'Nouvo Vant',sv_customers:'Jesyon Kliyan',sv_history:'Istwa Vant',sv_receipts:'Resi Dijital',
   sv_products:'Jesyon Pwodwi',sv_inventory:'Envantè',sv_notifs:'Notifikasyon Tan Reyèl',sv_payments:'Peman MonCash/NatCash',
-  dash_orders:'Kòmand',dash_customers:'Kliyan',dash_notifs:'Notifikasyon',sv_none_cust:'Pa gen kliyan ankò.',sv_none_sales:'Pa gen vant ankò.',reopen_receipt:'Wè resi'},
+  dash_orders:'Kòmand',dash_customers:'Kliyan',dash_notifs:'Notifikasyon',sv_none_cust:'Pa gen kliyan ankò.',sv_none_sales:'Pa gen vant ankò.',reopen_receipt:'Wè resi',
+  pg_creating:'N ap kreye peman an…',pg_scan:'Fè kliyan an eskane kòd la ak telefòn li, oswa louvri paj peman an.',pg_open:'Louvri paj peman an',pg_waiting:'N ap tann peman an…',pg_paid:'✓ Peman resevwa!',pg_manual:'Make peye manyèlman',pg_fail:'Peman pa kreye',pg_fail_sub:'Nou pa rive jwenn sèvis peman an. Ou ka make l peye manyèlman oswa eseye ankò.',cancel:'Anile',set_pay_h:'Peman elektwonik',set_payclient:'ID Machann Peman (MonCash/NatCash)',pay_active:'MonCash & NatCash aktif',pay_active_sub:'Chwazi MonCash oswa NatCash lè w ap fè yon vant — kliyan an peye sou telefòn li epi vant lan make peye otomatikman.',pay_status_paid:'Peye',pay_status_manual:'Peye (manyèl)',pay_none:'Pa gen peman elektwonik ankò.'},
  fr:{install:'Installer',offline_on:'Mode hors-ligne — enregistré sur l’appareil',rep_open:'📈 Rapport détaillé',rep_t:'Rapports',rep_csv:'⬇️ CSV',
   rp_today:'Aujourd’hui',rp_7:'7 jours',rp_30:'30 jours',rp_all:'Tout',rep_revenue:'Revenu',rep_txn:'Transactions',rep_avg:'Moyenne',
   rep_bysvc:'Par service',rep_bypay:'Par paiement',rep_bystat:'Par statut',rep_none:'Aucune donnée pour cette période.',
@@ -409,7 +410,8 @@ const T_EXT={
   sv_t:'Système de Vente',sv_sub:'Votre système de vente numérique — vendre, gérer clients et reçus.',soon:'Bientôt',pick_service:'Choisir un service à vendre',
   sv_newsale:'Nouvelle vente',sv_customers:'Gestion des clients',sv_history:'Historique des ventes',sv_receipts:'Reçus numériques',
   sv_products:'Gestion des produits',sv_inventory:'Inventaire',sv_notifs:'Notifications en temps réel',sv_payments:'Paiement MonCash/NatCash',
-  dash_orders:'Commandes',dash_customers:'Clients',dash_notifs:'Notifications',sv_none_cust:'Aucun client pour le moment.',sv_none_sales:'Aucune vente pour le moment.',reopen_receipt:'Voir le reçu'},
+  dash_orders:'Commandes',dash_customers:'Clients',dash_notifs:'Notifications',sv_none_cust:'Aucun client pour le moment.',sv_none_sales:'Aucune vente pour le moment.',reopen_receipt:'Voir le reçu',
+  pg_creating:'Création du paiement…',pg_scan:'Faites scanner le code au client avec son téléphone, ou ouvrez la page de paiement.',pg_open:'Ouvrir la page de paiement',pg_waiting:'En attente du paiement…',pg_paid:'✓ Paiement reçu !',pg_manual:'Marquer payé manuellement',pg_fail:'Paiement non créé',pg_fail_sub:'Impossible de joindre le service de paiement. Vous pouvez marquer payé manuellement ou réessayer.',cancel:'Annuler',set_pay_h:'Paiement électronique',set_payclient:'ID Marchand Paiement (MonCash/NatCash)',pay_active:'MonCash & NatCash actifs',pay_active_sub:'Choisissez MonCash ou NatCash lors d’une vente — le client paie sur son téléphone et la vente est marquée payée automatiquement.',pay_status_paid:'Payé',pay_status_manual:'Payé (manuel)',pay_none:'Aucun paiement électronique pour le moment.'},
  en:{install:'Install',offline_on:'Offline mode — saved on this device',rep_open:'📈 Detailed Report',rep_t:'Reports',rep_csv:'⬇️ CSV',
   rp_today:'Today',rp_7:'7 days',rp_30:'30 days',rp_all:'All',rep_revenue:'Revenue',rep_txn:'Transactions',rep_avg:'Average',
   rep_bysvc:'By service',rep_bypay:'By payment',rep_bystat:'By status',rep_none:'No data for this period.',
@@ -419,7 +421,8 @@ const T_EXT={
   sv_t:'Sales System',sv_sub:'Your digital sales system — sell, manage customers and receipts.',soon:'Soon',pick_service:'Choose a service to sell',
   sv_newsale:'New Sale',sv_customers:'Customer Management',sv_history:'Sales History',sv_receipts:'Digital Receipts',
   sv_products:'Product Management',sv_inventory:'Inventory',sv_notifs:'Real-time Notifications',sv_payments:'MonCash/NatCash Payment',
-  dash_orders:'Orders',dash_customers:'Customers',dash_notifs:'Notifications',sv_none_cust:'No customers yet.',sv_none_sales:'No sales yet.',reopen_receipt:'View receipt'}
+  dash_orders:'Orders',dash_customers:'Customers',dash_notifs:'Notifications',sv_none_cust:'No customers yet.',sv_none_sales:'No sales yet.',reopen_receipt:'View receipt',
+  pg_creating:'Creating payment…',pg_scan:'Have the customer scan the code with their phone, or open the payment page.',pg_open:'Open payment page',pg_waiting:'Waiting for payment…',pg_paid:'✓ Payment received!',pg_manual:'Mark paid manually',pg_fail:'Payment not created',pg_fail_sub:'Could not reach the payment service. You can mark it paid manually or try again.',cancel:'Cancel',set_pay_h:'Electronic payment',set_payclient:'Payment Merchant ID (MonCash/NatCash)',pay_active:'MonCash & NatCash active',pay_active_sub:'Choose MonCash or NatCash when making a sale — the customer pays on their phone and the sale is marked paid automatically.',pay_status_paid:'Paid',pay_status_manual:'Paid (manual)',pay_none:'No electronic payments yet.'}
 };
 Object.keys(T_EXT).forEach(function(l){Object.assign(T[l],T_EXT[l]);});
 
@@ -433,7 +436,8 @@ function applyI18n(){document.documentElement.lang=lang;
 /* ---------- config ---------- */
 const DEF_CFG={rate:132,regFeeDriver:0,regFeeRider:0,regFeeMerchant:0,regFeePro:0,
   bizreg:[{id:'nc',nm:'Nom Commercial',usd:500,press:0},{id:'ncol',nm:'Société en Nom Collectif',usd:1000,press:0},
-    {id:'sa',nm:'Société Anonyme',usd:2000,press:40000},{id:'sam',nm:'Société Anonyme Mixte',usd:3500,press:70000}],hbFeePct:30};
+    {id:'sa',nm:'Société Anonyme',usd:2000,press:40000},{id:'sam',nm:'Société Anonyme Mixte',usd:3500,press:70000}],hbFeePct:30,
+  payClient:'pp_1ohu5zz2tcx'};
 function getCfg(){try{const c=JSON.parse(localStorage.getItem('hb_cfg'));if(c&&c.bizreg)return c;}catch(e){}return JSON.parse(JSON.stringify(DEF_CFG));}
 function setCfg(c){localStorage.setItem('hb_cfg',JSON.stringify(c));}
 
@@ -659,12 +663,18 @@ function renderPay(){const b=document.getElementById('payBreak');b.innerHTML='';
   document.querySelectorAll('#payGrid .pay').forEach(p=>{p.classList.toggle('on',flow.payment===p.dataset.pay);p.onclick=()=>{flow.payment=p.dataset.pay;renderPay();};});
   document.getElementById('payBtn').disabled=!flow.payment;}
 function payLabel(p){return ({cash:t('p_cash'),moncash:'MonCash',natcash:'NatCash',card:t('p_card')})[p]||p||'';}
-function completeFlow(){if(!flow.payment){alert(t('need_pay'));return;}
+async function completeFlow(){if(!flow.payment){alert(t('need_pay'));return;}
   const orders=load('hb_orders',[]);const id='HB-'+String(1000+orders.length+1);
   const rec={id,type:'sale',statusSet:'sale',module:flow.module,svcName:modById(flow.module).nm,
     custId:flow.customer.id,name:flow.customer.name,phone:flow.customer.phone,wa:flow.customer.wa,
     items:flow.items.slice(),amount:flow.amount,payment:flow.payment,docs:flow.docs.map(d=>({name:d.name})),
     status:flow.docs.length?'prog':'wait',ts:nowStamp()};
+  if(flow.payment!=='cash'&&flow.amount>0){
+    const ref=id+'-'+Date.now().toString(36);
+    const res=await collectPayment(ref,flow.amount,flow.payment);
+    if(res==='cancel')return;                 // aborted — nothing saved
+    rec.payRef=ref;rec.payStatus=(res==='paid'?'paid':'manual');
+  }else{rec.payStatus='cash';}
   orders.push(rec);save('hb_orders',orders);showReceipt(rec);refreshBadges();
 }
 
@@ -854,6 +864,61 @@ function ticketSales(){const body=document.getElementById('ticketsBody');const t
    RECEIPT / QR
    =================================================================== */
 function qrDataURL(text){try{const q=qrcode(0,'M');q.addData(text);q.make();return q.createDataURL(5,8);}catch(e){return null;}}
+
+/* ===================================================================
+   PAYMENT GATEWAY — SolutionIP / Pey'M PlopPlop (MonCash / NatCash / Card)
+   Hosted checkout: create a payment -> get a MonCash/NatCash URL ->
+   customer pays on their phone -> we poll verify -> mark the sale paid.
+   Works fully client-side (gateway allows cross-origin calls).
+   =================================================================== */
+const PAY_BASE='https://plopplop.solutionip.app';
+function payClientId(){return getCfg().payClient||'pp_1ohu5zz2tcx';}
+function pgMethod(p){return ({moncash:'moncash',natcash:'natcash',card:'all'})[p]||'all';}
+async function pgCreate(ref,amount,method){
+  const r=await fetch(PAY_BASE+'/api/paiement-marchand',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({client_id:payClientId(),refference_id:ref,montant:Math.round(amount),payment_method:pgMethod(method)})});
+  return r.json();
+}
+async function pgVerify(ref){
+  const r=await fetch(PAY_BASE+'/api/paiement-verify',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({client_id:payClientId(),refference_id:ref})});
+  return r.json();
+}
+/* Show the electronic-payment modal. Resolves 'paid' | 'manual' | 'cancel'. */
+function collectPayment(ref,amount,method){
+  return new Promise(async(resolve)=>{
+    const ov=document.createElement('div');
+    ov.style.cssText='position:fixed;inset:0;background:rgba(10,16,32,.55);z-index:70;display:flex;align-items:center;justify-content:center;padding:16px';
+    const box=document.createElement('div');
+    box.style.cssText='background:#fff;width:100%;max-width:420px;border-radius:18px;padding:20px 18px;max-height:92vh;overflow:auto;text-align:center';
+    box.innerHTML=`<div style="font-weight:900;font-size:17px;color:var(--blue)">${payLabel(method)} — ${gdes(amount)}</div>
+      <div style="margin:16px 0;color:var(--muted);font-size:14px">${t('pg_creating')}</div>`;
+    ov.appendChild(box);document.body.appendChild(ov);
+    let done=false,timer=null;
+    function finish(res){if(done)return;done=true;if(timer)clearInterval(timer);if(ov.parentNode)document.body.removeChild(ov);resolve(res);}
+    let data=null;try{data=await pgCreate(ref,amount,method);}catch(e){data=null;}
+    if(!data||data.status!==true||!data.url){
+      box.innerHTML=`<div style="font-weight:800;color:var(--red);margin-bottom:8px">${t('pg_fail')}</div>
+        <p class="sub" style="margin-bottom:14px">${t('pg_fail_sub')}</p>`;
+      const mk=document.createElement('button');mk.className='cta';mk.textContent=t('pg_manual');mk.onclick=()=>finish('manual');box.appendChild(mk);
+      const cx=document.createElement('button');cx.className='cta ghost';cx.textContent=t('cancel');cx.onclick=()=>finish('cancel');box.appendChild(cx);
+      return;
+    }
+    const qr=qrDataURL(data.url);
+    box.innerHTML=`<div style="font-weight:900;font-size:17px;color:var(--blue)">${payLabel(method)} — ${gdes(amount)}</div>
+      <p class="sub" style="margin:8px 0 12px">${t('pg_scan')}</p>
+      ${qr?`<img src="${qr}" alt="QR" style="width:196px;height:196px;display:block;margin:0 auto;border:1px solid var(--line);border-radius:12px;padding:6px">`:''}
+      <a href="${data.url}" target="_blank" rel="noopener" class="cta" style="display:block;margin:14px 0 6px;text-decoration:none">${t('pg_open')}</a>
+      <div id="pgStat" style="margin:8px 0;color:var(--muted);font-size:13px">${t('pg_waiting')}</div>`;
+    const mk=document.createElement('button');mk.className='cta ghost';mk.textContent=t('pg_manual');mk.onclick=()=>finish('manual');box.appendChild(mk);
+    const cx=document.createElement('button');cx.className='cta ghost';cx.textContent=t('cancel');cx.onclick=()=>finish('cancel');box.appendChild(cx);
+    const stat=box.querySelector('#pgStat');
+    timer=setInterval(async()=>{
+      let v=null;try{v=await pgVerify(ref);}catch(e){return;}
+      if(v&&v.trans_status==='yes'){stat.textContent=t('pg_paid');stat.style.color='#16a34a';stat.style.fontWeight='800';setTimeout(()=>finish('paid'),800);}
+    },4000);
+  });
+}
 function showReceipt(o){const cust=o.name;const items=(o.items||[]).map(it=>`<div class="ritem"><span>${it.label}</span><span>${it.amt?gdes(it.amt):''}</span></div>`).join('');
   document.getElementById('doneExtra').innerHTML='';
   document.getElementById('receiptBox').innerHTML=`
@@ -864,7 +929,7 @@ function showReceipt(o){const cust=o.name;const items=(o.items||[]).map(it=>`<di
     <div class="rrow"><span>${t('service')}</span><span>${o.svcName}</span></div>
     <div style="height:8px"></div>${items}
     <div class="rtot"><span>${t('total')}</span><span>${gdes(o.amount)}</span></div>
-    ${o.payment?`<div class="rrow" style="margin-top:6px"><span>${t('pay_t')}</span><span>${payLabel(o.payment)}</span></div>`:''}
+    ${o.payment?`<div class="rrow" style="margin-top:6px"><span>${t('pay_t')}</span><span>${payLabel(o.payment)}${o.payStatus==='paid'?' · '+t('pay_status_paid'):o.payStatus==='manual'?' · '+t('pay_status_manual'):''}</span></div>`:''}
     ${o.docs&&o.docs.length?`<div class="rrow"><span>📎</span><span>${o.docs.length}</span></div>`:''}
     <div class="rf">${t('thanks')}</div>`;
   setupWA(o);go('done');
@@ -955,6 +1020,8 @@ function renderSettings(){const cfg=getCfg();const box=document.getElementById('
     <label class="fl">${t('set_regfee_r')}</label><input type="number" id="set_rfr" value="${cfg.regFeeRider}">
     <label class="fl">${t('set_regfee_m')}</label><input type="number" id="set_rfm" value="${cfg.regFeeMerchant}">
     <label class="fl">${t('set_regfee_p')}</label><input type="number" id="set_rfp" value="${cfg.regFeePro}">
+    <div style="font-weight:800;margin:10px 0 6px">${t('set_pay_h')}</div>
+    <label class="fl">${t('set_payclient')}</label><input id="set_payclient" value="${cfg.payClient||'pp_1ohu5zz2tcx'}">
     <div style="font-weight:800;margin:8px 0 6px">${t('fee_hb')} — ${modById('bizreg').nm}</div>`;
   cfg.bizreg.forEach((r,i)=>{box.innerHTML+=`<div style="border-top:1px solid var(--line);padding-top:10px;margin-top:4px"><div style="font-weight:700;margin-bottom:6px">${r.nm}</div>
     <label class="fl">Base (US$)</label><input type="number" data-usd="${i}" value="${r.usd}">
@@ -963,6 +1030,7 @@ function renderSettings(){const cfg=getCfg();const box=document.getElementById('
 function saveSettings(){const cfg=getCfg();cfg.rate=+document.getElementById('set_rate').value||132;
   cfg.regFeeDriver=+document.getElementById('set_rfd').value||0;cfg.regFeeRider=+document.getElementById('set_rfr').value||0;
   cfg.regFeeMerchant=+document.getElementById('set_rfm').value||0;cfg.regFeePro=+document.getElementById('set_rfp').value||0;
+  cfg.payClient=(document.getElementById('set_payclient').value||'').trim()||'pp_1ohu5zz2tcx';
   document.querySelectorAll('[data-usd]').forEach(el=>cfg.bizreg[+el.dataset.usd].usd=+el.value||0);
   document.querySelectorAll('[data-press]').forEach(el=>cfg.bizreg[+el.dataset.press].press=+el.value||0);
   setCfg(cfg);const btn=event.target,old=btn.textContent;btn.textContent='✓';setTimeout(()=>btn.textContent=old,900);}
@@ -995,7 +1063,7 @@ const SV_TILES=[
   {id:'products',em:'📦',k:'sv_products',soon:true},
   {id:'inventory',em:'🗃️',k:'sv_inventory',soon:true},
   {id:'notifications',em:'🔔',k:'sv_notifs',soon:true},
-  {id:'payments',em:'💳',k:'sv_payments',soon:true}
+  {id:'payments',em:'💳',k:'sv_payments',open:()=>svPayments()}
 ];
 function svHeader(back){return `<button class="back" onclick="${back||"go('home')"}">‹ ${t('back')}</button>`;}
 function openSV(){const body=document.getElementById('svBody');
@@ -1027,6 +1095,23 @@ function svReceipts(){const body=document.getElementById('svBody');
   if(!sales.length){wrap.innerHTML=`<div class="empty"><div class="ee">📩</div>${t('sv_none_sales')}</div>`;return;}
   sales.forEach(o=>{const el=document.createElement('div');el.className='order';
     el.innerHTML=`<div class="top"><div><div class="who">${o.name}</div><div class="meta">${o.id} · ${o.svcName} · ${fmtDate(o.ts)}</div></div><div class="amt2">${gdes(o.amount)}</div></div>
+      <button class="mini">🧾 ${t('reopen_receipt')}</button>`;
+    el.querySelector('.mini').onclick=()=>showReceipt(o);wrap.appendChild(el);});
+}
+function svPayments(){const body=document.getElementById('svBody');
+  const tx=load('hb_orders',[]).filter(o=>o.payment&&o.payment!=='cash'&&o.amount>0).slice().reverse();
+  body.innerHTML=`${svHeader('openSV()')}<div class="h2">${t('sv_payments')}</div>
+    <div class="card" style="background:#eef3ff;border-color:var(--blue)">
+      <div style="font-weight:800;color:var(--blue)">✅ ${t('pay_active')}</div>
+      <div class="sub" style="margin-top:4px">${t('pay_active_sub')}</div></div>
+    <div id="svPayList"></div>`;
+  const wrap=document.getElementById('svPayList');
+  if(!tx.length){wrap.innerHTML=`<div class="empty"><div class="ee">💳</div>${t('pay_none')}</div>`;return;}
+  tx.forEach(o=>{const st=o.payStatus==='paid'?t('pay_status_paid'):o.payStatus==='manual'?t('pay_status_manual'):'';
+    const col=o.payStatus==='paid'?'#16a34a':'var(--muted)';
+    const el=document.createElement('div');el.className='order';
+    el.innerHTML=`<div class="top"><div><div class="who">${o.name}</div><div class="meta">${o.id} · ${payLabel(o.payment)} · ${fmtDate(o.ts)}</div></div>
+      <div style="text-align:right"><div class="amt2">${gdes(o.amount)}</div><div style="font-size:11px;font-weight:800;color:${col}">${st}</div></div></div>
       <button class="mini">🧾 ${t('reopen_receipt')}</button>`;
     el.querySelector('.mini').onclick=()=>showReceipt(o);wrap.appendChild(el);});
 }
