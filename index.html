@@ -145,7 +145,19 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
 .nav button .ni{font-size:22px;line-height:1}.nav button.on{color:var(--blue)}
 .badge-dot{position:relative}
 .badge-dot[data-n]:not([data-n="0"]):after{content:attr(data-n);position:absolute;top:-3px;right:calc(50% - 22px);background:var(--red);color:#fff;font-size:10px;font-weight:800;min-width:16px;height:16px;border-radius:999px;display:flex;align-items:center;justify-content:center;padding:0 4px}
-@media print{.appbar,.nav,.back,.cta,.no-print{display:none!important}body{padding:0}}
+#installBanner{display:none;align-items:center;gap:11px;background:linear-gradient(135deg,#00209F 0%,#0a44e0 100%);color:#fff;padding:12px 14px;box-shadow:0 6px 18px rgba(0,32,159,.34);animation:ibslide .35s cubic-bezier(.2,.8,.2,1)}
+#installBanner.show{display:flex}
+@keyframes ibslide{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
+#installBanner .ib-ic{font-size:1.7rem;flex-shrink:0}
+#installBanner .ib-tx{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.28}
+#installBanner .ib-tx b{font-size:14px;font-weight:800}
+#installBanner .ib-tx span{font-size:11.5px;color:rgba(255,255,255,.9)}
+#installBanner .ib-btn{background:#fff;color:#00209F;border:none;border-radius:11px;padding:10px 16px;font-size:13px;font-weight:900;flex-shrink:0;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.2);animation:ibpulse 2s ease-in-out infinite}
+#installBanner .ib-btn:active{transform:scale(.95)}
+@keyframes ibpulse{0%,100%{box-shadow:0 3px 10px rgba(0,0,0,.2)}50%{box-shadow:0 0 0 6px rgba(255,255,255,.18)}}
+#installBanner .ib-x{background:transparent;border:none;color:rgba(255,255,255,.85);font-size:15px;flex-shrink:0;cursor:pointer;padding:2px 5px;line-height:1}
+@media(prefers-reduced-motion:reduce){#installBanner,#installBanner .ib-btn{animation:none}}
+@media print{.appbar,.nav,.back,.cta,.no-print,#installBanner{display:none!important}body{padding:0}}
 </style>
 </head>
 <body>
@@ -158,6 +170,15 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
   <button class="gear" onclick="go('set')">⚙️</button>
 </div>
 <div id="offlineBar" style="display:none;background:#e08a00;color:#fff;text-align:center;font-size:12px;font-weight:700;padding:5px 8px" data-i18n="offline_on">Mòd offline — sere sou aparèy la</div>
+<div id="installBanner">
+  <span class="ib-ic">📲</span>
+  <div class="ib-tx">
+    <b data-i18n="ib_head">Enstale app la sou telefòn ou</b>
+    <span data-i18n="ib_sub">Pi rapid, louvri tankou yon vrè app, mache menm san entènèt</span>
+  </div>
+  <button id="installBtn2" class="ib-btn" data-i18n="ib_cta">Enstale Kounye a</button>
+  <button id="installClose" class="ib-x" aria-label="close">✕</button>
+</div>
 
 <main>
 <section id="s-home" class="screen on">
@@ -413,7 +434,7 @@ const T={
 };
 /* ---- added strings (install/offline, reports, notify) ---- */
 const T_EXT={
- ht:{install:'Enstale',offline_on:'Mòd offline — sere sou aparèy la',rep_open:'📈 Rapò detaye',rep_t:'Rapò',rep_csv:'⬇️ CSV',
+ ht:{install:'Enstale',ib_head:'Enstale app la sou telefòn ou',ib_sub:'Pi rapid, louvri tankou yon vrè app, mache menm san entènèt',ib_cta:'Enstale Kounye a',offline_on:'Mòd offline — sere sou aparèy la',rep_open:'📈 Rapò detaye',rep_t:'Rapò',rep_csv:'⬇️ CSV',
   rp_today:'Jodi a',rp_7:'7 jou',rp_30:'30 jou',rp_all:'Tout',rep_revenue:'Revni',rep_txn:'Tranzaksyon',rep_avg:'Mwayèn',
   rep_bysvc:'Pa sèvis',rep_bypay:'Pa metòd peman',rep_bystat:'Pa estati',rep_none:'Pa gen done pou peryòd sa a.',
   notify:'📲 Fè kliyan an konnen',notify_t:'Fè konnen kliyan',notify_wa:'WhatsApp',notify_email:'Imel',notify_no:'Pa gen telefòn/imel pou kliyan sa a.',
@@ -424,7 +445,7 @@ const T_EXT={
   sv_products:'Jesyon Pwodwi',sv_inventory:'Envantè',sv_notifs:'Notifikasyon Tan Reyèl',sv_payments:'Peman MonCash/NatCash',
   dash_orders:'Kòmand',dash_customers:'Kliyan',dash_notifs:'Notifikasyon',sv_none_cust:'Pa gen kliyan ankò.',sv_none_sales:'Pa gen vant ankò.',reopen_receipt:'Wè resi',
   pg_creating:'N ap kreye peman an…',pg_scan:'Fè kliyan an eskane kòd la ak telefòn li, oswa louvri paj peman an.',pg_open:'Louvri paj peman an',pg_waiting:'N ap tann peman an…',pg_paid:'✓ Peman resevwa!',pg_manual:'Make peye manyèlman',pg_fail:'Peman pa kreye',pg_fail_sub:'Nou pa rive jwenn sèvis peman an. Ou ka make l peye manyèlman oswa eseye ankò.',cancel:'Anile',set_pay_h:'Peman elektwonik',set_payclient:'ID Machann Peman (MonCash/NatCash)',pay_active:'MonCash & NatCash aktif',pay_active_sub:'Chwazi MonCash oswa NatCash lè w ap fè yon vant — kliyan an peye sou telefòn li epi vant lan make peye otomatikman.',pay_status_paid:'Peye',pay_status_manual:'Peye (manyèl)',pay_none:'Pa gen peman elektwonik ankò.'},
- fr:{install:'Installer',offline_on:'Mode hors-ligne — enregistré sur l’appareil',rep_open:'📈 Rapport détaillé',rep_t:'Rapports',rep_csv:'⬇️ CSV',
+ fr:{install:'Installer',ib_head:'Installez l’app sur votre téléphone',ib_sub:'Plus rapide, s’ouvre comme une vraie app, fonctionne même hors-ligne',ib_cta:'Installer maintenant',offline_on:'Mode hors-ligne — enregistré sur l’appareil',rep_open:'📈 Rapport détaillé',rep_t:'Rapports',rep_csv:'⬇️ CSV',
   rp_today:'Aujourd’hui',rp_7:'7 jours',rp_30:'30 jours',rp_all:'Tout',rep_revenue:'Revenu',rep_txn:'Transactions',rep_avg:'Moyenne',
   rep_bysvc:'Par service',rep_bypay:'Par paiement',rep_bystat:'Par statut',rep_none:'Aucune donnée pour cette période.',
   notify:'📲 Notifier le client',notify_t:'Notifier le client',notify_wa:'WhatsApp',notify_email:'Email',notify_no:'Aucun téléphone/email pour ce client.',
@@ -435,7 +456,7 @@ const T_EXT={
   sv_products:'Gestion des produits',sv_inventory:'Inventaire',sv_notifs:'Notifications en temps réel',sv_payments:'Paiement MonCash/NatCash',
   dash_orders:'Commandes',dash_customers:'Clients',dash_notifs:'Notifications',sv_none_cust:'Aucun client pour le moment.',sv_none_sales:'Aucune vente pour le moment.',reopen_receipt:'Voir le reçu',
   pg_creating:'Création du paiement…',pg_scan:'Faites scanner le code au client avec son téléphone, ou ouvrez la page de paiement.',pg_open:'Ouvrir la page de paiement',pg_waiting:'En attente du paiement…',pg_paid:'✓ Paiement reçu !',pg_manual:'Marquer payé manuellement',pg_fail:'Paiement non créé',pg_fail_sub:'Impossible de joindre le service de paiement. Vous pouvez marquer payé manuellement ou réessayer.',cancel:'Annuler',set_pay_h:'Paiement électronique',set_payclient:'ID Marchand Paiement (MonCash/NatCash)',pay_active:'MonCash & NatCash actifs',pay_active_sub:'Choisissez MonCash ou NatCash lors d’une vente — le client paie sur son téléphone et la vente est marquée payée automatiquement.',pay_status_paid:'Payé',pay_status_manual:'Payé (manuel)',pay_none:'Aucun paiement électronique pour le moment.'},
- en:{install:'Install',offline_on:'Offline mode — saved on this device',rep_open:'📈 Detailed Report',rep_t:'Reports',rep_csv:'⬇️ CSV',
+ en:{install:'Install',ib_head:'Install the app on your phone',ib_sub:'Faster, opens like a real app, works even offline',ib_cta:'Install Now',offline_on:'Offline mode — saved on this device',rep_open:'📈 Detailed Report',rep_t:'Reports',rep_csv:'⬇️ CSV',
   rp_today:'Today',rp_7:'7 days',rp_30:'30 days',rp_all:'All',rep_revenue:'Revenue',rep_txn:'Transactions',rep_avg:'Average',
   rep_bysvc:'By service',rep_bypay:'By payment',rep_bystat:'By status',rep_none:'No data for this period.',
   notify:'📲 Notify customer',notify_t:'Notify customer',notify_wa:'WhatsApp',notify_email:'Email',notify_no:'No phone/email for this customer.',
@@ -1773,9 +1794,27 @@ function exportCSV(){const os=repOrders();
    =================================================================== */
 if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
 let deferredPrompt=null;
-window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;document.getElementById('installBtn').style.display='inline-flex';});
-document.getElementById('installBtn').onclick=function(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.finally(function(){deferredPrompt=null;document.getElementById('installBtn').style.display='none';});};
-window.addEventListener('appinstalled',function(){document.getElementById('installBtn').style.display='none';});
+function showInstallUI(){
+  if(!deferredPrompt)return;
+  document.getElementById('installBtn').style.display='inline-flex';
+  if(localStorage.getItem('hb_install_dismissed')!=='1'){
+    document.getElementById('installBanner').classList.add('show');
+  }
+}
+function hideInstallUI(){
+  document.getElementById('installBtn').style.display='none';
+  document.getElementById('installBanner').classList.remove('show');
+}
+function doInstall(){
+  if(!deferredPrompt)return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.finally(function(){deferredPrompt=null;hideInstallUI();});
+}
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;showInstallUI();});
+document.getElementById('installBtn').onclick=doInstall;
+document.getElementById('installBtn2').onclick=doInstall;
+document.getElementById('installClose').onclick=function(){localStorage.setItem('hb_install_dismissed','1');document.getElementById('installBanner').classList.remove('show');};
+window.addEventListener('appinstalled',function(){hideInstallUI();});
 function updateOnline(){document.getElementById('offlineBar').style.display=navigator.onLine?'none':'block';}
 window.addEventListener('online',updateOnline);window.addEventListener('offline',updateOnline);updateOnline();
 
