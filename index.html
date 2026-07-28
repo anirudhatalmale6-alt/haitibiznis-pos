@@ -199,6 +199,12 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
   <div id="refBody"></div>
 </section>
 
+<!-- Promo / Marketing Kit -->
+<section id="s-promo" class="screen">
+  <button class="back" onclick="go('ref')">‹ <span data-i18n="back">Retounen</span></button>
+  <div id="promoBody"></div>
+</section>
+
 <section id="s-subs" class="screen">
   <button class="back" onclick="go('home')">‹ <span data-i18n="back">Retounen</span></button>
   <div class="h2" id="subTitle"></div>
@@ -590,6 +596,33 @@ const T_HUB={
 };
 Object.keys(T_HUB).forEach(function(l){Object.assign(T[l],T_HUB[l]);});
 
+const T_PROMO={
+ ht:{promo_open:'Materyèl Pwomosyon',promo_t:'Materyèl Pwomosyon',promo_sub:'Telechaje flyer ak videyo pou pwomote sèvis yo epi fè plis komisyon.',
+  promo_link_note:'Chak fwa ou pataje, mete lyen parenaj ou an pou touche komisyon:',promo_flyers_h:'Flyer & Post Rezo Sosyal',promo_videos_h:'Videyo',
+  promo_download:'Telechaje',promo_share:'Pataje',promo_videos_empty:'Videyo pwomosyon ap vini talè. W ap ka telechaje yo la a pou pataje sou WhatsApp ak Facebook.',
+  promo_watch:'Gade',promo_msg:'Dekouvri sèvis HaitiBiznis yo! Enskri ak lyen mwen an: {link}'},
+ fr:{promo_open:'Matériel Promo',promo_t:'Matériel Promotionnel',promo_sub:'Téléchargez des flyers et vidéos pour promouvoir les services et gagner plus de commissions.',
+  promo_link_note:'À chaque partage, incluez votre lien de parrainage pour gagner des commissions :',promo_flyers_h:'Flyers & Posts Réseaux Sociaux',promo_videos_h:'Vidéos',
+  promo_download:'Télécharger',promo_share:'Partager',promo_videos_empty:'Les vidéos promotionnelles arrivent bientôt. Vous pourrez les télécharger ici pour les partager sur WhatsApp et Facebook.',
+  promo_watch:'Regarder',promo_msg:'Découvrez les services HaitiBiznis ! Inscrivez-vous avec mon lien : {link}'},
+ en:{promo_open:'Promo Materials',promo_t:'Promotional Materials',promo_sub:'Download flyers and videos to promote the services and earn more commissions.',
+  promo_link_note:'Every time you share, include your referral link to earn commissions:',promo_flyers_h:'Flyers & Social Media Posts',promo_videos_h:'Videos',
+  promo_download:'Download',promo_share:'Share',promo_videos_empty:'Promo videos are coming soon. You’ll be able to download them here to share on WhatsApp and Facebook.',
+  promo_watch:'Watch',promo_msg:'Discover the HaitiBiznis services! Sign up with my link: {link}'}
+};
+Object.keys(T_PROMO).forEach(function(l){Object.assign(T[l],T_PROMO[l]);});
+const PROMO_FLYERS=[
+ {f:'msw-whatsapp-status.png',t:'MsouWout — WhatsApp Status'},
+ {f:'msw-square.png',t:'MsouWout — Post Rezo Sosyal'},
+ {f:'msw-launch.png',t:'MsouWout — Lansman'},
+ {f:'msw-how.png',t:'MsouWout — Kijan li Mache'},
+ {f:'msw-driver.png',t:'MsouWout — Rekritman Chofè'},
+ {f:'msw-fb-cover.png',t:'MsouWout — Kouvèti Facebook'},
+ {f:'msw-vehicle-sticker.png',t:'MsouWout — Otokolan Machin'},
+ {f:'msw-qr-flyer.png',t:'MsouWout — Flyer QR'}
+];
+const PROMO_VIDEOS=[]; /* client to supply promo videos → {src,thumb,t} */
+
 let lang=localStorage.getItem('hb_lang')||'ht';
 function t(k){return (T[lang]&&T[lang][k])||T.ht[k]||k;}
 function applyI18n(){document.documentElement.lang=lang;
@@ -675,13 +708,13 @@ const REG_FORMS={
 function go(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
   document.getElementById('s-'+name).classList.add('on');
-  const nm={home:'home',earn:'earn',orders:'orders',dash:'earn',reports:'earn',ref:'ref',set:'set'};
+  const nm={home:'home',earn:'earn',orders:'orders',dash:'earn',reports:'earn',ref:'ref',promo:'ref',set:'set'};
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.nav===nm[name]));
   if(!nm[name])document.querySelector('.nav button[data-nav="home"]').classList.add('on');
   window.scrollTo(0,0);
   const fab=document.getElementById('fabNewSale');if(fab)fab.style.display=['home','orders','earn'].includes(name)?'flex':'none';
   if(name==='home')renderHome();if(name==='orders')renderOrders();if(name==='dash')renderDash();if(name==='set')renderSettings();if(name==='reports')renderReports();
-  if(name==='earn')renderEarn();if(name==='ref')renderRef();
+  if(name==='earn')renderEarn();if(name==='ref')renderRef();if(name==='promo')renderPromo();
   refreshBadges();
 }
 function refreshBadges(){const o=load('hb_orders',[]);
@@ -745,6 +778,11 @@ function renderHome(){
      <div style="font-size:16px;font-weight:900">🤝 ${t('hub_invite_t')}</div>
      <div style="font-size:12px;opacity:.92;margin-top:4px">${t('hub_invite_s')}</div>
      <div style="display:inline-block;background:#fff;color:#0b7a44;font-weight:800;font-size:13px;padding:8px 16px;border-radius:999px;margin-top:12px">${t('hub_invite_btn')} →</div>
+   </button>
+   <button onclick="go('promo')" style="width:100%;border:0;border-radius:16px;padding:14px 16px;margin-top:10px;text-align:left;color:#fff;background:linear-gradient(135deg,var(--blue),#0a44e0);box-shadow:0 8px 20px rgba(0,32,159,.28);display:flex;align-items:center;gap:12px">
+     <span style="font-size:22px">📣</span>
+     <span style="flex:1"><span style="display:block;font-size:14px;font-weight:900">${t('promo_open')}</span><span style="display:block;font-size:11.5px;opacity:.9">${t('promo_sub')}</span></span>
+     <span style="font-size:18px">→</span>
    </button>`;
   applyI18n();
 }
@@ -788,6 +826,7 @@ function renderRef(){
       <div style="font-size:11px;opacity:.85;word-break:break-all">${link}</div></div>
     <button class="cta green" onclick="refShare()">📲 ${t('ref_invite')}</button>
     <button class="cta ghost" onclick="refCopy()">📋 ${t('ref_copy')}</button>
+    <button class="cta" style="background:var(--blue)" onclick="go('promo')">📣 ${t('promo_open')}</button>
     <div class="card" style="margin-top:14px">
       <div style="font-weight:800;margin-bottom:8px">${t('ref_yours')}</div>
       <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0"><span>${t('earn_referred')}</span><b>${refs.length}</b></div>
@@ -798,6 +837,40 @@ function refShare(){const link=refLink();const msg=t('ref_msg').replace('{link}'
   if(navigator.share){navigator.share({title:'HaitiBiznis',text:msg,url:link}).catch(()=>{});}
   else window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
 function refCopy(){const link=refLink();if(navigator.clipboard){navigator.clipboard.writeText(link).then(()=>alert(t('ref_copied'))).catch(()=>alert(link));}else alert(link);}
+function renderPromo(){
+  const link=refLink();
+  const flyers=PROMO_FLYERS.map((fl,i)=>`
+    <div class="card" style="padding:10px">
+      <img src="assets/promo/${fl.f}" alt="${fl.t}" loading="lazy" style="width:100%;border-radius:10px;background:#f2f4f8;display:block;object-fit:cover;max-height:220px">
+      <div style="font-weight:800;font-size:13px;margin:8px 2px 10px">${fl.t}</div>
+      <div style="display:flex;gap:8px">
+        <a class="cta" style="flex:1;text-decoration:none;text-align:center;padding:10px 8px;font-size:13px" href="assets/promo/${fl.f}" download="${fl.f}">⬇️ ${t('promo_download')}</a>
+        <button class="cta ghost" style="flex:1;padding:10px 8px;font-size:13px" onclick="promoShare('${fl.t.replace(/'/g,"\\'")}')">📲 ${t('promo_share')}</button>
+      </div>
+    </div>`).join('');
+  const videos = PROMO_VIDEOS.length
+    ? PROMO_VIDEOS.map(v=>`
+      <div class="card" style="padding:10px">
+        <video src="${v.src}" ${v.thumb?`poster="${v.thumb}"`:''} controls preload="metadata" style="width:100%;border-radius:10px;background:#000;max-height:240px"></video>
+        <div style="font-weight:800;font-size:13px;margin:8px 2px 10px">${v.t||''}</div>
+        <a class="cta" style="text-decoration:none;text-align:center;display:block;padding:10px 8px;font-size:13px" href="${v.src}" download>⬇️ ${t('promo_download')}</a>
+      </div>`).join('')
+    : `<div class="empty" style="padding:22px 14px;text-align:center;color:var(--muted)">🎬<div style="margin-top:8px;font-size:13px">${t('promo_videos_empty')}</div></div>`;
+  document.getElementById('promoBody').innerHTML=`
+    <div class="h2">📣 ${t('promo_t')}</div><p class="sub">${t('promo_sub')}</p>
+    <div class="card" style="background:linear-gradient(135deg,var(--blue),#0a44e0);color:#fff;border:0">
+      <div style="font-size:12px;opacity:.9;font-weight:700">${t('promo_link_note')}</div>
+      <div style="font-size:13px;font-weight:800;word-break:break-all;margin-top:6px">${link}</div>
+      <button class="cta ghost" style="background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.6);color:#fff;margin-top:10px" onclick="refCopy()">📋 ${t('ref_copy')}</button>
+    </div>
+    <div class="h2" style="font-size:16px;margin:18px 0 10px">${t('promo_flyers_h')}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">${flyers}</div>
+    <div class="h2" style="font-size:16px;margin:20px 0 10px">${t('promo_videos_h')}</div>
+    ${videos}`;
+}
+function promoShare(name){const link=refLink();const msg=t('promo_msg').replace('{link}',link);
+  if(navigator.share){navigator.share({title:'HaitiBiznis',text:msg,url:link}).catch(()=>{});}
+  else window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
 function openModule(m){
   if(!m.soon&&!licGate())return;
   if(m.type==='order'){startFlow(m.id);}

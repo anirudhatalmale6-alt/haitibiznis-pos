@@ -1,5 +1,5 @@
 /* Sant HaitiBiznis POS — service worker (offline app shell) */
-var CACHE = 'hb-pos-v8';
+var CACHE = 'hb-pos-v9';
 var SHELL = [
   './',
   './index.html',
