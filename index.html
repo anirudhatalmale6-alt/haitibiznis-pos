@@ -1899,6 +1899,9 @@ document.querySelectorAll('.lang button').forEach(b=>{b.onclick=()=>{lang=b.data
 /* ---------- boot ---------- */
 document.querySelectorAll('.lang button').forEach(x=>x.classList.toggle('on',x.dataset.lang===lang));
 applyI18n();renderHome();refreshBadges();
+/* deep-link: /pos/#promo opens the Promo Materials screen directly */
+(function(){var h=(location.hash||'').replace('#','');if(h==='promo'){go('promo');}})();
+window.addEventListener('hashchange',function(){var h=(location.hash||'').replace('#','');if(h==='promo')go('promo');else if(h==='home'||h==='')go('home');});
 </script>
 </body>
 </html>
