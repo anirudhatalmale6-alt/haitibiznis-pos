@@ -161,9 +161,21 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
 
 <main>
 <section id="s-home" class="screen on">
-  <div class="h2" data-i18n="home_t">Chwazi yon sèvis</div>
-  <p class="sub" data-i18n="home_s">Kès la: enskri kliyan, vann sèvis, resevwa peman.</p>
+  <div id="homeHead"></div>
+  <div id="homeQuick"></div>
+  <div class="h2" style="font-size:17px;margin:16px 0 10px" id="homeSvcTitle">Sèvis</div>
   <div class="grid" id="modGrid"></div>
+  <div id="homeRefer"></div>
+</section>
+
+<!-- Earnings -->
+<section id="s-earn" class="screen">
+  <div id="earnBody"></div>
+</section>
+
+<!-- Referral (Parenaj Biznis) -->
+<section id="s-ref" class="screen">
+  <div id="refBody"></div>
 </section>
 
 <section id="s-subs" class="screen">
@@ -285,7 +297,7 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
 </section>
 
 <section id="s-reports" class="screen">
-  <button class="back" onclick="go('dash')">‹ <span data-i18n="back">Retounen</span></button>
+  <button class="back" onclick="go('earn')">‹ <span data-i18n="back">Retounen</span></button>
   <div class="h2" data-i18n="rep_t">Rapò</div>
   <div class="filterbar" id="repRange"></div>
   <div id="reportBody"></div>
@@ -309,8 +321,9 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
 
 <nav class="nav">
   <button data-nav="home" class="on" onclick="go('home')"><span class="ni">🏠</span><span data-i18n="n_home">Akèy</span></button>
-  <button data-nav="orders" class="badge-dot" onclick="go('orders')"><span class="ni">📋</span><span data-i18n="n_orders">Kòmand</span></button>
-  <button data-nav="dash" onclick="go('dash')"><span class="ni">📊</span><span data-i18n="n_dash">Tablodbò</span></button>
+  <button data-nav="earn" onclick="go('earn')"><span class="ni">💰</span><span data-i18n="n_earn">Kòb</span></button>
+  <button data-nav="orders" class="badge-dot" onclick="go('orders')"><span class="ni">📦</span><span data-i18n="n_orders">Kòmand</span></button>
+  <button data-nav="ref" onclick="go('ref')"><span class="ni">🤝</span><span data-i18n="n_ref">Parenaj</span></button>
   <button data-nav="set" onclick="go('set')"><span class="ni">⚙️</span><span data-i18n="n_set">Paramèt</span></button>
 </nav>
 
@@ -515,6 +528,46 @@ const T_LIC={
   lic_set_active:'Set Active',lic_set_expired:'Set Expired (test)',lic_suspend:'Suspend',lic_reactivate:'Reactivate'}
 };
 Object.keys(T_LIC).forEach(function(l){Object.assign(T[l],T_LIC[l]);});
+/* ---- Digital Business Center hub / Earnings / Referral strings ---- */
+const T_HUB={
+ ht:{n_earn:'Kòb',n_ref:'Parenaj',
+  hub_verified:'Patnè Verifye',hub_level:'Nivo',hub_refcode:'Kòd Parenaj',
+  hub_title:'Sant Biznis Dijital',hub_revtoday:'Revni Jodi a',hub_sales:'Vant Jodi a',hub_custserved:'Kliyan Sèvi',hub_comm:'Komisyon',
+  hub_commbanner:'Ou fè {n} komisyon semèn sa a!',hub_manage:'Jere Abònman',hub_quick:'Aksyon Rapid',
+  hub_newsale:'Nouvo Vant',hub_inventory:'Envantè',hub_customers:'Kliyan',hub_earn:'Fè Kòb',
+  hub_invite_t:'Envite Biznis',hub_invite_s:'Fè komisyon chak mwa ak Parenaj Biznis.',hub_invite_btn:'Envite Kounye a',
+  hub_soon_msg:'N ap prepare fonksyon sa a. Li ap disponib byento.',
+  svc_marketplace:'Machande',svc_ride:'Woulib',svc_parenaj:'Parenaj Biznis',svc_bizreg:'Anrejistreman Biznis',svc_insurance:'Asirans',svc_bills:'Peman Fakti',svc_water:'Peman Dlo',svc_tickets:'Vant Tikè',svc_website:'Kreyasyon Sit Web',svc_delivery:'Livrezon',svc_admin:'Sèvis Administratif',svc_legal:'Sèvis Legal',svc_pro:'Pwofesyonèl Lakay',svc_cashout:'Retrè Kach',
+  earn_t:'Kòb Ou Fè',earn_sub:'Tout revni ou nan ekosistèm HaitiBiznis.',earn_lifetime:'Total Depi Toujou',earn_today:'Jodi a',earn_month:'Mwa sa a',
+  earn_direct:'Vant Dirèk (pa sèvis)',earn_parenaj:'Parenaj Biznis',earn_referred:'Machann Refere',earn_active_ref:'Parenaj Aktif',earn_ref_income:'Revni Parenaj',earn_open_ref:'Louvri Parenaj',earn_none:'Poko gen komisyon.',
+  ref_t:'Parenaj Biznis',ref_sub:'Envite lòt biznis, fè komisyon chak mwa.',ref_invite:'Envite yon Biznis',ref_copy:'Kopye Lyen an',ref_yours:'Parenaj Ou',
+  ref_note:'Chak biznis ou envite ki abòne bay ou yon komisyon chak mwa pandan abònman an rete aktif.',ref_copied:'Lyen kopye!',ref_msg:'Vin sou HaitiBiznis — sant biznis dijital pou machann Ayisyen! Enskri ak lyen mwen an: {link}'},
+ fr:{n_earn:'Revenus',n_ref:'Parrainage',
+  hub_verified:'Partenaire Vérifié',hub_level:'Niveau',hub_refcode:'Code Parrainage',
+  hub_title:'Centre d’Affaires Numérique',hub_revtoday:'Revenu du jour',hub_sales:'Ventes du jour',hub_custserved:'Clients servis',hub_comm:'Commissions',
+  hub_commbanner:'Vous avez gagné {n} de commissions cette semaine !',hub_manage:'Gérer l’abonnement',hub_quick:'Actions rapides',
+  hub_newsale:'Nouvelle vente',hub_inventory:'Inventaire',hub_customers:'Clients',hub_earn:'Gagner',
+  hub_invite_t:'Inviter des entreprises',hub_invite_s:'Gagnez des commissions mensuelles avec Parenaj Biznis.',hub_invite_btn:'Inviter',
+  hub_soon_msg:'Cette fonction arrive bientôt.',
+  svc_marketplace:'Marketplace',svc_ride:'Transport',svc_parenaj:'Parrainage',svc_bizreg:'Enregistrement d’entreprise',svc_insurance:'Assurance',svc_bills:'Paiement de factures',svc_water:'Paiement d’eau',svc_tickets:'Vente de billets',svc_website:'Création de site web',svc_delivery:'Livraison',svc_admin:'Services administratifs',svc_legal:'Services juridiques',svc_pro:'Professionnels',svc_cashout:'Retrait d’espèces',
+  earn_t:'Vos revenus',earn_sub:'Tous vos revenus dans l’écosystème HaitiBiznis.',earn_lifetime:'Total à vie',earn_today:'Aujourd’hui',earn_month:'Ce mois',
+  earn_direct:'Ventes directes (par service)',earn_parenaj:'Parrainage',earn_referred:'Marchands parrainés',earn_active_ref:'Parrainages actifs',earn_ref_income:'Revenu de parrainage',earn_open_ref:'Ouvrir parrainage',earn_none:'Pas encore de commissions.',
+  ref_t:'Parrainage',ref_sub:'Invitez d’autres entreprises, gagnez chaque mois.',ref_invite:'Inviter une entreprise',ref_copy:'Copier le lien',ref_yours:'Vos parrainages',
+  ref_note:'Chaque entreprise que vous invitez et qui s’abonne vous rapporte une commission mensuelle tant que l’abonnement reste actif.',ref_copied:'Lien copié !',ref_msg:'Rejoignez HaitiBiznis — le centre d’affaires numérique des marchands haïtiens ! Inscrivez-vous avec mon lien : {link}'},
+ en:{n_earn:'Earnings',n_ref:'Referral',
+  hub_verified:'Verified Partner',hub_level:'Level',hub_refcode:'Referral Code',
+  hub_title:'Digital Business Center',hub_revtoday:'Today’s Revenue',hub_sales:'Today’s Sales',hub_custserved:'Customers Served',hub_comm:'Commissions',
+  hub_commbanner:'You earned {n} in commissions this week!',hub_manage:'Manage Subscription',hub_quick:'Quick Actions',
+  hub_newsale:'New Sale',hub_inventory:'Inventory',hub_customers:'Customers',hub_earn:'Earn',
+  hub_invite_t:'Invite Businesses',hub_invite_s:'Earn recurring monthly commissions through Parenaj Biznis.',hub_invite_btn:'Invite Now',
+  hub_soon_msg:'This feature is coming soon.',
+  svc_marketplace:'Marketplace',svc_ride:'Ride Booking',svc_parenaj:'Parenaj Biznis',svc_bizreg:'Business Registration',svc_insurance:'Insurance',svc_bills:'Bill Payments',svc_water:'Water Payments',svc_tickets:'Ticket Sales',svc_website:'Website Creation',svc_delivery:'Delivery',svc_admin:'Admin Services',svc_legal:'Legal Services',svc_pro:'Professionals',svc_cashout:'Cash-Out',
+  earn_t:'Your Earnings',earn_sub:'All your income across the HaitiBiznis ecosystem.',earn_lifetime:'Lifetime Total',earn_today:'Today',earn_month:'This Month',
+  earn_direct:'Direct Sales (by service)',earn_parenaj:'Parenaj Biznis',earn_referred:'Referred Merchants',earn_active_ref:'Active Referrals',earn_ref_income:'Referral Income',earn_open_ref:'Open Referral',earn_none:'No commissions yet.',
+  ref_t:'Parenaj Biznis',ref_sub:'Invite other businesses, earn every month.',ref_invite:'Invite a Business',ref_copy:'Copy Link',ref_yours:'Your Referrals',
+  ref_note:'Every business you invite that subscribes earns you a monthly commission for as long as their subscription stays active.',ref_copied:'Link copied!',ref_msg:'Join HaitiBiznis — the digital business center for Haitian merchants! Sign up with my link: {link}'}
+};
+Object.keys(T_HUB).forEach(function(l){Object.assign(T[l],T_HUB[l]);});
 
 let lang=localStorage.getItem('hb_lang')||'ht';
 function t(k){return (T[lang]&&T[lang][k])||T.ht[k]||k;}
@@ -551,19 +604,21 @@ function sInfo(set,id){const s=STATUS[set]||STATUS.sale;return s.find(x=>x.id===
 
 /* ---------- modules ---------- */
 const MODULES=[
- {id:'sistemvant',nm:'Sistèm Vant',em:'🧾',type:'sv',feat:true},
- {id:'myplopplop',nm:'MyPlopPlop',logo:'assets/myplopplop-logo.png',type:'sub'},
- {id:'msouwout',nm:'MsouWout',logo:'assets/msouwout-logo.png',type:'sub'},
- {id:'parenaj',nm:'Parenaj Biznis',em:'🤝',type:'reg',reg:'affiliate'},
- {id:'tikelakay',nm:'Tikè Lakay',em:'🎟️',type:'tickets'},
- {id:'pwofesyonel',nm:'Pwofesyonèl Lakay',em:'👨‍💼',type:'reg',reg:'pro'},
- {id:'48h',nm:'48HoursReady',logo:'assets/48hoursready-logo.jpg',type:'order'},
- {id:'admin',nm:'Sèvis Administratif',em:'📄',type:'order'},
- {id:'legal',nm:'Sèvis Legal',em:'⚖️',type:'order'},
- {id:'bizreg',nm:'Anrejistreman Biznis',em:'🏢',type:'order'},
- {id:'cashaccess',nm:'Aksè Kach',em:'💵',type:'cash',soon:true}
- /* Payment Hub temporarily hidden from home (not ready) — code kept, re-add later:
-    {id:'paymenthub',nm:'Payment Hub',em:'💳',type:'order'} */
+ {id:'myplopplop',nm:'Marketplace',nmKey:'svc_marketplace',sub:'MyPlopPlop',logo:'assets/myplopplop-logo.png',type:'sub',color:'#0ea5a0',comm:8},
+ {id:'msouwout',nm:'Ride Booking',nmKey:'svc_ride',sub:'MsouWout',logo:'assets/msouwout-logo.png',type:'sub',color:'#2563eb',comm:10},
+ {id:'parenaj',nm:'Parenaj Biznis',nmKey:'svc_parenaj',em:'🤝',type:'reg',reg:'affiliate',color:'#12a150',commLabel:'earn'},
+ {id:'bizreg',nm:'Business Registration',nmKey:'svc_bizreg',em:'🏛️',type:'order',color:'#4f46e5',comm:10},
+ {id:'asirans',nm:'Insurance',nmKey:'svc_insurance',em:'🛡️',type:'order',color:'#7c3aed',comm:12},
+ {id:'billpay',nm:'Bill Payments',nmKey:'svc_bills',em:'💡',type:'order',color:'#f59e0b',comm:5},
+ {id:'water',nm:'Water Payments',nmKey:'svc_water',em:'🚰',type:'order',color:'#06b6d4',comm:5},
+ {id:'tikelakay',nm:'Ticket Sales',nmKey:'svc_tickets',em:'🎫',type:'tickets',color:'#db2777',comm:8},
+ {id:'website',nm:'Website Creation',nmKey:'svc_website',em:'💻',type:'order',color:'#8b5cf6',comm:15},
+ {id:'48h',nm:'48HoursReady',sub:'48HoursReady',logo:'assets/48hoursready-logo.jpg',type:'order',color:'#ea580c',comm:15},
+ {id:'delivery',nm:'Delivery',nmKey:'svc_delivery',em:'🚚',type:'action',action:'delivery',color:'#b45309',comm:8},
+ {id:'admin',nm:'Sèvis Administratif',nmKey:'svc_admin',em:'📄',type:'order',color:'#475569',comm:10},
+ {id:'legal',nm:'Sèvis Legal',nmKey:'svc_legal',em:'⚖️',type:'order',color:'#1e3a8a',comm:10},
+ {id:'pwofesyonel',nm:'Pwofesyonèl Lakay',nmKey:'svc_pro',em:'👨‍💼',type:'reg',reg:'pro',color:'#0891b2',comm:0},
+ {id:'cashaccess',nm:'Cash-Out',nmKey:'svc_cashout',em:'💵',type:'cash',soon:true,color:'#12a150'}
 ];
 function modById(id){return MODULES.find(m=>m.id===id);}
 
@@ -574,6 +629,9 @@ const ADMIN_ITEMS=['Patente','Extrait d’Archives','Légalisation','Permis de c
 const LEGAL_ITEMS=['Legal Consultation','Contract Drafting','Property Transactions','Labour Law','Family Law','Business Agreements','Foundation Registration','NGO Registration','Association Registration'];
 const BILL_TYPES=['EDH','DINEPA','MonCash Services','NatCash Services','Mobile Recharge','Internet Bill','Other bill'];
 const MERCH_CATS=['Supermarket','Restaurant','Pharmacy','Hardware Store','Boutique','Other'];
+const ITEMS_MAP={admin:ADMIN_ITEMS,legal:LEGAL_ITEMS,
+  asirans:['Asirans Machin','Asirans Sante','Asirans Vi','Asirans Biznis','Lòt asirans'],
+  website:['Sit Vitrin (1 paj)','Sit Biznis (plizyè paj)','Boutik An Liy','Landing Page','Antretyen Mansyèl','Non Domèn + Hosting','Lòt sèvis web']};
 
 /* registration form schemas (person-first) */
 const REG_FORMS={
@@ -596,12 +654,13 @@ const REG_FORMS={
 function go(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
   document.getElementById('s-'+name).classList.add('on');
-  const nm={home:'home',orders:'orders',dash:'dash',reports:'dash',set:'set'};
+  const nm={home:'home',earn:'earn',orders:'orders',dash:'earn',reports:'earn',ref:'ref',set:'set'};
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.nav===nm[name]));
   if(!nm[name])document.querySelector('.nav button[data-nav="home"]').classList.add('on');
   window.scrollTo(0,0);
-  const fab=document.getElementById('fabNewSale');if(fab)fab.style.display=['home','orders','dash','reports'].includes(name)?'flex':'none';
-  if(name==='orders')renderOrders();if(name==='dash')renderDash();if(name==='set')renderSettings();if(name==='reports')renderReports();
+  const fab=document.getElementById('fabNewSale');if(fab)fab.style.display=['home','orders','earn'].includes(name)?'flex':'none';
+  if(name==='home')renderHome();if(name==='orders')renderOrders();if(name==='dash')renderDash();if(name==='set')renderSettings();if(name==='reports')renderReports();
+  if(name==='earn')renderEarn();if(name==='ref')renderRef();
   refreshBadges();
 }
 function refreshBadges(){const o=load('hb_orders',[]);
@@ -609,21 +668,115 @@ function refreshBadges(){const o=load('hb_orders',[]);
   document.querySelector('.nav button[data-nav="orders"]').setAttribute('data-n',active);}
 
 /* ---------- home ---------- */
-function renderHome(){const g=document.getElementById('modGrid');g.innerHTML='';
-  (function(){const l=lic();const days=licDays(l);const es=licEffStatus(l);
-   if(es==='expired'||es==='suspended'||es==='trial'||days<=5){const bn=document.createElement('button');
-     bn.style.cssText='grid-column:1/-1;border:none;border-radius:14px;padding:12px 14px;font-weight:800;text-align:left;cursor:pointer;color:#fff;font-size:13px;background:'+((es==='expired'||es==='suspended')?'#b91c1c':es==='trial'?'#2563eb':'#f59e0b');
-     bn.innerHTML=(es==='expired'||es==='suspended')?('⚠️ '+t('lic_expired_msg')+' — '+t('lic_renew')):es==='trial'?('⭐ '+t('lic_banner_trial').replace('{n}',Math.max(0,days))):('⏳ '+t('lic_banner_soon').replace('{n}',Math.max(0,days)));
-     bn.onclick=()=>openLicense();g.appendChild(bn);}})();
-  MODULES.forEach(m=>{const b=document.createElement('button');b.className='mod'+(m.feat?' feat':'')+(m.soon?' soon':'');
-    const badge=m.soon?`<span style="position:absolute;top:8px;right:8px;background:#f59e0b;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:20px;letter-spacing:.3px">${t('soon')}</span>`:'';
-    if(m.feat){b.innerHTML=`<span class="fem">${m.em}</span><span class="ft"><span class="nm">${m.nm}</span><span class="fs" data-i18n="sv_tag">Sistèm prensipal — vann & jere tout</span></span><span class="fgo">›</span>`;}
-    else{const icon=m.logo?`<img class="il" src="${m.logo}" alt="">`:`<span class="em">${m.em}</span>`;
-      b.innerHTML=`${badge}${icon}<span class="nm">${m.nm}</span>`;}
-    if(m.soon){b.style.position='relative';b.style.opacity='.72';b.onclick=()=>caSoon();}
-    else b.onclick=()=>openModule(m);
+function profile(){var p=load('hb_profile',null);if(!p){p={name:'Centre HaitiBiznis',level:'Gold Partner',code:'HB-'+Math.floor(10000+Math.random()*89999),verified:true};save('hb_profile',p);}return p;}
+function commRate(mid){const m=modById(mid);return m&&m.comm!=null?m.comm:0;}
+function orderComm(o){return Math.round((+o.amount||0)*commRate(o.module)/100);}
+function hubSoon(titleKey){const m=caOverlay(`<div style="text-align:center"><div style="font-size:40px">🚧</div><div style="font-weight:900;font-size:17px;margin-top:4px">${t(titleKey)}</div><div style="display:inline-block;background:#f59e0b;color:#fff;font-size:11px;font-weight:800;padding:3px 12px;border-radius:20px;margin:8px 0">${t('soon')}</div><div class="sub">${t('hub_soon_msg')}</div><div style="height:12px"></div><button class="cta ghost" id="hs_x">${t('back')}</button></div>`);m.box.querySelector('#hs_x').onclick=m.close;}
+function renderHome(){
+  const p=profile();const o=load('hb_orders',[]);const today=o.filter(x=>isToday(x.ts)&&x.amount>0);
+  const revToday=today.reduce((a,b)=>a+(+b.amount||0),0);
+  const commToday=today.reduce((a,b)=>a+orderComm(b),0);
+  const custToday=new Set(today.map(x=>x.custId||x.phone||x.id)).size;
+  const commWeek=o.filter(x=>x.amount>0&&(Date.now()-new Date(x.ts).getTime())<7*864e5).reduce((a,b)=>a+orderComm(b),0);
+  const l=lic();const days=Math.max(0,licDays(l));const si=licStatusInfo(l);const exp=licExpired(l);
+  document.getElementById('homeHead').innerHTML=`
+   <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+     <div style="width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--blue),#0b2fc4);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex:0 0 auto">👤</div>
+     <div style="flex:1;min-width:0">
+       <div style="font-weight:900;font-size:16px">${p.name}</div>
+       <div style="font-size:12px;color:#d19a00;font-weight:700">⭐⭐⭐⭐⭐ ${t('hub_verified')}</div>
+       <div style="font-size:11px;color:var(--muted)">${t('hub_level')}: ${p.level} · ${t('hub_refcode')}: ${p.code}</div>
+     </div>
+   </div>
+   <div style="background:linear-gradient(135deg,#0e1830,#1b2a52);color:#fff;border-radius:18px;padding:18px;margin-bottom:12px">
+     <div style="font-size:13px;font-weight:800;opacity:.9">💰 ${t('hub_title')}</div>
+     <div style="font-size:12px;opacity:.7;margin-top:8px">${t('hub_revtoday')}</div>
+     <div style="font-size:30px;font-weight:900">${gdes(revToday)}</div>
+     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px">
+       <div style="background:rgba(255,255,255,.1);border-radius:12px;padding:11px 6px;text-align:center"><div style="font-size:19px;font-weight:900;color:#4ade80">${today.length}</div><div style="font-size:9px;opacity:.85;margin-top:2px">🟢 ${t('hub_sales')}</div></div>
+       <div style="background:rgba(255,255,255,.1);border-radius:12px;padding:11px 6px;text-align:center"><div style="font-size:19px;font-weight:900">${custToday}</div><div style="font-size:9px;opacity:.85;margin-top:2px">👥 ${t('hub_custserved')}</div></div>
+       <div style="background:rgba(255,255,255,.1);border-radius:12px;padding:11px 6px;text-align:center"><div style="font-size:19px;font-weight:900;color:#fbbf24">${commToday.toLocaleString()}</div><div style="font-size:9px;opacity:.85;margin-top:2px">💵 ${t('hub_comm')}</div></div>
+     </div>
+   </div>
+   ${exp?`<button onclick="openLicense()" style="width:100%;border:0;border-radius:14px;padding:12px 14px;font-weight:800;text-align:left;color:#fff;font-size:13px;margin-bottom:12px;background:#b91c1c">⚠️ ${t('lic_expired_msg')} — ${t('lic_renew')} →</button>`:
+     `<button onclick="go('earn')" style="width:100%;border:0;border-radius:14px;padding:14px;font-weight:800;text-align:left;color:#fff;font-size:13px;margin-bottom:12px;background:linear-gradient(120deg,var(--good),#0f9d55);display:flex;justify-content:space-between;align-items:center;gap:8px"><span>🎉 ${t('hub_commbanner').replace('{n}',gdes(commWeek))}</span><span style="opacity:.9">→</span></button>`}
+   <button onclick="openLicense()" style="width:100%;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px 14px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow)">
+     <span style="font-weight:800;font-size:13px"><span style="color:${si[0]}">●</span> ${planName(l.plan)} · ${days} ${t('lic_days').toLowerCase()}</span>
+     <span style="color:var(--blue);font-weight:700;font-size:12px">${t('hub_manage')} →</span>
+   </button>`;
+  document.getElementById('homeQuick').innerHTML=`
+   <div class="h2" style="font-size:17px;margin:16px 0 10px">${t('hub_quick')}</div>
+   <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px">
+     ${[['🛒','hub_newsale',"newSale()"],['📦','hub_inventory',"hubSoon('hub_inventory')"],['👥','hub_customers',"go('sv');svCustomers()"],['🧾','n_orders',"go('orders')"]].map(([em,k,fn])=>`<button onclick="${fn}" style="border:1px solid var(--line);background:#fff;border-radius:14px;padding:14px 4px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:6px"><span style="font-size:24px">${em}</span><span style="font-size:11px;font-weight:800;line-height:1.15">${t(k)}</span></button>`).join('')}
+   </div>`;
+  const g=document.getElementById('modGrid');g.innerHTML='';
+  MODULES.forEach(m=>{const b=document.createElement('button');b.className='mod';b.style.position='relative';b.style.borderTop='3px solid '+(m.color||'var(--blue)');
+    const nm=m.nmKey?t(m.nmKey):m.nm;
+    const badge=m.soon?`<span style="position:absolute;top:8px;right:8px;background:#f59e0b;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:20px">${t('soon')}</span>`
+      :m.commLabel==='earn'?`<span style="position:absolute;top:8px;right:8px;background:var(--good);color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:20px">${t('hub_earn')}</span>`
+      :m.comm?`<span style="position:absolute;top:8px;right:8px;background:#e9f7ef;color:#0f9d55;font-size:10px;font-weight:900;padding:2px 7px;border-radius:20px">${m.comm}%</span>`:'';
+    const icon=m.logo?`<img class="il" src="${m.logo}" alt="">`:`<span style="font-size:26px;width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:${m.color}1a;color:${m.color}">${m.em}</span>`;
+    b.innerHTML=`${badge}${icon}<span class="nm">${nm}</span>${m.sub?`<span style="font-size:10px;color:var(--muted);font-weight:700;margin-top:-4px">${m.sub}</span>`:''}`;
+    if(m.soon){b.style.opacity='.7';b.onclick=()=>caSoon();}else b.onclick=()=>openModule(m);
     g.appendChild(b);});
-  applyI18n();}
+  document.getElementById('homeRefer').innerHTML=`
+   <button onclick="go('ref')" style="width:100%;border:0;border-radius:18px;padding:18px;margin-top:16px;text-align:left;color:#fff;background:linear-gradient(135deg,var(--good),#0b7a44);box-shadow:0 10px 26px rgba(15,157,85,.3)">
+     <div style="font-size:16px;font-weight:900">🤝 ${t('hub_invite_t')}</div>
+     <div style="font-size:12px;opacity:.92;margin-top:4px">${t('hub_invite_s')}</div>
+     <div style="display:inline-block;background:#fff;color:#0b7a44;font-weight:800;font-size:13px;padding:8px 16px;border-radius:999px;margin-top:12px">${t('hub_invite_btn')} →</div>
+   </button>`;
+  applyI18n();
+}
+function renderEarn(){
+  const o=load('hb_orders',[]);const paid=o.filter(x=>x.amount>0);
+  const today=paid.filter(x=>isToday(x.ts));
+  const month=paid.filter(x=>{const d=new Date(x.ts),n=new Date();return d.getMonth()===n.getMonth()&&d.getFullYear()===n.getFullYear();});
+  const sum=arr=>arr.reduce((a,b)=>a+orderComm(b),0);
+  const bySvc={};paid.forEach(x=>{const c=orderComm(x);if(c>0){const k=x.svcName||x.module;bySvc[k]=(bySvc[k]||0)+c;}});
+  const refs=load('hb_referrals',[]);
+  document.getElementById('earnBody').innerHTML=`
+    <div class="h2">💰 ${t('earn_t')}</div><p class="sub">${t('earn_sub')}</p>
+    <div class="card" style="background:linear-gradient(135deg,var(--good),#0b7a44);color:#fff;border:0">
+      <div style="font-size:12px;opacity:.85;font-weight:700">${t('earn_lifetime')}</div>
+      <div style="font-size:30px;font-weight:900">${gdes(sum(paid))}</div></div>
+    <div class="stats">
+      <div class="stat"><div class="n" style="font-size:22px;color:var(--good)">${gdes(sum(today))}</div><div class="l">📅 ${t('earn_today')}</div></div>
+      <div class="stat"><div class="n" style="font-size:22px;color:var(--good)">${gdes(sum(month))}</div><div class="l">🗓️ ${t('earn_month')}</div></div></div>
+    <div class="h2" style="font-size:17px;margin-top:16px">📊 ${t('earn_direct')}</div>
+    <div class="card" id="earnBySvc"></div>
+    <div class="h2" style="font-size:17px;margin-top:8px">🤝 ${t('earn_parenaj')}</div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0"><span>${t('earn_referred')}</span><b>${refs.length}</b></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0"><span>${t('earn_active_ref')}</span><b>0</b></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0"><span>${t('earn_ref_income')}</span><b>${gdes(0)}</b></div>
+      <button class="cta ghost" style="margin-top:10px" onclick="go('ref')">🔗 ${t('earn_open_ref')}</button></div>
+    <button class="cta ghost" onclick="go('reports')">📈 ${t('rep_open')}</button>`;
+  const bs=document.getElementById('earnBySvc');const keys=Object.keys(bySvc).sort((a,b)=>bySvc[b]-bySvc[a]);
+  if(!keys.length)bs.innerHTML=`<div class="empty" style="padding:20px"><div class="ee">💸</div>${t('earn_none')}</div>`;
+  else bs.innerHTML=keys.map(k=>`<div style="display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px dotted var(--line)"><span>${k}</span><b style="color:var(--good)">${gdes(bySvc[k])}</b></div>`).join('');
+}
+function refLink(){return 'https://haitibiznis.com/?ref='+profile().code;}
+function renderRef(){
+  const p=profile();const link=refLink();const qr=qrDataURL(link);const refs=load('hb_referrals',[]);
+  document.getElementById('refBody').innerHTML=`
+    <div class="h2">🤝 ${t('ref_t')}</div><p class="sub">${t('ref_sub')}</p>
+    <div class="card" style="background:linear-gradient(135deg,var(--good),#0b7a44);color:#fff;border:0;text-align:center">
+      <div style="font-size:12px;opacity:.85;font-weight:700">${t('hub_refcode')}</div>
+      <div style="font-size:28px;font-weight:900;letter-spacing:2px">${p.code}</div>
+      ${qr?`<img src="${qr}" alt="QR" style="width:170px;height:170px;margin:12px auto 6px;background:#fff;border-radius:12px;padding:8px">`:''}
+      <div style="font-size:11px;opacity:.85;word-break:break-all">${link}</div></div>
+    <button class="cta green" onclick="refShare()">📲 ${t('ref_invite')}</button>
+    <button class="cta ghost" onclick="refCopy()">📋 ${t('ref_copy')}</button>
+    <div class="card" style="margin-top:14px">
+      <div style="font-weight:800;margin-bottom:8px">${t('ref_yours')}</div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0"><span>${t('earn_referred')}</span><b>${refs.length}</b></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0"><span>${t('earn_ref_income')}</span><b>${gdes(0)}</b></div></div>
+    <div class="partner">${t('ref_note')}</div>`;
+}
+function refShare(){const link=refLink();const msg=t('ref_msg').replace('{link}',link);
+  if(navigator.share){navigator.share({title:'HaitiBiznis',text:msg,url:link}).catch(()=>{});}
+  else window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
+function refCopy(){const link=refLink();if(navigator.clipboard){navigator.clipboard.writeText(link).then(()=>alert(t('ref_copied'))).catch(()=>alert(link));}else alert(link);}
 function openModule(m){
   if(!m.soon&&!licGate())return;
   if(m.type==='order'){startFlow(m.id);}
@@ -632,6 +785,7 @@ function openModule(m){
   else if(m.type==='sub'){openSubs(m);}
   else if(m.type==='sv'){openSV();}
   else if(m.type==='cash'){openCash();}
+  else if(m.type==='action'){if(m.action==='delivery')openDelivery();}
 }
 function openSubs(m){
   const subs={
@@ -714,10 +868,10 @@ function renderDetail(){
         row.onclick=()=>{const idx=flow.extra.sel.indexOf(s);if(idx>=0)flow.extra.sel.splice(idx,1);else{if(flow.extra.sel.length>=max)return;flow.extra.sel.push(s);}renderDetail();};
         wrap.appendChild(row);});body.appendChild(wrap);}
   }
-  else if(m==='admin'||m==='legal'){
+  else if(ITEMS_MAP[m]){
     if(m==='legal')body.innerHTML=`<div class="partner">${t('partner_legal')}</div>`;
     body.innerHTML+=`<p class="sub">${t('amount')}: antre pri, peze +</p>`;
-    (m==='admin'?ADMIN_ITEMS:LEGAL_ITEMS).forEach((name,i)=>{const ex=flow.items.find(it=>it.label===name);
+    ITEMS_MAP[m].forEach((name,i)=>{const ex=flow.items.find(it=>it.label===name);
       const row=document.createElement('div');row.className='choice check'+(ex?' on':'');
       row.innerHTML=`<span class="dot"></span><span class="txt">${name}</span><input type="number" class="price-in" inputmode="numeric" placeholder="GDES" value="${ex?ex.amt:''}">`;
       const inp=row.querySelector('input');
@@ -737,8 +891,9 @@ function renderDetail(){
         <div class="tot"><span>${t('total')}</span><span>${gdes(tot)}</span></div></div>`;
       body.appendChild(bd);}
   }
-  else if(m==='paymenthub'){
-    body.innerHTML=`<label class="fl">${t('bill_type')}</label><select id="billType">${BILL_TYPES.map(b=>`<option>${b}</option>`).join('')}</select>
+  else if(m==='paymenthub'||m==='billpay'||m==='water'){
+    const types=m==='water'?['DINEPA — Dlo','Lòt fakti dlo']:BILL_TYPES;
+    body.innerHTML=`<label class="fl">${t('bill_type')}</label><select id="billType">${types.map(b=>`<option>${b}</option>`).join('')}</select>
       <label class="fl">${t('desc')}</label><input type="text" id="billRef" placeholder="Nº kont / referans">
       <label class="fl">${t('amount')}</label><input type="number" id="billAmt" inputmode="numeric">`;
     const upd=()=>{const a=+document.getElementById('billAmt').value||0;const ty=document.getElementById('billType').value;const rf=document.getElementById('billRef').value.trim();
