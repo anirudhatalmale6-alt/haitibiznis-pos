@@ -10,11 +10,16 @@
 <meta property="og:title" content="HaitiBiznis Center POS">
 <meta property="og:description" content="Point of sale + 30+ digital services for Haitian merchants. Download free — 30 days FREE.">
 <meta property="og:url" content="https://haitibiznis.com/pos/">
-<meta property="og:image" content="https://haitibiznis.com/pos/assets/icon-512.png">
+<meta property="og:image" content="https://haitibiznis.com/pos/assets/og-share.png">
+<meta property="og:image:secure_url" content="https://haitibiznis.com/pos/assets/og-share.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="HaitiBiznis Center POS">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="HaitiBiznis Center POS">
 <meta name="twitter:description" content="Point of sale + 30+ digital services for Haitian merchants. Download free — 30 days FREE.">
-<meta name="twitter:image" content="https://haitibiznis.com/pos/assets/icon-512.png">
+<meta name="twitter:image" content="https://haitibiznis.com/pos/assets/og-share.png">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
 <link rel="manifest" href="manifest.json">
@@ -176,7 +181,7 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
 <div class="appbar">
   <img src="assets/haitibiznis-logo.png" class="logo" alt="HaitiBiznis">
   <h1 data-i18n="app_t">Sant HaitiBiznis<small data-i18n="app_s">POINT OF SALE</small></h1>
-  <div class="lang"><button data-lang="ht" class="on">HT</button><button data-lang="fr">FR</button><button data-lang="en">EN</button></div>
+  <div class="lang"><button data-lang="ht" class="on">HT</button><button data-lang="fr">FR</button><button data-lang="en">EN</button><button data-lang="es">ES</button></div>
   <button class="gear" id="installBtn" style="display:none;width:auto;padding:0 12px;font-size:12px;font-weight:800;gap:4px">⬇️ <span data-i18n="install">Enstale</span></button>
   <button class="gear" onclick="go('set')">⚙️</button>
 </div>
@@ -195,7 +200,7 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
 <section id="s-home" class="screen on">
   <div id="homeHead"></div>
   <div id="homeQuick"></div>
-  <div class="h2" style="font-size:17px;margin:16px 0 10px" id="homeSvcTitle">Sèvis</div>
+  <div class="h2" style="font-size:17px;margin:16px 0 10px;text-transform:capitalize" id="homeSvcTitle" data-i18n="services">Sèvis</div>
   <div class="grid" id="modGrid"></div>
   <div id="homeRefer"></div>
 </section>
@@ -447,7 +452,32 @@ const T={
   set_rate:'Exchange rate (GDES per US$1)',set_regfee_d:'Driver registration fee (GDES)',set_regfee_r:'Rider registration fee (GDES)',set_regfee_m:'Merchant registration fee (GDES)',set_regfee_p:'Professional registration fee (GDES)',
   vehicle:'Vehicle type',plate:'License plate',color:'Color',profession:'Profession',category:'Category',biz_name:'Business Name',owner:'Owner',address:'Address',
   pickup_addr:'Pickup Address',drop_addr:'Delivery Address',recip_phone:'Recipient Phone',pkg_desc:'Package Description',deliv_fee:'Delivery fee (GDES)',
-  wa_msg:'Hello {name}, here is your order receipt {id} at HaitiBiznis Center. Total: {total}. Thank you!'}
+  wa_msg:'Hello {name}, here is your order receipt {id} at HaitiBiznis Center. Total: {total}. Thank you!'},
+ es:{app_t:'Centro HaitiBiznis',app_s:'PUNTO DE VENTA',home_t:'Elige un servicio',home_s:'Caja: registra clientes, vende servicios, cobra.',
+  back:'Atrás',next:'Continuar',subtotal:'Total',cust_t:'Cliente',cust_search:'Buscar nombre / teléfono...',cust_new:'+ Nuevo cliente',
+  f_name:'Nombre completo',f_phone:'Teléfono',f_wa:'WhatsApp',f_email:'Correo (opcional)',f_addr:'Dirección (opcional)',cust_save:'Continuar',
+  docs_t:'Documentos',docs_s:'Agrega archivos (PDF, JPG, PNG, DOCX). Se adjuntan al pedido.',docs_add:'Agregar documentos',
+  pay_t:'Pago',p_cash:'Efectivo',p_card:'Tarjeta',pay_do:'Completar y Recibo',print:'Imprimir',wa_send:'Enviar WhatsApp',conf_home:'Inicio',
+  ord_t:'Pedidos',ord_search:'Buscar nombre / tel / WhatsApp / Nº pedido',dash_t:'Panel',
+  set_t:'Ajustes',set_note:'Ingresa los precios reales. Se guardan en este dispositivo.',set_save:'Guardar ajustes',
+  n_home:'Inicio',n_orders:'Pedidos',n_dash:'Panel',n_set:'Ajustes',
+  all:'Todo',add:'Agregar',remove:'Quitar',total:'TOTAL',save:'Guardar',
+  st_wait:'Esperando documentos',st_prog:'En curso',st_ready:'Listo',st_done:'Completado',
+  st_pending:'Pendiente',st_approved:'Aprobado',st_rejected:'Rechazado',st_active:'Activo',st_verified:'Verificado',
+  st_assigned:'Asignado',st_delivered:'Entregado',st_checkin:'Registrado',
+  receipt:'RECIBO',order_no:'Nº',date:'Fecha',cashier:'Centro HaitiBiznis',thanks:'¡Gracias! — HaitiBiznis.com',service:'Servicio',customer:'Cliente',
+  need_name:'Ingresa el nombre.',need_pay:'Elige un método de pago.',need_sel:'Selecciona al menos un elemento.',
+  dash_sales:'Ventas de hoy',dash_new:'Nuevos pedidos',dash_prog:'En curso',dash_done:'Completados',dash_rev:'Ingresos totales',
+  pick_pkg:'Elige un paquete',pkg_max:'Elige hasta',services:'servicios',fee_hb:'Comisión HaitiBiznis 30%',fee_press:'Comisión Presses Nationales',base:'Precio base',sub_usd:'Subtotal',rate_note:'Conversión aprox',
+  partner_legal:'Socio: Cabinet EX LEGE – PRO LEGE (Abogados Nacionales e Internacionales)',
+  amount:'Monto (GDES)',desc:'Descripción',verify_t:'Verificación de Chofer',bill_type:'Tipo de factura',
+  qr_ticket:'Boleto QR',qr_ref:'Código de referido',checkin_ok:'Registrado ✓',search_ticket:'Buscar Nº de boleto...',
+  ev_create:'Crear evento',ev_name:'Nombre del evento',ev_date:'Fecha',ev_price:'Precio del boleto (GDES)',ev_sell:'Vender boletos',ev_checkin:'Registro',ev_sales:'Venta de boletos',ev_qty:'Cantidad',no_event:'Crea un evento primero.',
+  aff_reg:'Registrar afiliado',aff_qr:'Código QR de referido',aff_hist:'Historial de referidos',aff_comm:'Saldo de comisión',aff_pay:'Registrar pago de comisión',balance:'Saldo',record_pay:'Registrar pago',
+  set_rate:'Tasa de cambio (GDES por US$1)',set_regfee_d:'Cuota de registro chofer (GDES)',set_regfee_r:'Cuota de registro pasajero (GDES)',set_regfee_m:'Cuota de registro comerciante (GDES)',set_regfee_p:'Cuota de registro profesional (GDES)',
+  vehicle:'Tipo de vehículo',plate:'Placa',color:'Color',profession:'Profesión',category:'Categoría',biz_name:'Nombre del negocio',owner:'Propietario',address:'Dirección',
+  pickup_addr:'Dirección de recogida',drop_addr:'Dirección de entrega',recip_phone:'Tel. destinatario',pkg_desc:'Descripción del paquete',deliv_fee:'Costo de entrega (GDES)',
+  wa_msg:'Hola {name}, aquí está el recibo de tu pedido {id} en el Centro HaitiBiznis. Total: {total}. ¡Gracias!'}
 };
 /* ---- added strings (install/offline, reports, notify) ---- */
 const T_EXT={
@@ -483,7 +513,18 @@ const T_EXT={
   sv_newsale:'New Sale',sv_customers:'Customer Management',sv_history:'Sales History',sv_receipts:'Digital Receipts',
   sv_products:'Product Management',sv_inventory:'Inventory',sv_notifs:'Real-time Notifications',sv_payments:'MonCash/NatCash Payment',
   dash_orders:'Orders',dash_customers:'Customers',dash_notifs:'Notifications',sv_none_cust:'No customers yet.',sv_none_sales:'No sales yet.',reopen_receipt:'View receipt',
-  pg_creating:'Creating payment…',pg_scan:'Have the customer scan the code with their phone, or open the payment page.',pg_open:'Open payment page',pg_waiting:'Waiting for payment…',pg_paid:'✓ Payment received!',pg_manual:'Mark paid manually',pg_fail:'Payment not created',pg_fail_sub:'Could not reach the payment service. You can mark it paid manually or try again.',cancel:'Cancel',set_pay_h:'Electronic payment',set_payclient:'Payment Merchant ID (MonCash/NatCash)',pay_active:'MonCash & NatCash active',pay_active_sub:'Choose MonCash or NatCash when making a sale — the customer pays on their phone and the sale is marked paid automatically.',pay_status_paid:'Paid',pay_status_manual:'Paid (manual)',pay_none:'No electronic payments yet.'}
+  pg_creating:'Creating payment…',pg_scan:'Have the customer scan the code with their phone, or open the payment page.',pg_open:'Open payment page',pg_waiting:'Waiting for payment…',pg_paid:'✓ Payment received!',pg_manual:'Mark paid manually',pg_fail:'Payment not created',pg_fail_sub:'Could not reach the payment service. You can mark it paid manually or try again.',cancel:'Cancel',set_pay_h:'Electronic payment',set_payclient:'Payment Merchant ID (MonCash/NatCash)',pay_active:'MonCash & NatCash active',pay_active_sub:'Choose MonCash or NatCash when making a sale — the customer pays on their phone and the sale is marked paid automatically.',pay_status_paid:'Paid',pay_status_manual:'Paid (manual)',pay_none:'No electronic payments yet.'},
+ es:{install:'Instalar',ib_head:'Instala la app en tu teléfono',ib_sub:'Más rápida, se abre como una app real, funciona incluso sin internet',ib_cta:'Instalar ahora',offline_on:'Modo sin conexión — guardado en este dispositivo',rep_open:'📈 Reporte detallado',rep_t:'Reportes',rep_csv:'⬇️ CSV',
+  rp_today:'Hoy',rp_7:'7 días',rp_30:'30 días',rp_all:'Todo',rep_revenue:'Ingresos',rep_txn:'Transacciones',rep_avg:'Promedio',
+  rep_bysvc:'Por servicio',rep_bypay:'Por pago',rep_bystat:'Por estado',rep_none:'No hay datos para este período.',
+  notify:'📲 Notificar al cliente',notify_t:'Notificar al cliente',notify_wa:'WhatsApp',notify_email:'Correo',notify_no:'No hay teléfono/correo para este cliente.',
+  ready_msg:'Hola {name}, tu pedido {id} en el Centro HaitiBiznis está LISTO. Puedes venir a recogerlo. ¡Gracias!',ready_subj:'Tu pedido está listo — HaitiBiznis',
+  home_t:'¡Bienvenido! ¿Qué deseas hacer hoy?',sv_tag:'Sistema principal — vende y gestiona todo',fab_newsale:'Nueva venta',
+  sv_t:'Sistema de Ventas',sv_sub:'Tu sistema de ventas digital — vende, gestiona clientes y recibos.',soon:'Pronto',pick_service:'Elige un servicio para vender',
+  sv_newsale:'Nueva venta',sv_customers:'Gestión de clientes',sv_history:'Historial de ventas',sv_receipts:'Recibos digitales',
+  sv_products:'Gestión de productos',sv_inventory:'Inventario',sv_notifs:'Notificaciones en tiempo real',sv_payments:'Pago MonCash/NatCash',
+  dash_orders:'Pedidos',dash_customers:'Clientes',dash_notifs:'Notificaciones',sv_none_cust:'Aún no hay clientes.',sv_none_sales:'Aún no hay ventas.',reopen_receipt:'Ver recibo',
+  pg_creating:'Creando el pago…',pg_scan:'Haz que el cliente escanee el código con su teléfono, o abre la página de pago.',pg_open:'Abrir página de pago',pg_waiting:'Esperando el pago…',pg_paid:'✓ ¡Pago recibido!',pg_manual:'Marcar pagado manualmente',pg_fail:'Pago no creado',pg_fail_sub:'No se pudo conectar con el servicio de pago. Puedes marcarlo pagado manualmente o intentar de nuevo.',cancel:'Cancelar',set_pay_h:'Pago electrónico',set_payclient:'ID de Comercio de Pago (MonCash/NatCash)',pay_active:'MonCash y NatCash activos',pay_active_sub:'Elige MonCash o NatCash al hacer una venta — el cliente paga en su teléfono y la venta se marca pagada automáticamente.',pay_status_paid:'Pagado',pay_status_manual:'Pagado (manual)',pay_none:'Aún no hay pagos electrónicos.'}
 };
 Object.keys(T_EXT).forEach(function(l){Object.assign(T[l],T_EXT[l]);});
 /* ---- Cash Access Network strings ---- */
@@ -526,7 +567,20 @@ const T_CA={
   ca_notfound:'Code not found on this device. Enter the amount manually.',ca_paid_ok:'Cash paid out!',ca_none:'No withdrawals yet.',ca_receipt:'WITHDRAWAL RECEIPT',
   ca_insufficient:'Not enough cash in the drawer.',ca_add_amt:'How much cash to add? (GDES)',ca_sub_amt:'How much cash to remove? (GDES)',
   ca_set_h:'Cash Access (Withdrawals)',ca_set_feetype:'Merchant commission type',ca_set_feefixed:'Fixed fee (GDES/withdrawal)',ca_set_feepct:'or Commission (%)',ca_set_low:'Low-liquidity threshold (GDES)',ca_fixed:'Fixed (GDES)',ca_pct:'Percentage (%)',
-  ca_soon_msg:'Soon you’ll be able to withdraw your MonCash/NatCash money as cash at HaitiBiznis merchants anywhere — no ATM needed.'}
+  ca_soon_msg:'Soon you’ll be able to withdraw your MonCash/NatCash money as cash at HaitiBiznis merchants anywhere — no ATM needed.'},
+ es:{ca_title:'Acceso a Efectivo',ca_sub:'Entrega efectivo a los clientes en el Centro — sin cajero automático.',
+  ca_avail:'Efectivo disponible',ca_redeem:'Procesar retiro',ca_reserve:'Reservar retiro',
+  ca_increase:'Aumentar efectivo',ca_decrease:'Disminuir efectivo',ca_pause:'Pausar retiros',ca_resume:'Reanudar retiros',ca_paused:'Retiros pausados',
+  ca_history:'Historial',ca_low:'Efectivo bajo (menos de {n}) — agrega liquidez o pausa los retiros.',
+  ca_today_out:'Pagado hoy',ca_today_fee:'Ganancias hoy',ca_count:'Retiros hoy',
+  ca_code:'Código de retiro',ca_enter_code:'Ingresa o escanea el código de 6 dígitos del cliente.',
+  ca_cust:'Nombre del cliente',ca_method:'Método',ca_confirm_id:'Verifiqué la identidad del cliente',
+  ca_approve:'Aprobar y entregar efectivo',ca_fee:'Comisión',ca_net:'El cliente recibe',
+  ca_reserved:'Retiro reservado',ca_res_sub:'Dale este código al cliente. Expira en 10 minutos.',ca_expires:'Expira en',ca_expired:'Código expirado.',
+  ca_notfound:'Código no encontrado en este dispositivo. Ingresa el monto manualmente.',ca_paid_ok:'¡Efectivo entregado!',ca_none:'Aún no hay retiros.',ca_receipt:'RECIBO DE RETIRO',
+  ca_insufficient:'No hay suficiente efectivo en la caja.',ca_add_amt:'¿Cuánto efectivo agregar? (GDES)',ca_sub_amt:'¿Cuánto efectivo retirar? (GDES)',
+  ca_set_h:'Acceso a Efectivo (Retiros)',ca_set_feetype:'Tipo de comisión del comercio',ca_set_feefixed:'Cuota fija (GDES/retiro)',ca_set_feepct:'o Comisión (%)',ca_set_low:'Umbral de liquidez baja (GDES)',ca_fixed:'Fija (GDES)',ca_pct:'Porcentaje (%)',
+  ca_soon_msg:'Pronto podrás retirar tu dinero MonCash/NatCash en efectivo con los comercios HaitiBiznis en todas partes — sin cajero automático.'}
 };
 Object.keys(T_CA).forEach(function(l){Object.assign(T[l],T_CA[l]);});
 /* ---- Licensing / Subscription strings ---- */
@@ -563,7 +617,18 @@ const T_LIC={
   lic_pay_method:'Choose payment method',lic_activated:'Subscription activated!',lic_autorenew:'Auto-renew',lic_feats:'Included',
   lic_banner_trial:'Trial: {n} days left — tap to see plans',lic_banner_soon:'Subscription expires in {n} days',
   lic_settings_h:'Subscription / License (Admin)',lic_open:'Open Subscription page',lic_extend:'Extend +30 days',lic_grant_trial:'Grant 30-day Trial',
-  lic_set_active:'Set Active',lic_set_expired:'Set Expired (test)',lic_suspend:'Suspend',lic_reactivate:'Reactivate'}
+  lic_set_active:'Set Active',lic_set_expired:'Set Expired (test)',lic_suspend:'Suspend',lic_reactivate:'Reactivate'},
+ es:{lic_title:'Suscripción',lic_sub:'Tu plan de licencia POS.',lic_current:'Plan actual',lic_status:'Estado',
+  lic_start:'Fecha de inicio',lic_exp:'Vencimiento',lic_days:'Días restantes',
+  lic_active:'Activo',lic_expired:'Vencido',lic_trial:'Prueba',lic_suspended:'Suspendido',
+  lic_expired_msg:'Tu suscripción ha vencido.',lic_expired_sub:'Renueva para seguir vendiendo.',
+  lic_renew:'Renovar suscripción',lic_upgrade:'Cambiar / Mejorar plan',lic_choose:'Elegir este plan',lic_current_tag:'Tu plan',
+  lic_month:'/mes',lic_year:'/año',lic_monthly:'Mensual',lic_annual:'Anual (2 meses gratis)',lic_custom:'Personalizado',
+  lic_enterprise_note:'Contacta a HaitiBiznis para un plan Enterprise.',lic_history:'Historial de pagos',lic_no_history:'Aún no hay pagos.',
+  lic_pay_method:'Elige el método de pago',lic_activated:'¡Suscripción activada!',lic_autorenew:'Renovación automática',lic_feats:'Incluido',
+  lic_banner_trial:'Prueba: quedan {n} días — toca para ver los planes',lic_banner_soon:'La suscripción vence en {n} días',
+  lic_settings_h:'Suscripción / Licencia (Admin)',lic_open:'Abrir página de suscripción',lic_extend:'Extender +30 días',lic_grant_trial:'Otorgar prueba de 30 días',
+  lic_set_active:'Marcar activo',lic_set_expired:'Marcar vencido (prueba)',lic_suspend:'Suspender',lic_reactivate:'Reactivar'}
 };
 Object.keys(T_LIC).forEach(function(l){Object.assign(T[l],T_LIC[l]);});
 /* ---- Digital Business Center hub / Earnings / Referral strings ---- */
@@ -603,7 +668,19 @@ const T_HUB={
   earn_t:'Your Earnings',earn_sub:'All your income across the HaitiBiznis ecosystem.',earn_lifetime:'Lifetime Total',earn_today:'Today',earn_month:'This Month',
   earn_direct:'Direct Sales (by service)',earn_parenaj:'Parenaj Biznis',earn_referred:'Referred Merchants',earn_active_ref:'Active Referrals',earn_ref_income:'Referral Income',earn_open_ref:'Open Referral',earn_none:'No commissions yet.',
   ref_t:'Parenaj Biznis',ref_sub:'Invite other businesses, earn every month.',ref_invite:'Invite a Business',ref_copy:'Copy Link',ref_yours:'Your Referrals',
-  ref_note:'Every business you invite that subscribes earns you a monthly commission for as long as their subscription stays active.',ref_copied:'Link copied!',ref_msg:'Join HaitiBiznis — the digital business center for Haitian merchants! Sign up with my link: {link}'}
+  ref_note:'Every business you invite that subscribes earns you a monthly commission for as long as their subscription stays active.',ref_copied:'Link copied!',ref_msg:'Join HaitiBiznis — the digital business center for Haitian merchants! Sign up with my link: {link}'},
+ es:{n_earn:'Ingresos',n_ref:'Referidos',
+  hub_verified:'Socio verificado',hub_level:'Nivel',hub_refcode:'Código de referido',
+  hub_title:'Centro de Negocios Digital',hub_revtoday:'Ingresos de hoy',hub_sales:'Ventas de hoy',hub_custserved:'Clientes atendidos',hub_comm:'Comisiones',
+  hub_commbanner:'¡Ganaste {n} en comisiones esta semana!',hub_manage:'Gestionar suscripción',hub_quick:'Acciones rápidas',
+  hub_newsale:'Nueva venta',hub_inventory:'Inventario',hub_customers:'Clientes',hub_earn:'Ganar',
+  hub_invite_t:'Invitar negocios',hub_invite_s:'Gana comisiones mensuales recurrentes con Parenaj Biznis.',hub_invite_btn:'Invitar ahora',
+  hub_soon_msg:'Esta función estará disponible pronto.',
+  svc_marketplace:'Marketplace',svc_ride:'Reserva de viajes',svc_parenaj:'Parenaj Biznis',svc_bizreg:'Registro de empresas',svc_insurance:'Seguros',svc_bills:'Pago de facturas',svc_water:'Pago de agua',svc_tickets:'Venta de boletos',svc_website:'Creación de sitios web',svc_delivery:'Entrega',svc_admin:'Servicios administrativos',svc_legal:'Servicios legales',svc_pro:'Profesionales',svc_cashout:'Retiro de efectivo',
+  earn_t:'Tus ingresos',earn_sub:'Todos tus ingresos en el ecosistema HaitiBiznis.',earn_lifetime:'Total histórico',earn_today:'Hoy',earn_month:'Este mes',
+  earn_direct:'Ventas directas (por servicio)',earn_parenaj:'Parenaj Biznis',earn_referred:'Comerciantes referidos',earn_active_ref:'Referidos activos',earn_ref_income:'Ingreso por referidos',earn_open_ref:'Abrir referidos',earn_none:'Aún no hay comisiones.',
+  ref_t:'Parenaj Biznis',ref_sub:'Invita a otros negocios y gana cada mes.',ref_invite:'Invitar un negocio',ref_copy:'Copiar enlace',ref_yours:'Tus referidos',
+  ref_note:'Cada negocio que invites y que se suscriba te genera una comisión mensual mientras su suscripción siga activa.',ref_copied:'¡Enlace copiado!',ref_msg:'¡Únete a HaitiBiznis — el centro de negocios digital para comerciantes haitianos! Regístrate con mi enlace: {link}'}
 };
 Object.keys(T_HUB).forEach(function(l){Object.assign(T[l],T_HUB[l]);});
 
@@ -619,7 +696,11 @@ const T_PROMO={
  en:{promo_open:'Promo Materials',promo_t:'Promotional Materials',promo_sub:'Download flyers and videos to promote the services and earn more commissions.',
   promo_link_note:'Every time you share, include your referral link to earn commissions:',promo_flyers_h:'Flyers & Social Media Posts',promo_videos_h:'Videos',
   promo_download:'Download',promo_share:'Share',promo_videos_empty:'Promo videos are coming soon. You’ll be able to download them here to share on WhatsApp and Facebook.',
-  promo_watch:'Watch',promo_msg:'Discover the HaitiBiznis services! Sign up with my link: {link}'}
+  promo_watch:'Watch',promo_msg:'Discover the HaitiBiznis services! Sign up with my link: {link}'},
+ es:{promo_open:'Material Promocional',promo_t:'Material Promocional',promo_sub:'Descarga flyers y videos para promover los servicios y ganar más comisiones.',
+  promo_link_note:'Cada vez que compartas, incluye tu enlace de referido para ganar comisiones:',promo_flyers_h:'Flyers y Publicaciones para Redes',promo_videos_h:'Videos',
+  promo_download:'Descargar',promo_share:'Compartir',promo_videos_empty:'Los videos promocionales llegarán pronto. Podrás descargarlos aquí para compartirlos en WhatsApp y Facebook.',
+  promo_watch:'Ver',promo_msg:'¡Descubre los servicios de HaitiBiznis! Regístrate con mi enlace: {link}'}
 };
 Object.keys(T_PROMO).forEach(function(l){Object.assign(T[l],T_PROMO[l]);});
 const T_EMP={
@@ -806,10 +887,10 @@ function renderHome(){
      <span style="flex:1"><span style="display:block;font-size:14px;font-weight:900">${t('promo_open')}</span><span style="display:block;font-size:11.5px;opacity:.9">${t('promo_sub')}</span></span>
      <span style="font-size:18px">→</span>
    </button>
-   <button onclick="shareApp()" style="width:100%;border:1px solid var(--line);background:#fff;border-radius:16px;padding:14px 16px;margin-top:10px;text-align:left;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow)">
-     <span style="font-size:22px">📲</span>
-     <span style="flex:1"><span style="display:block;font-size:14px;font-weight:900">${t('share_pos')}</span><span style="display:block;font-size:11.5px;color:var(--muted)">https://haitibiznis.com/pos/</span></span>
-     <span style="font-size:18px;color:var(--blue)">→</span>
+   <button onclick="shareApp()" style="width:100%;border:0;border-radius:16px;padding:14px 16px;margin-top:10px;text-align:left;display:flex;align-items:center;gap:12px;color:#fff;background:linear-gradient(135deg,#25D366,#128C7E);box-shadow:0 8px 20px rgba(18,140,126,.28)">
+     <span style="font-size:22px">🟢</span>
+     <span style="flex:1"><span style="display:block;font-size:14px;font-weight:900">${t('share_pos')}</span><span style="display:block;font-size:11.5px;opacity:.92">WhatsApp • https://haitibiznis.com/pos/</span></span>
+     <span style="font-size:18px">→</span>
    </button>`;
   applyI18n();
 }
@@ -1393,7 +1474,7 @@ function renderDash(){const o=load('hb_orders',[]);
 /* ---------- settings ---------- */
 function renderSettings(){const cfg=getCfg();const box=document.getElementById('setBody');const _si=licStatusInfo();
   box.innerHTML=`<button class="cta" style="margin-bottom:10px" onclick="manageStaff()">👥 ${t('emp_employees')}</button>
-    <button class="cta ghost" style="margin-bottom:12px" onclick="shareApp()">📲 ${t('share_pos')}</button>
+    <button class="cta" style="margin-bottom:12px;background:linear-gradient(135deg,#25D366,#128C7E);border:0" onclick="shareApp()">🟢 ${t('share_pos')} — WhatsApp</button>
     <button class="cta" style="margin-bottom:12px" onclick="openLicense()">💳 ${t('lic_open')}</button>
     <div style="font-weight:800;margin:2px 0 4px">${t('lic_settings_h')}</div>
     <div class="sub" style="margin-bottom:8px">${planName(lic().plan)} · ${_si[1]} · ${Math.max(0,licDays())} ${t('lic_days').toLowerCase()}</div>
@@ -1728,15 +1809,18 @@ const PLANS=[
  {id:'basic',price:5000,feats:{
    ht:['1 biznis','Vant','Envantè','Jesyon kliyan','Rapò','MonCash/NatCash'],
    fr:['1 établissement','Ventes','Inventaire','Gestion clients','Rapports','MonCash/NatCash'],
-   en:['1 business location','Sales','Inventory','Customer management','Reports','MonCash/NatCash']}},
+   en:['1 business location','Sales','Inventory','Customer management','Reports','MonCash/NatCash'],
+   es:['1 local de negocio','Ventas','Inventario','Gestión de clientes','Reportes','MonCash/NatCash']}},
  {id:'pro',price:10000,feats:{
    ht:['Tout nan Basic','Plizyè itilizatè','Jesyon depans','Peman QR','Analytics','Resi WhatsApp/SMS'],
    fr:['Tout de Basic','Plusieurs utilisateurs','Gestion des dépenses','Paiements QR','Analytics','Reçus WhatsApp/SMS'],
-   en:['Everything in Basic','Multiple users','Expense management','QR payments','Analytics dashboard','WhatsApp/SMS receipts']}},
+   en:['Everything in Basic','Multiple users','Expense management','QR payments','Analytics dashboard','WhatsApp/SMS receipts'],
+   es:['Todo lo de Basic','Múltiples usuarios','Gestión de gastos','Pagos QR','Panel de analíticas','Recibos por WhatsApp/SMS']}},
  {id:'enterprise',price:0,custom:true,feats:{
    ht:['Milti-branch','Entegrasyon API','Branding pèsonalize','Pèmisyon avanse','Sipò dedye'],
    fr:['Multi-succursale','Intégrations API','Branding personnalisé','Permissions avancées','Support dédié'],
-   en:['Multi-branch','API integrations','Custom branding','Advanced permissions','Dedicated support']}}
+   en:['Multi-branch','API integrations','Custom branding','Advanced permissions','Dedicated support'],
+   es:['Multisucursal','Integraciones API','Marca personalizada','Permisos avanzados','Soporte dedicado']}}
 ];
 let licCycle='monthly';
 function planName(id){return id==='trial'?t('lic_trial'):({basic:'Basic',pro:'Professional',enterprise:'Enterprise'})[id]||id;}
