@@ -3,7 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Sant HaitiBiznis — POS</title>
+<title>HaitiBiznis Center POS — Point of Sale + 30 Digital Services</title>
+<meta name="description" content="HaitiBiznis Center POS — point of sale plus 30+ digital services for Haitian merchants. Download free, 30 days trial.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HaitiBiznis">
+<meta property="og:title" content="HaitiBiznis Center POS">
+<meta property="og:description" content="Point of sale + 30+ digital services for Haitian merchants. Download free — 30 days FREE.">
+<meta property="og:url" content="https://haitibiznis.com/pos/">
+<meta property="og:image" content="https://haitibiznis.com/pos/assets/icon-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HaitiBiznis Center POS">
+<meta name="twitter:description" content="Point of sale + 30+ digital services for Haitian merchants. Download free — 30 days FREE.">
+<meta name="twitter:image" content="https://haitibiznis.com/pos/assets/icon-512.png">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
 <link rel="manifest" href="manifest.json">
@@ -611,6 +622,13 @@ const T_PROMO={
   promo_watch:'Watch',promo_msg:'Discover the HaitiBiznis services! Sign up with my link: {link}'}
 };
 Object.keys(T_PROMO).forEach(function(l){Object.assign(T[l],T_PROMO[l]);});
+const T_EMP={
+ ht:{emp_owner:'Pwopriyetè',emp_staff:'Anplwaye',emp_signin_t:'Konekte',emp_signin_s:'Chwazi non ou pou kontinye',emp_hi:'Bonjou',emp_enter_pin:'Antre kòd PIN 4 chif ou a',emp_signin_btn:'Konekte',emp_wrong_pin:'Move PIN, eseye ankò',emp_first_t:'Kreye kont pwopriyetè',emp_first_s:'Konfigire premye kont lan pou pwopriyetè biznis la. W ap ka ajoute anplwaye apre.',emp_edit_t:'Modifye anplwaye',emp_add_t:'Ajoute anplwaye',emp_add_s:'Ba li yon non ak yon kòd PIN 4 chif pou l konekte.',emp_name:'Non',emp_role:'Wòl',emp_pin:'PIN (4 chif)',emp_save:'Sere',emp_need_name:'Antre yon non',emp_need_pin:'PIN dwe gen 4 chif',emp_manage_t:'Anplwaye',emp_manage_s:'Ajoute ekip ou a. Chak moun konekte ak yon PIN; vant yo montre kiyès ki sèvi kliyan an.',emp_none:'Poko gen anplwaye.',emp_active:'konekte',emp_switch:'Chanje anplwaye',emp_del_confirm:'Retire {n}?',emp_signed:'Konekte',emp_setup_nudge:'Konfigire anplwaye & koneksyon',emp_employees:'Anplwaye',share_pos:'Pataje POS la',share_msg:'Eseye HaitiBiznis Center POS — pwen lavant + 30+ sèvis dijital. Telechaje gratis: {link}'},
+ fr:{emp_owner:'Propriétaire',emp_staff:'Employé',emp_signin_t:'Se connecter',emp_signin_s:'Choisissez votre nom pour continuer',emp_hi:'Bonjour',emp_enter_pin:'Entrez votre code PIN à 4 chiffres',emp_signin_btn:'Se connecter',emp_wrong_pin:'PIN incorrect, réessayez',emp_first_t:'Créer le compte propriétaire',emp_first_s:'Configurez le premier compte pour le propriétaire. Vous pourrez ajouter des employés ensuite.',emp_edit_t:'Modifier l’employé',emp_add_t:'Ajouter un employé',emp_add_s:'Donnez-lui un nom et un code PIN à 4 chiffres pour se connecter.',emp_name:'Nom',emp_role:'Rôle',emp_pin:'PIN (4 chiffres)',emp_save:'Enregistrer',emp_need_name:'Entrez un nom',emp_need_pin:'Le PIN doit avoir 4 chiffres',emp_manage_t:'Employés',emp_manage_s:'Ajoutez votre équipe. Chacun se connecte avec un PIN ; les ventes indiquent qui a servi le client.',emp_none:'Aucun employé pour l’instant.',emp_active:'connecté',emp_switch:'Changer d’employé',emp_del_confirm:'Retirer {n} ?',emp_signed:'Connecté',emp_setup_nudge:'Configurer employés & connexion',emp_employees:'Employés',share_pos:'Partager le POS',share_msg:'Essayez HaitiBiznis Center POS — point de vente + 30+ services numériques. Téléchargez gratuitement : {link}'},
+ en:{emp_owner:'Owner',emp_staff:'Employee',emp_signin_t:'Sign in',emp_signin_s:'Choose your name to continue',emp_hi:'Hi',emp_enter_pin:'Enter your 4-digit PIN',emp_signin_btn:'Sign in',emp_wrong_pin:'Wrong PIN, try again',emp_first_t:'Create owner account',emp_first_s:'Set up the first account for the business owner. You can add employees after.',emp_edit_t:'Edit employee',emp_add_t:'Add employee',emp_add_s:'Give them a name and a 4-digit PIN to sign in.',emp_name:'Name',emp_role:'Role',emp_pin:'PIN (4 digits)',emp_save:'Save',emp_need_name:'Enter a name',emp_need_pin:'PIN must be 4 digits',emp_manage_t:'Employees',emp_manage_s:'Add your team. Each signs in with a PIN; sales show who served the customer.',emp_none:'No employees yet.',emp_active:'signed in',emp_switch:'Switch employee',emp_del_confirm:'Remove {n}?',emp_signed:'Signed in',emp_setup_nudge:'Set up employees & sign-in',emp_employees:'Employees',share_pos:'Share the POS',share_msg:'Try HaitiBiznis Center POS — point of sale + 30+ digital services. Download free: {link}'},
+ es:{emp_owner:'Propietario',emp_staff:'Empleado',emp_signin_t:'Iniciar sesión',emp_signin_s:'Elige tu nombre para continuar',emp_hi:'Hola',emp_enter_pin:'Ingresa tu PIN de 4 dígitos',emp_signin_btn:'Iniciar sesión',emp_wrong_pin:'PIN incorrecto, intenta de nuevo',emp_first_t:'Crear cuenta del propietario',emp_first_s:'Configura la primera cuenta para el propietario. Podrás agregar empleados después.',emp_edit_t:'Editar empleado',emp_add_t:'Agregar empleado',emp_add_s:'Dale un nombre y un PIN de 4 dígitos para iniciar sesión.',emp_name:'Nombre',emp_role:'Rol',emp_pin:'PIN (4 dígitos)',emp_save:'Guardar',emp_need_name:'Ingresa un nombre',emp_need_pin:'El PIN debe tener 4 dígitos',emp_manage_t:'Empleados',emp_manage_s:'Agrega tu equipo. Cada uno inicia sesión con un PIN; las ventas muestran quién atendió al cliente.',emp_none:'Aún no hay empleados.',emp_active:'conectado',emp_switch:'Cambiar empleado',emp_del_confirm:'¿Quitar a {n}?',emp_signed:'Conectado',emp_setup_nudge:'Configurar empleados e inicio de sesión',emp_employees:'Empleados',share_pos:'Compartir el POS',share_msg:'Prueba HaitiBiznis Center POS — punto de venta + 30+ servicios digitales. Descarga gratis: {link}'}
+};
+Object.keys(T_EMP).forEach(function(l){if(T[l])Object.assign(T[l],T_EMP[l]);});
 const PROMO_FLYERS=[
  {f:'msw-whatsapp-status.png',t:'MsouWout — WhatsApp Status'},
  {f:'msw-square.png',t:'MsouWout — Post Rezo Sosyal'},
@@ -742,6 +760,10 @@ function renderHome(){
        <div style="font-size:11px;color:var(--muted)">${t('hub_level')}: ${p.level} · ${t('hub_refcode')}: ${p.code}</div>
      </div>
    </div>
+   ${(function(){var a=activeStaff();var has=staffList().length;
+     if(a)return '<button onclick="signOut()" style="width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow)"><span style="font-weight:800;font-size:12.5px">👤 '+t('emp_signed')+': '+a.name+' <span style="color:var(--muted);font-weight:600">· '+(a.role==='owner'?t('emp_owner'):t('emp_staff'))+'</span></span><span style="color:var(--blue);font-weight:800;font-size:12px;flex:0 0 auto">🔄 '+t('emp_switch')+'</span></button>';
+     if(!has)return '<button onclick="manageStaff()" style="width:100%;border:1px dashed var(--blue);background:#eef3ff;border-radius:12px;padding:9px 12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800;font-size:12.5px;color:var(--blue)">👥 '+t('emp_setup_nudge')+'</span><span style="color:var(--blue);font-weight:800;font-size:12px;flex:0 0 auto">→</span></button>';
+     return '';})()}
    <div style="background:linear-gradient(135deg,#0e1830,#1b2a52);color:#fff;border-radius:18px;padding:18px;margin-bottom:12px">
      <div style="font-size:13px;font-weight:800;opacity:.9">💰 ${t('hub_title')}</div>
      <div style="font-size:12px;opacity:.7;margin-top:8px">${t('hub_revtoday')}</div>
@@ -783,6 +805,11 @@ function renderHome(){
      <span style="font-size:22px">📣</span>
      <span style="flex:1"><span style="display:block;font-size:14px;font-weight:900">${t('promo_open')}</span><span style="display:block;font-size:11.5px;opacity:.9">${t('promo_sub')}</span></span>
      <span style="font-size:18px">→</span>
+   </button>
+   <button onclick="shareApp()" style="width:100%;border:1px solid var(--line);background:#fff;border-radius:16px;padding:14px 16px;margin-top:10px;text-align:left;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow)">
+     <span style="font-size:22px">📲</span>
+     <span style="flex:1"><span style="display:block;font-size:14px;font-weight:900">${t('share_pos')}</span><span style="display:block;font-size:11.5px;color:var(--muted)">https://haitibiznis.com/pos/</span></span>
+     <span style="font-size:18px;color:var(--blue)">→</span>
    </button>`;
   applyI18n();
 }
@@ -1025,7 +1052,7 @@ async function completeFlow(){if(!flow.payment){alert(t('need_pay'));return;}
     if(res==='cancel')return;                 // aborted — nothing saved
     rec.payRef=ref;rec.payStatus=(res==='paid'?'paid':'manual');
   }else{rec.payStatus='cash';}
-  orders.push(rec);save('hb_orders',orders);showReceipt(rec);refreshBadges();
+  orders.push(stampStaff(rec));save('hb_orders',orders);showReceipt(rec);refreshBadges();
 }
 
 /* ===================================================================
@@ -1067,7 +1094,7 @@ function saveReg(kind){const sc=REG_FORMS[kind];const name=document.getElementBy
     docs:docsFlat,status:(sc.statusSet?STATUS[sc.statusSet][0].id:'pending'),ts:nowStamp()};
   /* affiliate referral code */
   if(sc.referral){rec.refCode='HB-'+name.replace(/[^A-Za-z]/g,'').slice(0,4).toUpperCase()+String(1000+orders.length+1);}
-  orders.push(rec);save('hb_orders',orders);
+  orders.push(stampStaff(rec));save('hb_orders',orders);
   /* also add as customer for future lookup */
   const custs=customers();if(!custs.find(c=>c.phone&&c.phone===rec.phone&&rec.phone)){custs.push({id:'C-'+(custs.length+1),name,phone:rec.phone,wa:rec.wa,email:rec.email,addr:'',ts:nowStamp()});save('hb_customers',custs);}
   if(sc.referral){showReferral(rec);}else{showReceipt(rec);}
@@ -1123,7 +1150,7 @@ function saveDelivery(){const name=document.getElementById('dl_name').value.trim
     items:[{label:(document.getElementById('dl_pick').value.trim()||'—')+' → '+(document.getElementById('dl_drop').value.trim()||'—'),amt:0},{label:reg.vehType==='moto'?'Moto':'Machin',amt:0}],
     amount:fee,payment:reg.payment||'cash',docs:[],status:'pending',ts:nowStamp(),
     desc:document.getElementById('dl_desc').value.trim(),rphone:document.getElementById('dl_rphone').value.trim()};
-  orders.push(rec);save('hb_orders',orders);showReceipt(rec);refreshBadges();
+  orders.push(stampStaff(rec));save('hb_orders',orders);showReceipt(rec);refreshBadges();
 }
 
 /* ---------- Parenaj commission ---------- */
@@ -1187,7 +1214,7 @@ function sellTicket(){const evs=load('hb_events',[]);const ev=evs.find(e=>e.id==
   const rec={id,type:'ticket',statusSet:'sale',module:'tikelakay',svcName:'Tikè: '+ev.name,name,phone:document.getElementById('ts_phone').value.trim(),wa:'',
     items:[{label:ev.name+' × '+qty,amt:ev.price*qty}],amount:ev.price*qty,payment:reg.payment,docs:[],status:'ready',ts:nowStamp(),
     eventId:ev.id,qty,checkedIn:0,ticketCode:id};
-  orders.push(rec);save('hb_orders',orders);showTicket(rec,ev);refreshBadges();
+  orders.push(stampStaff(rec));save('hb_orders',orders);showTicket(rec,ev);refreshBadges();
 }
 function ticketCheckin(){const body=document.getElementById('ticketsBody');
   body.innerHTML=`<button class="back" onclick="renderTicketsHome()">‹ ${t('back')}</button><div class="h2">${t('ev_checkin')}</div>
@@ -1272,7 +1299,7 @@ function collectPayment(ref,amount,method){
 function showReceipt(o){const cust=o.name;const items=(o.items||[]).map(it=>`<div class="ritem"><span>${it.label}</span><span>${it.amt?gdes(it.amt):''}</span></div>`).join('');
   document.getElementById('doneExtra').innerHTML='';
   document.getElementById('receiptBox').innerHTML=`
-    <div class="rh"><img src="assets/haitibiznis-logo.png" alt=""><div class="bt">HaitiBiznis</div><div class="st">${t('cashier')}</div></div>
+    <div class="rh"><img src="assets/haitibiznis-logo.png" alt=""><div class="bt">HaitiBiznis</div><div class="st">${o.staff?('👤 '+o.staff):t('cashier')}</div></div>
     <div class="rrow"><span>${t('order_no')}</span><b>${o.id}</b></div>
     <div class="rrow"><span>${t('date')}</span><span>${fmtDate(o.ts)}</span></div>
     <div class="rrow"><span>${t('customer')}</span><span>${cust}</span></div>
@@ -1365,7 +1392,9 @@ function renderDash(){const o=load('hb_orders',[]);
 
 /* ---------- settings ---------- */
 function renderSettings(){const cfg=getCfg();const box=document.getElementById('setBody');const _si=licStatusInfo();
-  box.innerHTML=`<button class="cta" style="margin-bottom:12px" onclick="openLicense()">💳 ${t('lic_open')}</button>
+  box.innerHTML=`<button class="cta" style="margin-bottom:10px" onclick="manageStaff()">👥 ${t('emp_employees')}</button>
+    <button class="cta ghost" style="margin-bottom:12px" onclick="shareApp()">📲 ${t('share_pos')}</button>
+    <button class="cta" style="margin-bottom:12px" onclick="openLicense()">💳 ${t('lic_open')}</button>
     <div style="font-weight:800;margin:2px 0 4px">${t('lic_settings_h')}</div>
     <div class="sub" style="margin-bottom:8px">${planName(lic().plan)} · ${_si[1]} · ${Math.max(0,licDays())} ${t('lic_days').toLowerCase()}</div>
     <div class="row2"><button class="cta ghost" onclick="licAdmin('extend')">${t('lic_extend')}</button><button class="cta ghost" onclick="licAdmin('trial')">${t('lic_grant_trial')}</button></div>
@@ -1863,6 +1892,71 @@ function exportCSV(){const os=repOrders();
   document.body.appendChild(a);a.click();document.body.removeChild(a);}
 
 /* ===================================================================
+   Employees — PIN sign-in + sale attribution (opt-in)
+   =================================================================== */
+function staffList(){return load('hb_staff',[]);}
+function saveStaff(l){save('hb_staff',l);}
+function activeStaff(){return load('hb_active_staff',null);}
+function setActiveStaff(s){if(s)save('hb_active_staff',{id:s.id,name:s.name,role:s.role});else localStorage.removeItem('hb_active_staff');}
+function stampStaff(rec){var a=activeStaff();if(a){rec.staff=a.name;rec.staffId=a.id;}return rec;}
+function genStaffId(){return 'E'+Math.floor(1000+Math.random()*8999);}
+function signOut(){setActiveStaff(null);openSignIn();}
+
+function openSignIn(){
+  var list=staffList();
+  if(!list.length){return staffForm(true);}
+  var tiles=list.map(function(s){return '<button class="cta ghost" data-sid="'+s.id+'" style="text-align:left;margin-bottom:8px;display:flex;align-items:center;gap:10px"><span style="width:34px;height:34px;border-radius:10px;background:'+(s.role==='owner'?'#00209F':'#0f9d55')+';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900">'+((s.name[0]||'?').toUpperCase())+'</span><span style="flex:1"><b>'+s.name+'</b><br><span style="font-size:11px;color:var(--muted)">'+(s.role==='owner'?t('emp_owner'):t('emp_staff'))+'</span></span></button>';}).join('');
+  var m=caOverlay('<div style="text-align:center"><div style="font-size:34px">👥</div><div style="font-weight:900;font-size:18px;margin:2px 0">'+t('emp_signin_t')+'</div><div class="sub" style="margin-bottom:12px">'+t('emp_signin_s')+'</div><div style="text-align:left">'+tiles+'</div></div>');
+  m.ov.style.zIndex='90';
+  m.box.querySelectorAll('[data-sid]').forEach(function(b){b.onclick=function(){var s=staffList().find(function(x){return x.id===b.dataset.sid;});m.close();pinPrompt(s);};});
+}
+function pinPrompt(s){
+  var m=caOverlay('<div style="text-align:center"><div style="font-weight:900;font-size:17px;margin-bottom:2px">'+t('emp_hi')+' '+s.name+'</div><div class="sub" style="margin-bottom:10px">'+t('emp_enter_pin')+'</div><input id="pinIn" inputmode="numeric" maxlength="4" style="width:150px;text-align:center;letter-spacing:10px;font-size:26px;font-weight:900;padding:10px;border:2px solid var(--line);border-radius:12px" placeholder="••••"><div id="pinErr" style="color:#b91c1c;font-weight:700;font-size:13px;height:18px;margin-top:6px"></div><button class="cta" id="pinGo" style="margin-top:4px">'+t('emp_signin_btn')+'</button><button class="cta ghost" id="pinBack" style="margin-top:8px">‹ '+t('back')+'</button></div>');
+  m.ov.style.zIndex='90';
+  var inp=m.box.querySelector('#pinIn');setTimeout(function(){inp.focus();},50);
+  function submit(){if((inp.value||'')===s.pin){setActiveStaff(s);m.close();renderHome();go('home');}else{m.box.querySelector('#pinErr').textContent=t('emp_wrong_pin');inp.value='';inp.focus();}}
+  m.box.querySelector('#pinGo').onclick=submit;
+  inp.addEventListener('keydown',function(e){if(e.key==='Enter')submit();});
+  m.box.querySelector('#pinBack').onclick=function(){m.close();openSignIn();};
+}
+function staffForm(isFirst,editId){
+  var ed=editId?staffList().find(function(x){return x.id===editId;}):null;
+  var roleRow=isFirst?'':'<label class="fl">'+t('emp_role')+'</label><select id="sfRole"><option value="staff"'+(ed&&ed.role==='staff'?' selected':'')+'>'+t('emp_staff')+'</option><option value="owner"'+(ed&&ed.role==='owner'?' selected':'')+'>'+t('emp_owner')+'</option></select>';
+  var m=caOverlay('<div style="font-weight:900;font-size:17px;margin-bottom:2px">'+(isFirst?t('emp_first_t'):ed?t('emp_edit_t'):t('emp_add_t'))+'</div><div class="sub" style="margin-bottom:10px">'+(isFirst?t('emp_first_s'):t('emp_add_s'))+'</div><label class="fl">'+t('emp_name')+'</label><input id="sfName" value="'+(ed?ed.name:'')+'" placeholder="'+t('emp_name')+'">'+roleRow+'<label class="fl">'+t('emp_pin')+'</label><input id="sfPin" inputmode="numeric" maxlength="4" value="'+(ed?ed.pin:'')+'" placeholder="••••" style="letter-spacing:6px;font-weight:800"><div id="sfErr" style="color:#b91c1c;font-weight:700;font-size:13px;height:18px;margin-top:4px"></div><button class="cta" id="sfSave" style="margin-top:4px">'+t('emp_save')+'</button><button class="cta ghost" id="sfCancel" style="margin-top:8px">‹ '+t('back')+'</button>');
+  m.ov.style.zIndex='95';
+  m.box.querySelector('#sfCancel').onclick=function(){m.close();if(!isFirst)manageStaff();};
+  m.box.querySelector('#sfSave').onclick=function(){
+    var nm=(m.box.querySelector('#sfName').value||'').trim();
+    var pin=(m.box.querySelector('#sfPin').value||'').trim();
+    var role=isFirst?'owner':(m.box.querySelector('#sfRole')?m.box.querySelector('#sfRole').value:(ed?ed.role:'staff'));
+    if(!nm){m.box.querySelector('#sfErr').textContent=t('emp_need_name');return;}
+    if(!/^[0-9]{4}$/.test(pin)){m.box.querySelector('#sfErr').textContent=t('emp_need_pin');return;}
+    var l=staffList();
+    if(ed){ed.name=nm;ed.pin=pin;ed.role=role;var a=activeStaff();if(a&&a.id===ed.id)setActiveStaff(ed);}
+    else l.push({id:genStaffId(),name:nm,pin:pin,role:role,ts:nowStamp()});
+    saveStaff(l);m.close();
+    if(isFirst){setActiveStaff(staffList()[0]);renderHome();go('home');}
+    else manageStaff();
+  };
+}
+function manageStaff(){
+  var l=staffList();var a=activeStaff();
+  var rows=l.length?l.map(function(s){return '<div style="display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px"><span style="width:32px;height:32px;border-radius:9px;background:'+(s.role==='owner'?'#00209F':'#0f9d55')+';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;flex:0 0 auto">'+((s.name[0]||'?').toUpperCase())+'</span><span style="flex:1;min-width:0"><b>'+s.name+'</b>'+(a&&a.id===s.id?' <span style="color:#0f9d55;font-size:11px;font-weight:800">● '+t('emp_active')+'</span>':'')+'<br><span style="font-size:11px;color:var(--muted)">'+(s.role==='owner'?t('emp_owner'):t('emp_staff'))+' · PIN ••••</span></span><button class="mini" data-edit="'+s.id+'" style="border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 9px;font-weight:700;flex:0 0 auto">✎</button><button class="mini" data-del="'+s.id+'" style="border:1px solid #fca5a5;background:#fff;color:#b91c1c;border-radius:8px;padding:5px 9px;font-weight:700;flex:0 0 auto">🗑</button></div>';}).join(''):'<div class="sub" style="margin-bottom:10px">'+t('emp_none')+'</div>';
+  var m=caOverlay('<div style="font-weight:900;font-size:17px;margin-bottom:2px">👥 '+t('emp_manage_t')+'</div><div class="sub" style="margin-bottom:12px">'+t('emp_manage_s')+'</div>'+rows+'<button class="cta" id="stAdd" style="margin-top:4px">＋ '+t('emp_add_t')+'</button>'+(l.length?'<button class="cta ghost" id="stSwitch" style="margin-top:8px">🔄 '+t('emp_switch')+'</button>':'')+'<button class="cta ghost" id="stClose" style="margin-top:8px">'+t('back')+'</button>');
+  m.box.querySelector('#stAdd').onclick=function(){m.close();staffForm(staffList().length===0);};
+  var sw=m.box.querySelector('#stSwitch');if(sw)sw.onclick=function(){m.close();signOut();};
+  m.box.querySelector('#stClose').onclick=m.close;
+  m.box.querySelectorAll('[data-edit]').forEach(function(b){b.onclick=function(){m.close();staffForm(false,b.dataset.edit);};});
+  m.box.querySelectorAll('[data-del]').forEach(function(b){b.onclick=function(){var id=b.dataset.del;var s=staffList().find(function(x){return x.id===id;});if(!confirm(t('emp_del_confirm').replace('{n}',s.name)))return;var l2=staffList().filter(function(x){return x.id!==id;});saveStaff(l2);var av=activeStaff();if(av&&av.id===id)setActiveStaff(l2[0]||null);m.close();manageStaff();};});
+}
+/* Share the POS app (distinct from affiliate referral) */
+function shareApp(){
+  var url='https://haitibiznis.com/pos/';var msg=t('share_msg').replace('{link}',url);
+  if(navigator.share){navigator.share({title:'HaitiBiznis Center POS',text:msg,url:url}).catch(function(){});}
+  else{window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
+}
+
+/* ===================================================================
    PWA: service worker + install prompt + offline indicator
    =================================================================== */
 if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
@@ -1899,6 +1993,8 @@ document.querySelectorAll('.lang button').forEach(b=>{b.onclick=()=>{lang=b.data
 /* ---------- boot ---------- */
 document.querySelectorAll('.lang button').forEach(x=>x.classList.toggle('on',x.dataset.lang===lang));
 applyI18n();renderHome();refreshBadges();
+/* employees: if the owner has set up staff, require PIN sign-in */
+if(staffList().length && !activeStaff()){openSignIn();}
 /* deep-link: /pos/#promo opens the Promo Materials screen directly */
 (function(){var h=(location.hash||'').replace('#','');if(h==='promo'){go('promo');}})();
 window.addEventListener('hashchange',function(){var h=(location.hash||'').replace('#','');if(h==='promo')go('promo');else if(h==='home'||h==='')go('home');});
