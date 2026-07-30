@@ -792,8 +792,9 @@ const WEB_PACKAGES=[
 ];
 /* Clickable "see a sample" links per service name — shown as a small eye link in package flows */
 const SAMPLES={
- 'Pitch Deck Envestisè':'https://haitibiznis.com/samples/pitch-deck/'
- /* 'Video Eksplikatif':'<url>'  — added when the sample video is ready */
+ 'Pitch Deck Envestisè':'https://haitibiznis.com/samples/pitch-deck/',
+ 'Flipbook Dijital 10 Paj':'https://haitibiznis.com/samples/pitch-deck/'
+ /* 'Video Eksplikatif':'<url>'  — added when the sample video is hosted (YouTube) */
 };
 function sampleLink(name){const u=SAMPLES[name];if(!u)return '';
   return `<a href="${u}" target="_blank" rel="noopener" class="smpl" onclick="event.stopPropagation()">👁 ${t('see_sample')}</a>`;}
