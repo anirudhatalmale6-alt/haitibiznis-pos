@@ -102,6 +102,8 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
 .choice .txt{flex:1}.choice .amt{font-weight:800;color:var(--blue);white-space:nowrap}
 .choice .price-in{width:96px;margin:0;padding:8px;text-align:right}
 .pill{display:inline-block;font-size:11px;background:#eef3ff;color:var(--blue);border-radius:999px;padding:2px 8px;font-weight:700}
+.smpl{flex:0 0 auto;font-size:11px;font-weight:800;color:var(--blue);background:#eef3ff;border:1px solid #cdd9ff;border-radius:999px;padding:4px 10px;text-decoration:none;white-space:nowrap}
+.smpl:active{transform:scale(.96)}
 .banner{background:#eef3ff;border:1px solid #cdd9ff;border-radius:12px;padding:12px 14px;margin:6px 0 14px;font-weight:700;color:var(--blue);display:flex;justify-content:space-between;align-items:center}
 .banner b{font-size:17px}
 .breakdown div{display:flex;justify-content:space-between;padding:3px 0;font-size:13px;color:var(--muted)}
@@ -393,7 +395,7 @@ const T={
   receipt:'RESI',order_no:'Nº',date:'Dat',cashier:'Sant HaitiBiznis',thanks:'Mèsi! — HaitiBiznis.com',service:'Sèvis',customer:'Kliyan',
   need_name:'Antre non an.',need_pay:'Chwazi metòd peman.',need_sel:'Chwazi omwen yon bagay.',
   dash_sales:'Vant jodi a',dash_new:'Nouvo kòmand',dash_prog:'An kou',dash_done:'Fini',dash_rev:'Revni total',
-  pick_pkg:'Chwazi yon pakè',pkg_max:'Chwazi jiska',services:'sèvis',sections:'seksyon',pkg_incl:'Sa ki enkli',choose_one:'Chwazi 1 sèvis',incl_word:'enkli',fee_hb:'Frè HaitiBiznis 30%',fee_press:'Frè Près Nasyonal',base:'Pri baz',sub_usd:'Sou-total',rate_note:'Egzanp konvèsyon',
+  pick_pkg:'Chwazi yon pakè',pkg_max:'Chwazi jiska',services:'sèvis',sections:'seksyon',pkg_incl:'Sa ki enkli',choose_one:'Chwazi 1 sèvis',incl_word:'enkli',see_sample:'Gade egzanp',fee_hb:'Frè HaitiBiznis 30%',fee_press:'Frè Près Nasyonal',base:'Pri baz',sub_usd:'Sou-total',rate_note:'Egzanp konvèsyon',
   partner_legal:'Patnè: Cabinet EX LEGE – PRO LEGE (Avoka Nasyonal & Entènasyonal)',
   amount:'Montan (GDES)',desc:'Deskripsyon',verify_t:'Verifikasyon Chofè',bill_type:'Tip fakti',
   qr_ticket:'Tikè QR',qr_ref:'Kòd Referans',checkin_ok:'Antre ✓',search_ticket:'Chèche Nº tikè...',
@@ -418,7 +420,7 @@ const T={
   receipt:'REÇU',order_no:'Nº',date:'Date',cashier:'Centre HaitiBiznis',thanks:'Merci ! — HaitiBiznis.com',service:'Service',customer:'Client',
   need_name:'Saisissez le nom.',need_pay:'Choisissez le paiement.',need_sel:'Sélectionnez au moins un élément.',
   dash_sales:'Ventes du jour',dash_new:'Nouvelles',dash_prog:'En cours',dash_done:'Terminées',dash_rev:'Revenu total',
-  pick_pkg:'Choisir un forfait',pkg_max:'Choisir jusqu’à',services:'services',sections:'sections',pkg_incl:'Inclus',choose_one:'Choisissez 1 service',incl_word:'inclus',fee_hb:'Frais HaitiBiznis 30%',fee_press:'Frais Presses Nationales',base:'Prix de base',sub_usd:'Sous-total',rate_note:'Conversion ex.',
+  pick_pkg:'Choisir un forfait',pkg_max:'Choisir jusqu’à',services:'services',sections:'sections',pkg_incl:'Inclus',choose_one:'Choisissez 1 service',incl_word:'inclus',see_sample:'Voir un exemple',fee_hb:'Frais HaitiBiznis 30%',fee_press:'Frais Presses Nationales',base:'Prix de base',sub_usd:'Sous-total',rate_note:'Conversion ex.',
   partner_legal:'Partenaire : Cabinet EX LEGE – PRO LEGE (Avocats National & International)',
   amount:'Montant (GDES)',desc:'Description',verify_t:'Vérification Chauffeur',bill_type:'Type de facture',
   qr_ticket:'Billet QR',qr_ref:'Code de parrainage',checkin_ok:'Entré ✓',search_ticket:'Rechercher Nº billet...',
@@ -443,7 +445,7 @@ const T={
   receipt:'RECEIPT',order_no:'Nº',date:'Date',cashier:'HaitiBiznis Center',thanks:'Thank you! — HaitiBiznis.com',service:'Service',customer:'Customer',
   need_name:'Enter the name.',need_pay:'Choose a payment method.',need_sel:'Select at least one item.',
   dash_sales:'Today’s Sales',dash_new:'New Orders',dash_prog:'In Progress',dash_done:'Completed',dash_rev:'Total Revenue',
-  pick_pkg:'Choose a package',pkg_max:'Choose up to',services:'services',sections:'sections',pkg_incl:'Included',choose_one:'Choose 1 service',incl_word:'included',fee_hb:'HaitiBiznis fee 30%',fee_press:'Presses Nationales fee',base:'Base price',sub_usd:'Subtotal',rate_note:'Conversion approx',
+  pick_pkg:'Choose a package',pkg_max:'Choose up to',services:'services',sections:'sections',pkg_incl:'Included',choose_one:'Choose 1 service',incl_word:'included',see_sample:'See sample',fee_hb:'HaitiBiznis fee 30%',fee_press:'Presses Nationales fee',base:'Base price',sub_usd:'Subtotal',rate_note:'Conversion approx',
   partner_legal:'Partner: Cabinet EX LEGE – PRO LEGE (National & International Attorneys)',
   amount:'Amount (GDES)',desc:'Description',verify_t:'Driver Verification',bill_type:'Bill type',
   qr_ticket:'QR Ticket',qr_ref:'Referral Code',checkin_ok:'Checked-in ✓',search_ticket:'Search ticket Nº...',
@@ -468,7 +470,7 @@ const T={
   receipt:'RECIBO',order_no:'Nº',date:'Fecha',cashier:'Centro HaitiBiznis',thanks:'¡Gracias! — HaitiBiznis.com',service:'Servicio',customer:'Cliente',
   need_name:'Ingresa el nombre.',need_pay:'Elige un método de pago.',need_sel:'Selecciona al menos un elemento.',
   dash_sales:'Ventas de hoy',dash_new:'Nuevos pedidos',dash_prog:'En curso',dash_done:'Completados',dash_rev:'Ingresos totales',
-  pick_pkg:'Elige un paquete',pkg_max:'Elige hasta',services:'servicios',sections:'secciones',pkg_incl:'Incluye',choose_one:'Elige 1 servicio',incl_word:'incluidos',fee_hb:'Comisión HaitiBiznis 30%',fee_press:'Comisión Presses Nationales',base:'Precio base',sub_usd:'Subtotal',rate_note:'Conversión aprox',
+  pick_pkg:'Elige un paquete',pkg_max:'Elige hasta',services:'servicios',sections:'secciones',pkg_incl:'Incluye',choose_one:'Elige 1 servicio',incl_word:'incluidos',see_sample:'Ver ejemplo',fee_hb:'Comisión HaitiBiznis 30%',fee_press:'Comisión Presses Nationales',base:'Precio base',sub_usd:'Subtotal',rate_note:'Conversión aprox',
   partner_legal:'Socio: Cabinet EX LEGE – PRO LEGE (Abogados Nacionales e Internacionales)',
   amount:'Monto (GDES)',desc:'Descripción',verify_t:'Verificación de Chofer',bill_type:'Tipo de factura',
   qr_ticket:'Boleto QR',qr_ref:'Código de referido',checkin_ok:'Registrado ✓',search_ticket:'Buscar Nº de boleto...',
@@ -788,6 +790,13 @@ const WEB_PACKAGES=[
  {amt:1500,nm:'Domain & Hosting Setup',feats:['Rechèch non domèn','Enstalasyon Hosting'],note:'Acha domèn pa enkli'},
  {amt:5000,nm:'Domain, Achte & Setup Konplè',feats:['Rechèch non domèn','Acha domèn','Enstalasyon Hosting','Sit konekte epi pare']}
 ];
+/* Clickable "see a sample" links per service name — shown as a small eye link in package flows */
+const SAMPLES={
+ 'Pitch Deck Envestisè':'https://haitibiznis.com/samples/pitch-deck/'
+ /* 'Video Eksplikatif':'<url>'  — added when the sample video is ready */
+};
+function sampleLink(name){const u=SAMPLES[name];if(!u)return '';
+  return `<a href="${u}" target="_blank" rel="noopener" class="smpl" onclick="event.stopPropagation()">👁 ${t('see_sample')}</a>`;}
 /* HaitiBiznis Technologies — Menu 2: Business/branding packages (pick:1 = choose one; pick:0 = all included) */
 const BRAND_PACKAGES=[
  {amt:500,pick:1,feats:['Logo Pwofesyonèl','Kat Biznis (Business Card)','Retouche Foto','Kolorasyon Foto','QR Code Pèmanan','1 Post pou Rezo Sosyal','Kat Envitasyon Dijital']},
@@ -1108,9 +1117,9 @@ function renderDetail(){
       if(p.pick){body.innerHTML+=`<p class="sub" style="margin-top:10px">${t('choose_one')} — ${flow.extra.sel.length}/1</p>`;
         const wrap=document.createElement('div');
         p.feats.forEach(s=>{const on=flow.extra.sel[0]===s;const row=document.createElement('div');row.className='choice radio'+(on?' on':'');
-          row.innerHTML=`<span class="dot"></span><span class="txt">${s}</span>`;
+          row.innerHTML=`<span class="dot"></span><span class="txt">${s}</span>${sampleLink(s)}`;
           row.onclick=()=>{flow.extra.sel=[s];renderDetail();};wrap.appendChild(row);});body.appendChild(wrap);}
-      else{const feats=p.feats.map(f=>`<div style="display:flex;gap:8px;align-items:center;font-size:13px;padding:3px 0"><span style="color:var(--good);font-weight:800">✓</span><span>${f}</span></div>`).join('');
+      else{const feats=p.feats.map(f=>`<div style="display:flex;gap:8px;align-items:center;font-size:13px;padding:3px 0"><span style="color:var(--good);font-weight:800">✓</span><span style="flex:1">${f}</span>${sampleLink(f)}</div>`).join('');
         const bd=document.createElement('div');bd.className='card';bd.style.marginTop='10px';
         bd.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:6px">${t('pkg_incl')}</div>${feats}`;body.appendChild(bd);}}
   }
