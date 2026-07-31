@@ -768,8 +768,7 @@ const MODULES=[
  {id:'water',nm:'Water Payments',nmKey:'svc_water',em:'🚰',type:'order',color:'#06b6d4',comm:5},
  {id:'tikelakay',nm:'Ticket Sales',nmKey:'svc_tickets',em:'🎫',type:'tickets',color:'#db2777',comm:8},
  {id:'website',nm:'Website Creation',nmKey:'svc_website',em:'💻',type:'order',color:'#8b5cf6',comm:15},
- {id:'hbtech',nm:'Pakè Biznis',nmKey:'svc_hbtech',logo:'assets/haitibiznis-logo.png',type:'order',color:'#D21034',comm:20},
- {id:'48h',nm:'48HoursReady',sub:'48HoursReady',logo:'assets/48hoursready-logo.jpg',type:'order',color:'#ea580c',comm:15},
+ {id:'hbtech',nm:'Pakè Biznis',nmKey:'svc_hbtech',sub:'HaitiBiznis Technologies',logo:'assets/haitibiznis-logo.png',type:'order',color:'#D21034',comm:20},
  {id:'delivery',nm:'Delivery',nmKey:'svc_delivery',em:'🚚',type:'action',action:'delivery',color:'#b45309',comm:8},
  {id:'admin',nm:'Sèvis Administratif',nmKey:'svc_admin',em:'📄',type:'order',color:'#475569',comm:10},
  {id:'legal',nm:'Sèvis Legal',nmKey:'svc_legal',em:'⚖️',type:'order',color:'#1e3a8a',comm:10},
@@ -779,8 +778,6 @@ const MODULES=[
 function modById(id){return MODULES.find(m=>m.id===id);}
 
 /* module data */
-const FH_SERVICES=['Logo','Business Card','Executive Summary','Pitch Deck','Website','Flipbook','Promotional Video','QR Code','Flyer','Social Media Banner','Google Business Profile','WhatsApp Business Setup','Resume / CV','Other digital service'];
-const FH_PACKAGES=[{amt:500,max:1},{amt:1000,max:3},{amt:5000,max:5},{amt:10000,max:7}];
 /* HaitiBiznis Technologies — Menu 1: Website / Landing Page packages (fixed price + fixed sections) */
 const WEB_PACKAGES=[
  {amt:1500,nm:'Pakè Pwofesyonèl',secs:3,feats:['Akèy','Sou Nou','Kontak']},
@@ -1044,7 +1041,7 @@ let flow=null;   // {module, customer, items[], amount, docs[], payment, extra}
 let fstep=1;
 function startFlow(moduleId,preItems){
   flow={module:moduleId,customer:null,items:preItems||[],amount:0,docs:[],payment:null,extra:{}};
-  if(['48h','website','hbtech'].includes(moduleId)){flow.extra.pkg=null;flow.extra.sel=[];}
+  if(['website','hbtech'].includes(moduleId)){flow.extra.pkg=null;flow.extra.sel=[];}
   if(moduleId==='bizreg'){flow.extra.reg=null;}
   document.getElementById('flowSvcLabel').textContent=modById(moduleId)?modById(moduleId).nm:moduleId;
   go('flow');fstep=1;showFlowStep();renderCustSearch();
@@ -1083,20 +1080,7 @@ function renderDetail(){
   document.getElementById('detailCust').textContent=flow.customer?flow.customer.name:'';
   const body=document.getElementById('detailBody');body.innerHTML='';const cfg=getCfg();
 
-  if(m==='48h'){
-    body.innerHTML=`<p class="sub">${t('pick_pkg')}</p>`;
-    FH_PACKAGES.forEach((p,i)=>{const on=flow.extra.pkg===i;const row=document.createElement('div');row.className='choice radio'+(on?' on':'');
-      row.innerHTML=`<span class="dot"></span><span class="txt">${p.amt.toLocaleString()} GDES <span class="pill">${t('pkg_max')} ${p.max} ${t('services')}</span></span>`;
-      row.onclick=()=>{flow.extra.pkg=i;flow.extra.sel=flow.extra.sel.slice(0,p.max);renderDetail();};body.appendChild(row);});
-    if(flow.extra.pkg!==null){const max=FH_PACKAGES[flow.extra.pkg].max;
-      body.innerHTML+=`<p class="sub" style="margin-top:10px">${t('pkg_max')} ${max} ${t('services')} — ${flow.extra.sel.length}/${max}</p>`;
-      const wrap=document.createElement('div');
-      FH_SERVICES.forEach(s=>{const on=flow.extra.sel.includes(s);const row=document.createElement('div');row.className='choice'+(on?' on':'');
-        row.innerHTML=`<span class="dot"></span><span class="txt">${s}</span>`;
-        row.onclick=()=>{const idx=flow.extra.sel.indexOf(s);if(idx>=0)flow.extra.sel.splice(idx,1);else{if(flow.extra.sel.length>=max)return;flow.extra.sel.push(s);}renderDetail();};
-        wrap.appendChild(row);});body.appendChild(wrap);}
-  }
-  else if(m==='website'){
+  if(m==='website'){
     body.innerHTML=`<p class="sub">${t('pick_pkg')}</p>`;
     WEB_PACKAGES.forEach((p,i)=>{const on=flow.extra.pkg===i;const row=document.createElement('div');row.className='choice radio'+(on?' on':'');
       const tag=p.secs?(p.secs+' '+t('sections')):(p.feats.length+' '+t('services')+' '+t('incl_word'));
@@ -1159,8 +1143,7 @@ function renderDetail(){
   computeAmount();document.getElementById('detailTot').textContent=gdes(flow.amount);
 }
 function computeAmount(){const m=flow.module;const cfg=getCfg();
-  if(m==='48h'){if(flow.extra.pkg!==null){const p=FH_PACKAGES[flow.extra.pkg];flow.items=[{label:'48HoursReady — '+(flow.extra.sel.join(', ')||p.max+' '+t('services')),amt:p.amt}];flow.amount=p.amt;}else{flow.items=[];flow.amount=0;}}
-  else if(m==='website'){if(flow.extra.pkg!==null){const p=WEB_PACKAGES[flow.extra.pkg];flow.items=[{label:'Sit Web — '+p.nm+(p.secs?' ('+p.secs+' '+t('sections')+')':''),amt:p.amt}];flow.amount=p.amt;}else{flow.items=[];flow.amount=0;}}
+  if(m==='website'){if(flow.extra.pkg!==null){const p=WEB_PACKAGES[flow.extra.pkg];flow.items=[{label:'Sit Web — '+p.nm+(p.secs?' ('+p.secs+' '+t('sections')+')':''),amt:p.amt}];flow.amount=p.amt;}else{flow.items=[];flow.amount=0;}}
   else if(m==='hbtech'){if(flow.extra.pkg!==null){const p=BRAND_PACKAGES[flow.extra.pkg];
       if(p.pick){if(flow.extra.sel.length){flow.items=[{label:'Pakè Biznis '+p.amt.toLocaleString()+' GDES — '+flow.extra.sel[0],amt:p.amt}];flow.amount=p.amt;}else{flow.items=[];flow.amount=0;}}
       else{flow.items=[{label:'Pakè Biznis '+p.amt.toLocaleString()+' GDES — '+p.feats.length+' '+t('services'),amt:p.amt}];flow.amount=p.amt;}
