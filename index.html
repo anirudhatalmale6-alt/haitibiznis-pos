@@ -48,6 +48,7 @@ main{padding:16px 14px}
 .screen{display:none;animation:fade .2s ease}.screen.on{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .h2{font-size:20px;font-weight:800;margin:2px 0 4px}.sub{color:var(--muted);font-size:13px;margin:0 0 16px}
+.usd{color:#00834d;font-weight:700;font-size:.82em;white-space:nowrap}
 .back{display:inline-flex;align-items:center;gap:6px;border:0;background:#fff;color:var(--blue);font-weight:700;font-size:14px;padding:8px 12px;border-radius:999px;box-shadow:var(--shadow);margin-bottom:14px}
 /* module grid */
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -778,6 +779,9 @@ function nowStamp(){return new Date().toISOString();}
 function fmtDate(iso){const d=new Date(iso);return d.toLocaleDateString(lang==='en'?'en-US':'fr-FR')+' '+d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
 function isToday(iso){const d=new Date(iso),n=new Date();return d.toDateString()===n.toDateString();}
 function gdes(n){return (Math.round(n)||0).toLocaleString()+' GDES';}
+function usdAmt(n){const r=getCfg().rate||132;return Math.round((+n||0)/r);}
+function usdTag(n){const u=usdAmt(n);return u>0?' <span class="usd">≈ US$'+u.toLocaleString()+'</span>':'';}
+function showTot(){const el=document.getElementById('detailTot');if(el)el.innerHTML=gdes(flow.amount)+usdTag(flow.amount);}
 
 /* ---------- status sets ---------- */
 const STATUS={
@@ -1144,7 +1148,7 @@ function renderDetail(){
     body.innerHTML=`<p class="sub">${t('pick_pkg')}</p>`;
     WEB_PACKAGES.forEach((p,i)=>{const on=flow.extra.pkg===i;const row=document.createElement('div');row.className='choice radio'+(on?' on':'');
       const tag=p.secs?(p.secs+' '+t('sections')):(p.feats.length+' '+t('services')+' '+t('incl_word'));
-      row.innerHTML=`<span class="dot"></span><span class="txt">${p.nm} <span class="pill">${p.amt.toLocaleString()} GDES</span><div style="font-size:11px;color:var(--muted);font-weight:600;margin-top:3px">${tag}</div></span>`;
+      row.innerHTML=`<span class="dot"></span><span class="txt">${p.nm} <span class="pill">${p.amt.toLocaleString()} GDES</span>${usdTag(p.amt)}<div style="font-size:11px;color:var(--muted);font-weight:600;margin-top:3px">${tag}</div></span>`;
       row.onclick=()=>{flow.extra.pkg=i;renderDetail();};body.appendChild(row);});
     if(flow.extra.pkg!==null){const p=WEB_PACKAGES[flow.extra.pkg];
       const feats=p.feats.map(f=>`<div style="display:flex;gap:8px;align-items:center;font-size:13px;padding:3px 0"><span style="color:var(--good);font-weight:800">✓</span><span>${f}</span></div>`).join('');
@@ -1153,20 +1157,20 @@ function renderDetail(){
       bd.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:6px">${t('pkg_incl')}</div>${feats}${note}`;body.appendChild(bd);}
   }
   else if(m==='hbtech'){
-    body.innerHTML=`<p class="sub">${t('pick_pkg')}</p>`;
+    const hd=document.createElement('p');hd.className='sub';hd.textContent=t('pick_pkg');body.appendChild(hd);
     BRAND_PACKAGES.forEach((p,i)=>{const on=flow.extra.pkg===i;const row=document.createElement('div');row.className='choice radio'+(on?' on':'');
       const tag=p.pick?t('choose_one'):(p.feats.length+' '+t('services')+' '+t('incl_word'));
-      row.innerHTML=`<span class="dot"></span><span class="txt">${p.amt.toLocaleString()} GDES${p.tier?' · '+p.tier:''}<div style="font-size:11px;color:var(--muted);font-weight:600;margin-top:3px">${tag}</div></span>`;
+      row.innerHTML=`<span class="dot"></span><span class="txt">${p.amt.toLocaleString()} GDES${p.tier?' · '+p.tier:''}${usdTag(p.amt)}<div style="font-size:11px;color:var(--muted);font-weight:600;margin-top:3px">${tag}</div></span>`;
       row.onclick=()=>{flow.extra.pkg=i;flow.extra.sel=[];flow.extra.sub=null;renderDetail();};body.appendChild(row);});
     if(flow.extra.pkg!==null){const p=BRAND_PACKAGES[flow.extra.pkg];
-      if(p.pick){body.innerHTML+=`<p class="sub" style="margin-top:10px">${t('choose_one')} — ${flow.extra.sel.length}/1</p>`;
+      if(p.pick){const ph=document.createElement('p');ph.className='sub';ph.style.marginTop='10px';ph.textContent=`${t('choose_one')} — ${flow.extra.sel.length}/1`;body.appendChild(ph);
         const wrap=document.createElement('div');
-        p.feats.forEach(f=>{const nm=(typeof f==='string')?f:f.nm;const on=flow.extra.sel[0]===nm;const row=document.createElement('div');row.className='choice radio'+(on?' on':'');
+        p.feats.forEach(f=>{const nm=(typeof f==='string')?f:f.nm;const fsub=(f&&typeof f==='object'&&Array.isArray(f.sub))?f.sub:null;const on=flow.extra.sel[0]===nm;const row=document.createElement('div');row.className='choice radio'+(on?' on':'');
           row.innerHTML=`<span class="dot"></span><span class="txt">${nm}</span>${sampleLink(nm)}`;
           row.onclick=()=>{flow.extra.sel=[nm];flow.extra.sub=null;renderDetail();};wrap.appendChild(row);
-          if(on&&f.sub){const sw=document.createElement('div');sw.style.cssText='margin:2px 0 8px 20px;padding-left:10px;border-left:2px solid #e5e7eb';
+          if(on&&fsub){const sw=document.createElement('div');sw.style.cssText='margin:2px 0 8px 20px;padding-left:10px;border-left:2px solid #e5e7eb';
             sw.innerHTML=`<div style="font-size:11px;color:var(--muted);font-weight:700;margin:4px 0">${t('choose_one')} — ${flow.extra.sub?'1':'0'}/1</div>`;
-            f.sub.forEach(ss=>{const son=flow.extra.sub===ss;const sr=document.createElement('div');sr.className='choice radio'+(son?' on':'');sr.style.padding='7px 10px';
+            fsub.forEach(ss=>{const son=flow.extra.sub===ss;const sr=document.createElement('div');sr.className='choice radio'+(son?' on':'');sr.style.padding='7px 10px';
               sr.innerHTML=`<span class="dot"></span><span class="txt" style="font-size:13px">${ss}</span>`;
               sr.onclick=()=>{flow.extra.sub=ss;renderDetail();};sw.appendChild(sr);});
             wrap.appendChild(sw);}
@@ -1185,7 +1189,7 @@ function renderDetail(){
       row.innerHTML=`<span class="dot"></span><span class="txt">${name}</span><input type="number" class="price-in" inputmode="numeric" placeholder="GDES" value="${ex?ex.amt:''}">`;
       const inp=row.querySelector('input');
       row.onclick=(e)=>{if(e.target===inp)return;const idx=flow.items.findIndex(it=>it.label===name);if(idx>=0)flow.items.splice(idx,1);else flow.items.push({label:name,amt:+inp.value||0});renderDetail();};
-      inp.oninput=()=>{let it=flow.items.find(x=>x.label===name);if(!it){it={label:name,amt:0};flow.items.push(it);row.classList.add('on');}it.amt=+inp.value||0;computeAmount();document.getElementById('detailTot').textContent=gdes(flow.amount);};
+      inp.oninput=()=>{let it=flow.items.find(x=>x.label===name);if(!it){it={label:name,amt:0};flow.items.push(it);row.classList.add('on');}it.amt=+inp.value||0;computeAmount();showTot();};
       body.appendChild(row);});
   }
   else if(m==='bizreg'){
@@ -1206,16 +1210,16 @@ function renderDetail(){
       <label class="fl">${t('desc')}</label><input type="text" id="billRef" placeholder="Nº kont / referans">
       <label class="fl">${t('amount')}</label><input type="number" id="billAmt" inputmode="numeric">`;
     const upd=()=>{const a=+document.getElementById('billAmt').value||0;const ty=document.getElementById('billType').value;const rf=document.getElementById('billRef').value.trim();
-      flow.items=a>0?[{label:ty+(rf?(' — '+rf):''),amt:a}]:[];computeAmount();document.getElementById('detailTot').textContent=gdes(flow.amount);};
+      flow.items=a>0?[{label:ty+(rf?(' — '+rf):''),amt:a}]:[];computeAmount();showTot();};
     body.querySelector('#billAmt').oninput=upd;body.querySelector('#billType').onchange=upd;body.querySelector('#billRef').oninput=upd;
   }
-  computeAmount();document.getElementById('detailTot').textContent=gdes(flow.amount);
+  computeAmount();showTot();
 }
 function computeAmount(){const m=flow.module;const cfg=getCfg();
   if(m==='website'){if(flow.extra.pkg!==null){const p=WEB_PACKAGES[flow.extra.pkg];flow.items=[{label:'Sit Web — '+p.nm+(p.secs?' ('+p.secs+' '+t('sections')+')':''),amt:p.amt}];flow.amount=p.amt;}else{flow.items=[];flow.amount=0;}}
   else if(m==='hbtech'){if(flow.extra.pkg!==null){const p=BRAND_PACKAGES[flow.extra.pkg];
       if(p.pick){const sel=flow.extra.sel[0];
-        if(sel){const f=p.feats.find(x=>((typeof x==='string')?x:x.nm)===sel);const needSub=f&&f.sub;
+        if(sel){const f=p.feats.find(x=>((typeof x==='string')?x:x.nm)===sel);const needSub=f&&typeof f==='object'&&Array.isArray(f.sub);
           if(needSub&&!flow.extra.sub){flow.items=[];flow.amount=0;}
           else{const lbl=sel+(flow.extra.sub?' ('+flow.extra.sub+')':'');flow.items=[{label:'48HoursReady '+p.amt.toLocaleString()+' GDES — '+lbl,amt:p.amt}];flow.amount=p.amt;}}
         else{flow.items=[];flow.amount=0;}}
