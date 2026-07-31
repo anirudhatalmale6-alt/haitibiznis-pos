@@ -76,6 +76,29 @@ main{padding:16px 14px}
 .fab .fp{font-size:20px;font-weight:900;line-height:1}
 .fab:active{transform:scale(.96)}
 @media(min-width:721px){.fab{right:calc(50% - 344px)}}
+/* group headers on home */
+.grp-h{display:flex;align-items:center;gap:10px;margin:20px 2px 10px;font-size:15px;font-weight:900;color:var(--ink)}
+.grp-h:first-of-type{margin-top:6px}
+.grp-h::after{content:"";flex:1;height:1px;background:var(--line)}
+.grp-h .grp-soon{flex:0 0 auto;background:#fff3e0;color:#c47500;font-size:10px;font-weight:800;padding:2px 9px;border-radius:20px;order:2}
+.grp-h::after{order:3}
+/* FAB speed-dial (New Registration) */
+.fab-wrap{position:fixed;right:16px;bottom:78px;z-index:29;display:flex;flex-direction:column;align-items:flex-end;gap:10px;pointer-events:none}
+@media(min-width:721px){.fab-wrap{right:calc(50% - 344px)}}
+.fab-wrap>*{pointer-events:auto}
+.fab-menu{display:none;flex-direction:column;align-items:flex-end;gap:9px}
+.fab-wrap.open .fab-menu{display:flex}
+.fab-act{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:11px 16px;font-weight:800;font-size:13.5px;
+  display:flex;align-items:center;gap:9px;box-shadow:0 8px 20px rgba(0,0,0,.16);white-space:nowrap;animation:fabpop .18s ease}
+.fab-act .ae{font-size:17px}
+@keyframes fabpop{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+.fab-main{background:var(--red);color:#fff;border:0;border-radius:999px;padding:14px 20px;font-weight:800;font-size:15px;
+  display:flex;align-items:center;gap:8px;box-shadow:0 10px 24px rgba(210,16,52,.4);cursor:pointer}
+.fab-main .fp{font-size:20px;font-weight:900;line-height:1;transition:transform .2s}
+.fab-wrap.open .fab-main .fp{transform:rotate(45deg)}
+.fab-main:active{transform:scale(.96)}
+.fab-back{position:fixed;inset:0;z-index:28;background:rgba(10,16,32,.28);display:none}
+.fab-wrap.open ~ .fab-back,.fab-back.on{display:block}
 /* sub buttons */
 .subs{display:flex;flex-direction:column;gap:10px}
 .subbtn{display:flex;align-items:center;gap:12px;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:16px;box-shadow:var(--shadow);font-weight:800;font-size:15px;text-align:left}
@@ -362,14 +385,23 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
 </section>
 </main>
 
-<button class="fab" id="fabNewSale" onclick="newSale()"><span class="fp">＋</span><span data-i18n="fab_newsale">Nouvo Vant</span></button>
+<div class="fab-back" id="fabBack" onclick="closeFab()"></div>
+<div class="fab-wrap" id="fabWrap">
+  <div class="fab-menu" id="fabMenu">
+    <button class="fab-act" onclick="fabDo('driver')"><span class="ae">🚖</span><span data-i18n="fab_driver">Enskri Chofè MsouWout</span></button>
+    <button class="fab-act" onclick="fabDo('merchant')"><span class="ae">🛒</span><span data-i18n="fab_merchant">Enskri Machann MyPlopPlop</span></button>
+    <button class="fab-act" onclick="fabDo('affiliate')"><span class="ae">🤝</span><span data-i18n="fab_parenaj">Enskri Parenaj Biznis</span></button>
+    <button class="fab-act" onclick="fabDo('pakebiznis')"><span class="ae">💼</span><span data-i18n="fab_pakebiznis">Kòmande Pakè Biznis</span></button>
+  </div>
+  <button class="fab-main" id="fabMain" onclick="toggleFab()"><span class="fp">＋</span><span data-i18n="fab_reg">Nouvo Enskripsyon</span></button>
+</div>
 
 <nav class="nav">
   <button data-nav="home" class="on" onclick="go('home')"><span class="ni">🏠</span><span data-i18n="n_home">Akèy</span></button>
-  <button data-nav="earn" onclick="go('earn')"><span class="ni">💰</span><span data-i18n="n_earn">Kòb</span></button>
   <button data-nav="orders" class="badge-dot" onclick="go('orders')"><span class="ni">📦</span><span data-i18n="n_orders">Kòmand</span></button>
+  <button data-nav="earn" onclick="go('earn')"><span class="ni">💰</span><span data-i18n="n_earn">Revni</span></button>
   <button data-nav="ref" onclick="go('ref')"><span class="ni">🤝</span><span data-i18n="n_ref">Parenaj</span></button>
-  <button data-nav="set" onclick="go('set')"><span class="ni">⚙️</span><span data-i18n="n_set">Paramèt</span></button>
+  <button data-nav="set" onclick="go('set')"><span class="ni">👤</span><span data-i18n="n_set">Kont Mwen</span></button>
 </nav>
 
 <script src="qrcode.js"></script>
@@ -387,7 +419,7 @@ const T={
   pay_t:'Peman',p_cash:'Kach',p_card:'Kat',pay_do:'Konplete & Resi',print:'Enprime',wa_send:'Voye WhatsApp',conf_home:'Akèy',
   ord_t:'Kòmand yo',ord_search:'Chèche non / tel / WhatsApp / Nº kòmand',dash_t:'Tablodbò',
   set_t:'Paramèt',set_note:'Antre vrè pri yo. Chanjman yo sere sou aparèy sa a.',set_save:'Sere paramèt',
-  n_home:'Akèy',n_orders:'Kòmand',n_dash:'Tablodbò',n_set:'Paramèt',
+  n_home:'Akèy',n_orders:'Kòmand',n_dash:'Tablodbò',n_set:'Kont Mwen',
   all:'Tout',add:'Ajoute',remove:'Retire',total:'TOTAL',save:'Anrejistre',
   st_wait:'Ap tann dokiman',st_prog:'An kou',st_ready:'Pare',st_done:'Fini',
   st_pending:'An atant',st_approved:'Apwouve',st_rejected:'Rejte',st_active:'Aktif',st_verified:'Verifye',
@@ -412,7 +444,7 @@ const T={
   pay_t:'Paiement',p_cash:'Espèces',p_card:'Carte',pay_do:'Terminer & Reçu',print:'Imprimer',wa_send:'Envoyer WhatsApp',conf_home:'Accueil',
   ord_t:'Commandes',ord_search:'Rechercher nom / tél / WhatsApp / Nº',dash_t:'Tableau de bord',
   set_t:'Réglages',set_note:'Saisissez les vrais prix. Enregistré sur cet appareil.',set_save:'Enregistrer',
-  n_home:'Accueil',n_orders:'Commandes',n_dash:'Tableau',n_set:'Réglages',
+  n_home:'Accueil',n_orders:'Commandes',n_dash:'Tableau',n_set:'Mon compte',
   all:'Tout',add:'Ajouter',remove:'Retirer',total:'TOTAL',save:'Enregistrer',
   st_wait:'Attente docs',st_prog:'En cours',st_ready:'Prêt',st_done:'Terminé',
   st_pending:'En attente',st_approved:'Approuvé',st_rejected:'Rejeté',st_active:'Actif',st_verified:'Vérifié',
@@ -437,7 +469,7 @@ const T={
   pay_t:'Payment',p_cash:'Cash',p_card:'Card',pay_do:'Complete & Receipt',print:'Print',wa_send:'Send WhatsApp',conf_home:'Home',
   ord_t:'Orders',ord_search:'Search name / phone / WhatsApp / Order Nº',dash_t:'Dashboard',
   set_t:'Settings',set_note:'Enter the real prices. Saved on this device.',set_save:'Save settings',
-  n_home:'Home',n_orders:'Orders',n_dash:'Dashboard',n_set:'Settings',
+  n_home:'Home',n_orders:'Orders',n_dash:'Dashboard',n_set:'My Account',
   all:'All',add:'Add',remove:'Remove',total:'TOTAL',save:'Save',
   st_wait:'Waiting for Docs',st_prog:'In Progress',st_ready:'Ready',st_done:'Completed',
   st_pending:'Pending',st_approved:'Approved',st_rejected:'Rejected',st_active:'Active',st_verified:'Verified',
@@ -462,7 +494,7 @@ const T={
   pay_t:'Pago',p_cash:'Efectivo',p_card:'Tarjeta',pay_do:'Completar y Recibo',print:'Imprimir',wa_send:'Enviar WhatsApp',conf_home:'Inicio',
   ord_t:'Pedidos',ord_search:'Buscar nombre / tel / WhatsApp / Nº pedido',dash_t:'Panel',
   set_t:'Ajustes',set_note:'Ingresa los precios reales. Se guardan en este dispositivo.',set_save:'Guardar ajustes',
-  n_home:'Inicio',n_orders:'Pedidos',n_dash:'Panel',n_set:'Ajustes',
+  n_home:'Inicio',n_orders:'Pedidos',n_dash:'Panel',n_set:'Mi cuenta',
   all:'Todo',add:'Agregar',remove:'Quitar',total:'TOTAL',save:'Guardar',
   st_wait:'Esperando documentos',st_prog:'En curso',st_ready:'Listo',st_done:'Completado',
   st_pending:'Pendiente',st_approved:'Aprobado',st_rejected:'Rechazado',st_active:'Activo',st_verified:'Verificado',
@@ -635,14 +667,14 @@ const T_LIC={
 Object.keys(T_LIC).forEach(function(l){Object.assign(T[l],T_LIC[l]);});
 /* ---- Digital Business Center hub / Earnings / Referral strings ---- */
 const T_HUB={
- ht:{n_earn:'Kòb',n_ref:'Parenaj',
+ ht:{n_earn:'Revni',n_ref:'Parenaj',
   hub_verified:'Patnè Verifye',hub_level:'Nivo',hub_refcode:'Kòd Parenaj',
   hub_title:'Sant Biznis Dijital',hub_revtoday:'Revni Jodi a',hub_sales:'Vant Jodi a',hub_custserved:'Kliyan Sèvi',hub_comm:'Komisyon',
   hub_commbanner:'Ou fè {n} komisyon semèn sa a!',hub_manage:'Jere Abònman',hub_quick:'Aksyon Rapid',
   hub_newsale:'Nouvo Vant',hub_inventory:'Envantè',hub_customers:'Kliyan',hub_earn:'Fè Kòb',
   hub_invite_t:'Envite Biznis',hub_invite_s:'Fè komisyon chak mwa ak Parenaj Biznis.',hub_invite_btn:'Envite Kounye a',
   hub_soon_msg:'N ap prepare fonksyon sa a. Li ap disponib byento.',
-  svc_marketplace:'Machande',svc_ride:'Woulib',svc_parenaj:'Parenaj Biznis',svc_bizreg:'Anrejistreman Biznis',svc_insurance:'Asirans',svc_bills:'Peman Fakti',svc_water:'Peman Dlo',svc_tickets:'Vant Tikè',svc_website:'Kreyasyon Sit Web',svc_hbtech:'48HoursReady',svc_delivery:'Livrezon',svc_admin:'Sèvis Administratif',svc_legal:'Sèvis Legal',svc_pro:'Pwofesyonèl Lakay',svc_cashout:'Retrè Kach',
+  svc_marketplace:'Machande',svc_ride:'Woulib',svc_parenaj:'Parenaj Biznis',svc_bizreg:'Anrejistreman Biznis',svc_insurance:'Asirans',svc_bills:'Peman Fakti',svc_water:'Peman Dlo',svc_tickets:'Tikè Lakay',svc_website:'Kreyasyon Sit Web',svc_hbtech:'48HoursReady',svc_delivery:'Livrezon',svc_admin:'Sèvis Administratif',svc_legal:'Sèvis Legal',svc_pro:'Pwofesyonèl Lakay',svc_cashout:'Retrè Kach',svc_presswire:'Kominike pou Laprès',svc_pakebiznis:'Pakè Biznis',grp_core:'Ekosistèm Prensipal',grp_biz:'Sèvis Biznis',grp_growth:'Kòmès & Kwasans Biznis',grp_fin:'Sèvis Finansye',fab_reg:'Nouvo Enskripsyon',fab_driver:'Enskri Chofè MsouWout',fab_merchant:'Enskri Machann MyPlopPlop',fab_parenaj:'Enskri Parenaj Biznis',fab_pakebiznis:'Kòmande Pakè Biznis',
   earn_t:'Kòb Ou Fè',earn_sub:'Tout revni ou nan ekosistèm HaitiBiznis.',earn_lifetime:'Total Depi Toujou',earn_today:'Jodi a',earn_month:'Mwa sa a',
   earn_direct:'Vant Dirèk (pa sèvis)',earn_parenaj:'Parenaj Biznis',earn_referred:'Machann Refere',earn_active_ref:'Parenaj Aktif',earn_ref_income:'Revni Parenaj',earn_open_ref:'Louvri Parenaj',earn_none:'Poko gen komisyon.',
   ref_t:'Parenaj Biznis',ref_sub:'Envite lòt biznis, fè komisyon chak mwa.',ref_invite:'Envite yon Biznis',ref_copy:'Kopye Lyen an',ref_yours:'Parenaj Ou',
@@ -654,7 +686,7 @@ const T_HUB={
   hub_newsale:'Nouvelle vente',hub_inventory:'Inventaire',hub_customers:'Clients',hub_earn:'Gagner',
   hub_invite_t:'Inviter des entreprises',hub_invite_s:'Gagnez des commissions mensuelles avec Parenaj Biznis.',hub_invite_btn:'Inviter',
   hub_soon_msg:'Cette fonction arrive bientôt.',
-  svc_marketplace:'Marketplace',svc_ride:'Transport',svc_parenaj:'Parrainage',svc_bizreg:'Enregistrement d’entreprise',svc_insurance:'Assurance',svc_bills:'Paiement de factures',svc_water:'Paiement d’eau',svc_tickets:'Vente de billets',svc_website:'Création de site web',svc_hbtech:'48HoursReady',svc_delivery:'Livraison',svc_admin:'Services administratifs',svc_legal:'Services juridiques',svc_pro:'Professionnels',svc_cashout:'Retrait d’espèces',
+  svc_marketplace:'Marketplace',svc_ride:'Transport',svc_parenaj:'Parrainage',svc_bizreg:'Enregistrement d’entreprise',svc_insurance:'Assurance',svc_bills:'Paiement de factures',svc_water:'Paiement d’eau',svc_tickets:'Tikè Lakay',svc_website:'Création de site web',svc_hbtech:'48HoursReady',svc_delivery:'Livraison',svc_admin:'Services administratifs',svc_legal:'Services juridiques',svc_pro:'Professionnels',svc_cashout:'Retrait d’espèces',svc_presswire:'Communiqué de presse',svc_pakebiznis:'Forfait Business',grp_core:'Écosystème principal',grp_biz:'Services aux entreprises',grp_growth:'Commerce & Croissance',grp_fin:'Services financiers',fab_reg:'Nouvelle inscription',fab_driver:'Inscrire chauffeur MsouWout',fab_merchant:'Inscrire marchand MyPlopPlop',fab_parenaj:'Inscrire Parenaj Biznis',fab_pakebiznis:'Commander Forfait Business',
   earn_t:'Vos revenus',earn_sub:'Tous vos revenus dans l’écosystème HaitiBiznis.',earn_lifetime:'Total à vie',earn_today:'Aujourd’hui',earn_month:'Ce mois',
   earn_direct:'Ventes directes (par service)',earn_parenaj:'Parrainage',earn_referred:'Marchands parrainés',earn_active_ref:'Parrainages actifs',earn_ref_income:'Revenu de parrainage',earn_open_ref:'Ouvrir parrainage',earn_none:'Pas encore de commissions.',
   ref_t:'Parrainage',ref_sub:'Invitez d’autres entreprises, gagnez chaque mois.',ref_invite:'Inviter une entreprise',ref_copy:'Copier le lien',ref_yours:'Vos parrainages',
@@ -666,7 +698,7 @@ const T_HUB={
   hub_newsale:'New Sale',hub_inventory:'Inventory',hub_customers:'Customers',hub_earn:'Earn',
   hub_invite_t:'Invite Businesses',hub_invite_s:'Earn recurring monthly commissions through Parenaj Biznis.',hub_invite_btn:'Invite Now',
   hub_soon_msg:'This feature is coming soon.',
-  svc_marketplace:'Marketplace',svc_ride:'Ride Booking',svc_parenaj:'Parenaj Biznis',svc_bizreg:'Business Registration',svc_insurance:'Insurance',svc_bills:'Bill Payments',svc_water:'Water Payments',svc_tickets:'Ticket Sales',svc_website:'Website Creation',svc_hbtech:'48HoursReady',svc_delivery:'Delivery',svc_admin:'Admin Services',svc_legal:'Legal Services',svc_pro:'Professionals',svc_cashout:'Cash-Out',
+  svc_marketplace:'Marketplace',svc_ride:'Ride Booking',svc_parenaj:'Parenaj Biznis',svc_bizreg:'Business Registration',svc_insurance:'Insurance',svc_bills:'Bill Payments',svc_water:'Water Payments',svc_tickets:'Tikè Lakay',svc_website:'Website Creation',svc_hbtech:'48HoursReady',svc_delivery:'Delivery',svc_admin:'Admin Services',svc_legal:'Legal Services',svc_pro:'Professionals',svc_cashout:'Cash-Out',svc_presswire:'Press Release',svc_pakebiznis:'Business Pack',grp_core:'Core Ecosystem',grp_biz:'Business Services',grp_growth:'Commerce & Business Growth',grp_fin:'Financial Services',fab_reg:'New Registration',fab_driver:'Register MsouWout Driver',fab_merchant:'Register MyPlopPlop Merchant',fab_parenaj:'Register Parenaj Biznis',fab_pakebiznis:'Order Business Pack',
   earn_t:'Your Earnings',earn_sub:'All your income across the HaitiBiznis ecosystem.',earn_lifetime:'Lifetime Total',earn_today:'Today',earn_month:'This Month',
   earn_direct:'Direct Sales (by service)',earn_parenaj:'Parenaj Biznis',earn_referred:'Referred Merchants',earn_active_ref:'Active Referrals',earn_ref_income:'Referral Income',earn_open_ref:'Open Referral',earn_none:'No commissions yet.',
   ref_t:'Parenaj Biznis',ref_sub:'Invite other businesses, earn every month.',ref_invite:'Invite a Business',ref_copy:'Copy Link',ref_yours:'Your Referrals',
@@ -678,7 +710,7 @@ const T_HUB={
   hub_newsale:'Nueva venta',hub_inventory:'Inventario',hub_customers:'Clientes',hub_earn:'Ganar',
   hub_invite_t:'Invitar negocios',hub_invite_s:'Gana comisiones mensuales recurrentes con Parenaj Biznis.',hub_invite_btn:'Invitar ahora',
   hub_soon_msg:'Esta función estará disponible pronto.',
-  svc_marketplace:'Marketplace',svc_ride:'Reserva de viajes',svc_parenaj:'Parenaj Biznis',svc_bizreg:'Registro de empresas',svc_insurance:'Seguros',svc_bills:'Pago de facturas',svc_water:'Pago de agua',svc_tickets:'Venta de boletos',svc_website:'Creación de sitios web',svc_hbtech:'48HoursReady',svc_delivery:'Entrega',svc_admin:'Servicios administrativos',svc_legal:'Servicios legales',svc_pro:'Profesionales',svc_cashout:'Retiro de efectivo',
+  svc_marketplace:'Marketplace',svc_ride:'Reserva de viajes',svc_parenaj:'Parenaj Biznis',svc_bizreg:'Registro de empresas',svc_insurance:'Seguros',svc_bills:'Pago de facturas',svc_water:'Pago de agua',svc_tickets:'Tikè Lakay',svc_website:'Creación de sitios web',svc_hbtech:'48HoursReady',svc_delivery:'Entrega',svc_admin:'Servicios administrativos',svc_legal:'Servicios legales',svc_pro:'Profesionales',svc_cashout:'Retiro de efectivo',svc_presswire:'Comunicado de prensa',svc_pakebiznis:'Paquete de negocio',grp_core:'Ecosistema principal',grp_biz:'Servicios empresariales',grp_growth:'Comercio y crecimiento',grp_fin:'Servicios financieros',fab_reg:'Nuevo registro',fab_driver:'Registrar conductor MsouWout',fab_merchant:'Registrar comerciante MyPlopPlop',fab_parenaj:'Registrar Parenaj Biznis',fab_pakebiznis:'Pedir paquete de negocio',
   earn_t:'Tus ingresos',earn_sub:'Todos tus ingresos en el ecosistema HaitiBiznis.',earn_lifetime:'Total histórico',earn_today:'Hoy',earn_month:'Este mes',
   earn_direct:'Ventas directas (por servicio)',earn_parenaj:'Parenaj Biznis',earn_referred:'Comerciantes referidos',earn_active_ref:'Referidos activos',earn_ref_income:'Ingreso por referidos',earn_open_ref:'Abrir referidos',earn_none:'Aún no hay comisiones.',
   ref_t:'Parenaj Biznis',ref_sub:'Invita a otros negocios y gana cada mes.',ref_invite:'Invitar un negocio',ref_copy:'Copiar enlace',ref_yours:'Tus referidos',
@@ -763,12 +795,14 @@ const MODULES=[
  {id:'msouwout',nm:'Ride Booking',nmKey:'svc_ride',sub:'MsouWout',logo:'assets/msouwout-logo.png',type:'sub',color:'#2563eb',comm:10},
  {id:'parenaj',nm:'Parenaj Biznis',nmKey:'svc_parenaj',em:'🤝',type:'reg',reg:'affiliate',color:'#12a150',commLabel:'earn'},
  {id:'bizreg',nm:'Business Registration',nmKey:'svc_bizreg',em:'🏛️',type:'order',color:'#4f46e5',comm:10},
- {id:'asirans',nm:'Insurance',nmKey:'svc_insurance',em:'🛡️',type:'order',color:'#7c3aed',comm:12},
- {id:'billpay',nm:'Bill Payments',nmKey:'svc_bills',em:'💡',type:'order',color:'#f59e0b',comm:5},
- {id:'water',nm:'Water Payments',nmKey:'svc_water',em:'🚰',type:'order',color:'#06b6d4',comm:5},
+ {id:'asirans',nm:'Insurance',nmKey:'svc_insurance',em:'🛡️',type:'order',soon:true,color:'#7c3aed',comm:12},
+ {id:'billpay',nm:'Bill Payments',nmKey:'svc_bills',em:'💡',type:'order',soon:true,color:'#f59e0b',comm:5},
+ {id:'water',nm:'Water Payments',nmKey:'svc_water',em:'💧',type:'order',soon:true,color:'#06b6d4',comm:5},
  {id:'tikelakay',nm:'Ticket Sales',nmKey:'svc_tickets',em:'🎫',type:'tickets',color:'#db2777',comm:8},
  {id:'website',nm:'Website Creation',nmKey:'svc_website',em:'💻',type:'order',color:'#8b5cf6',comm:15},
  {id:'hbtech',nm:'48HoursReady',nmKey:'svc_hbtech',sub:'HaitiBiznis Technologies',logo:'assets/haitibiznis-logo.png',type:'order',color:'#D21034',comm:20},
+ {id:'pakebiznis',nm:'Pakè Biznis',nmKey:'svc_pakebiznis',em:'💼',type:'order',aliasFlow:'hbtech',color:'#7c3aed',comm:20},
+ {id:'presswire',nm:'Kominike pou Laprès',nmKey:'svc_presswire',em:'📰',type:'order',color:'#0d9488',comm:15},
  {id:'delivery',nm:'Delivery',nmKey:'svc_delivery',em:'🚚',type:'action',action:'delivery',color:'#b45309',comm:8},
  {id:'admin',nm:'Sèvis Administratif',nmKey:'svc_admin',em:'📄',type:'order',color:'#475569',comm:10},
  {id:'legal',nm:'Sèvis Legal',nmKey:'svc_legal',em:'⚖️',type:'order',color:'#1e3a8a',comm:10},
@@ -807,7 +841,8 @@ const ADMIN_ITEMS=['Patente','Extrait d’Archives','Légalisation','Permis de c
 const LEGAL_ITEMS=['Legal Consultation','Contract Drafting','Property Transactions','Labour Law','Family Law','Business Agreements','Foundation Registration','NGO Registration','Association Registration'];
 const BILL_TYPES=['EDH','DINEPA','MonCash Services','NatCash Services','Mobile Recharge','Internet Bill','Other bill'];
 const MERCH_CATS=['Supermarket','Restaurant','Pharmacy','Hardware Store','Boutique','Other'];
-const ITEMS_MAP={admin:ADMIN_ITEMS,legal:LEGAL_ITEMS,
+const PRESS_ITEMS=['Kominike pou Laprès (Kreyòl)','Kominike pou Laprès (2 Lang)','Redaksyon & Reviziyon','Distribisyon nan Media'];
+const ITEMS_MAP={admin:ADMIN_ITEMS,legal:LEGAL_ITEMS,presswire:PRESS_ITEMS,
   asirans:['Asirans Machin','Asirans Sante','Asirans Vi','Asirans Biznis','Lòt asirans']};
 
 /* registration form schemas (person-first) */
@@ -827,6 +862,15 @@ const REG_FORMS={
    fields:[['name','f_name',1],['phone','f_phone'],['wa','f_wa'],['email','f_email']],uploads:[],referral:true}
 };
 
+/* ---------- FAB speed-dial (Nouvo Enskripsyon) ---------- */
+function toggleFab(){const w=document.getElementById('fabWrap');if(!w)return;const open=w.classList.toggle('open');
+  document.getElementById('fabBack').classList.toggle('on',open);}
+function closeFab(){const w=document.getElementById('fabWrap');if(w)w.classList.remove('open');
+  const b=document.getElementById('fabBack');if(b)b.classList.remove('on');}
+function fabDo(what){closeFab();
+  if(what==='pakebiznis'){startFlow('hbtech');}
+  else{startReg(what);} /* driver | merchant | affiliate */
+}
 /* ---------- navigation ---------- */
 function go(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
@@ -835,7 +879,7 @@ function go(name){
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.nav===nm[name]));
   if(!nm[name])document.querySelector('.nav button[data-nav="home"]').classList.add('on');
   window.scrollTo(0,0);
-  const fab=document.getElementById('fabNewSale');if(fab)fab.style.display=['home','orders','earn'].includes(name)?'flex':'none';
+  const fab=document.getElementById('fabWrap');if(fab){fab.style.display=['home','orders','earn'].includes(name)?'flex':'none';closeFab();}
   if(name==='home')renderHome();if(name==='orders')renderOrders();if(name==='dash')renderDash();if(name==='set')renderSettings();if(name==='reports')renderReports();
   if(name==='earn')renderEarn();if(name==='ref')renderRef();if(name==='promo')renderPromo();
   refreshBadges();
@@ -890,16 +934,31 @@ function renderHome(){
    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px">
      ${[['🛒','hub_newsale',"newSale()"],['📦','hub_inventory',"hubSoon('hub_inventory')"],['👥','hub_customers',"go('sv');svCustomers()"],['🧾','n_orders',"go('orders')"]].map(([em,k,fn])=>`<button onclick="${fn}" style="border:1px solid var(--line);background:#fff;border-radius:14px;padding:14px 4px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:6px"><span style="font-size:24px">${em}</span><span style="font-size:11px;font-weight:800;line-height:1.15">${t(k)}</span></button>`).join('')}
    </div>`;
-  const g=document.getElementById('modGrid');g.innerHTML='';
-  MODULES.forEach(m=>{const b=document.createElement('button');b.className='mod';b.style.position='relative';b.style.borderTop='3px solid '+(m.color||'var(--blue)');
-    const nm=m.nmKey?t(m.nmKey):m.nm;
-    const badge=m.soon?`<span style="position:absolute;top:8px;right:8px;background:#f59e0b;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:20px">${t('soon')}</span>`
-      :m.commLabel==='earn'?`<span style="position:absolute;top:8px;right:8px;background:var(--good);color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:20px">${t('hub_earn')}</span>`
-      :m.comm?`<span style="position:absolute;top:8px;right:8px;background:#e9f7ef;color:#0f9d55;font-size:10px;font-weight:900;padding:2px 7px;border-radius:20px">${m.comm}%</span>`:'';
-    const icon=m.logo?`<img class="il" src="${m.logo}" alt="">`:`<span style="font-size:26px;width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:${m.color}1a;color:${m.color}">${m.em}</span>`;
-    b.innerHTML=`${badge}${icon}<span class="nm">${nm}</span>${m.sub?`<span style="font-size:10px;color:var(--muted);font-weight:700;margin-top:-4px">${m.sub}</span>`:''}`;
-    if(m.soon){b.style.opacity='.7';b.onclick=()=>caSoon();}else b.onclick=()=>openModule(m);
-    g.appendChild(b);});
+  const g=document.getElementById('modGrid');g.innerHTML='';g.style.display='block';
+  const GROUPS=[
+    {t:'grp_core',ids:['msouwout','myplopplop','parenaj','hbtech']},
+    {t:'grp_biz',ids:['admin','legal','pwofesyonel','tikelakay']},
+    {t:'grp_growth',ids:['delivery','pakebiznis','website','presswire']},
+    {t:'grp_fin',ids:['billpay','water','asirans','cashaccess'],soon:true}
+  ];
+  GROUPS.forEach(gr=>{
+    const h=document.createElement('div');h.className='grp-h';
+    h.innerHTML=`<span>${t(gr.t)}</span>${gr.soon?`<span class="grp-soon">${t('soon')}</span>`:''}`;
+    g.appendChild(h);
+    const sub=document.createElement('div');sub.className='grid';
+    gr.ids.forEach(id=>{const m=modById(id);if(!m)return;
+      const soon=m.soon||gr.soon;
+      const b=document.createElement('button');b.className='mod';b.style.position='relative';b.style.borderTop='3px solid '+(m.color||'var(--blue)');
+      const nm=m.nmKey?t(m.nmKey):m.nm;
+      const badge=soon?`<span style="position:absolute;top:8px;right:8px;background:#f59e0b;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:20px">${t('soon')}</span>`
+        :m.commLabel==='earn'?`<span style="position:absolute;top:8px;right:8px;background:var(--good);color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:20px">${t('hub_earn')}</span>`
+        :m.comm?`<span style="position:absolute;top:8px;right:8px;background:#e9f7ef;color:#0f9d55;font-size:10px;font-weight:900;padding:2px 7px;border-radius:20px">${m.comm}%</span>`:'';
+      const icon=m.logo?`<img class="il" src="${m.logo}" alt="">`:`<span style="font-size:26px;width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:${m.color}1a;color:${m.color}">${m.em}</span>`;
+      b.innerHTML=`${badge}${icon}<span class="nm">${nm}</span>${m.sub?`<span style="font-size:10px;color:var(--muted);font-weight:700;margin-top:-4px">${m.sub}</span>`:''}`;
+      if(soon){b.style.opacity='.6';b.onclick=()=>caSoon();}else b.onclick=()=>openModule(m);
+      sub.appendChild(b);});
+    g.appendChild(sub);
+  });
   document.getElementById('homeRefer').innerHTML=`
    <button onclick="go('ref')" style="width:100%;border:0;border-radius:18px;padding:18px;margin-top:16px;text-align:left;color:#fff;background:linear-gradient(135deg,var(--good),#0b7a44);box-shadow:0 10px 26px rgba(15,157,85,.3)">
      <div style="font-size:16px;font-weight:900">🤝 ${t('hub_invite_t')}</div>
@@ -1005,7 +1064,7 @@ function promoShare(name){const link=refLink();const msg=t('promo_msg').replace(
   else window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
 function openModule(m){
   if(!m.soon&&!licGate())return;
-  if(m.type==='order'){startFlow(m.id);}
+  if(m.type==='order'){startFlow(m.aliasFlow||m.id);}
   else if(m.type==='reg'){startReg(m.reg);}
   else if(m.type==='tickets'){openTickets();}
   else if(m.type==='sub'){openSubs(m);}
