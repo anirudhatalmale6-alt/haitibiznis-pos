@@ -39,6 +39,10 @@
 html,body{margin:0;padding:0}
 body{font-family:"Poppins","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.4;padding-bottom:150px;max-width:720px;margin:0 auto;min-height:100vh}
 button{font-family:inherit;cursor:pointer}img{display:block}
+#splash{position:fixed;inset:0;z-index:9999;background:#0033A0;display:flex;align-items:center;justify-content:center;transition:opacity .5s ease}
+#splash.hide{opacity:0;pointer-events:none}
+#splash img{width:60%;max-width:280px;height:auto;border-radius:24px;box-shadow:0 12px 40px rgba(0,0,0,.28);animation:splashPop .6s cubic-bezier(.2,.8,.2,1) both}
+@keyframes splashPop{0%{transform:scale(.82);opacity:0}60%{transform:scale(1.03);opacity:1}100%{transform:scale(1);opacity:1}}
 .appbar{position:sticky;top:0;z-index:20;background:linear-gradient(120deg,var(--blue),#0b2fc4);color:#fff;padding:12px 14px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow)}
 .appbar .logo{width:38px;height:38px;border-radius:10px;background:#fff;padding:3px;object-fit:contain}
 .appbar h1{font-size:16px;margin:0;line-height:1.15;font-weight:800;flex:1}
@@ -227,6 +231,10 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
 </style>
 </head>
 <body>
+
+<div id="splash">
+  <img src="assets/pos-logo.png" alt="HaitiBiznis POS">
+</div>
 
 <div class="appbar">
   <img src="assets/haitibiznis-logo.png" class="logo" alt="HaitiBiznis">
@@ -2372,6 +2380,8 @@ document.querySelectorAll('.lang button').forEach(b=>{b.onclick=()=>{lang=b.data
 /* ---------- boot ---------- */
 document.querySelectorAll('.lang button').forEach(x=>x.classList.toggle('on',x.dataset.lang===lang));
 applyI18n();renderHome();refreshBadges();
+/* splash screen: show POS logo on open, then fade out */
+(function(){var sp=document.getElementById('splash');if(!sp)return;setTimeout(function(){sp.classList.add('hide');setTimeout(function(){sp.remove();},600);},1600);})();
 /* employees: if the owner has set up staff, require PIN sign-in */
 if(staffList().length && !activeStaff()){openSignIn();}
 /* deep-link: /pos/#promo opens the Promo Materials screen directly */
