@@ -1443,6 +1443,7 @@ function renderWebPkgs(body){
     bd.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:6px">${t('pkg_incl')}</div>${feats}${note}`;body.appendChild(bd);}
 }
 function renderBrandPkgs(body){
+  const img=document.createElement('img');img.src='assets/biz-menu.jpg';img.alt='Pakè Biznis';img.style.cssText='width:100%;border-radius:14px;margin:4px 0 12px;box-shadow:0 6px 18px rgba(16,26,60,.12)';body.appendChild(img);
   const hd=document.createElement('p');hd.className='sub';hd.textContent=t('pick_pkg');body.appendChild(hd);
   BRAND_PACKAGES.forEach((p,i)=>{const on=flow.extra.pkg===i;const row=document.createElement('div');row.className='choice radio'+(on?' on':'');
     const tag=p.pick?t('choose_one'):(p.feats.length+' '+t('services')+' '+t('incl_word'));
