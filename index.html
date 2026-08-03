@@ -1193,7 +1193,7 @@ function renderHome(){
       const nm=m.nmKey?t(m.nmKey):m.nm;
       const badge=soon?`<span style="position:absolute;top:8px;right:8px;background:#f59e0b;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:20px">${t('soon')}</span>`
         :m.commLabel==='earn'?`<span style="position:absolute;top:8px;right:8px;background:var(--good);color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:20px">${t('hub_earn')}</span>`
-        :m.comm?`<span style="position:absolute;top:8px;right:8px;background:#e9f7ef;color:#0f9d55;font-size:10px;font-weight:900;padding:2px 7px;border-radius:20px">${m.comm}%</span>`:'';
+        :commRate(m.id)?`<span style="position:absolute;top:8px;right:8px;background:#e9f7ef;color:#0f9d55;font-size:10px;font-weight:900;padding:2px 7px;border-radius:20px">${commRate(m.id)}%</span>`:'';
       const icon=m.logo?`<img class="il" src="${m.logo}" alt="">`:`<span style="font-size:26px;width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:${m.color}1a;color:${m.color}">${m.em}</span>`;
       b.innerHTML=`${badge}${icon}<span class="nm">${nm}</span>`;
       if(soon){b.style.opacity='.6';b.onclick=()=>caSoon();}else b.onclick=()=>openModule(m);
