@@ -329,7 +329,6 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
     <div class="h2" data-i18n="pay_t">Peman</div>
     <div class="card"><div class="breakdown" id="payBreak"></div></div>
     <div class="pays" id="payGrid">
-      <button class="pay" data-pay="cash"><span class="pe">💵</span><span data-i18n="p_cash">Kach</span></button>
       <button class="pay" data-pay="moncash"><span class="pe">📱</span>MonCash</button>
       <button class="pay" data-pay="natcash"><span class="pe">📲</span>NatCash</button>
       <button class="pay" data-pay="card"><span class="pe">💳</span><span data-i18n="p_card">Kat</span></button>
@@ -910,12 +909,10 @@ function modById(id){return MODULES.find(m=>m.id===id);}
 /* module data */
 /* HaitiBiznis Technologies — Menu 1: Website / Landing Page packages (fixed price + fixed sections) */
 const WEB_PACKAGES=[
- {amt:1500,nm:'Pakè Pwofesyonèl',secs:3,feats:['Akèy','Sou Nou','Kontak']},
  {amt:2000,nm:'Pakè Rapid',secs:5,feats:['Akèy','Sou Nou','Sèvis','Galeri','Kontak']},
- {amt:2500,nm:'Pakè Abòdab',secs:7,feats:['Akèy','Sou Nou','Sèvis','Poukisa Chwazi Nou','Temoignaj','Galeri','Kontak']},
- {amt:3000,nm:'Pakè Sipò 7/7',secs:9,feats:['Akèy','Sou Nou','Sèvis','Pwodwi','Pòtfèy','Temoignaj','FAQ','Galeri','Kontak']},
- {amt:1500,nm:'Domain & Hosting Setup',feats:['Rechèch non domèn','Enstalasyon Hosting'],note:'Acha domèn pa enkli'},
- {amt:5000,nm:'Domain, Achte & Setup Konplè',feats:['Rechèch non domèn','Acha domèn','Enstalasyon Hosting','Sit konekte epi pare']}
+ {amt:3000,nm:'Pakè Sipò 7/7',secs:7,feats:['Akèy','Sou Nou','Sèvis','Poukisa Chwazi Nou','Temoignaj','Galeri','Kontak','FAQ']},
+ {amt:4000,nm:'Pakè Abòdab',secs:9,feats:['Akèy','Sou Nou','Sèvis','Poukisa Chwazi Nou','Temoignaj','Pòtfèy','Galeri','Kontak','FAQ','Ekip','Pati Nouvèl']},
+ {amt:7500,nm:'Domèn, Achte & Setup Konplè',feats:['Rechèch non domèn','Acha domèn','Enstalasyon Hosting','Sit konekte epi pare','Tout sa ki nan pakè 4,000 GDES','+ Plis opsyon avanse']}
 ];
 /* Clickable "see a sample" links per service name — shown as a small eye link in package flows */
 const SAMPLES={
@@ -1020,6 +1017,57 @@ const MERCH_REFERRAL=['FTPH/COTRASMOTHA','SPAP','Facebook','WhatsApp','Zanmi / F
 const PRESS_ITEMS=['Kominike pou Laprès (Kreyòl)','Kominike pou Laprès (2 Lang)','Redaksyon & Reviziyon','Distribisyon nan Media'];
 const ITEMS_MAP={admin:ADMIN_ITEMS,legal:LEGAL_ITEMS,presswire:PRESS_ITEMS,
   asirans:['Asirans Machin','Asirans Sante','Asirans Vi','Asirans Biznis','Lòt asirans']};
+/* ---- service-item translations (catalog lists change with the language too) ---- */
+const ITEM_I18N={
+ /* legal */
+ 'Legal Consultation':{ht:'Konsiltasyon Legal',fr:'Consultation juridique',en:'Legal Consultation',es:'Consulta legal'},
+ 'Contract Drafting':{ht:'Redaksyon Kontra',fr:'Rédaction de contrats',en:'Contract Drafting',es:'Redacción de contratos'},
+ 'Property Transactions':{ht:'Tranzaksyon Pwopriyete',fr:'Transactions immobilières',en:'Property Transactions',es:'Transacciones inmobiliarias'},
+ 'Labour Law':{ht:'Dwa Travay',fr:'Droit du travail',en:'Labour Law',es:'Derecho laboral'},
+ 'Family Law':{ht:'Dwa Fanmi',fr:'Droit de la famille',en:'Family Law',es:'Derecho de familia'},
+ 'Business Agreements':{ht:'Akò Biznis',fr:'Accords commerciaux',en:'Business Agreements',es:'Acuerdos comerciales'},
+ 'Foundation Registration':{ht:'Enskripsyon Fondasyon',fr:'Enregistrement de fondation',en:'Foundation Registration',es:'Registro de fundación'},
+ 'NGO Registration':{ht:'Enskripsyon ONG',fr:'Enregistrement d’ONG',en:'NGO Registration',es:'Registro de ONG'},
+ 'Association Registration':{ht:'Enskripsyon Asosyasyon',fr:'Enregistrement d’association',en:'Association Registration',es:'Registro de asociación'},
+ /* admin / government */
+ 'Patente':{ht:'Patant',fr:'Patente',en:'Business License (Patente)',es:'Patente'},
+ 'Extrait d’Archives':{ht:'Ekstrè Achiv',fr:'Extrait d’Archives',en:'Archive Extract',es:'Extracto de archivo'},
+ 'Légalisation':{ht:'Legalizasyon',fr:'Légalisation',en:'Legalization',es:'Legalización'},
+ 'Permis de conduire':{ht:'Pèmi Kondwi',fr:'Permis de conduire',en:'Driver’s License',es:'Licencia de conducir'},
+ 'Matricule Fiscal':{ht:'Matrikil Fiskal',fr:'Matricule Fiscal',en:'Tax ID (Matricule Fiscal)',es:'Matrícula fiscal'},
+ 'Immatriculation':{ht:'Imatrikilasyon',fr:'Immatriculation',en:'Vehicle Registration',es:'Matriculación'},
+ 'Assurance':{ht:'Asirans',fr:'Assurance',en:'Insurance',es:'Seguro'},
+ 'Mariage Civil':{ht:'Maryaj Sivil',fr:'Mariage Civil',en:'Civil Marriage',es:'Matrimonio civil'},
+ 'Birth Certificate Assistance':{ht:'Asistans Batistè',fr:'Assistance acte de naissance',en:'Birth Certificate Assistance',es:'Asistencia con acta de nacimiento'},
+ 'Passport Assistance':{ht:'Asistans Paspò',fr:'Assistance passeport',en:'Passport Assistance',es:'Asistencia con pasaporte'},
+ 'Other government service':{ht:'Lòt sèvis leta',fr:'Autre service public',en:'Other government service',es:'Otro servicio del gobierno'},
+ /* press */
+ 'Kominike pou Laprès (Kreyòl)':{ht:'Kominike pou Laprès (Kreyòl)',fr:'Communiqué de presse (Créole)',en:'Press Release (Creole)',es:'Comunicado de prensa (Criollo)'},
+ 'Kominike pou Laprès (2 Lang)':{ht:'Kominike pou Laprès (2 Lang)',fr:'Communiqué de presse (2 langues)',en:'Press Release (2 languages)',es:'Comunicado de prensa (2 idiomas)'},
+ 'Redaksyon & Reviziyon':{ht:'Redaksyon & Reviziyon',fr:'Rédaction & révision',en:'Writing & Revision',es:'Redacción y revisión'},
+ 'Distribisyon nan Media':{ht:'Distribisyon nan Media',fr:'Distribution aux médias',en:'Media Distribution',es:'Distribución a medios'},
+ /* insurance */
+ 'Asirans Machin':{ht:'Asirans Machin',fr:'Assurance auto',en:'Car Insurance',es:'Seguro de auto'},
+ 'Asirans Sante':{ht:'Asirans Sante',fr:'Assurance santé',en:'Health Insurance',es:'Seguro de salud'},
+ 'Asirans Vi':{ht:'Asirans Vi',fr:'Assurance vie',en:'Life Insurance',es:'Seguro de vida'},
+ 'Asirans Biznis':{ht:'Asirans Biznis',fr:'Assurance entreprise',en:'Business Insurance',es:'Seguro de negocio'},
+ 'Lòt asirans':{ht:'Lòt asirans',fr:'Autre assurance',en:'Other insurance',es:'Otro seguro'},
+ /* bills */
+ 'MonCash Services':{ht:'Sèvis MonCash',fr:'Services MonCash',en:'MonCash Services',es:'Servicios MonCash'},
+ 'NatCash Services':{ht:'Sèvis NatCash',fr:'Services NatCash',en:'NatCash Services',es:'Servicios NatCash'},
+ 'Mobile Recharge':{ht:'Rechaj Telefòn',fr:'Recharge mobile',en:'Mobile Recharge',es:'Recarga móvil'},
+ 'Internet Bill':{ht:'Fakti Entènèt',fr:'Facture internet',en:'Internet Bill',es:'Factura de internet'},
+ 'Other bill':{ht:'Lòt fakti',fr:'Autre facture',en:'Other bill',es:'Otra factura'}
+};
+function tItem(name){const m=ITEM_I18N[name];return (m&&m[lang])||name;}
+/* small extra UI keys used by order-flow bodies */
+const T_FIX={
+ ht:{price_hint:'antre pri, peze +',web_menu_h:'Chwazi pakè sit entènèt ou',biz_baz:'Baz an US$, frè Près an GDES. To: {r} GDES/US$',bill_ref_ph:'Nº kont / referans',water_dinepa:'DINEPA — Dlo',water_other:'Lòt fakti dlo'},
+ fr:{price_hint:'saisir le prix, appuyez +',web_menu_h:'Choisissez votre forfait site web',biz_baz:'Base en US$, frais Presses en GDES. Taux : {r} GDES/US$',bill_ref_ph:'Nº compte / référence',water_dinepa:'DINEPA — Eau',water_other:'Autre facture d’eau'},
+ en:{price_hint:'enter price, tap +',web_menu_h:'Choose your website package',biz_baz:'Base in US$, Presses fee in GDES. Rate: {r} GDES/US$',bill_ref_ph:'Account Nº / reference',water_dinepa:'DINEPA — Water',water_other:'Other water bill'},
+ es:{price_hint:'ingresa el precio, toca +',web_menu_h:'Elige tu paquete de sitio web',biz_baz:'Base en US$, comisión Presses en GDES. Tasa: {r} GDES/US$',bill_ref_ph:'Nº de cuenta / referencia',water_dinepa:'DINEPA — Agua',water_other:'Otra factura de agua'}
+};
+Object.keys(T_FIX).forEach(function(l){Object.assign(T[l],T_FIX[l]);});
 
 /* registration form schemas (person-first) */
 const UP_KEY={'Driver License':'up_driverlic','National ID':'up_natid','Insurance':'up_insurance','Vehicle Registration':'up_vehreg','Driver Photo':'up_driverphoto','Business Documents':'up_bizdocs','Diploma / Certification':'up_diploma','Experience Documents':'up_expdocs'};
@@ -1283,7 +1331,7 @@ function startFlow(moduleId,preItems){
   flow={module:moduleId,customer:null,items:preItems||[],amount:0,docs:[],payment:null,extra:{},intake:{}};
   if(['website','hbtech'].includes(moduleId)){flow.extra.pkg=null;flow.extra.sel=[];flow.extra.sub=null;}
   if(moduleId==='bizreg'){flow.extra.reg=null;}
-  document.getElementById('flowSvcLabel').textContent=modById(moduleId)?modById(moduleId).nm:moduleId;
+  {const _m=modById(moduleId);document.getElementById('flowSvcLabel').textContent=_m?(_m.nmKey?t(_m.nmKey):_m.nm):moduleId;}
   go('flow');fstep=1;showFlowStep();renderCustSearch();
 }
 function flowBack(){ if(fstep===1)go('home'); else {fstep--;showFlowStep();} }
@@ -1316,12 +1364,12 @@ function saveNewCust(){const name=document.getElementById('c_name').value.trim()
 
 /* ----- detail per module ----- */
 function renderDetail(){
-  const m=flow.module;document.getElementById('detailTitle').textContent=modById(m).nm;
+  const m=flow.module;{const _m=modById(m);document.getElementById('detailTitle').textContent=_m?(_m.nmKey?t(_m.nmKey):_m.nm):m;}
   document.getElementById('detailCust').textContent=flow.customer?flow.customer.name:'';
   const body=document.getElementById('detailBody');body.innerHTML='';const cfg=getCfg();
 
   if(m==='website'){
-    body.innerHTML=`<p class="sub">${t('pick_pkg')}</p>`;
+    body.innerHTML=`<img src="assets/web-menu.jpg" alt="Pakè Sit Entènèt" style="width:100%;border-radius:14px;margin-bottom:12px;box-shadow:0 6px 18px rgba(16,26,60,.12)"><p class="sub">${t('pick_pkg')}</p>`;
     WEB_PACKAGES.forEach((p,i)=>{const on=flow.extra.pkg===i;const row=document.createElement('div');row.className='choice radio'+(on?' on':'');
       const tag=p.secs?(p.secs+' '+t('sections')):(p.feats.length+' '+t('services')+' '+t('incl_word'));
       row.innerHTML=`<span class="dot"></span><span class="txt">${p.nm} <span class="pill">${p.amt.toLocaleString()} GDES</span>${usdTag(p.amt)}<div style="font-size:11px;color:var(--muted);font-weight:600;margin-top:3px">${tag}</div></span>`;
@@ -1359,17 +1407,17 @@ function renderDetail(){
   }
   else if(ITEMS_MAP[m]){
     if(m==='legal')body.innerHTML=`<div class="partner">${t('partner_legal')}</div>`;
-    body.innerHTML+=`<p class="sub">${t('amount')}: antre pri, peze +</p>`;
+    body.innerHTML+=`<p class="sub">${t('amount')}: ${t('price_hint')}</p>`;
     ITEMS_MAP[m].forEach((name,i)=>{const ex=flow.items.find(it=>it.label===name);
       const row=document.createElement('div');row.className='choice check'+(ex?' on':'');
-      row.innerHTML=`<span class="dot"></span><span class="txt">${name}</span><input type="number" class="price-in" inputmode="numeric" placeholder="GDES" value="${ex?ex.amt:''}">`;
+      row.innerHTML=`<span class="dot"></span><span class="txt">${tItem(name)}</span><input type="number" class="price-in" inputmode="numeric" placeholder="GDES" value="${ex?ex.amt:''}">`;
       const inp=row.querySelector('input');
       row.onclick=(e)=>{if(e.target===inp)return;const idx=flow.items.findIndex(it=>it.label===name);if(idx>=0)flow.items.splice(idx,1);else flow.items.push({label:name,amt:+inp.value||0});renderDetail();};
       inp.oninput=()=>{let it=flow.items.find(x=>x.label===name);if(!it){it={label:name,amt:0};flow.items.push(it);row.classList.add('on');}it.amt=+inp.value||0;computeAmount();showTot();};
       body.appendChild(row);});
   }
   else if(m==='bizreg'){
-    body.innerHTML=`<p class="sub">Baz an US$, frè Près an GDES. To: ${cfg.rate} GDES/US$</p>`;
+    body.innerHTML=`<p class="sub">${t('biz_baz').replace('{r}',cfg.rate)}</p>`;
     cfg.bizreg.forEach(r=>{const on=flow.extra.reg===r.id;const row=document.createElement('div');row.className='choice radio'+(on?' on':'');
       row.innerHTML=`<span class="dot"></span><span class="txt">${r.nm}<div style="font-size:11px;color:var(--muted);font-weight:600">US$${r.usd.toLocaleString()}${r.press?' + '+r.press.toLocaleString()+' GDES Près':''}</div></span>`;
       row.onclick=()=>{flow.extra.reg=r.id;renderDetail();};body.appendChild(row);});
@@ -1381,9 +1429,9 @@ function renderDetail(){
       body.appendChild(bd);}
   }
   else if(m==='paymenthub'||m==='billpay'||m==='water'){
-    const types=m==='water'?['DINEPA — Dlo','Lòt fakti dlo']:BILL_TYPES;
-    body.innerHTML=`<label class="fl">${t('bill_type')}</label><select id="billType">${types.map(b=>`<option>${b}</option>`).join('')}</select>
-      <label class="fl">${t('desc')}</label><input type="text" id="billRef" placeholder="Nº kont / referans">
+    const types=m==='water'?[t('water_dinepa'),t('water_other')]:BILL_TYPES;
+    body.innerHTML=`<label class="fl">${t('bill_type')}</label><select id="billType">${types.map(b=>`<option value="${b}">${tItem(b)}</option>`).join('')}</select>
+      <label class="fl">${t('desc')}</label><input type="text" id="billRef" placeholder="${t('bill_ref_ph')}">
       <label class="fl">${t('amount')}</label><input type="number" id="billAmt" inputmode="numeric">`;
     const upd=()=>{const a=+document.getElementById('billAmt').value||0;const ty=document.getElementById('billType').value;const rf=document.getElementById('billRef').value.trim();
       flow.items=a>0?[{label:ty+(rf?(' — '+rf):''),amt:a}]:[];computeAmount();showTot();};
@@ -1509,7 +1557,6 @@ function openDelivery(){{const rt=document.getElementById('regTitle');rt.textCon
   </div>
   <div style="font-weight:800;margin:6px 0 8px">${t('pay_t')}</div>
   <div class="pays" id="dPayGrid">
-    <button class="pay" data-pay="cash"><span class="pe">💵</span>${t('p_cash')}</button>
     <button class="pay" data-pay="moncash"><span class="pe">📱</span>MonCash</button>
     <button class="pay" data-pay="natcash"><span class="pe">📲</span>NatCash</button>
     <button class="pay" data-pay="card"><span class="pe">💳</span>${t('p_card')}</button></div>
@@ -1578,12 +1625,11 @@ function ticketSell(){const evs=load('hb_events',[]);const body=document.getElem
     <label class="fl">${t('ev_qty')}</label><input type="number" id="ts_qty" value="1" inputmode="numeric"></div>
     <div style="font-weight:800;margin:6px 0 8px">${t('pay_t')}</div>
     <div class="pays" id="tPayGrid">
-      <button class="pay on" data-pay="cash"><span class="pe">💵</span>${t('p_cash')}</button>
-      <button class="pay" data-pay="moncash"><span class="pe">📱</span>MonCash</button>
+      <button class="pay on" data-pay="moncash"><span class="pe">📱</span>MonCash</button>
       <button class="pay" data-pay="natcash"><span class="pe">📲</span>NatCash</button>
       <button class="pay" data-pay="card"><span class="pe">💳</span>${t('p_card')}</button></div>
     <div style="height:12px"></div><button class="cta red" onclick="sellTicket()">${t('pay_do')}</button>`;
-  reg={payment:'cash'};
+  reg={payment:'moncash'};
   document.querySelectorAll('#tPayGrid .pay').forEach(p=>p.onclick=()=>{reg.payment=p.dataset.pay;document.querySelectorAll('#tPayGrid .pay').forEach(x=>x.classList.toggle('on',x===p));});
 }
 function sellTicket(){const evs=load('hb_events',[]);const ev=evs.find(e=>e.id===document.getElementById('ts_ev').value);
@@ -2374,8 +2420,16 @@ window.addEventListener('online',updateOnline);window.addEventListener('offline'
 
 /* ---------- language ---------- */
 document.querySelectorAll('.lang button').forEach(b=>{b.onclick=()=>{lang=b.dataset.lang;localStorage.setItem('hb_lang',lang);
-  document.querySelectorAll('.lang button').forEach(x=>x.classList.toggle('on',x===b));applyI18n();renderHome();
-  const cur=document.querySelector('.screen.on').id.replace('s-','');if(cur==='orders')renderOrders();if(cur==='dash')renderDash();if(cur==='set')renderSettings();};});
+  document.querySelectorAll('.lang button').forEach(x=>x.classList.toggle('on',x===b));applyI18n();rerenderCurrent();};});
+/* re-render whatever screen is currently visible so the language switch reaches the page body + active order flow */
+function rerenderCurrent(){
+  const scr=document.querySelector('.screen.on');const id=scr?scr.id.replace('s-',''):'home';
+  const R={home:renderHome,earn:renderEarn,ref:renderRef,promo:renderPromo,orders:renderOrders,dash:renderDash,reports:renderReports,set:renderSettings};
+  if(id==='flow'){const m=flow.module;const md=m?modById(m):null;
+    const nm=md?(md.nmKey?t(md.nmKey):md.nm):m;const sl=document.getElementById('flowSvcLabel');if(sl)sl.textContent=nm;
+    if(typeof fstep!=='undefined'&&fstep===1)renderCustSearch();else showFlowStep();return;}
+  if(R[id]){try{R[id]();}catch(e){}}
+}
 
 /* ---------- boot ---------- */
 document.querySelectorAll('.lang button').forEach(x=>x.classList.toggle('on',x.dataset.lang===lang));
