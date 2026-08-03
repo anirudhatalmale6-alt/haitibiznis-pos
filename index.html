@@ -889,22 +889,33 @@ const MODULES=[
  {id:'myplopplop',nm:'Marketplace',nmKey:'svc_marketplace',sub:'MyPlopPlop',logo:'assets/myplopplop-logo.png',type:'sub',color:'#0ea5a0',comm:8},
  {id:'msouwout',nm:'Ride Booking',nmKey:'svc_ride',sub:'MsouWout',logo:'assets/msouwout-logo.png',type:'sub',color:'#2563eb',comm:10},
  {id:'parenaj',nm:'Parenaj Biznis',nmKey:'svc_parenaj',em:'🤝',type:'reg',reg:'affiliate',color:'#12a150',commLabel:'earn'},
- {id:'bizreg',nm:'Business Registration',nmKey:'svc_bizreg',em:'🏛️',type:'order',color:'#4f46e5',comm:10},
+ {id:'bizreg',nm:'Business Registration',nmKey:'svc_bizreg',em:'🏛️',type:'order',color:'#4f46e5',commType:'admin_legal_10'},
  {id:'asirans',nm:'Insurance',nmKey:'svc_insurance',em:'🛡️',type:'order',soon:true,color:'#7c3aed',comm:12},
  {id:'billpay',nm:'Bill Payments',nmKey:'svc_bills',em:'💡',type:'order',soon:true,color:'#f59e0b',comm:5},
  {id:'water',nm:'Water Payments',nmKey:'svc_water',em:'💧',type:'order',soon:true,color:'#06b6d4',comm:5},
  {id:'tikelakay',nm:'Ticket Sales',nmKey:'svc_tickets',em:'🎫',type:'tickets',color:'#db2777',comm:8},
- {id:'website',nm:'Website Creation',nmKey:'svc_website',em:'💻',type:'order',color:'#8b5cf6',comm:15},
- {id:'hbtech',nm:'48HoursReady',nmKey:'svc_hbtech',sub:'HaitiBiznis Technologies',logo:'assets/haitibiznis-logo.png',type:'order',color:'#D21034',comm:20},
- {id:'pakebiznis',nm:'Pakè Biznis',nmKey:'svc_pakebiznis',em:'💼',type:'order',aliasFlow:'hbtech',color:'#7c3aed',comm:20},
- {id:'presswire',nm:'Kominike pou Laprès',nmKey:'svc_presswire',em:'📰',type:'order',color:'#0d9488',comm:15},
+ {id:'website',nm:'Website Creation',nmKey:'svc_website',em:'💻',type:'order',color:'#8b5cf6',commType:'digital_70_30'},
+ {id:'hbtech',nm:'48HoursReady',nmKey:'svc_hbtech',sub:'HaitiBiznis Technologies',logo:'assets/haitibiznis-logo.png',type:'order',color:'#D21034',commType:'digital_70_30'},
+ {id:'pakebiznis',nm:'Pakè Biznis',nmKey:'svc_pakebiznis',em:'💼',type:'order',aliasFlow:'hbtech',color:'#7c3aed',commType:'digital_70_30'},
+ {id:'presswire',nm:'Kominike pou Laprès',nmKey:'svc_presswire',em:'📰',type:'order',color:'#0d9488',commType:'digital_70_30'},
  {id:'delivery',nm:'Delivery',nmKey:'svc_delivery',em:'🚚',type:'action',action:'delivery',color:'#b45309',comm:8},
- {id:'admin',nm:'Sèvis Administratif',nmKey:'svc_admin',em:'📄',type:'order',color:'#475569',comm:10},
- {id:'legal',nm:'Sèvis Legal',nmKey:'svc_legal',em:'⚖️',type:'order',color:'#1e3a8a',comm:10},
+ {id:'admin',nm:'Sèvis Administratif',nmKey:'svc_admin',em:'📄',type:'order',color:'#475569',commType:'admin_legal_10'},
+ {id:'legal',nm:'Sèvis Legal',nmKey:'svc_legal',em:'⚖️',type:'order',color:'#1e3a8a',commType:'admin_legal_10'},
  {id:'pwofesyonel',nm:'Pwofesyonèl Lakay',nmKey:'svc_pro',em:'👨‍💼',type:'reg',reg:'pro',color:'#0891b2',comm:0},
  {id:'cashaccess',nm:'Cash-Out',nmKey:'svc_cashout',em:'💵',type:'cash',soon:true,color:'#12a150'}
 ];
 function modById(id){return MODULES.find(m=>m.id===id);}
+/* ===== Commission engine — two revenue-sharing models (client spec, final) ===== */
+/* digital_70_30 : 70% HaitiBiznis / 30% POS-Agent.  admin_legal_10 : 10% POS-Agent / 90% Provider. */
+const COMM_MODELS={
+  digital_70_30:{posPct:30, restKey:'split_hb'},
+  admin_legal_10:{posPct:10, restKey:'split_provider'}
+};
+function commType(mid){const m=modById(mid);return (m&&m.commType)||null;}
+/* apply the revenue-sharing rule to a completed order: sets commType + posShare (agent) + restShare */
+function applyCommission(rec){const amt=+rec.amount||0;const ct=commType(rec.module);
+  const posPct=(ct&&COMM_MODELS[ct])?COMM_MODELS[ct].posPct:(modById(rec.module)&&modById(rec.module).comm!=null?modById(rec.module).comm:0);
+  rec.commType=ct;rec.posPct=posPct;rec.posShare=Math.round(amt*posPct/100);rec.restShare=amt-rec.posShare;return rec;}
 
 /* module data */
 /* HaitiBiznis Technologies — Menu 1: Website / Landing Page packages (fixed price + fixed sections) */
@@ -1062,10 +1073,10 @@ const ITEM_I18N={
 function tItem(name){const m=ITEM_I18N[name];return (m&&m[lang])||name;}
 /* small extra UI keys used by order-flow bodies */
 const T_FIX={
- ht:{price_hint:'antre pri, peze +',web_menu_h:'Chwazi pakè sit entènèt ou',biz_baz:'Baz an US$, frè Près an GDES. To: {r} GDES/US$',bill_ref_ph:'Nº kont / referans',water_dinepa:'DINEPA — Dlo',water_other:'Lòt fakti dlo',menu_web:'Sit Entènèt',menu_brand:'Pakè Biznis'},
- fr:{price_hint:'saisir le prix, appuyez +',web_menu_h:'Choisissez votre forfait site web',biz_baz:'Base en US$, frais Presses en GDES. Taux : {r} GDES/US$',bill_ref_ph:'Nº compte / référence',water_dinepa:'DINEPA — Eau',water_other:'Autre facture d’eau',menu_web:'Site web',menu_brand:'Forfait Business'},
- en:{price_hint:'enter price, tap +',web_menu_h:'Choose your website package',biz_baz:'Base in US$, Presses fee in GDES. Rate: {r} GDES/US$',bill_ref_ph:'Account Nº / reference',water_dinepa:'DINEPA — Water',water_other:'Other water bill',menu_web:'Website',menu_brand:'Business Pack'},
- es:{price_hint:'ingresa el precio, toca +',web_menu_h:'Elige tu paquete de sitio web',biz_baz:'Base en US$, comisión Presses en GDES. Tasa: {r} GDES/US$',bill_ref_ph:'Nº de cuenta / referencia',water_dinepa:'DINEPA — Agua',water_other:'Otra factura de agua',menu_web:'Sitio web',menu_brand:'Paquete de negocio'}
+ ht:{price_hint:'antre pri, peze +',web_menu_h:'Chwazi pakè sit entènèt ou',biz_baz:'Baz an US$, frè Près an GDES. To: {r} GDES/US$',bill_ref_ph:'Nº kont / referans',water_dinepa:'DINEPA — Dlo',water_other:'Lòt fakti dlo',menu_web:'Sit Entènèt',menu_brand:'Pakè Biznis',rev_split:'Pataj Revni',gross_sales:'Total Vant',your_comm:'Komisyon Ou',platform_share:'Pòsyon HaitiBiznis / Founisè',tag_reg:'Enskripsyon',tag_reg_s:'Enskri',sel_event:'Evènman',comm_digital:'Pwodwi Dijital — 30% pou ou',comm_admin:'Admin / Legal — 10% pou ou',payout_note:'Komisyon ou kalkile otomatikman sou chak vant.'},
+ fr:{price_hint:'saisir le prix, appuyez +',web_menu_h:'Choisissez votre forfait site web',biz_baz:'Base en US$, frais Presses en GDES. Taux : {r} GDES/US$',bill_ref_ph:'Nº compte / référence',water_dinepa:'DINEPA — Eau',water_other:'Autre facture d’eau',menu_web:'Site web',menu_brand:'Forfait Business',rev_split:'Répartition des revenus',gross_sales:'Total des ventes',your_comm:'Votre commission',platform_share:'Part HaitiBiznis / Prestataire',tag_reg:'Inscription',tag_reg_s:'Inscr.',sel_event:'Événement',comm_digital:'Produits numériques — 30% pour vous',comm_admin:'Admin / Légal — 10% pour vous',payout_note:'Votre commission est calculée automatiquement à chaque vente.'},
+ en:{price_hint:'enter price, tap +',web_menu_h:'Choose your website package',biz_baz:'Base in US$, Presses fee in GDES. Rate: {r} GDES/US$',bill_ref_ph:'Account Nº / reference',water_dinepa:'DINEPA — Water',water_other:'Other water bill',menu_web:'Website',menu_brand:'Business Pack',rev_split:'Revenue Split',gross_sales:'Total Sales',your_comm:'Your Commission',platform_share:'HaitiBiznis / Provider Share',tag_reg:'Registration',tag_reg_s:'Reg',sel_event:'Event',comm_digital:'Digital Products — 30% to you',comm_admin:'Admin / Legal — 10% to you',payout_note:'Your commission is calculated automatically on every sale.'},
+ es:{price_hint:'ingresa el precio, toca +',web_menu_h:'Elige tu paquete de sitio web',biz_baz:'Base en US$, comisión Presses en GDES. Tasa: {r} GDES/US$',bill_ref_ph:'Nº de cuenta / referencia',water_dinepa:'DINEPA — Agua',water_other:'Otra factura de agua',menu_web:'Sitio web',menu_brand:'Paquete de negocio',rev_split:'Reparto de ingresos',gross_sales:'Ventas totales',your_comm:'Tu comisión',platform_share:'Parte HaitiBiznis / Proveedor',tag_reg:'Registro',tag_reg_s:'Reg',sel_event:'Evento',comm_digital:'Productos digitales — 30% para ti',comm_admin:'Admin / Legal — 10% para ti',payout_note:'Tu comisión se calcula automáticamente en cada venta.'}
 };
 Object.keys(T_FIX).forEach(function(l){Object.assign(T[l],T_FIX[l]);});
 
@@ -1116,8 +1127,10 @@ function refreshBadges(){const o=load('hb_orders',[]);
 
 /* ---------- home ---------- */
 function profile(){var p=load('hb_profile',null);if(!p){p={name:'Centre HaitiBiznis',level:'Gold Partner',code:'HB-'+Math.floor(10000+Math.random()*89999),verified:true};save('hb_profile',p);}return p;}
-function commRate(mid){const m=modById(mid);return m&&m.comm!=null?m.comm:0;}
-function orderComm(o){return Math.round((+o.amount||0)*commRate(o.module)/100);}
+function commRate(mid){const m=modById(mid);if(!m)return 0;
+  if(m.commType&&COMM_MODELS[m.commType])return COMM_MODELS[m.commType].posPct;
+  return m.comm!=null?m.comm:0;}
+function orderComm(o){return (o.posShare!=null)?o.posShare:Math.round((+o.amount||0)*commRate(o.module)/100);}
 function hubSoon(titleKey){const m=caOverlay(`<div style="text-align:center"><div style="font-size:40px">🚧</div><div style="font-weight:900;font-size:17px;margin-top:4px">${t(titleKey)}</div><div style="display:inline-block;background:#f59e0b;color:#fff;font-size:11px;font-weight:800;padding:3px 12px;border-radius:20px;margin:8px 0">${t('soon')}</div><div class="sub">${t('hub_soon_msg')}</div><div style="height:12px"></div><button class="cta ghost" id="hs_x">${t('back')}</button></div>`);m.box.querySelector('#hs_x').onclick=m.close;}
 function renderHome(){
   const p=profile();const o=load('hb_orders',[]);const today=o.filter(x=>isToday(x.ts)&&x.amount>0);
@@ -1210,13 +1223,21 @@ function renderEarn(){
   const today=paid.filter(x=>isToday(x.ts));
   const month=paid.filter(x=>{const d=new Date(x.ts),n=new Date();return d.getMonth()===n.getMonth()&&d.getFullYear()===n.getFullYear();});
   const sum=arr=>arr.reduce((a,b)=>a+orderComm(b),0);
+  const grossSum=arr=>arr.reduce((a,b)=>a+(+b.amount||0),0);
   const bySvc={};paid.forEach(x=>{const c=orderComm(x);if(c>0){const k=x.svcName||x.module;bySvc[k]=(bySvc[k]||0)+c;}});
   const refs=load('hb_referrals',[]);
+  const gross=grossSum(paid),yours=sum(paid),platform=gross-yours;
   document.getElementById('earnBody').innerHTML=`
     <div class="h2">💰 ${t('earn_t')}</div><p class="sub">${t('earn_sub')}</p>
     <div class="card" style="background:linear-gradient(135deg,var(--good),#0b7a44);color:#fff;border:0">
       <div style="font-size:12px;opacity:.85;font-weight:700">${t('earn_lifetime')}</div>
       <div style="font-size:30px;font-weight:900">${gdes(sum(paid))}</div></div>
+    <div class="h2" style="font-size:17px;margin-top:16px">🧮 ${t('rev_split')}</div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0"><span>${t('gross_sales')}</span><b>${gdes(gross)}</b></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-top:1px dotted var(--line)"><span>✅ ${t('your_comm')}</span><b style="color:var(--good)">${gdes(yours)}</b></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0"><span>${t('platform_share')}</span><span>${gdes(platform)}</span></div>
+      <div style="margin-top:8px;font-size:11px;color:var(--muted);line-height:1.4">🌐 ${t('comm_digital')}<br>📄 ${t('comm_admin')}<br>⚙️ ${t('payout_note')}</div></div>
     <div class="stats">
       <div class="stat"><div class="n" style="font-size:22px;color:var(--good)">${gdes(sum(today))}</div><div class="l">📅 ${t('earn_today')}</div></div>
       <div class="stat"><div class="n" style="font-size:22px;color:var(--good)">${gdes(sum(month))}</div><div class="l">🗓️ ${t('earn_month')}</div></div></div>
@@ -1492,7 +1513,7 @@ async function completeFlow(){if(!flow.payment){alert(t('need_pay'));return;}
     if(res==='cancel')return;                 // aborted — nothing saved
     rec.payRef=ref;rec.payStatus=(res==='paid'?'paid':'manual');
   }else{rec.payStatus='cash';}
-  orders.push(stampStaff(rec));save('hb_orders',orders);showReceipt(rec);refreshBadges();
+  applyCommission(rec);orders.push(stampStaff(rec));save('hb_orders',orders);showReceipt(rec);refreshBadges();
 }
 
 /* ===================================================================
@@ -1535,7 +1556,7 @@ function saveReg(kind){const sc=REG_FORMS[kind];const name=document.getElementBy
     docs:docsFlat,status:(sc.statusSet?STATUS[sc.statusSet][0].id:'pending'),ts:nowStamp()};
   /* affiliate referral code */
   if(sc.referral){rec.refCode='HB-'+name.replace(/[^A-Za-z]/g,'').slice(0,4).toUpperCase()+String(1000+orders.length+1);}
-  orders.push(stampStaff(rec));save('hb_orders',orders);
+  applyCommission(rec);orders.push(stampStaff(rec));save('hb_orders',orders);
   /* also add as customer for future lookup */
   const custs=customers();if(!custs.find(c=>c.phone&&c.phone===rec.phone&&rec.phone)){custs.push({id:'C-'+(custs.length+1),name,phone:rec.phone,wa:rec.wa,email:rec.email,addr:'',ts:nowStamp()});save('hb_customers',custs);}
   if(sc.referral){showReferral(rec);}else{showReceipt(rec);}
@@ -1590,7 +1611,7 @@ function saveDelivery(){const name=document.getElementById('dl_name').value.trim
     items:[{label:(document.getElementById('dl_pick').value.trim()||'—')+' → '+(document.getElementById('dl_drop').value.trim()||'—'),amt:0},{label:reg.vehType==='moto'?'Moto':'Machin',amt:0}],
     amount:fee,payment:reg.payment||'cash',docs:[],status:'pending',ts:nowStamp(),
     desc:document.getElementById('dl_desc').value.trim(),rphone:document.getElementById('dl_rphone').value.trim()};
-  orders.push(stampStaff(rec));save('hb_orders',orders);showReceipt(rec);refreshBadges();
+  applyCommission(rec);orders.push(stampStaff(rec));save('hb_orders',orders);showReceipt(rec);refreshBadges();
 }
 
 /* ---------- Parenaj commission ---------- */
@@ -1634,7 +1655,7 @@ function saveEvent(){const nm=document.getElementById('ev_name').value.trim();if
 function ticketSell(){const evs=load('hb_events',[]);const body=document.getElementById('ticketsBody');
   if(!evs.length){body.innerHTML=`<button class="back" onclick="renderTicketsHome()">‹ ${t('back')}</button><div class="empty"><div class="ee">🎟️</div>${t('no_event')}</div>`;return;}
   body.innerHTML=`<button class="back" onclick="renderTicketsHome()">‹ ${t('back')}</button><div class="h2">${t('ev_sell')}</div>
-    <div class="card"><label class="fl">Evènman</label><select id="ts_ev">${evs.map(e=>`<option value="${e.id}">${e.name} — ${e.price.toLocaleString()} GDES</option>`).join('')}</select>
+    <div class="card"><label class="fl">${t('sel_event')}</label><select id="ts_ev">${evs.map(e=>`<option value="${e.id}">${e.name} — ${e.price.toLocaleString()} GDES</option>`).join('')}</select>
     <label class="fl">${t('f_name')}</label><input type="text" id="ts_name">
     <label class="fl">${t('f_phone')}</label><input type="tel" id="ts_phone">
     <label class="fl">${t('ev_qty')}</label><input type="number" id="ts_qty" value="1" inputmode="numeric"></div>
@@ -1653,7 +1674,7 @@ function sellTicket(){const evs=load('hb_events',[]);const ev=evs.find(e=>e.id==
   const rec={id,type:'ticket',statusSet:'sale',module:'tikelakay',svcName:'Tikè: '+ev.name,name,phone:document.getElementById('ts_phone').value.trim(),wa:'',
     items:[{label:ev.name+' × '+qty,amt:ev.price*qty}],amount:ev.price*qty,payment:reg.payment,docs:[],status:'ready',ts:nowStamp(),
     eventId:ev.id,qty,checkedIn:0,ticketCode:id};
-  orders.push(stampStaff(rec));save('hb_orders',orders);showTicket(rec,ev);refreshBadges();
+  applyCommission(rec);orders.push(stampStaff(rec));save('hb_orders',orders);showTicket(rec,ev);refreshBadges();
 }
 function ticketCheckin(){const body=document.getElementById('ticketsBody');
   body.innerHTML=`<button class="back" onclick="renderTicketsHome()">‹ ${t('back')}</button><div class="h2">${t('ev_checkin')}</div>
@@ -1783,7 +1804,7 @@ function setupWA(o){const btn=document.getElementById('waBtn');const num=(o.wa||
    =================================================================== */
 let filter='all';
 function renderOrders(){const fb=document.getElementById('filterBar');fb.innerHTML='';
-  const opts=[{id:'all',lbl:t('all')},{id:'wait',lbl:t('st_wait')},{id:'prog',lbl:t('st_prog')},{id:'ready',lbl:t('st_ready')},{id:'done',lbl:t('st_done')},{id:'reg',lbl:'Enskripsyon'}];
+  const opts=[{id:'all',lbl:t('all')},{id:'wait',lbl:t('st_wait')},{id:'prog',lbl:t('st_prog')},{id:'ready',lbl:t('st_ready')},{id:'done',lbl:t('st_done')},{id:'reg',lbl:t('tag_reg')}];
   opts.forEach(o=>{const b=document.createElement('button');b.textContent=o.lbl;b.className=filter===o.id?'on':'';b.onclick=()=>{filter=o.id;renderOrders();};fb.appendChild(b);});
   const q=(document.getElementById('ordSearch').value||'').toLowerCase();
   let orders=load('hb_orders',[]).slice().reverse();
@@ -1793,7 +1814,7 @@ function renderOrders(){const fb=document.getElementById('filterBar');fb.innerHT
   const list=document.getElementById('ordersList');list.innerHTML='';
   if(!orders.length){list.innerHTML=`<div class="empty"><div class="ee">📋</div>—</div>`;return;}
   orders.forEach(o=>{const setName=o.statusSet||'sale';const st=sInfo(setName,o.status);
-    const el=document.createElement('div');el.className='order';const tag=o.type!=='sale'?`<span class="rtag">${o.type==='reg'?'Enskri':o.type}</span>`:'';
+    const el=document.createElement('div');el.className='order';const tag=o.type!=='sale'?`<span class="rtag">${o.type==='reg'?t('tag_reg_s'):o.type}</span>`:'';
     const itemsH=(o.items||[]).map(it=>`<div class="rrow" style="font-size:12px"><span>${it.label}</span><span>${it.amt?gdes(it.amt):''}</span></div>`).join('');
     const intakeH=(o.intake||[]).map(s=>`<div style="font-weight:800;font-size:11.5px;margin:6px 0 2px">${s.title}</div>`+s.items.map(it=>`<div class="rrow" style="font-size:11.5px"><span style="color:#666">${it[0]}</span><span style="text-align:right;max-width:56%">${it[1]}</span></div>`).join('')).join('');
     const docsH=(o.docs&&o.docs.length)?`<div style="font-size:11.5px;margin-top:6px;color:#666">📎 ${o.docs.map(d=>d.name).join(', ')}</div>`:'';
@@ -1802,6 +1823,7 @@ function renderOrders(){const fb=document.getElementById('filterBar');fb.innerHT
       <span class="badge" style="background:${st.c};color:${st.t}">${st.em} ${t(st.k)}</span></div>
       <div class="svc-t">${o.svcName} ${o.docs&&o.docs.length?('· 📎 '+o.docs.length):''}</div>
       <div class="top"><div class="meta">${o.payment?payLabel(o.payment):''}</div><div class="amt2">${o.amount?gdes(o.amount):''}</div></div>
+      ${o.amount>0&&orderComm(o)>0?`<div class="meta" style="font-size:11px;color:var(--good);font-weight:800">✅ ${t('your_comm')}: ${gdes(orderComm(o))}${o.posPct?' ('+o.posPct+'%)':''}</div>`:''}
       ${det}
       <div class="statusrow"></div>`;
     const sr=el.querySelector('.statusrow');STATUS[setName].forEach(s=>{const b=document.createElement('button');b.className=o.status===s.id?'on':'';b.innerHTML=`${s.em}<br>${t(s.k)}`;
@@ -1860,7 +1882,7 @@ function renderSettings(){const cfg=getCfg();const box=document.getElementById('
     <label class="fl">${t('ca_set_low')}</label><input type="number" id="set_calow" value="${cfg.caLow!=null?cfg.caLow:20000}">
     <div style="font-weight:800;margin:8px 0 6px">${t('fee_hb')} — ${modById('bizreg').nm}</div>`;
   cfg.bizreg.forEach((r,i)=>{box.innerHTML+=`<div style="border-top:1px solid var(--line);padding-top:10px;margin-top:4px"><div style="font-weight:700;margin-bottom:6px">${r.nm}</div>
-    <label class="fl">Base (US$)</label><input type="number" data-usd="${i}" value="${r.usd}">
+    <label class="fl">${t('base')} (US$)</label><input type="number" data-usd="${i}" value="${r.usd}">
     <label class="fl">${t('fee_press')} (GDES)</label><input type="number" data-press="${i}" value="${r.press}"></div>`;});
 }
 function saveSettings(){const cfg=getCfg();cfg.rate=+document.getElementById('set_rate').value||132;
