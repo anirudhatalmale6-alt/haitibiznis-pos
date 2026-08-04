@@ -992,32 +992,42 @@ function intakeInput(sec,fld){const[key,lblKey,type,optsKey]=fld;const id='ik_'+
    return `<label class="fl">${t(lblKey)}</label><select id="${id}" onchange="${set}">`+opts.map(o=>`<option value="${o}"${val===o?' selected':''}>${o}</option>`).join('')+`</select>`;}
  return `<label class="fl">${t(lblKey)}</label><input type="text" id="${id}" value="${val.replace(/"/g,'&quot;')}" oninput="${set}">`;
 }
-function renderIntake(container){const targets=intakeTargets();if(!targets.length){return;}
+/* modules that use the AI Smart Brief (one short page instead of dozens of fields) */
+function isBriefModule(m){return ['hbtech','website','presswire','pakebiznis'].includes(m);}
+function briefReady(){return flow.module==='presswire'||flow.extra.pkg!=null;}
+function renderIntake(container){
+ if(!isBriefModule(flow.module)||!briefReady())return;
+ flow.intake['_brief']=flow.intake['_brief']||{};const b=flow.intake['_brief'];
+ const setk=function(k){return "flow.intake['_brief']=flow.intake['_brief']||{};flow.intake['_brief']['"+k+"']=this.value";};
+ const esc=function(s){return (s||'').replace(/"/g,'&quot;');};
+ const styles=[['','—'],['surprise','🤖 '+t('sb_surprise')],['modern',t('sb_modern')],['luxury',t('sb_luxury')],['corporate',t('sb_corporate')],['minimalist',t('sb_minimalist')],['creative',t('sb_creative')]];
  const wrap=document.createElement('div');wrap.style.marginTop='14px';
- wrap.innerHTML=`<div class="h2" style="font-size:16px;margin-bottom:2px">📋 ${t('intake_h')}</div><p class="sub" style="margin-bottom:10px">${t('intake_s')}</p>`;
- /* universal section */
- const uni=document.createElement('div');uni.className='card';uni.style.marginBottom='10px';
- uni.innerHTML=`<div class="upgroup" style="margin-bottom:6px">${t('sec_universal')}</div>`+
-   intakeInput('_uni',['biz','biz_name','text'])+
-   intakeInput('_uni',['date','iu_date','date'])+
-   intakeInput('_uni',['desc','iu_desc','ta'])+
-   intakeInput('_uni',['special','iu_special','ta']);
- wrap.appendChild(uni);
- /* per-deliverable sections */
- targets.forEach(tg=>{const fields=INTAKE_FORMS[tg.slug]||[];
-   const c=document.createElement('div');c.className='card';c.style.marginBottom='10px';
-   let html=`<div class="upgroup" style="margin-bottom:6px">${tg.name}</div>`;
-   if(!fields.length)html+=`<p class="sub" style="margin:0">${t('iu_desc')} ⤴</p>`;
-   else fields.forEach(f=>{html+=intakeInput(tg.key,f);});
-   c.innerHTML=html;wrap.appendChild(c);});
+ wrap.innerHTML=
+   `<div class="h2" style="font-size:16px;margin-bottom:2px">🤖 ${t('sb_h')}</div>`+
+   `<p class="sub" style="margin-bottom:10px">${t('sb_sub')}</p>`+
+   `<div class="card">`+
+     `<label class="fl">${t('sb_bizname')} <span style="color:var(--red)">*</span></label>`+
+     `<input type="text" id="sb_biz" value="${esc(b.biz)}" oninput="${setk('biz')}">`+
+     `<label class="fl">${t('sb_about')} <span style="color:var(--red)">*</span></label>`+
+     `<textarea id="sb_about" rows="6" placeholder="${esc(t('sb_about_ph'))}" oninput="${setk('about')}">${b.about||''}</textarea>`+
+     `<label class="fl">${t('sb_style')}</label>`+
+     `<select id="sb_style" onchange="${setk('style')}">`+styles.map(s=>`<option value="${s[0]}"${(b.style||'')===s[0]?' selected':''}>${s[1]}</option>`).join('')+`</select>`+
+     `<label class="fl">${t('sb_colors')} <span class="opt" style="color:var(--muted);font-weight:400">${t('sb_opt')}</span></label>`+
+     `<input type="text" id="sb_colors" placeholder="${esc(t('sb_colors_ph'))}" value="${esc(b.colors)}" oninput="${setk('colors')}">`+
+     `<label class="fl">${t('sb_delivery')}</label>`+
+     `<input type="date" id="sb_date" value="${b.date||''}" onchange="${setk('date')}">`+
+   `</div>`+
+   `<p class="sub" style="margin-top:8px;font-size:11.5px">📎 ${t('sb_upload_note')}</p>`;
  container.appendChild(wrap);
 }
-function collectIntake(){const out=[];const targets=intakeTargets();const uni=flow.intake['_uni']||{};const ul=[];
- [['biz','biz_name'],['date','iu_date'],['desc','iu_desc'],['special','iu_special']].forEach(function(p){if(uni[p[0]])ul.push([t(p[1]),uni[p[0]]]);});
- if(ul.length)out.push({title:t('sec_universal'),items:ul});
- targets.forEach(function(tg){const d=flow.intake[tg.key]||{};const fields=INTAKE_FORMS[tg.slug]||[];const li=[];
-   fields.forEach(function(f){if(d[f[0]])li.push([t(f[1]),d[f[0]]]);});
-   if(li.length)out.push({title:tg.name,items:li});});
+function collectIntake(){const out=[];if(!isBriefModule(flow.module))return out;
+ const b=flow.intake['_brief']||{};const li=[];
+ if(b.biz)li.push([t('sb_bizname'),b.biz]);
+ if(b.about)li.push([t('sb_about'),b.about]);
+ if(b.style){const s=b.style==='surprise'?t('sb_surprise'):(t('sb_'+b.style)||b.style);li.push([t('sb_style'),s]);}
+ if(b.colors)li.push([t('sb_colors'),b.colors]);
+ if(b.date)li.push([t('sb_delivery'),b.date]);
+ if(li.length)out.push({title:t('sb_h'),items:li});
  return out;
 }
 const ADMIN_ITEMS=['Patente','Extrait d’Archives','Légalisation','Permis de conduire','Matricule Fiscal','Immatriculation','Assurance','Mariage Civil','Birth Certificate Assistance','Passport Assistance','Other government service'];
@@ -1073,10 +1083,10 @@ const ITEM_I18N={
 function tItem(name){const m=ITEM_I18N[name];return (m&&m[lang])||name;}
 /* small extra UI keys used by order-flow bodies */
 const T_FIX={
- ht:{price_hint:'antre pri, peze +',web_menu_h:'Chwazi pakè sit entènèt ou',biz_baz:'Baz an US$, frè Près an GDES. To: {r} GDES/US$',bill_ref_ph:'Nº kont / referans',water_dinepa:'DINEPA — Dlo',water_other:'Lòt fakti dlo',menu_web:'Sit Entènèt',menu_brand:'Pakè Biznis',rev_split:'Pataj Revni',gross_sales:'Total Vant',your_comm:'Komisyon Ou',platform_share:'Pòsyon HaitiBiznis / Founisè',tag_reg:'Enskripsyon',tag_reg_s:'Enskri',sel_event:'Evènman',comm_digital:'Pwodwi Dijital — 30% pou ou',comm_admin:'Admin / Legal — 10% pou ou',payout_note:'Komisyon ou kalkile otomatikman sou chak vant.'},
- fr:{price_hint:'saisir le prix, appuyez +',web_menu_h:'Choisissez votre forfait site web',biz_baz:'Base en US$, frais Presses en GDES. Taux : {r} GDES/US$',bill_ref_ph:'Nº compte / référence',water_dinepa:'DINEPA — Eau',water_other:'Autre facture d’eau',menu_web:'Site web',menu_brand:'Forfait Business',rev_split:'Répartition des revenus',gross_sales:'Total des ventes',your_comm:'Votre commission',platform_share:'Part HaitiBiznis / Prestataire',tag_reg:'Inscription',tag_reg_s:'Inscr.',sel_event:'Événement',comm_digital:'Produits numériques — 30% pour vous',comm_admin:'Admin / Légal — 10% pour vous',payout_note:'Votre commission est calculée automatiquement à chaque vente.'},
- en:{price_hint:'enter price, tap +',web_menu_h:'Choose your website package',biz_baz:'Base in US$, Presses fee in GDES. Rate: {r} GDES/US$',bill_ref_ph:'Account Nº / reference',water_dinepa:'DINEPA — Water',water_other:'Other water bill',menu_web:'Website',menu_brand:'Business Pack',rev_split:'Revenue Split',gross_sales:'Total Sales',your_comm:'Your Commission',platform_share:'HaitiBiznis / Provider Share',tag_reg:'Registration',tag_reg_s:'Reg',sel_event:'Event',comm_digital:'Digital Products — 30% to you',comm_admin:'Admin / Legal — 10% to you',payout_note:'Your commission is calculated automatically on every sale.'},
- es:{price_hint:'ingresa el precio, toca +',web_menu_h:'Elige tu paquete de sitio web',biz_baz:'Base en US$, comisión Presses en GDES. Tasa: {r} GDES/US$',bill_ref_ph:'Nº de cuenta / referencia',water_dinepa:'DINEPA — Agua',water_other:'Otra factura de agua',menu_web:'Sitio web',menu_brand:'Paquete de negocio',rev_split:'Reparto de ingresos',gross_sales:'Ventas totales',your_comm:'Tu comisión',platform_share:'Parte HaitiBiznis / Proveedor',tag_reg:'Registro',tag_reg_s:'Reg',sel_event:'Evento',comm_digital:'Productos digitales — 30% para ti',comm_admin:'Admin / Legal — 10% para ti',payout_note:'Tu comisión se calcula automáticamente en cada venta.'}
+ ht:{price_hint:'antre pri, peze +',web_menu_h:'Chwazi pakè sit entènèt ou',biz_baz:'Baz an US$, frè Près an GDES. To: {r} GDES/US$',bill_ref_ph:'Nº kont / referans',water_dinepa:'DINEPA — Dlo',water_other:'Lòt fakti dlo',menu_web:'Sit Entènèt',menu_brand:'Pakè Biznis',rev_split:'Pataj Revni',gross_sales:'Total Vant',your_comm:'Komisyon Ou',platform_share:'Pòsyon HaitiBiznis / Founisè',tag_reg:'Enskripsyon',tag_reg_s:'Enskri',sel_event:'Evènman',comm_digital:'Pwodwi Dijital — 30% pou ou',comm_admin:'Admin / Legal — 10% pou ou',payout_note:'Komisyon ou kalkile otomatikman sou chak vant.',sb_h:'HaitiBiznis Smart Brief',sb_sub:'Dekri biznis ou nan 2 minit — AI nou an ap kreye rès la.',sb_bizname:'Non Biznis',sb_about:'Pale nou de biznis ou',sb_about_ph:'Dekri biznis ou ak pwòp mo pa w. Di nou sa w vann, kiyès kliyan ou yo ye, sa ki fè w diferan, objektif ou, ak nenpòt lòt bagay. Plis detay ou bay, se pi bon AI nou an ap kreye logo, executive summary, pitch deck, videyo ak materyèl maketing ou.',sb_style:'Style ou pi renmen',sb_surprise:'Fè m sipriz',sb_modern:'Modèn',sb_luxury:'Liks',sb_corporate:'Antrepriz',sb_minimalist:'Minimalis',sb_creative:'Kreyatif',sb_colors:'Koulè ou pi renmen',sb_colors_ph:'egz. ble & wouj',sb_delivery:'Dat Livrezon',sb_upload_note:'Ou ka ajoute logo, foto oswa dokiman nan pwochen etap la.',sb_opt:'(opsyonèl)'},
+ fr:{price_hint:'saisir le prix, appuyez +',web_menu_h:'Choisissez votre forfait site web',biz_baz:'Base en US$, frais Presses en GDES. Taux : {r} GDES/US$',bill_ref_ph:'Nº compte / référence',water_dinepa:'DINEPA — Eau',water_other:'Autre facture d’eau',menu_web:'Site web',menu_brand:'Forfait Business',rev_split:'Répartition des revenus',gross_sales:'Total des ventes',your_comm:'Votre commission',platform_share:'Part HaitiBiznis / Prestataire',tag_reg:'Inscription',tag_reg_s:'Inscr.',sel_event:'Événement',comm_digital:'Produits numériques — 30% pour vous',comm_admin:'Admin / Légal — 10% pour vous',payout_note:'Votre commission est calculée automatiquement à chaque vente.',sb_h:'HaitiBiznis Smart Brief',sb_sub:'Décrivez votre entreprise en 2 minutes — notre IA crée le reste.',sb_bizname:'Nom de l’entreprise',sb_about:'Parlez-nous de votre entreprise',sb_about_ph:'Décrivez votre entreprise avec vos propres mots. Dites-nous ce que vous vendez, qui sont vos clients, ce qui vous différencie, vos objectifs, et tout le reste. Plus vous donnez de détails, mieux notre IA créera votre logo, résumé exécutif, pitch deck, vidéos et supports marketing.',sb_style:'Style préféré',sb_surprise:'Surprenez-moi',sb_modern:'Moderne',sb_luxury:'Luxe',sb_corporate:'Corporate',sb_minimalist:'Minimaliste',sb_creative:'Créatif',sb_colors:'Couleurs préférées',sb_colors_ph:'ex. bleu & rouge',sb_delivery:'Date de livraison',sb_upload_note:'Vous pourrez ajouter logo, photos ou documents à l’étape suivante.',sb_opt:'(optionnel)'},
+ en:{price_hint:'enter price, tap +',web_menu_h:'Choose your website package',biz_baz:'Base in US$, Presses fee in GDES. Rate: {r} GDES/US$',bill_ref_ph:'Account Nº / reference',water_dinepa:'DINEPA — Water',water_other:'Other water bill',menu_web:'Website',menu_brand:'Business Pack',rev_split:'Revenue Split',gross_sales:'Total Sales',your_comm:'Your Commission',platform_share:'HaitiBiznis / Provider Share',tag_reg:'Registration',tag_reg_s:'Reg',sel_event:'Event',comm_digital:'Digital Products — 30% to you',comm_admin:'Admin / Legal — 10% to you',payout_note:'Your commission is calculated automatically on every sale.',sb_h:'HaitiBiznis Smart Brief',sb_sub:'Describe your business in 2 minutes — our AI creates the rest.',sb_bizname:'Business Name',sb_about:'Tell us about your business',sb_about_ph:'Describe your business in your own words. Tell us what you sell, who your customers are, what makes you different, your goals, and anything else. The more details you provide, the better our AI will create your logo, executive summary, pitch deck, videos and marketing materials.',sb_style:'Preferred Style',sb_surprise:'Surprise Me',sb_modern:'Modern',sb_luxury:'Luxury',sb_corporate:'Corporate',sb_minimalist:'Minimalist',sb_creative:'Creative',sb_colors:'Preferred Colors',sb_colors_ph:'e.g. blue & red',sb_delivery:'Delivery Date',sb_upload_note:'You can add your logo, photos or documents in the next step.',sb_opt:'(optional)'},
+ es:{price_hint:'ingresa el precio, toca +',web_menu_h:'Elige tu paquete de sitio web',biz_baz:'Base en US$, comisión Presses en GDES. Tasa: {r} GDES/US$',bill_ref_ph:'Nº de cuenta / referencia',water_dinepa:'DINEPA — Agua',water_other:'Otra factura de agua',menu_web:'Sitio web',menu_brand:'Paquete de negocio',rev_split:'Reparto de ingresos',gross_sales:'Ventas totales',your_comm:'Tu comisión',platform_share:'Parte HaitiBiznis / Proveedor',tag_reg:'Registro',tag_reg_s:'Reg',sel_event:'Evento',comm_digital:'Productos digitales — 30% para ti',comm_admin:'Admin / Legal — 10% para ti',payout_note:'Tu comisión se calcula automáticamente en cada venta.',sb_h:'HaitiBiznis Smart Brief',sb_sub:'Describe tu negocio en 2 minutos — nuestra IA crea el resto.',sb_bizname:'Nombre del negocio',sb_about:'Cuéntanos sobre tu negocio',sb_about_ph:'Describe tu negocio con tus propias palabras. Dinos qué vendes, quiénes son tus clientes, qué te diferencia, tus objetivos y cualquier otra cosa. Cuantos más detalles nos des, mejor creará nuestra IA tu logo, resumen ejecutivo, pitch deck, videos y materiales de marketing.',sb_style:'Estilo preferido',sb_surprise:'Sorpréndeme',sb_modern:'Moderno',sb_luxury:'Lujo',sb_corporate:'Corporativo',sb_minimalist:'Minimalista',sb_creative:'Creativo',sb_colors:'Colores preferidos',sb_colors_ph:'ej. azul y rojo',sb_delivery:'Fecha de entrega',sb_upload_note:'Puedes agregar tu logo, fotos o documentos en el siguiente paso.',sb_opt:'(opcional)'}
 };
 Object.keys(T_FIX).forEach(function(l){Object.assign(T[l],T_FIX[l]);});
 
