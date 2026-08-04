@@ -36,7 +36,7 @@
 :root{--blue:#0057D9;--red:#E31B23;--ink:#333333;--muted:#6B7280;--bg:#F5F7FA;--card:#fff;--line:#e6eaf0;
   --amber:#F5A800;--good:#00B050;--warn:#e08a00;--shadow:0 2px 10px rgba(20,30,60,.08);--shadow-lg:0 10px 30px rgba(20,30,60,.14);--r:18px}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;padding:0}
+html,body{margin:0;padding:0;overflow-x:hidden}
 body{font-family:"Poppins","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.4;padding-bottom:150px;max-width:720px;margin:0 auto;min-height:100vh}
 button{font-family:inherit;cursor:pointer}img{display:block}
 #splash{position:fixed;inset:0;z-index:9999;background:#0033A0;display:flex;align-items:center;justify-content:center;transition:opacity .5s ease}
@@ -224,14 +224,14 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
 .nav button .ni{font-size:22px;line-height:1}.nav button.on{color:var(--blue)}
 .badge-dot{position:relative}
 .badge-dot[data-n]:not([data-n="0"]):after{content:attr(data-n);position:absolute;top:-3px;right:calc(50% - 22px);background:var(--red);color:#fff;font-size:10px;font-weight:800;min-width:16px;height:16px;border-radius:999px;display:flex;align-items:center;justify-content:center;padding:0 4px}
-#installBanner{display:none;align-items:center;gap:11px;background:linear-gradient(135deg,#00209F 0%,#0a44e0 100%);color:#fff;padding:12px 14px;box-shadow:0 6px 18px rgba(0,32,159,.34);animation:ibslide .35s cubic-bezier(.2,.8,.2,1)}
+#installBanner{display:none;align-items:center;gap:11px;background:linear-gradient(135deg,#E31B23 0%,#ff3d45 100%);color:#fff;padding:12px 14px;box-shadow:0 6px 18px rgba(227,27,35,.34);animation:ibslide .35s cubic-bezier(.2,.8,.2,1)}
 #installBanner.show{display:flex}
 @keyframes ibslide{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
 #installBanner .ib-ic{font-size:1.7rem;flex-shrink:0}
 #installBanner .ib-tx{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.28}
 #installBanner .ib-tx b{font-size:14px;font-weight:800}
 #installBanner .ib-tx span{font-size:11.5px;color:rgba(255,255,255,.9)}
-#installBanner .ib-btn{background:#fff;color:#00209F;border:none;border-radius:11px;padding:10px 16px;font-size:13px;font-weight:900;flex-shrink:0;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.2);animation:ibpulse 2s ease-in-out infinite}
+#installBanner .ib-btn{background:#fff;color:#E31B23;border:none;border-radius:11px;padding:10px 16px;font-size:13px;font-weight:900;flex-shrink:0;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.2);animation:ibpulse 2s ease-in-out infinite}
 #installBanner .ib-btn:active{transform:scale(.95)}
 @keyframes ibpulse{0%,100%{box-shadow:0 3px 10px rgba(0,0,0,.2)}50%{box-shadow:0 0 0 6px rgba(255,255,255,.18)}}
 #installBanner .ib-x{background:transparent;border:none;color:rgba(255,255,255,.85);font-size:15px;flex-shrink:0;cursor:pointer;padding:2px 5px;line-height:1}
@@ -249,7 +249,6 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
   <img src="assets/haitibiznis-logo.png" class="logo" alt="HaitiBiznis">
   <h1 data-i18n="app_t">Sant HaitiBiznis<small data-i18n="app_s">POINT OF SALE</small></h1>
   <div class="lang"><button data-lang="ht" class="on">HT</button><button data-lang="fr">FR</button><button data-lang="en">EN</button><button data-lang="es">ES</button></div>
-  <button class="installred" id="installBtn" style="display:none">⬇️ <span data-i18n="install">Enstale App</span></button>
   <button class="gear" onclick="go('set')">⚙️</button>
 </div>
 <div id="offlineBar" style="display:none;background:#e08a00;color:#fff;text-align:center;font-size:12px;font-weight:700;padding:5px 8px" data-i18n="offline_on">Mòd offline — sere sou aparèy la</div>
@@ -575,7 +574,7 @@ const T={
 };
 /* ---- added strings (install/offline, reports, notify) ---- */
 const T_EXT={
- ht:{install:'Enstale App',ib_head:'Enstale app la sou telefòn ou',ib_sub:'Pi rapid, louvri tankou yon vrè app, mache menm san entènèt',ib_cta:'Enstale Kounye a',inst_title:'Enstale HaitiBiznis POS',inst_and:'1. Peze meni ⋮ (twa pwen) anwo adwat navigatè a\n2. Chwazi «Enstale app» oswa «Ajoute sou ekran Akèy»\n3. Konfime — app la ap parèt sou ekran ou tankou yon vrè app',inst_ios:'1. Peze bouton Pataje (kare ak flèch) anba a\n2. Chwazi «Ajoute sou ekran Akèy»\n3. Peze «Ajoute» anwo adwat',inst_close:'Fèmen',offline_on:'Mòd offline — sere sou aparèy la',rep_open:'📈 Rapò detaye',rep_t:'Rapò',rep_csv:'⬇️ CSV',
+ ht:{install:'Enstale App',ib_head:'Enstale app la sou telefòn ou',ib_sub:'Pi rapid, louvri tankou yon vrè app, mache menm san entènèt',ib_cta:'Enstale Kounye a',inst_title:'Enstale HaitiBiznis POS',inst_and:'1. Louvri meni navigatè a (ikòn ⋮ oswa ≡)\n2. Chwazi «Enstale app» oswa «Ajoute sou ekran Akèy»\n3. Konfime — app la ap parèt sou ekran ou tankou yon vrè app',inst_ios:'1. Peze bouton Pataje (kare ak flèch) anba a\n2. Chwazi «Ajoute sou ekran Akèy»\n3. Peze «Ajoute» anwo adwat',inst_close:'Fèmen',offline_on:'Mòd offline — sere sou aparèy la',rep_open:'📈 Rapò detaye',rep_t:'Rapò',rep_csv:'⬇️ CSV',
   rp_today:'Jodi a',rp_7:'7 jou',rp_30:'30 jou',rp_all:'Tout',rep_revenue:'Revni',rep_txn:'Tranzaksyon',rep_avg:'Mwayèn',
   rep_bysvc:'Pa sèvis',rep_bypay:'Pa metòd peman',rep_bystat:'Pa estati',rep_none:'Pa gen done pou peryòd sa a.',
   notify:'📲 Fè kliyan an konnen',notify_t:'Fè konnen kliyan',notify_wa:'WhatsApp',notify_email:'Imel',notify_no:'Pa gen telefòn/imel pou kliyan sa a.',
@@ -586,7 +585,7 @@ const T_EXT={
   sv_products:'Jesyon Pwodwi',sv_inventory:'Envantè',sv_notifs:'Notifikasyon Tan Reyèl',sv_payments:'Peman MonCash/NatCash',
   dash_orders:'Kòmand',dash_customers:'Kliyan',dash_notifs:'Notifikasyon',sv_none_cust:'Pa gen kliyan ankò.',sv_none_sales:'Pa gen vant ankò.',reopen_receipt:'Wè resi',
   pg_creating:'N ap kreye peman an…',pg_scan:'Fè kliyan an eskane kòd la ak telefòn li, oswa louvri paj peman an.',pg_open:'Louvri paj peman an',pg_waiting:'N ap tann peman an…',pg_paid:'✓ Peman resevwa!',pg_manual:'Make peye manyèlman',pg_fail:'Peman pa kreye',pg_fail_sub:'Nou pa rive jwenn sèvis peman an. Ou ka make l peye manyèlman oswa eseye ankò.',cancel:'Anile',set_pay_h:'Peman elektwonik',set_payclient:'ID Machann Peman (MonCash/NatCash)',pay_active:'MonCash & NatCash aktif',pay_active_sub:'Chwazi MonCash oswa NatCash lè w ap fè yon vant — kliyan an peye sou telefòn li epi vant lan make peye otomatikman.',pay_status_paid:'Peye',pay_status_manual:'Peye (manyèl)',pay_none:'Pa gen peman elektwonik ankò.'},
- fr:{install:'Installer l’app',ib_head:'Installez l’app sur votre téléphone',ib_sub:'Plus rapide, s’ouvre comme une vraie app, fonctionne même hors-ligne',ib_cta:'Installer maintenant',inst_title:'Installer HaitiBiznis POS',inst_and:'1. Appuyez sur le menu ⋮ (trois points) en haut à droite du navigateur\n2. Choisissez « Installer l’application » ou « Ajouter à l’écran d’accueil »\n3. Confirmez — l’app apparaîtra comme une vraie application',inst_ios:'1. Appuyez sur le bouton Partager (carré avec flèche) en bas\n2. Choisissez « Sur l’écran d’accueil »\n3. Appuyez sur « Ajouter » en haut à droite',inst_close:'Fermer',offline_on:'Mode hors-ligne — enregistré sur l’appareil',rep_open:'📈 Rapport détaillé',rep_t:'Rapports',rep_csv:'⬇️ CSV',
+ fr:{install:'Installer l’app',ib_head:'Installez l’app sur votre téléphone',ib_sub:'Plus rapide, s’ouvre comme une vraie app, fonctionne même hors-ligne',ib_cta:'Installer maintenant',inst_title:'Installer HaitiBiznis POS',inst_and:'1. Ouvrez le menu du navigateur (icône ⋮ ou ≡)\n2. Choisissez « Installer l’application » ou « Ajouter à l’écran d’accueil »\n3. Confirmez — l’app apparaîtra comme une vraie application',inst_ios:'1. Appuyez sur le bouton Partager (carré avec flèche) en bas\n2. Choisissez « Sur l’écran d’accueil »\n3. Appuyez sur « Ajouter » en haut à droite',inst_close:'Fermer',offline_on:'Mode hors-ligne — enregistré sur l’appareil',rep_open:'📈 Rapport détaillé',rep_t:'Rapports',rep_csv:'⬇️ CSV',
   rp_today:'Aujourd’hui',rp_7:'7 jours',rp_30:'30 jours',rp_all:'Tout',rep_revenue:'Revenu',rep_txn:'Transactions',rep_avg:'Moyenne',
   rep_bysvc:'Par service',rep_bypay:'Par paiement',rep_bystat:'Par statut',rep_none:'Aucune donnée pour cette période.',
   notify:'📲 Notifier le client',notify_t:'Notifier le client',notify_wa:'WhatsApp',notify_email:'Email',notify_no:'Aucun téléphone/email pour ce client.',
@@ -597,7 +596,7 @@ const T_EXT={
   sv_products:'Gestion des produits',sv_inventory:'Inventaire',sv_notifs:'Notifications en temps réel',sv_payments:'Paiement MonCash/NatCash',
   dash_orders:'Commandes',dash_customers:'Clients',dash_notifs:'Notifications',sv_none_cust:'Aucun client pour le moment.',sv_none_sales:'Aucune vente pour le moment.',reopen_receipt:'Voir le reçu',
   pg_creating:'Création du paiement…',pg_scan:'Faites scanner le code au client avec son téléphone, ou ouvrez la page de paiement.',pg_open:'Ouvrir la page de paiement',pg_waiting:'En attente du paiement…',pg_paid:'✓ Paiement reçu !',pg_manual:'Marquer payé manuellement',pg_fail:'Paiement non créé',pg_fail_sub:'Impossible de joindre le service de paiement. Vous pouvez marquer payé manuellement ou réessayer.',cancel:'Annuler',set_pay_h:'Paiement électronique',set_payclient:'ID Marchand Paiement (MonCash/NatCash)',pay_active:'MonCash & NatCash actifs',pay_active_sub:'Choisissez MonCash ou NatCash lors d’une vente — le client paie sur son téléphone et la vente est marquée payée automatiquement.',pay_status_paid:'Payé',pay_status_manual:'Payé (manuel)',pay_none:'Aucun paiement électronique pour le moment.'},
- en:{install:'Install App',ib_head:'Install the app on your phone',ib_sub:'Faster, opens like a real app, works even offline',ib_cta:'Install Now',inst_title:'Install HaitiBiznis POS',inst_and:'1. Tap the ⋮ menu (three dots) at the top-right of your browser\n2. Choose “Install app” or “Add to Home screen”\n3. Confirm — the app will appear like a real app on your screen',inst_ios:'1. Tap the Share button (square with an arrow) at the bottom\n2. Choose “Add to Home Screen”\n3. Tap “Add” at the top-right',inst_close:'Close',offline_on:'Offline mode — saved on this device',rep_open:'📈 Detailed Report',rep_t:'Reports',rep_csv:'⬇️ CSV',
+ en:{install:'Install App',ib_head:'Install the app on your phone',ib_sub:'Faster, opens like a real app, works even offline',ib_cta:'Install Now',inst_title:'Install HaitiBiznis POS',inst_and:'1. Open your browser menu (the ⋮ or ≡ icon)\n2. Choose “Install app” or “Add to Home screen”\n3. Confirm — the app will appear on your screen like a real app',inst_ios:'1. Tap the Share button (square with an arrow) at the bottom\n2. Choose “Add to Home Screen”\n3. Tap “Add” at the top-right',inst_close:'Close',offline_on:'Offline mode — saved on this device',rep_open:'📈 Detailed Report',rep_t:'Reports',rep_csv:'⬇️ CSV',
   rp_today:'Today',rp_7:'7 days',rp_30:'30 days',rp_all:'All',rep_revenue:'Revenue',rep_txn:'Transactions',rep_avg:'Average',
   rep_bysvc:'By service',rep_bypay:'By payment',rep_bystat:'By status',rep_none:'No data for this period.',
   notify:'📲 Notify customer',notify_t:'Notify customer',notify_wa:'WhatsApp',notify_email:'Email',notify_no:'No phone/email for this customer.',
@@ -608,7 +607,7 @@ const T_EXT={
   sv_products:'Product Management',sv_inventory:'Inventory',sv_notifs:'Real-time Notifications',sv_payments:'MonCash/NatCash Payment',
   dash_orders:'Orders',dash_customers:'Customers',dash_notifs:'Notifications',sv_none_cust:'No customers yet.',sv_none_sales:'No sales yet.',reopen_receipt:'View receipt',
   pg_creating:'Creating payment…',pg_scan:'Have the customer scan the code with their phone, or open the payment page.',pg_open:'Open payment page',pg_waiting:'Waiting for payment…',pg_paid:'✓ Payment received!',pg_manual:'Mark paid manually',pg_fail:'Payment not created',pg_fail_sub:'Could not reach the payment service. You can mark it paid manually or try again.',cancel:'Cancel',set_pay_h:'Electronic payment',set_payclient:'Payment Merchant ID (MonCash/NatCash)',pay_active:'MonCash & NatCash active',pay_active_sub:'Choose MonCash or NatCash when making a sale — the customer pays on their phone and the sale is marked paid automatically.',pay_status_paid:'Paid',pay_status_manual:'Paid (manual)',pay_none:'No electronic payments yet.'},
- es:{install:'Instalar App',ib_head:'Instala la app en tu teléfono',ib_sub:'Más rápida, se abre como una app real, funciona incluso sin internet',ib_cta:'Instalar ahora',inst_title:'Instalar HaitiBiznis POS',inst_and:'1. Toca el menú ⋮ (tres puntos) arriba a la derecha del navegador\n2. Elige «Instalar app» o «Agregar a pantalla de inicio»\n3. Confirma — la app aparecerá como una app real en tu pantalla',inst_ios:'1. Toca el botón Compartir (cuadro con flecha) abajo\n2. Elige «Agregar a inicio»\n3. Toca «Agregar» arriba a la derecha',inst_close:'Cerrar',offline_on:'Modo sin conexión — guardado en este dispositivo',rep_open:'📈 Reporte detallado',rep_t:'Reportes',rep_csv:'⬇️ CSV',
+ es:{install:'Instalar App',ib_head:'Instala la app en tu teléfono',ib_sub:'Más rápida, se abre como una app real, funciona incluso sin internet',ib_cta:'Instalar ahora',inst_title:'Instalar HaitiBiznis POS',inst_and:'1. Abre el menú del navegador (ícono ⋮ o ≡)\n2. Elige «Instalar app» o «Agregar a pantalla de inicio»\n3. Confirma — la app aparecerá como una app real en tu pantalla',inst_ios:'1. Toca el botón Compartir (cuadro con flecha) abajo\n2. Elige «Agregar a inicio»\n3. Toca «Agregar» arriba a la derecha',inst_close:'Cerrar',offline_on:'Modo sin conexión — guardado en este dispositivo',rep_open:'📈 Reporte detallado',rep_t:'Reportes',rep_csv:'⬇️ CSV',
   rp_today:'Hoy',rp_7:'7 días',rp_30:'30 días',rp_all:'Todo',rep_revenue:'Ingresos',rep_txn:'Transacciones',rep_avg:'Promedio',
   rep_bysvc:'Por servicio',rep_bypay:'Por pago',rep_bystat:'Por estado',rep_none:'No hay datos para este período.',
   notify:'📲 Notificar al cliente',notify_t:'Notificar al cliente',notify_wa:'WhatsApp',notify_email:'Correo',notify_no:'No hay teléfono/correo para este cliente.',
@@ -2521,14 +2520,10 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
 let deferredPrompt=null;
 function isInstalled(){return window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;}
 function showInstallUI(){
-  if(isInstalled())return;                       // already installed as an app
-  document.getElementById('installBtn').style.display='inline-flex';   // always show the red button
-  if(localStorage.getItem('hb_install_dismissed')!=='1'){
-    document.getElementById('installBanner').classList.add('show');
-  }
+  if(isInstalled())return;                       // already installed as an app — no banner
+  document.getElementById('installBanner').classList.add('show');   // single red install bar, stays until installed
 }
 function hideInstallUI(){
-  document.getElementById('installBtn').style.display='none';
   document.getElementById('installBanner').classList.remove('show');
 }
 function showInstallHelp(){
@@ -2545,9 +2540,8 @@ function doInstall(){
   }
 }
 window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;showInstallUI();});
-document.getElementById('installBtn').onclick=doInstall;
 document.getElementById('installBtn2').onclick=doInstall;
-document.getElementById('installClose').onclick=function(){localStorage.setItem('hb_install_dismissed','1');document.getElementById('installBanner').classList.remove('show');};
+document.getElementById('installClose').onclick=function(){document.getElementById('installBanner').classList.remove('show');};
 document.getElementById('installHelpClose').onclick=function(){document.getElementById('installHelp').classList.remove('show');};
 document.getElementById('installHelp').addEventListener('click',function(e){if(e.target.id==='installHelp')this.classList.remove('show');});
 window.addEventListener('appinstalled',function(){hideInstallUI();});
