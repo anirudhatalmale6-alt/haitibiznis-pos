@@ -69,6 +69,18 @@ main{padding:16px 14px}
 /* module grid */
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .mod{border:1px solid var(--line);background:var(--card);border-radius:var(--r);padding:18px 10px;text-align:center;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:10px;min-height:124px;justify-content:center;transition:transform .15s ease,box-shadow .15s ease}
+/* Netflix/menu-style service cards */
+.svc{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 6px 18px rgba(20,30,60,.08);display:flex;flex-direction:column;transition:transform .15s ease,box-shadow .15s ease}
+.svc:active{transform:scale(.98)}
+.svc .ill{position:relative;height:104px;display:flex;align-items:center;justify-content:center;font-size:52px}
+.svc .bdg{position:absolute;top:9px;right:9px;color:#fff;font-size:10px;font-weight:900;padding:4px 10px;border-radius:999px;letter-spacing:.4px;box-shadow:0 3px 9px rgba(0,0,0,.2)}
+.svc .bd{padding:11px 13px 13px;display:flex;flex-direction:column;flex:1}
+.svc .nm{font-size:15.5px;font-weight:900;line-height:1.15;color:var(--ink)}
+.svc .sub{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:3px;line-height:1.25;flex:1}
+.svc .comm{font-size:10.5px;font-weight:800;margin-top:8px;display:flex;align-items:center;gap:3px}
+.svc .go{margin-top:10px;border:0;border-radius:12px;padding:12px;font-weight:900;font-size:13.5px;color:#fff;display:flex;align-items:center;justify-content:center;gap:5px;box-shadow:0 4px 12px rgba(20,30,60,.16)}
+.svc.soon{opacity:.66}
+.svc.soon .go{box-shadow:none}
 .mod:active{transform:translateY(-3px) scale(.98);box-shadow:var(--shadow-lg)}
 .mod .em{font-size:34px;line-height:1}
 .mod .il{width:56px;height:56px;border-radius:14px;background:#fff;padding:5px;object-fit:contain;border:1px solid var(--line);box-shadow:0 3px 8px rgba(0,0,0,.08)}
@@ -920,6 +932,27 @@ const MODULES=[
  {id:'cashaccess',nm:'Cash-Out',nmKey:'svc_cashout',em:'💵',type:'cash',soon:true,color:'#12a150'}
 ];
 function modById(id){return MODULES.find(m=>m.id===id);}
+/* Netflix/menu card metadata: big illustration + category color + hero badge (client redesign) */
+const CARD_META={
+ msouwout:{ill:'🛵',badge:'protect',color:'#D21034'},
+ myplopplop:{ill:'🛒',badge:'popular',color:'#0ea5a0'},
+ parenaj:{ill:'🤝',badge:'earn',color:'#12a150'},
+ hbtech:{ill:'🚀',badge:'new',color:'#2563eb'},
+ admin:{ill:'📄',badge:'official',color:'#4f46e5'},
+ legal:{ill:'⚖️',badge:'protect',color:'#1e3a8a'},
+ pwofesyonel:{ill:'👷',badge:'popular',color:'#f59e0b'},
+ tikelakay:{ill:'🎫',badge:'new',color:'#9333ea'},
+ delivery:{ill:'🚚',badge:'earn',color:'#b45309'},
+ pakebiznis:{ill:'💼',badge:'new',color:'#7c3aed'},
+ website:{ill:'💻',badge:'new',color:'#8b5cf6'},
+ presswire:{ill:'📰',badge:'new',color:'#0d9488'},
+ billpay:{ill:'💡',badge:'soon',color:'#f59e0b'},
+ water:{ill:'💧',badge:'soon',color:'#06b6d4'},
+ asirans:{ill:'🛡️',badge:'soon',color:'#7c3aed'},
+ cashaccess:{ill:'💵',badge:'soon',color:'#12a150'},
+ bizreg:{ill:'🏛️',badge:'official',color:'#4f46e5'}
+};
+const BADGE_META={earn:{k:'bg_earn',c:'#12a150'},'new':{k:'bg_new',c:'#f97316'},popular:{k:'bg_pop',c:'#2563eb'},protect:{k:'bg_protect',c:'#D21034'},official:{k:'bg_official',c:'#4f46e5'},soon:{k:'bg_soon',c:'#94a3b8'}};
 /* ===== Commission engine — two revenue-sharing models (client spec, final) ===== */
 /* digital_70_30 : 70% HaitiBiznis / 30% POS-Agent.  admin_legal_10 : 10% POS-Agent / 90% Provider. */
 const COMM_MODELS={
@@ -1158,6 +1191,30 @@ const ITEM_I18N={
  '+ Plis opsyon avanse':{fr:'+ Options avancées',en:'+ More advanced options',es:'+ Más opciones avanzadas'}
 };
 function tItem(name){const m=ITEM_I18N[name];return (m&&m[lang])||name;}
+/* Netflix/menu service-card copy — big simple names + 3-word taglines + hero badges */
+const T_CARD={
+ ht:{start_go:'Kòmanse',you_earn:'Ou touche',bg_earn:'FÈ KÒB',bg_new:'NOUVO',bg_pop:'POPILÈ',bg_protect:'PWOTEKSYON',bg_official:'OFISYÈL',bg_soon:'BYENTO',
+  cn_msouwout:'MsouWout',cs_msouwout:'Moto & Taxi Verifye',cn_myplopplop:'MyPlopPlop',cs_myplopplop:'Achte Tout Bagay',cn_parenaj:'Parenaj Biznis',cs_parenaj:'Fè Kòb Fasil',cn_hbtech:'48HoursReady',cs_hbtech:'Kreye Biznis Ou',
+  cn_admin:'Papye Biznis',cs_admin:'Dokiman Leta',cn_legal:'Avoka',cs_legal:'Èd Legal',cn_pwofesyonel:'Jwenn Pwofesyonèl',cs_pwofesyonel:'Elektrisyen, Plonbye…',cn_tikelakay:'Tikè Lakay',cs_tikelakay:'Tikè Evènman',
+  cn_delivery:'Livrezon',cs_delivery:'Voye & Resevwa',cn_pakebiznis:'Pakè Biznis',cs_pakebiznis:'Tout an Yon',cn_website:'Sit Entènèt',cs_website:'Kreye Sit Ou',cn_presswire:'Kominike Laprès',cs_presswire:'Fè Nouvèl Ou',
+  cn_billpay:'Peman Fakti',cs_billpay:'Kouran, Kab…',cn_water:'Peman Dlo',cs_water:'DINEPA, Kamyon',cn_asirans:'Asirans',cs_asirans:'Pwoteje Tèt Ou',cn_cashaccess:'Retrè Kach',cs_cashaccess:'Pran Kòb Ou',cn_bizreg:'Anrejistre Biznis',cs_bizreg:'Louvri Biznis Ou'},
+ fr:{start_go:'Commencer',you_earn:'Vous gagnez',bg_earn:'GAGNER',bg_new:'NOUVEAU',bg_pop:'POPULAIRE',bg_protect:'PROTECTION',bg_official:'OFFICIEL',bg_soon:'BIENTÔT',
+  cn_msouwout:'MsouWout',cs_msouwout:'Moto & Taxi vérifiés',cn_myplopplop:'MyPlopPlop',cs_myplopplop:'Achetez tout',cn_parenaj:'Parrainage',cs_parenaj:'Gagnez facilement',cn_hbtech:'48HoursReady',cs_hbtech:'Créez votre business',
+  cn_admin:'Papiers d’affaires',cs_admin:'Documents d’État',cn_legal:'Avocat',cs_legal:'Aide juridique',cn_pwofesyonel:'Trouver un pro',cs_pwofesyonel:'Électricien, plombier…',cn_tikelakay:'Billets',cs_tikelakay:'Billets d’événements',
+  cn_delivery:'Livraison',cs_delivery:'Envoyer & recevoir',cn_pakebiznis:'Forfait Business',cs_pakebiznis:'Tout-en-un',cn_website:'Site web',cs_website:'Créez votre site',cn_presswire:'Communiqué',cs_presswire:'Faites parler de vous',
+  cn_billpay:'Factures',cs_billpay:'Électricité, câble…',cn_water:'Eau',cs_water:'DINEPA, camion',cn_asirans:'Assurance',cs_asirans:'Protégez-vous',cn_cashaccess:'Retrait',cs_cashaccess:'Retirez votre argent',cn_bizreg:'Enregistrer entreprise',cs_bizreg:'Ouvrez votre business'},
+ en:{start_go:'Start',you_earn:'You earn',bg_earn:'EARN',bg_new:'NEW',bg_pop:'POPULAR',bg_protect:'PROTECTED',bg_official:'OFFICIAL',bg_soon:'SOON',
+  cn_msouwout:'MsouWout',cs_msouwout:'Verified Moto & Taxi',cn_myplopplop:'MyPlopPlop',cs_myplopplop:'Buy Anything',cn_parenaj:'Referral',cs_parenaj:'Earn Easily',cn_hbtech:'48HoursReady',cs_hbtech:'Create Your Business',
+  cn_admin:'Business Papers',cs_admin:'Government Docs',cn_legal:'Lawyer',cs_legal:'Legal Help',cn_pwofesyonel:'Find a Pro',cs_pwofesyonel:'Electrician, plumber…',cn_tikelakay:'Tickets',cs_tikelakay:'Event Tickets',
+  cn_delivery:'Delivery',cs_delivery:'Send & Receive',cn_pakebiznis:'Business Pack',cs_pakebiznis:'All-in-One',cn_website:'Website',cs_website:'Build Your Site',cn_presswire:'Press Release',cs_presswire:'Make the News',
+  cn_billpay:'Bill Pay',cs_billpay:'Power, Cable…',cn_water:'Water',cs_water:'DINEPA, Truck',cn_asirans:'Insurance',cs_asirans:'Protect Yourself',cn_cashaccess:'Cash-Out',cs_cashaccess:'Get Your Money',cn_bizreg:'Register Business',cs_bizreg:'Open Your Business'},
+ es:{start_go:'Comenzar',you_earn:'Ganas',bg_earn:'GANAR',bg_new:'NUEVO',bg_pop:'POPULAR',bg_protect:'PROTECCIÓN',bg_official:'OFICIAL',bg_soon:'PRONTO',
+  cn_msouwout:'MsouWout',cs_msouwout:'Moto y Taxi verificados',cn_myplopplop:'MyPlopPlop',cs_myplopplop:'Compra de todo',cn_parenaj:'Referidos',cs_parenaj:'Gana fácil',cn_hbtech:'48HoursReady',cs_hbtech:'Crea tu negocio',
+  cn_admin:'Papeles de negocio',cs_admin:'Documentos del Estado',cn_legal:'Abogado',cs_legal:'Ayuda legal',cn_pwofesyonel:'Encontrar profesional',cs_pwofesyonel:'Electricista, plomero…',cn_tikelakay:'Boletos',cs_tikelakay:'Boletos de eventos',
+  cn_delivery:'Entrega',cs_delivery:'Enviar y recibir',cn_pakebiznis:'Paquete de negocio',cs_pakebiznis:'Todo en uno',cn_website:'Sitio web',cs_website:'Crea tu sitio',cn_presswire:'Comunicado',cs_presswire:'Sé noticia',
+  cn_billpay:'Facturas',cs_billpay:'Luz, cable…',cn_water:'Agua',cs_water:'DINEPA, camión',cn_asirans:'Seguro',cs_asirans:'Protégete',cn_cashaccess:'Retiro',cs_cashaccess:'Retira tu dinero',cn_bizreg:'Registrar negocio',cs_bizreg:'Abre tu negocio'}
+};
+Object.keys(T_CARD).forEach(function(l){if(T[l])Object.assign(T[l],T_CARD[l]);});
 /* small extra UI keys used by order-flow bodies */
 const T_FIX={
  ht:{price_hint:'antre pri, peze +',web_menu_h:'Chwazi pakè sit entènèt ou',biz_baz:'Baz an US$, frè Près an GDES. To: {r} GDES/US$',bill_ref_ph:'Nº kont / referans',water_dinepa:'DINEPA — Dlo',water_other:'Lòt fakti dlo',menu_web:'Sit Entènèt',menu_brand:'Pakè Biznis',rev_split:'Pataj Revni',gross_sales:'Total Vant',your_comm:'Komisyon Ou',platform_share:'Pòsyon HaitiBiznis / Founisè',tag_reg:'Enskripsyon',tag_reg_s:'Enskri',sel_event:'Evènman',comm_digital:'Pwodwi Dijital — 30% pou ou',comm_admin:'Admin / Legal — 10% pou ou',payout_note:'Komisyon ou kalkile otomatikman sou chak vant.',sb_h:'HaitiBiznis Smart Brief',sb_sub:'Dekri biznis ou nan 2 minit — AI nou an ap kreye rès la.',sb_bizname:'Non Biznis',sb_about:'Pale nou de biznis ou',sb_about_ph:'Dekri biznis ou ak pwòp mo pa w. Di nou sa w vann, kiyès kliyan ou yo ye, sa ki fè w diferan, objektif ou, ak nenpòt lòt bagay. Plis detay ou bay, se pi bon AI nou an ap kreye logo, executive summary, pitch deck, videyo ak materyèl maketing ou.',sb_style:'Style ou pi renmen',sb_surprise:'Fè m sipriz',sb_modern:'Modèn',sb_luxury:'Liks',sb_corporate:'Antrepriz',sb_minimalist:'Minimalis',sb_creative:'Kreyatif',sb_colors:'Koulè ou pi renmen',sb_colors_ph:'egz. ble & wouj',sb_delivery:'Dat Livrezon',sb_upload_note:'Ou ka ajoute logo, foto oswa dokiman nan pwochen etap la.',sb_opt:'(opsyonèl)'},
@@ -1273,19 +1330,25 @@ function renderHome(){
     const h=document.createElement('div');h.className='grp-h';
     h.innerHTML=`<span>${t(gr.t)}</span>${gr.soon?`<span class="grp-soon">${t('soon')}</span>`:''}`;
     g.appendChild(h);
-    const sub=document.createElement('div');sub.className='grid';
+    const row=document.createElement('div');row.className='grid';
     gr.ids.forEach(id=>{const m=modById(id);if(!m)return;
+      const cm=CARD_META[id]||{ill:m.em||'📦',badge:null,color:m.color||'var(--blue)'};
       const soon=m.soon||gr.soon;
-      const b=document.createElement('button');b.className='mod';b.style.position='relative';b.style.borderTop='3px solid '+(m.color||'var(--blue)');
-      const nm=m.nmKey?t(m.nmKey):m.nm;
-      const badge=soon?`<span style="position:absolute;top:8px;right:8px;background:#f59e0b;color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:20px">${t('soon')}</span>`
-        :m.commLabel==='earn'?`<span style="position:absolute;top:8px;right:8px;background:var(--good);color:#fff;font-size:9px;font-weight:800;padding:2px 7px;border-radius:20px">${t('hub_earn')}</span>`
-        :commRate(m.id)?`<span style="position:absolute;top:8px;right:8px;background:#e9f7ef;color:#0f9d55;font-size:10px;font-weight:900;padding:2px 7px;border-radius:20px">${commRate(m.id)}%</span>`:'';
-      const icon=m.logo?`<img class="il" src="${m.logo}" alt="">`:`<span style="font-size:26px;width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:${m.color}1a;color:${m.color}">${m.em}</span>`;
-      b.innerHTML=`${badge}${icon}<span class="nm">${nm}</span>`;
-      if(soon){b.style.opacity='.6';b.onclick=()=>caSoon();}else b.onclick=()=>openModule(m);
-      sub.appendChild(b);});
-    g.appendChild(sub);
+      const col=cm.color;
+      const bt=soon?'soon':cm.badge;const bm=bt?BADGE_META[bt]:null;
+      const badge=bm?`<span class="bdg" style="background:${bm.c}">${t(bm.k)}</span>`:'';
+      const nm=t('cn_'+id)!=='cn_'+id?t('cn_'+id):(m.nmKey?t(m.nmKey):m.nm);
+      const sub=t('cs_'+id)!=='cs_'+id?t('cs_'+id):'';
+      const rate=commRate(m.id);
+      const comm=(!soon&&rate)?`<div class="comm" style="color:#0f9d55">💰 ${t('you_earn')} ${rate}%</div>`:'';
+      const card=document.createElement('div');card.className='svc'+(soon?' soon':'');
+      card.innerHTML=`<div class="ill" style="background:linear-gradient(135deg,${col}26,${col}0d)">${cm.ill}${badge}</div>
+        <div class="bd"><div class="nm">${nm}</div><div class="sub">${sub}</div>${comm}
+        <button class="go" style="background:${soon?'#94a3b8':col}">${soon?t('bg_soon'):t('start_go')+' →'}</button></div>`;
+      const go=card.querySelector('.go');
+      if(soon){go.onclick=()=>caSoon();}else{go.onclick=()=>openModule(m);}
+      row.appendChild(card);});
+    g.appendChild(row);
   });
   document.getElementById('homeRefer').innerHTML=`
    <button onclick="go('ref')" style="width:100%;border:0;border-radius:18px;padding:18px;margin-top:16px;text-align:left;color:#fff;background:linear-gradient(135deg,var(--good),#0b7a44);box-shadow:0 10px 26px rgba(15,157,85,.3)">
