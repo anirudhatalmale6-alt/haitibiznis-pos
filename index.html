@@ -195,6 +195,19 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
 .cta{width:100%;border:0;background:var(--blue);color:#fff;font-weight:800;font-size:17px;padding:16px;border-radius:14px;box-shadow:var(--shadow-lg);margin-top:4px}
 .cta:active{transform:scale(.99)}.cta.red{background:var(--red)}.cta.green{background:var(--good)}.cta.ghost{background:#fff;color:var(--blue);border:1.5px solid var(--line);box-shadow:var(--shadow)}.cta:disabled{opacity:.45}
 .row2 .cta{margin-top:0}
+/* Registration form — branded hero + document tiles (ecosystem-consistent) */
+.reghero{border-radius:18px;padding:18px 18px;margin-bottom:16px;color:#fff;display:flex;align-items:center;gap:14px;box-shadow:0 10px 26px rgba(20,30,60,.2)}
+.reghero .rh-ic{width:64px;height:64px;border-radius:18px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:38px;flex:0 0 auto}
+.reghero .rh-t{font-weight:900;font-size:18px;line-height:1.15}
+.reghero .rh-s{font-size:12.5px;opacity:.92;margin-top:4px;font-weight:600}
+.docs-h{font-weight:900;font-size:13.5px;margin:2px 2px 9px;display:flex;align-items:center;gap:7px}
+.uptile{display:flex;align-items:center;gap:12px;border:2px dashed var(--line);border-radius:14px;padding:12px 13px;margin-bottom:10px;cursor:pointer;background:#fafbfe;transition:.15s}
+.uptile:active{transform:scale(.99)}
+.uptile.done{border-style:solid;border-color:var(--good);background:#f0fbf4}
+.uptile .ut-ic{width:44px;height:44px;border-radius:12px;background:#eef3ff;display:flex;align-items:center;justify-content:center;font-size:22px;flex:0 0 auto}
+.uptile .ut-t{font-weight:800;font-size:13px;line-height:1.2}
+.uptile .ut-s{font-size:11px;color:var(--muted);font-weight:600;margin-top:3px}
+.uptile.done .ut-s{color:var(--good);font-weight:800}
 /* orders */
 .searchbox{margin-bottom:12px}
 .filterbar{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px}
@@ -1215,6 +1228,14 @@ const T_CARD={
   cn_billpay:'Facturas',cs_billpay:'Luz, cable…',cn_water:'Agua',cs_water:'DINEPA, camión',cn_asirans:'Seguro',cs_asirans:'Protégete',cn_cashaccess:'Retiro',cs_cashaccess:'Retira tu dinero',cn_bizreg:'Registrar negocio',cs_bizreg:'Abre tu negocio'}
 };
 Object.keys(T_CARD).forEach(function(l){if(T[l])Object.assign(T[l],T_CARD[l]);});
+/* Registration hero subtitles + document-tile labels (ecosystem-consistent form) */
+const T_REGH={
+ ht:{reg_s_driver:'Vin yon chofè verifye',reg_s_rider:'Kreye kont pasaje ou',reg_s_merchant:'Mete magazen ou anliy',reg_s_pro:'Ofri sèvis ou yo',reg_s_affiliate:'Envite biznis, fè kòb',docs_h:'📸 Foto Dokiman',up_tap:'Peze pou ajoute yon foto',up_added:'Foto ajoute',up_storephoto:'Foto Magazen',up_ownerid:'Kat Idantite Pwopriyetè'},
+ fr:{reg_s_driver:'Devenez chauffeur vérifié',reg_s_rider:'Créez votre compte passager',reg_s_merchant:'Mettez votre boutique en ligne',reg_s_pro:'Offrez vos services',reg_s_affiliate:'Invitez des entreprises, gagnez',docs_h:'📸 Photos des documents',up_tap:'Appuyez pour ajouter une photo',up_added:'Photo ajoutée',up_storephoto:'Photo de la boutique',up_ownerid:'Pièce d’identité du propriétaire'},
+ en:{reg_s_driver:'Become a verified driver',reg_s_rider:'Create your rider account',reg_s_merchant:'Put your store online',reg_s_pro:'Offer your services',reg_s_affiliate:'Invite businesses, earn',docs_h:'📸 Document Photos',up_tap:'Tap to add a photo',up_added:'Photo added',up_storephoto:'Store Photo',up_ownerid:'Owner ID'},
+ es:{reg_s_driver:'Conviértete en conductor verificado',reg_s_rider:'Crea tu cuenta de pasajero',reg_s_merchant:'Pon tu tienda en línea',reg_s_pro:'Ofrece tus servicios',reg_s_affiliate:'Invita negocios, gana',docs_h:'📸 Fotos de documentos',up_tap:'Toca para agregar una foto',up_added:'Foto agregada',up_storephoto:'Foto de la tienda',up_ownerid:'ID del propietario'}
+};
+Object.keys(T_REGH).forEach(function(l){if(T[l])Object.assign(T[l],T_REGH[l]);});
 /* small extra UI keys used by order-flow bodies */
 const T_FIX={
  ht:{price_hint:'antre pri, peze +',web_menu_h:'Chwazi pakè sit entènèt ou',biz_baz:'Baz an US$, frè Près an GDES. To: {r} GDES/US$',bill_ref_ph:'Nº kont / referans',water_dinepa:'DINEPA — Dlo',water_other:'Lòt fakti dlo',menu_web:'Sit Entènèt',menu_brand:'Pakè Biznis',rev_split:'Pataj Revni',gross_sales:'Total Vant',your_comm:'Komisyon Ou',platform_share:'Pòsyon HaitiBiznis / Founisè',tag_reg:'Enskripsyon',tag_reg_s:'Enskri',sel_event:'Evènman',comm_digital:'Pwodwi Dijital — 30% pou ou',comm_admin:'Admin / Legal — 10% pou ou',payout_note:'Komisyon ou kalkile otomatikman sou chak vant.',sb_h:'HaitiBiznis Smart Brief',sb_sub:'Dekri biznis ou nan 2 minit — AI nou an ap kreye rès la.',sb_bizname:'Non Biznis',sb_about:'Pale nou de biznis ou',sb_about_ph:'Dekri biznis ou ak pwòp mo pa w. Di nou sa w vann, kiyès kliyan ou yo ye, sa ki fè w diferan, objektif ou, ak nenpòt lòt bagay. Plis detay ou bay, se pi bon AI nou an ap kreye logo, executive summary, pitch deck, videyo ak materyèl maketing ou.',sb_style:'Style ou pi renmen',sb_surprise:'Fè m sipriz',sb_modern:'Modèn',sb_luxury:'Liks',sb_corporate:'Antrepriz',sb_minimalist:'Minimalis',sb_creative:'Kreyatif',sb_colors:'Koulè ou pi renmen',sb_colors_ph:'egz. ble & wouj',sb_delivery:'Dat Livrezon',sb_upload_note:'Ou ka ajoute logo, foto oswa dokiman nan pwochen etap la.',sb_opt:'(opsyonèl)'},
@@ -1225,8 +1246,10 @@ const T_FIX={
 Object.keys(T_FIX).forEach(function(l){Object.assign(T[l],T_FIX[l]);});
 
 /* registration form schemas (person-first) */
-const UP_KEY={'Driver License':'up_driverlic','National ID':'up_natid','Insurance':'up_insurance','Vehicle Registration':'up_vehreg','Driver Photo':'up_driverphoto','Business Documents':'up_bizdocs','Diploma / Certification':'up_diploma','Experience Documents':'up_expdocs'};
+const UP_KEY={'Driver License':'up_driverlic','National ID':'up_natid','Insurance':'up_insurance','Vehicle Registration':'up_vehreg','Driver Photo':'up_driverphoto','Business Documents':'up_bizdocs','Diploma / Certification':'up_diploma','Experience Documents':'up_expdocs','Store Photo':'up_storephoto','Owner ID':'up_ownerid'};
 function upT(u){return UP_KEY[u]?t(UP_KEY[u]):u;}
+/* branded hero per registration kind (ecosystem-consistent look) */
+const REG_HERO={driver:{em:'🛵',color:'#D21034'},rider:{em:'🙋',color:'#2563eb'},merchant:{em:'🏪',color:'#0ea5a0'},pro:{em:'👷',color:'#f59e0b'},affiliate:{em:'🤝',color:'#12a150'}};
 const REG_FORMS={
  driver:{titleKey:'reg_t_driver',statusSet:'verify',prefix:'DRV',feeKey:'regFeeDriver',
    fields:[['name','f_name',1],['phone','f_phone'],['wa','f_wa'],['vehicle','vehicle'],['plate','plate'],['color','color']],
@@ -1235,7 +1258,7 @@ const REG_FORMS={
    fields:[['name','f_name',1],['phone','f_phone'],['wa','f_wa']],uploads:[]},
  merchant:{titleKey:'reg_t_merchant',statusSet:'merch',prefix:'MRC',feeKey:'regFeeMerchant',
    fields:[['biz','store_name'],['category','category','sel',MERCH_CATS],['name','owner',1],['phone','f_phone'],['wa','f_wa'],['addr','mp_location'],['desc','store_desc','ta'],['referral','referral_partner','sel',MERCH_REFERRAL]],
-   uploads:[]},
+   uploads:['Store Photo','Owner ID']},
  pro:{titleKey:'reg_t_pro',statusSet:'pro',prefix:'PRO',feeKey:'regFeePro',
    fields:[['name','f_name',1],['profession','profession'],['phone','f_phone'],['wa','f_wa'],['addr','address']],
    uploads:['National ID','Diploma / Certification','Experience Documents']},
@@ -1671,8 +1694,12 @@ async function completeFlow(){if(!flow.payment){alert(t('need_pay'));return;}
    =================================================================== */
 let reg=null;
 function startReg(kind){const sc=REG_FORMS[kind];reg={kind,docs:{},fee:0,vehType:'moto'};
-  {const rt=document.getElementById('regTitle');rt.textContent=t(sc.titleKey);rt.setAttribute('data-i18n',sc.titleKey);}document.getElementById('regSub').textContent='';
+  {const rt=document.getElementById('regTitle');rt.textContent='';rt.style.display='none';}document.getElementById('regSub').textContent='';
   const body=document.getElementById('regBody');body.innerHTML='';
+  {const hm=REG_HERO[kind]||{em:'📝',color:'#2563eb'};const hero=document.createElement('div');hero.className='reghero';
+   hero.style.background='linear-gradient(135deg,rgba(0,0,0,0),rgba(0,0,0,.28)),'+hm.color;
+   hero.innerHTML=`<div class="rh-ic">${hm.em}</div><div class="rh-tx"><div class="rh-t" data-i18n="${sc.titleKey}">${t(sc.titleKey)}</div><div class="rh-s" data-i18n="reg_s_${kind}">${t('reg_s_'+kind)}</div></div>`;
+   body.appendChild(hero);}
   if(kind==='affiliate'){const cl=document.createElement('button');cl.className='cta ghost';cl.style.marginBottom='12px';cl.textContent=t('aff_comm')+' →';cl.onclick=openCommission;body.appendChild(cl);}
   const card=document.createElement('div');card.className='card';
   sc.fields.forEach(f=>{const[key,lbl,type,opts]=f;
@@ -1683,11 +1710,13 @@ function startReg(kind){const sc=REG_FORMS[kind];reg={kind,docs:{},fee:0,vehType
   });
   const feeKey=sc.feeKey;if(feeKey){card.innerHTML+=`<label class="fl">${t('set_regfee_'+(kind==='driver'?'d':kind==='rider'?'r':kind==='merchant'?'m':'p'))||'Frè (GDES)'}</label><input type="number" id="rf_fee" inputmode="numeric" value="${getCfg()[feeKey]||0}">`;}
   body.appendChild(card);
-  sc.uploads.forEach(u=>{const ul=upT(u);const wrap=document.createElement('div');wrap.innerHTML=`<div class="upgroup">${ul}</div>`;
-    const lab=document.createElement('label');lab.className='dropz';lab.style.padding='12px';lab.innerHTML=`📎 ${ul}`;
+  if(sc.uploads.length){const dh=document.createElement('div');dh.className='docs-h';dh.setAttribute('data-i18n','docs_h');dh.textContent=t('docs_h');body.appendChild(dh);}
+  sc.uploads.forEach(u=>{const ul=upT(u);
+    const lab=document.createElement('label');lab.className='uptile';
+    lab.innerHTML=`<div class="ut-ic">📷</div><div class="ut-tx"><div class="ut-t">${ul}</div><div class="ut-s">${t('up_tap')}</div></div>`;
     const inp=document.createElement('input');inp.type='file';inp.accept='.pdf,.jpg,.jpeg,.png,.docx,image/*';inp.style.display='none';
-    lab.appendChild(inp);inp.onchange=e=>{reg.docs[u]=[...e.target.files].map(f=>f.name);const badge=wrap.querySelector('.upgroup');badge.textContent=ul+' ✓ ('+e.target.files.length+')';};
-    wrap.appendChild(lab);body.appendChild(wrap);});
+    lab.appendChild(inp);inp.onchange=e=>{reg.docs[u]=[...e.target.files].map(f=>f.name);lab.classList.add('done');lab.querySelector('.ut-ic').textContent='✅';lab.querySelector('.ut-s').textContent='✓ '+t('up_added')+' ('+e.target.files.length+')';};
+    body.appendChild(lab);});
   const btn=document.createElement('button');btn.className='cta';btn.textContent=sc.feeKey?t('pay_do'):t('save');btn.onclick=()=>saveReg(kind);body.appendChild(btn);
   go('reg');
   if(sc.fields.some(f=>f[0]==='vehicle')){document.getElementById('veh_moto').classList.remove('ghost');
@@ -1714,7 +1743,7 @@ function saveReg(kind){const sc=REG_FORMS[kind];const name=document.getElementBy
 }
 
 /* ---------- Driver Verification (checklist) ---------- */
-function openVerify(){const body=document.getElementById('regBody');{const rt=document.getElementById('regTitle');rt.textContent=t('verify_t');rt.setAttribute('data-i18n','verify_t');}
+function openVerify(){const body=document.getElementById('regBody');{const rt=document.getElementById('regTitle');rt.style.display='';rt.textContent=t('verify_t');rt.setAttribute('data-i18n','verify_t');}
   document.getElementById('regSub').textContent='';
   const drivers=load('hb_orders',[]).filter(o=>o.regKind==='driver');
   body.innerHTML='';
@@ -1730,7 +1759,7 @@ function openVerify(){const body=document.getElementById('regBody');{const rt=do
 }
 
 /* ---------- MyPlopPlop Delivery ---------- */
-function openDelivery(){{const rt=document.getElementById('regTitle');rt.textContent=t('reg_t_delivery');rt.setAttribute('data-i18n','reg_t_delivery');}document.getElementById('regSub').textContent='';
+function openDelivery(){{const rt=document.getElementById('regTitle');rt.style.display='';rt.textContent=t('reg_t_delivery');rt.setAttribute('data-i18n','reg_t_delivery');}document.getElementById('regSub').textContent='';
   const body=document.getElementById('regBody');
   body.innerHTML=`<div class="card">
     <label class="fl">${t('f_name')}</label><input type="text" id="dl_name">
@@ -1765,7 +1794,7 @@ function saveDelivery(){const name=document.getElementById('dl_name').value.trim
 }
 
 /* ---------- Parenaj commission ---------- */
-function openCommission(){{const rt=document.getElementById('regTitle');rt.textContent=t('aff_comm');rt.setAttribute('data-i18n','aff_comm');}document.getElementById('regSub').textContent='';
+function openCommission(){{const rt=document.getElementById('regTitle');rt.style.display='';rt.textContent=t('aff_comm');rt.setAttribute('data-i18n','aff_comm');}document.getElementById('regSub').textContent='';
   const affs=load('hb_orders',[]).filter(o=>o.regKind==='affiliate');const body=document.getElementById('regBody');body.innerHTML='';
   if(!affs.length){body.innerHTML=`<div class="empty"><div class="ee">🤝</div>—</div>`;go('reg');return;}
   const pays=load('hb_commissions',[]);
