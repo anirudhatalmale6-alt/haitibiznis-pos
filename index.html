@@ -83,13 +83,16 @@ main{padding:16px 14px}
 /* Netflix/menu-style service cards */
 .svc{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 6px 18px rgba(20,30,60,.08);display:flex;flex-direction:column;transition:transform .15s ease,box-shadow .15s ease}
 .svc:active{transform:scale(.98)}
-.svc .ill{position:relative;height:104px;display:flex;align-items:center;justify-content:center;font-size:52px}
+.svc .ill{position:relative;height:132px;display:flex;align-items:center;justify-content:center;font-size:80px}
 .svc .bdg{position:absolute;top:9px;right:9px;color:#fff;font-size:10px;font-weight:900;padding:4px 10px;border-radius:999px;letter-spacing:.4px;box-shadow:0 3px 9px rgba(0,0,0,.2)}
-.svc .bd{padding:11px 13px 13px;display:flex;flex-direction:column;flex:1}
-.svc .nm{font-size:15.5px;font-weight:900;line-height:1.15;color:var(--ink)}
-.svc .sub{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:3px;line-height:1.25;flex:1}
-.svc .comm{font-size:10.5px;font-weight:800;margin-top:8px;display:flex;align-items:center;gap:3px}
-.svc .go{margin-top:10px;border:0;border-radius:12px;padding:12px;font-weight:900;font-size:13.5px;color:#fff;display:flex;align-items:center;justify-content:center;gap:5px;box-shadow:0 4px 12px rgba(20,30,60,.16)}
+.svc .bdg.reco{left:9px;right:auto;font-size:10.5px;animation:ibpulse 1.6s ease-in-out infinite}
+.svc .bd{padding:11px 13px 14px;display:flex;flex-direction:column;flex:1}
+.svc .nm{font-size:16.5px;font-weight:900;line-height:1.15;color:var(--ink)}
+.svc .sub{font-size:12px;color:var(--muted);font-weight:600;margin-top:3px;line-height:1.25;flex:1}
+.svc .comm{font-size:11px;font-weight:800;margin-top:8px;display:flex;align-items:center;gap:3px}
+.svc .go{margin-top:11px;border:0;border-radius:12px;padding:15px 12px;font-weight:900;font-size:15px;color:#fff;display:flex;align-items:center;justify-content:center;gap:5px;box-shadow:0 5px 14px rgba(20,30,60,.18)}
+.welcomebar{background:linear-gradient(120deg,#fff6e6,#fff);border:1px solid #ffe2b0;border-left:5px solid var(--red);border-radius:14px;padding:13px 15px;margin:16px 0 6px;font-weight:800;font-size:14.5px;color:var(--ink);display:flex;align-items:center;gap:9px;line-height:1.3}
+.morebtn{width:100%;border:1.5px dashed var(--blue);background:#eef3ff;color:var(--blue);border-radius:14px;padding:14px;font-weight:900;font-size:14.5px;margin:6px 0 4px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
 .svc.soon{opacity:.66}
 .svc.soon .go{box-shadow:none}
 .mod:active{transform:translateY(-3px) scale(.98);box-shadow:var(--shadow-lg)}
@@ -769,7 +772,7 @@ const T_HUB={
   hub_newsale:'Nouvo Vant',hub_inventory:'Envantè',hub_customers:'Kliyan',hub_earn:'Fè Kòb',
   hub_invite_t:'Envite Biznis',hub_invite_s:'Fè komisyon chak mwa ak Parenaj Biznis.',hub_invite_btn:'Envite Kounye a',
   hub_soon_msg:'N ap prepare fonksyon sa a. Li ap disponib byento.',
-  svc_marketplace:'MyPlopPlop',svc_ride:'MsouWout',svc_parenaj:'Parenaj Biznis',svc_bizreg:'Anrejistreman Biznis',svc_insurance:'Asirans',svc_bills:'Peman Fakti',svc_water:'Peman Dlo',svc_tickets:'Tikè Lakay',svc_website:'Kreyasyon Sit Web',svc_hbtech:'48HoursReady',svc_delivery:'Livrezon',svc_admin:'Sèvis Administratif',svc_legal:'Sèvis Legal',svc_pro:'Pwofesyonèl Lakay',svc_cashout:'Retrè Kach',svc_presswire:'Kominike pou Laprès',svc_pakebiznis:'Pakè Biznis',grp_core:'Ekosistèm Prensipal',grp_biz:'Sèvis Biznis',grp_growth:'Kòmès & Kwasans Biznis',grp_fin:'Sèvis Finansye',fab_reg:'Nouvo Enskripsyon',fab_driver:'Enskri Chofè MsouWout',fab_merchant:'Enskri Machann MyPlopPlop',fab_parenaj:'Enskri Parenaj Biznis',fab_pakebiznis:'Kòmande Pakè Biznis',
+  svc_marketplace:'MyPlopPlop',svc_ride:'MsouWout',svc_parenaj:'Parenaj Biznis',svc_bizreg:'Anrejistreman Biznis',svc_insurance:'Asirans',svc_bills:'Peman Fakti',svc_water:'Peman Dlo',svc_tickets:'Tikè Lakay',svc_website:'Kreyasyon Sit Web',svc_hbtech:'48HoursReady',svc_delivery:'Livrezon',svc_admin:'Sèvis Administratif',svc_legal:'Sèvis Legal',svc_pro:'Pwofesyonèl Lakay',svc_cashout:'Retrè Kach',svc_presswire:'Kominike pou Laprès',svc_pakebiznis:'Pakè Biznis',grp_core:'Ekosistèm Prensipal',grp_biz:'Sèvis Biznis',grp_growth:'Kòmès & Kwasans Biznis',grp_fin:'Sèvis Finansye',fab_reg:'Nouvo Kliyan',fab_driver:'Enskri Chofè MsouWout',fab_merchant:'Enskri Machann MyPlopPlop',fab_parenaj:'Enskri Parenaj Biznis',fab_pakebiznis:'Kòmande Pakè Biznis',
   earn_t:'Kòb Ou Fè',earn_sub:'Tout revni ou nan ekosistèm HaitiBiznis.',earn_lifetime:'Total Depi Toujou',earn_today:'Jodi a',earn_month:'Mwa sa a',
   earn_direct:'Vant Dirèk (pa sèvis)',earn_parenaj:'Parenaj Biznis',earn_referred:'Machann Refere',earn_active_ref:'Parenaj Aktif',earn_ref_income:'Revni Parenaj',earn_open_ref:'Louvri Parenaj',earn_none:'Poko gen komisyon.',
   ref_t:'Parenaj Biznis',ref_sub:'Envite lòt biznis, fè komisyon chak mwa.',ref_invite:'Envite yon Biznis',ref_copy:'Kopye Lyen an',ref_yours:'Parenaj Ou',
@@ -782,7 +785,7 @@ const T_HUB={
   hub_newsale:'Nouvelle vente',hub_inventory:'Inventaire',hub_customers:'Clients',hub_earn:'Gagner',
   hub_invite_t:'Inviter des entreprises',hub_invite_s:'Gagnez des commissions mensuelles avec Parenaj Biznis.',hub_invite_btn:'Inviter',
   hub_soon_msg:'Cette fonction arrive bientôt.',
-  svc_marketplace:'MyPlopPlop',svc_ride:'MsouWout',svc_parenaj:'Parrainage',svc_bizreg:'Enregistrement d’entreprise',svc_insurance:'Assurance',svc_bills:'Paiement de factures',svc_water:'Paiement d’eau',svc_tickets:'Tikè Lakay',svc_website:'Création de site web',svc_hbtech:'48HoursReady',svc_delivery:'Livraison',svc_admin:'Services administratifs',svc_legal:'Services juridiques',svc_pro:'Professionnels',svc_cashout:'Retrait d’espèces',svc_presswire:'Communiqué de presse',svc_pakebiznis:'Forfait Business',grp_core:'Écosystème principal',grp_biz:'Services aux entreprises',grp_growth:'Commerce & Croissance',grp_fin:'Services financiers',fab_reg:'Nouvelle inscription',fab_driver:'Inscrire chauffeur MsouWout',fab_merchant:'Inscrire marchand MyPlopPlop',fab_parenaj:'Inscrire Parenaj Biznis',fab_pakebiznis:'Commander Forfait Business',
+  svc_marketplace:'MyPlopPlop',svc_ride:'MsouWout',svc_parenaj:'Parrainage',svc_bizreg:'Enregistrement d’entreprise',svc_insurance:'Assurance',svc_bills:'Paiement de factures',svc_water:'Paiement d’eau',svc_tickets:'Tikè Lakay',svc_website:'Création de site web',svc_hbtech:'48HoursReady',svc_delivery:'Livraison',svc_admin:'Services administratifs',svc_legal:'Services juridiques',svc_pro:'Professionnels',svc_cashout:'Retrait d’espèces',svc_presswire:'Communiqué de presse',svc_pakebiznis:'Forfait Business',grp_core:'Écosystème principal',grp_biz:'Services aux entreprises',grp_growth:'Commerce & Croissance',grp_fin:'Services financiers',fab_reg:'Nouveau client',fab_driver:'Inscrire chauffeur MsouWout',fab_merchant:'Inscrire marchand MyPlopPlop',fab_parenaj:'Inscrire Parenaj Biznis',fab_pakebiznis:'Commander Forfait Business',
   earn_t:'Vos revenus',earn_sub:'Tous vos revenus dans l’écosystème HaitiBiznis.',earn_lifetime:'Total à vie',earn_today:'Aujourd’hui',earn_month:'Ce mois',
   earn_direct:'Ventes directes (par service)',earn_parenaj:'Parrainage',earn_referred:'Marchands parrainés',earn_active_ref:'Parrainages actifs',earn_ref_income:'Revenu de parrainage',earn_open_ref:'Ouvrir parrainage',earn_none:'Pas encore de commissions.',
   ref_t:'Parrainage',ref_sub:'Invitez d’autres entreprises, gagnez chaque mois.',ref_invite:'Inviter une entreprise',ref_copy:'Copier le lien',ref_yours:'Vos parrainages',
@@ -795,7 +798,7 @@ const T_HUB={
   hub_newsale:'New Sale',hub_inventory:'Inventory',hub_customers:'Customers',hub_earn:'Earn',
   hub_invite_t:'Invite Businesses',hub_invite_s:'Earn recurring monthly commissions through Parenaj Biznis.',hub_invite_btn:'Invite Now',
   hub_soon_msg:'This feature is coming soon.',
-  svc_marketplace:'MyPlopPlop',svc_ride:'MsouWout',svc_parenaj:'Parenaj Biznis',svc_bizreg:'Business Registration',svc_insurance:'Insurance',svc_bills:'Bill Payments',svc_water:'Water Payments',svc_tickets:'Tikè Lakay',svc_website:'Website Creation',svc_hbtech:'48HoursReady',svc_delivery:'Delivery',svc_admin:'Admin Services',svc_legal:'Legal Services',svc_pro:'Professionals',svc_cashout:'Cash-Out',svc_presswire:'Press Release',svc_pakebiznis:'Business Pack',grp_core:'Core Ecosystem',grp_biz:'Business Services',grp_growth:'Commerce & Business Growth',grp_fin:'Financial Services',fab_reg:'New Registration',fab_driver:'Register MsouWout Driver',fab_merchant:'Register MyPlopPlop Merchant',fab_parenaj:'Register Parenaj Biznis',fab_pakebiznis:'Order Business Pack',
+  svc_marketplace:'MyPlopPlop',svc_ride:'MsouWout',svc_parenaj:'Parenaj Biznis',svc_bizreg:'Business Registration',svc_insurance:'Insurance',svc_bills:'Bill Payments',svc_water:'Water Payments',svc_tickets:'Tikè Lakay',svc_website:'Website Creation',svc_hbtech:'48HoursReady',svc_delivery:'Delivery',svc_admin:'Admin Services',svc_legal:'Legal Services',svc_pro:'Professionals',svc_cashout:'Cash-Out',svc_presswire:'Press Release',svc_pakebiznis:'Business Pack',grp_core:'Core Ecosystem',grp_biz:'Business Services',grp_growth:'Commerce & Business Growth',grp_fin:'Financial Services',fab_reg:'New Customer',fab_driver:'Register MsouWout Driver',fab_merchant:'Register MyPlopPlop Merchant',fab_parenaj:'Register Parenaj Biznis',fab_pakebiznis:'Order Business Pack',
   earn_t:'Your Earnings',earn_sub:'All your income across the HaitiBiznis ecosystem.',earn_lifetime:'Lifetime Total',earn_today:'Today',earn_month:'This Month',
   earn_direct:'Direct Sales (by service)',earn_parenaj:'Parenaj Biznis',earn_referred:'Referred Merchants',earn_active_ref:'Active Referrals',earn_ref_income:'Referral Income',earn_open_ref:'Open Referral',earn_none:'No commissions yet.',
   ref_t:'Parenaj Biznis',ref_sub:'Invite other businesses, earn every month.',ref_invite:'Invite a Business',ref_copy:'Copy Link',ref_yours:'Your Referrals',
@@ -808,7 +811,7 @@ const T_HUB={
   hub_newsale:'Nueva venta',hub_inventory:'Inventario',hub_customers:'Clientes',hub_earn:'Ganar',
   hub_invite_t:'Invitar negocios',hub_invite_s:'Gana comisiones mensuales recurrentes con Parenaj Biznis.',hub_invite_btn:'Invitar ahora',
   hub_soon_msg:'Esta función estará disponible pronto.',
-  svc_marketplace:'MyPlopPlop',svc_ride:'MsouWout',svc_parenaj:'Parenaj Biznis',svc_bizreg:'Registro de empresas',svc_insurance:'Seguros',svc_bills:'Pago de facturas',svc_water:'Pago de agua',svc_tickets:'Tikè Lakay',svc_website:'Creación de sitios web',svc_hbtech:'48HoursReady',svc_delivery:'Entrega',svc_admin:'Servicios administrativos',svc_legal:'Servicios legales',svc_pro:'Profesionales',svc_cashout:'Retiro de efectivo',svc_presswire:'Comunicado de prensa',svc_pakebiznis:'Paquete de negocio',grp_core:'Ecosistema principal',grp_biz:'Servicios empresariales',grp_growth:'Comercio y crecimiento',grp_fin:'Servicios financieros',fab_reg:'Nuevo registro',fab_driver:'Registrar conductor MsouWout',fab_merchant:'Registrar comerciante MyPlopPlop',fab_parenaj:'Registrar Parenaj Biznis',fab_pakebiznis:'Pedir paquete de negocio',
+  svc_marketplace:'MyPlopPlop',svc_ride:'MsouWout',svc_parenaj:'Parenaj Biznis',svc_bizreg:'Registro de empresas',svc_insurance:'Seguros',svc_bills:'Pago de facturas',svc_water:'Pago de agua',svc_tickets:'Tikè Lakay',svc_website:'Creación de sitios web',svc_hbtech:'48HoursReady',svc_delivery:'Entrega',svc_admin:'Servicios administrativos',svc_legal:'Servicios legales',svc_pro:'Profesionales',svc_cashout:'Retiro de efectivo',svc_presswire:'Comunicado de prensa',svc_pakebiznis:'Paquete de negocio',grp_core:'Ecosistema principal',grp_biz:'Servicios empresariales',grp_growth:'Comercio y crecimiento',grp_fin:'Servicios financieros',fab_reg:'Nuevo cliente',fab_driver:'Registrar conductor MsouWout',fab_merchant:'Registrar comerciante MyPlopPlop',fab_parenaj:'Registrar Parenaj Biznis',fab_pakebiznis:'Pedir paquete de negocio',
   earn_t:'Tus ingresos',earn_sub:'Todos tus ingresos en el ecosistema HaitiBiznis.',earn_lifetime:'Total histórico',earn_today:'Hoy',earn_month:'Este mes',
   earn_direct:'Ventas directas (por servicio)',earn_parenaj:'Parenaj Biznis',earn_referred:'Comerciantes referidos',earn_active_ref:'Referidos activos',earn_ref_income:'Ingreso por referidos',earn_open_ref:'Abrir referidos',earn_none:'Aún no hay comisiones.',
   ref_t:'Parenaj Biznis',ref_sub:'Invita a otros negocios y gana cada mes.',ref_invite:'Invitar un negocio',ref_copy:'Copiar enlace',ref_yours:'Tus referidos',
@@ -958,7 +961,7 @@ function modById(id){return MODULES.find(m=>m.id===id);}
 /* Netflix/menu card metadata: big illustration + category color + hero badge (client redesign) */
 const CARD_META={
  msouwout:{ill:'🛵',badge:'protect',color:'#D21034'},
- myplopplop:{ill:'🛒',badge:'popular',color:'#0ea5a0'},
+ myplopplop:{ill:'🛒',badge:'reco',color:'#0ea5a0'},
  parenaj:{ill:'🤝',badge:'earn',color:'#12a150'},
  hbtech:{ill:'🚀',badge:'new',color:'#2563eb'},
  admin:{ill:'📄',badge:'official',color:'#4f46e5'},
@@ -975,7 +978,7 @@ const CARD_META={
  cashaccess:{ill:'💵',badge:'soon',color:'#12a150'},
  bizreg:{ill:'🏛️',badge:'official',color:'#4f46e5'}
 };
-const BADGE_META={earn:{k:'bg_earn',c:'#12a150'},'new':{k:'bg_new',c:'#f97316'},popular:{k:'bg_pop',c:'#2563eb'},protect:{k:'bg_protect',c:'#D21034'},official:{k:'bg_official',c:'#4f46e5'},soon:{k:'bg_soon',c:'#94a3b8'}};
+const BADGE_META={reco:{k:'bg_reco',c:'#E31B23'},earn:{k:'bg_earn',c:'#12a150'},'new':{k:'bg_new',c:'#f97316'},popular:{k:'bg_pop',c:'#2563eb'},protect:{k:'bg_protect',c:'#D21034'},official:{k:'bg_official',c:'#4f46e5'},soon:{k:'bg_soon',c:'#94a3b8'}};
 /* ===== Commission engine — two revenue-sharing models (client spec, final) ===== */
 /* digital_70_30 : 70% HaitiBiznis / 30% POS-Agent.  admin_legal_10 : 10% POS-Agent / 90% Provider. */
 const COMM_MODELS={
@@ -1216,22 +1219,22 @@ const ITEM_I18N={
 function tItem(name){const m=ITEM_I18N[name];return (m&&m[lang])||name;}
 /* Netflix/menu service-card copy — big simple names + 3-word taglines + hero badges */
 const T_CARD={
- ht:{start_go:'Kòmanse',you_earn:'Ou touche',bg_earn:'FÈ KÒB',bg_new:'NOUVO',bg_pop:'POPILÈ',bg_protect:'PWOTEKSYON',bg_official:'OFISYÈL',bg_soon:'BYENTO',
+ ht:{start_go:'Kòmanse Kounye a',you_earn:'Ou touche',comm_word:'komisyon',bg_earn:'FÈ KÒB',bg_new:'NOUVO',bg_pop:'POPILÈ',bg_protect:'PWOTEKSYON',bg_official:'OFISYÈL',bg_soon:'BYENTO',bg_reco:'🔥 KÒMANSE ISIT',pick_service:'Ki sèvis ou vle vann jodi a?',more_svc:'Plis Sèvis',less_svc:'Mwens Sèvis',
   cn_msouwout:'MsouWout',cs_msouwout:'Moto & Taxi Verifye',cn_myplopplop:'MyPlopPlop',cs_myplopplop:'Achte Tout Bagay',cn_parenaj:'Parenaj Biznis',cs_parenaj:'Fè Kòb Fasil',cn_hbtech:'48HoursReady',cs_hbtech:'Kreye Biznis Ou',
   cn_admin:'Papye Biznis',cs_admin:'Dokiman Leta',cn_legal:'Avoka',cs_legal:'Èd Legal',cn_pwofesyonel:'Jwenn Pwofesyonèl',cs_pwofesyonel:'Elektrisyen, Plonbye…',cn_tikelakay:'Tikè Lakay',cs_tikelakay:'Tikè Evènman',
   cn_delivery:'Livrezon',cs_delivery:'Voye & Resevwa',cn_pakebiznis:'Pakè Biznis',cs_pakebiznis:'Tout an Yon',cn_website:'Sit Entènèt',cs_website:'Kreye Sit Ou',cn_presswire:'Kominike Laprès',cs_presswire:'Fè Nouvèl Ou',
   cn_billpay:'Peman Fakti',cs_billpay:'Kouran, Kab…',cn_water:'Peman Dlo',cs_water:'DINEPA, Kamyon',cn_asirans:'Asirans',cs_asirans:'Pwoteje Tèt Ou',cn_cashaccess:'Retrè Kach',cs_cashaccess:'Pran Kòb Ou',cn_bizreg:'Anrejistre Biznis',cs_bizreg:'Louvri Biznis Ou'},
- fr:{start_go:'Commencer',you_earn:'Vous gagnez',bg_earn:'GAGNER',bg_new:'NOUVEAU',bg_pop:'POPULAIRE',bg_protect:'PROTECTION',bg_official:'OFFICIEL',bg_soon:'BIENTÔT',
+ fr:{start_go:'Commencer',you_earn:'Vous gagnez',comm_word:'commission',bg_earn:'GAGNER',bg_new:'NOUVEAU',bg_pop:'POPULAIRE',bg_protect:'PROTECTION',bg_official:'OFFICIEL',bg_soon:'BIENTÔT',bg_reco:'🔥 COMMENCEZ ICI',pick_service:'Quel service vendre aujourd’hui ?',more_svc:'Plus de services',less_svc:'Moins de services',
   cn_msouwout:'MsouWout',cs_msouwout:'Moto & Taxi vérifiés',cn_myplopplop:'MyPlopPlop',cs_myplopplop:'Achetez tout',cn_parenaj:'Parrainage',cs_parenaj:'Gagnez facilement',cn_hbtech:'48HoursReady',cs_hbtech:'Créez votre business',
   cn_admin:'Papiers d’affaires',cs_admin:'Documents d’État',cn_legal:'Avocat',cs_legal:'Aide juridique',cn_pwofesyonel:'Trouver un pro',cs_pwofesyonel:'Électricien, plombier…',cn_tikelakay:'Billets',cs_tikelakay:'Billets d’événements',
   cn_delivery:'Livraison',cs_delivery:'Envoyer & recevoir',cn_pakebiznis:'Forfait Business',cs_pakebiznis:'Tout-en-un',cn_website:'Site web',cs_website:'Créez votre site',cn_presswire:'Communiqué',cs_presswire:'Faites parler de vous',
   cn_billpay:'Factures',cs_billpay:'Électricité, câble…',cn_water:'Eau',cs_water:'DINEPA, camion',cn_asirans:'Assurance',cs_asirans:'Protégez-vous',cn_cashaccess:'Retrait',cs_cashaccess:'Retirez votre argent',cn_bizreg:'Enregistrer entreprise',cs_bizreg:'Ouvrez votre business'},
- en:{start_go:'Start',you_earn:'You earn',bg_earn:'EARN',bg_new:'NEW',bg_pop:'POPULAR',bg_protect:'PROTECTED',bg_official:'OFFICIAL',bg_soon:'SOON',
+ en:{start_go:'Start Now',you_earn:'You earn',comm_word:'commission',bg_earn:'EARN',bg_new:'NEW',bg_pop:'POPULAR',bg_protect:'PROTECTED',bg_official:'OFFICIAL',bg_soon:'SOON',bg_reco:'🔥 START HERE',pick_service:'Which service will you sell today?',more_svc:'More Services',less_svc:'Fewer Services',
   cn_msouwout:'MsouWout',cs_msouwout:'Verified Moto & Taxi',cn_myplopplop:'MyPlopPlop',cs_myplopplop:'Buy Anything',cn_parenaj:'Referral',cs_parenaj:'Earn Easily',cn_hbtech:'48HoursReady',cs_hbtech:'Create Your Business',
   cn_admin:'Business Papers',cs_admin:'Government Docs',cn_legal:'Lawyer',cs_legal:'Legal Help',cn_pwofesyonel:'Find a Pro',cs_pwofesyonel:'Electrician, plumber…',cn_tikelakay:'Tickets',cs_tikelakay:'Event Tickets',
   cn_delivery:'Delivery',cs_delivery:'Send & Receive',cn_pakebiznis:'Business Pack',cs_pakebiznis:'All-in-One',cn_website:'Website',cs_website:'Build Your Site',cn_presswire:'Press Release',cs_presswire:'Make the News',
   cn_billpay:'Bill Pay',cs_billpay:'Power, Cable…',cn_water:'Water',cs_water:'DINEPA, Truck',cn_asirans:'Insurance',cs_asirans:'Protect Yourself',cn_cashaccess:'Cash-Out',cs_cashaccess:'Get Your Money',cn_bizreg:'Register Business',cs_bizreg:'Open Your Business'},
- es:{start_go:'Comenzar',you_earn:'Ganas',bg_earn:'GANAR',bg_new:'NUEVO',bg_pop:'POPULAR',bg_protect:'PROTECCIÓN',bg_official:'OFICIAL',bg_soon:'PRONTO',
+ es:{start_go:'Comenzar',you_earn:'Ganas',comm_word:'comisión',bg_earn:'GANAR',bg_new:'NUEVO',bg_pop:'POPULAR',bg_protect:'PROTECCIÓN',bg_official:'OFICIAL',bg_soon:'PRONTO',bg_reco:'🔥 EMPIEZA AQUÍ',pick_service:'¿Qué servicio vas a vender hoy?',more_svc:'Más servicios',less_svc:'Menos servicios',
   cn_msouwout:'MsouWout',cs_msouwout:'Moto y Taxi verificados',cn_myplopplop:'MyPlopPlop',cs_myplopplop:'Compra de todo',cn_parenaj:'Referidos',cs_parenaj:'Gana fácil',cn_hbtech:'48HoursReady',cs_hbtech:'Crea tu negocio',
   cn_admin:'Papeles de negocio',cs_admin:'Documentos del Estado',cn_legal:'Abogado',cs_legal:'Ayuda legal',cn_pwofesyonel:'Encontrar profesional',cs_pwofesyonel:'Electricista, plomero…',cn_tikelakay:'Boletos',cs_tikelakay:'Boletos de eventos',
   cn_delivery:'Entrega',cs_delivery:'Enviar y recibir',cn_pakebiznis:'Paquete de negocio',cs_pakebiznis:'Todo en uno',cn_website:'Sitio web',cs_website:'Crea tu sitio',cn_presswire:'Comunicado',cs_presswire:'Sé noticia',
@@ -1332,10 +1335,10 @@ function renderHome(){
      </div>
    </div>
    <div class="dash">
-     <div class="dcard c-rev"><div class="dtop"><span class="dlabel">${t('dash_rev')}</span><span class="dicon">🟩</span></div><div class="dnum">${(revToday||0).toLocaleString()} <small>GDES</small></div></div>
-     <div class="dcard c-wal"><div class="dtop"><span class="dlabel">${t('dash_wallet')}</span><span class="dicon">🟦</span></div><div class="dnum">${(walletBal||0).toLocaleString()} <small>GDES</small></div></div>
-     <div class="dcard c-sig"><div class="dtop"><span class="dlabel">${t('dash_signups')}</span><span class="dicon">🟨</span></div><div class="dnum">${sigToday}</div></div>
-     <div class="dcard c-com"><div class="dtop"><span class="dlabel">${t('dash_comm')}</span><span class="dicon">🟥</span></div><div class="dnum">${(commToday||0).toLocaleString()} <small>GDES</small></div></div>
+     <div class="dcard c-rev"><div class="dtop"><span class="dlabel">${t('dash_rev')}</span><span class="dicon">💰</span></div><div class="dnum">${(revToday||0).toLocaleString()} <small>GDES</small></div></div>
+     <div class="dcard c-wal"><div class="dtop"><span class="dlabel">${t('dash_wallet')}</span><span class="dicon">👛</span></div><div class="dnum">${(walletBal||0).toLocaleString()} <small>GDES</small></div></div>
+     <div class="dcard c-sig"><div class="dtop"><span class="dlabel">${t('dash_signups')}</span><span class="dicon">👥</span></div><div class="dnum">${sigToday}</div></div>
+     <div class="dcard c-com"><div class="dtop"><span class="dlabel">${t('dash_comm')}</span><span class="dicon">💵</span></div><div class="dnum">${(commToday||0).toLocaleString()} <small>GDES</small></div></div>
    </div>
    ${(function(){var a=activeStaff();var has=staffList().length;
      if(a)return '<button onclick="signOut()" style="width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 12px;margin:12px 0;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow)"><span style="font-weight:800;font-size:12.5px">👤 '+t('emp_signed')+': '+a.name+' <span style="color:var(--muted);font-weight:600">· '+(a.role==='owner'?t('emp_owner'):t('emp_staff'))+'</span></span><span style="color:var(--blue);font-weight:800;font-size:12px;flex:0 0 auto">🔄 '+t('emp_switch')+'</span></button>';
@@ -1359,30 +1362,47 @@ function renderHome(){
     {t:'grp_growth',ids:['delivery','pakebiznis','website','presswire']},
     {t:'grp_fin',ids:['billpay','water','asirans','cashaccess'],soon:true}
   ];
-  GROUPS.forEach(gr=>{
-    const h=document.createElement('div');h.className='grp-h';
-    h.innerHTML=`<span>${t(gr.t)}</span>${gr.soon?`<span class="grp-soon">${t('soon')}</span>`:''}`;
-    g.appendChild(h);
-    const row=document.createElement('div');row.className='grid';
-    gr.ids.forEach(id=>{const m=modById(id);if(!m)return;
+  // Welcome prompt above the services (guides first-time cashiers)
+  const wb=document.createElement('div');wb.className='welcomebar';
+  wb.innerHTML=`<span style="font-size:20px">👋</span><span>${t('pick_service')}</span>`;
+  g.appendChild(wb);
+  function buildCard(id,forceSoon){const m=modById(id);if(!m)return null;
       const cm=CARD_META[id]||{ill:m.em||'📦',badge:null,color:m.color||'var(--blue)'};
-      const soon=m.soon||gr.soon;
+      const soon=m.soon||forceSoon;
       const col=cm.color;
       const bt=soon?'soon':cm.badge;const bm=bt?BADGE_META[bt]:null;
-      const badge=bm?`<span class="bdg" style="background:${bm.c}">${t(bm.k)}</span>`:'';
+      const reco=bt==='reco';
+      const badge=bm?`<span class="bdg${reco?' reco':''}" style="background:${bm.c}">${t(bm.k)}</span>`:'';
       const nm=t('cn_'+id)!=='cn_'+id?t('cn_'+id):(m.nmKey?t(m.nmKey):m.nm);
       const sub=t('cs_'+id)!=='cs_'+id?t('cs_'+id):'';
       const rate=commRate(m.id);
-      const comm=(!soon&&rate)?`<div class="comm" style="color:#0f9d55">💰 ${t('you_earn')} ${rate}%</div>`:'';
+      const comm=(!soon&&rate)?`<div class="comm" style="color:#0f9d55">💰 ${t('you_earn')} ${rate}% ${t('comm_word')}</div>`:'';
       const card=document.createElement('div');card.className='svc'+(soon?' soon':'');
       card.innerHTML=`<div class="ill" style="background:linear-gradient(135deg,${col}26,${col}0d)">${cm.ill}${badge}</div>
         <div class="bd"><div class="nm">${nm}</div><div class="sub">${sub}</div>${comm}
-        <button class="go" style="background:${soon?'#94a3b8':col}">${soon?t('bg_soon'):t('start_go')+' →'}</button></div>`;
+        <button class="go" style="background:${soon?'#94a3b8':col}">${soon?t('bg_soon'):'▶️ '+t('start_go')}</button></div>`;
       const go=card.querySelector('.go');
       if(soon){go.onclick=()=>caSoon();}else{go.onclick=()=>openModule(m);}
-      row.appendChild(card);});
-    g.appendChild(row);
-  });
+      return card;}
+  function buildGroup(gr,into){
+    const h=document.createElement('div');h.className='grp-h';
+    h.innerHTML=`<span>${t(gr.t)}</span>${gr.soon?`<span class="grp-soon">${t('soon')}</span>`:''}`;
+    into.appendChild(h);
+    const row=document.createElement('div');row.className='grid';
+    gr.ids.forEach(id=>{const c=buildCard(id,gr.soon);if(c)row.appendChild(c);});
+    into.appendChild(row);
+  }
+  // Core services always visible; the rest fold behind "Plis Sèvis" so first-timers aren't overwhelmed
+  buildGroup(GROUPS[0],g);
+  const more=document.createElement('div');more.id='moreSvc';more.style.display='none';
+  GROUPS.slice(1).forEach(gr=>buildGroup(gr,more));
+  const tog=document.createElement('button');tog.className='morebtn';tog.id='moreToggle';
+  tog.innerHTML=`<span>➡️</span><span>${t('more_svc')}</span>`;
+  tog.onclick=function(){const open=more.style.display==='none';more.style.display=open?'block':'none';
+    tog.innerHTML=`<span>${open?'⬆️':'➡️'}</span><span>${open?t('less_svc'):t('more_svc')}</span>`;
+    if(open){more.scrollIntoView({behavior:'smooth',block:'nearest'});}};
+  g.appendChild(tog);
+  g.appendChild(more);
   document.getElementById('homeRefer').innerHTML=`
    <button onclick="go('ref')" style="width:100%;border:0;border-radius:18px;padding:18px;margin-top:16px;text-align:left;color:#fff;background:linear-gradient(135deg,var(--good),#0b7a44);box-shadow:0 10px 26px rgba(15,157,85,.3)">
      <div style="font-size:16px;font-weight:900">🤝 ${t('hub_invite_t')}</div>
