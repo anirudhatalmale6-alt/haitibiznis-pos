@@ -52,8 +52,12 @@ button{font-family:inherit;cursor:pointer}img{display:block}
 .hbback .ar{font-size:16px;line-height:1}
 @media(max-width:430px){.hbback{padding:0;width:34px;justify-content:center}.hbback .lbl{display:none}}
 .appbar h1 small{display:block;font-weight:500;opacity:.85;font-size:11px;letter-spacing:.4px}
-.lang{display:flex;gap:4px;background:rgba(255,255,255,.15);border-radius:999px;padding:3px}
-.lang button{border:0;background:transparent;color:#fff;font-size:12px;font-weight:700;padding:5px 9px;border-radius:999px;opacity:.7}
+.lang{display:flex;gap:3px;background:rgba(255,255,255,.15);border-radius:999px;padding:3px;flex:0 0 auto}
+.lang button{border:0;background:transparent;color:#fff;font-size:12px;font-weight:700;padding:5px 7px;border-radius:999px;opacity:.7}
+/* 5 languages have to fit next to the logo and the gear — the appbar is a flex
+   row and a wide child pushes the whole page sideways on a small phone. */
+@media(max-width:430px){.lang{gap:1px;padding:2px}.lang button{font-size:11px;padding:4px 5px}}
+@media(max-width:360px){.lang button{font-size:10px;padding:4px 4px}}
 .lang button.on{background:#fff;color:var(--blue);opacity:1}
 .gear{border:0;background:rgba(255,255,255,.16);color:#fff;width:34px;height:34px;border-radius:10px;font-size:17px}
 .installred{border:0;background:linear-gradient(135deg,#E31B23,#ff3d45);color:#fff;height:34px;width:auto;padding:0 14px;border-radius:10px;font-size:12.5px;font-weight:900;gap:5px;display:inline-flex;align-items:center;box-shadow:0 3px 12px rgba(227,27,35,.5);cursor:pointer;animation:ibpulse 1.8s ease-in-out infinite}
@@ -287,7 +291,7 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
   <a href="https://haitibiznis.com" class="hbback" title="HaitiBiznis"><span class="ar">←</span><span class="lbl">HaitiBiznis</span></a>
   <img src="assets/haitibiznis-logo.png" class="logo" alt="HaitiBiznis">
   <h1 data-i18n="app_t">Sant HaitiBiznis<small data-i18n="app_s">POINT OF SALE</small></h1>
-  <div class="lang"><button data-lang="ht" class="on">HT</button><button data-lang="fr">FR</button><button data-lang="en">EN</button><button data-lang="es">ES</button></div>
+  <div class="lang"><button data-lang="ht" class="on">HT</button><button data-lang="fr">FR</button><button data-lang="en">EN</button><button data-lang="es">ES</button><button data-lang="pt">PT</button></div>
   <button class="gear" onclick="go('set')">⚙️</button>
 </div>
 <div id="offlineBar" style="display:none;background:#e08a00;color:#fff;text-align:center;font-size:12px;font-weight:700;padding:5px 8px" data-i18n="offline_on">Mòd offline — sere sou aparèy la</div>
@@ -381,11 +385,8 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
   <div id="fstep-pay" class="fbox" style="display:none">
     <div class="h2" data-i18n="pay_t">Peman</div>
     <div class="card"><div class="breakdown" id="payBreak"></div></div>
-    <div class="pays" id="payGrid">
-      <button class="pay" data-pay="moncash"><span class="pe">📱</span>MonCash</button>
-      <button class="pay" data-pay="natcash"><span class="pe">📲</span>NatCash</button>
-      <button class="pay" data-pay="card"><span class="pe">💳</span><span data-i18n="p_card">Kat</span></button>
-    </div>
+    <!-- filled by renderPay() from payMethods() — depends on the country -->
+    <div class="pays" id="payGrid"></div>
     <div style="height:12px"></div>
     <button class="cta red" id="payBtn" onclick="completeFlow()" disabled data-i18n="pay_do">Konplete & Resi</button>
   </div>
@@ -909,7 +910,8 @@ function applyI18n(){document.documentElement.lang=lang;
   const sm=document.querySelector('.appbar h1 small');if(sm)sm.textContent=t('app_s');}
 
 /* ---------- config ---------- */
-const DEF_CFG={rate:132,regFeeDriver:0,regFeeRider:0,regFeeMerchant:0,regFeePro:0,
+const DEF_CFG={rate:132,country:'ht',brl:5.4,pixKey:'',pixName:'',pixCity:'',brCardLink:'',
+  regFeeDriver:0,regFeeRider:0,regFeeMerchant:0,regFeePro:0,
   bizreg:[{id:'nc',nm:'Nom Commercial',usd:500,press:0},{id:'ncol',nm:'Société en Nom Collectif',usd:1000,press:0},
     {id:'sa',nm:'Société Anonyme',usd:2000,press:40000},{id:'sam',nm:'Société Anonyme Mixte',usd:3500,press:70000}],hbFeePct:30,
   payClient:'pp_1ohu5zz2tcx',caFeeType:'fixed',caFeeVal:25,caLow:20000};
@@ -920,11 +922,19 @@ function setCfg(c){localStorage.setItem('hb_cfg',JSON.stringify(c));}
 function load(k,d){try{return JSON.parse(localStorage.getItem(k))||d;}catch(e){return d;}}
 function save(k,v){localStorage.setItem(k,JSON.stringify(v));}
 function nowStamp(){return new Date().toISOString();}
-function fmtDate(iso){const d=new Date(iso);return d.toLocaleDateString(lang==='en'?'en-US':'fr-FR')+' '+d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
+function fmtDate(iso){const d=new Date(iso);const loc=lang==='en'?'en-US':lang==='pt'?'pt-BR':lang==='es'?'es-ES':'fr-FR';
+  return d.toLocaleDateString(loc)+' '+d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
 function isToday(iso){const d=new Date(iso),n=new Date();return d.toDateString()===n.toDateString();}
 function gdes(n){return (Math.round(n)||0).toLocaleString()+' GDES';}
 function usdAmt(n){const r=getCfg().rate||132;return Math.round((+n||0)/r);}
-function usdTag(n){const u=usdAmt(n);return u>0?' <span class="usd">≈ US$'+u.toLocaleString()+'</span>':'';}
+/* Prices are kept in GDES everywhere (one price list for the whole network).
+   In Brazil the same amount is shown — and charged by Pix — in reais, using
+   the two rates in Settings: GDES→US$ then US$→R$. */
+function isBR(){return getCfg().country==='br';}
+function brlAmt(n){const c=getCfg();const r=c.rate||132,b=c.brl||5.4;return Math.round(((+n||0)/r)*b*100)/100;}
+function brlFmt(n){return 'R$ '+(+n||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function usdTag(n){if(isBR()){const v=brlAmt(n);return v>0?' <span class="usd">≈ '+brlFmt(v)+'</span>':'';}
+  const u=usdAmt(n);return u>0?' <span class="usd">≈ US$'+u.toLocaleString()+'</span>':'';}
 function showTot(){const el=document.getElementById('detailTot');if(el)el.innerHTML=gdes(flow.amount)+usdTag(flow.amount);}
 
 /* ---------- status sets ---------- */
@@ -1257,6 +1267,220 @@ const T_FIX={
  es:{price_hint:'ingresa el precio, toca +',web_menu_h:'Elige tu paquete de sitio web',biz_baz:'Base en US$, comisión Presses en GDES. Tasa: {r} GDES/US$',bill_ref_ph:'Nº de cuenta / referencia',water_dinepa:'DINEPA — Agua',water_other:'Otra factura de agua',menu_web:'Sitio web',menu_brand:'Paquete de negocio',rev_split:'Reparto de ingresos',gross_sales:'Ventas totales',your_comm:'Tu comisión',platform_share:'Parte HaitiBiznis / Proveedor',tag_reg:'Registro',tag_reg_s:'Reg',sel_event:'Evento',comm_digital:'Productos digitales — 30% para ti',comm_admin:'Admin / Legal — 10% para ti',payout_note:'Tu comisión se calcula automáticamente en cada venta.',sb_h:'HaitiBiznis Smart Brief',sb_sub:'Describe tu negocio en 2 minutos — nuestra IA crea el resto.',sb_bizname:'Nombre del negocio',sb_about:'Cuéntanos sobre tu negocio',sb_about_ph:'Describe tu negocio con tus propias palabras. Dinos qué vendes, quiénes son tus clientes, qué te diferencia, tus objetivos y cualquier otra cosa. Cuantos más detalles nos des, mejor creará nuestra IA tu logo, resumen ejecutivo, pitch deck, videos y materiales de marketing.',sb_style:'Estilo preferido',sb_surprise:'Sorpréndeme',sb_modern:'Moderno',sb_luxury:'Lujo',sb_corporate:'Corporativo',sb_minimalist:'Minimalista',sb_creative:'Creativo',sb_colors:'Colores preferidos',sb_colors_ph:'ej. azul y rojo',sb_delivery:'Fecha de entrega',sb_upload_note:'Puedes agregar tu logo, fotos o documentos en el siguiente paso.',sb_opt:'(opcional)'}
 };
 Object.keys(T_FIX).forEach(function(l){Object.assign(T[l],T_FIX[l]);});
+
+/* ===================================================================
+   PORTUGUÊS (Brazil) — 5th language.
+   Built AFTER every T_* merge above, so it starts from the fully merged
+   English dictionary: anything not translated here shows in English
+   rather than falling back to Kreyòl, which a Brazilian cannot read.
+   =================================================================== */
+const T_PT={
+ app_t:'Centro HaitiBiznis',app_s:'PONTO DE VENDA',home_t:'Bem-vindo! O que você quer fazer hoje?',home_s:'Caixa: cadastre clientes, venda serviços, receba o pagamento.',
+ back:'Voltar',next:'Continuar',subtotal:'Total',cust_t:'Cliente',cust_search:'Buscar nome / telefone...',cust_new:'+ Novo cliente',
+ f_name:'Nome completo',f_phone:'Telefone',f_wa:'WhatsApp',f_email:'E-mail (opcional)',f_addr:'Endereço (opcional)',cust_save:'Continuar',
+ docs_t:'Documentos',docs_s:'Adicione arquivos (PDF, JPG, PNG, DOCX). Eles ficam anexados ao pedido.',docs_add:'Adicionar documentos',
+ pay_t:'Pagamento',p_cash:'Dinheiro',p_card:'Cartão',pay_do:'Concluir e Recibo',print:'Imprimir',wa_send:'Enviar WhatsApp',conf_home:'Início',
+ ord_t:'Pedidos',ord_search:'Buscar nome / tel / WhatsApp / Nº do pedido',dash_t:'Painel',
+ set_t:'Configurações',set_note:'Digite os preços reais. Ficam salvos neste aparelho.',set_save:'Salvar configurações',
+ n_home:'Início',n_orders:'Pedidos',n_dash:'Painel',n_set:'Minha conta',n_earn:'Ganhos',n_ref:'Indicações',
+ all:'Tudo',add:'Adicionar',remove:'Remover',total:'TOTAL',save:'Salvar',
+ st_wait:'Aguardando documentos',st_prog:'Em andamento',st_ready:'Pronto',st_done:'Concluído',
+ st_pending:'Pendente',st_approved:'Aprovado',st_rejected:'Recusado',st_active:'Ativo',st_verified:'Verificado',
+ st_assigned:'Atribuído',st_delivered:'Entregue',st_checkin:'Check-in feito',
+ receipt:'RECIBO',order_no:'Nº',date:'Data',cashier:'Centro HaitiBiznis',thanks:'Obrigado! — HaitiBiznis.com',service:'Serviço',customer:'Cliente',
+ need_name:'Digite o nome.',need_pay:'Escolha uma forma de pagamento.',need_sel:'Selecione pelo menos um item.',
+ dash_sales:'Vendas de hoje',dash_new:'Novos pedidos',dash_prog:'Em andamento',dash_done:'Concluídos',dash_rev:'Receita hoje',
+ pick_pkg:'Escolha um pacote',pkg_max:'Escolha até',services:'serviços',sections:'seções',pkg_incl:'Incluso',choose_one:'Escolha 1 serviço',incl_word:'inclusos',see_sample:'Ver exemplo',fee_hb:'Taxa HaitiBiznis 30%',fee_press:'Taxa Presses Nationales',base:'Preço base',sub_usd:'Subtotal',rate_note:'Conversão aproximada',
+ partner_legal:'Parceiro: Cabinet EX LEGE – PRO LEGE (Advogados Nacionais e Internacionais)',
+ amount:'Valor (GDES)',desc:'Descrição',verify_t:'Verificação de Motorista',bill_type:'Tipo de conta',
+ qr_ticket:'Ingresso QR',qr_ref:'Código de indicação',checkin_ok:'Check-in feito ✓',search_ticket:'Buscar Nº do ingresso...',
+ ev_create:'Criar evento',ev_name:'Nome do evento',ev_date:'Data',ev_price:'Preço do ingresso (GDES)',ev_sell:'Vender ingressos',ev_checkin:'Check-in',ev_sales:'Venda de ingressos',ev_qty:'Quantidade',no_event:'Crie um evento primeiro.',
+ aff_reg:'Cadastrar afiliado',aff_qr:'QR Code de indicação',aff_hist:'Histórico de indicações',aff_comm:'Saldo de comissão',aff_pay:'Registrar pagamento de comissão',balance:'Saldo',record_pay:'Registrar pagamento',
+ set_rate:'Taxa de câmbio (GDES por US$1)',set_regfee_d:'Taxa de cadastro do motorista (GDES)',set_regfee_r:'Taxa de cadastro do passageiro (GDES)',set_regfee_m:'Taxa de cadastro do lojista (GDES)',set_regfee_p:'Taxa de cadastro do profissional (GDES)',
+ vehicle:'Tipo de veículo',plate:'Placa',color:'Cor',profession:'Profissão',category:'Categoria',biz_name:'Nome do negócio',owner:'Proprietário',address:'Endereço',
+ reg_t_driver:'MsouWout — Cadastrar motorista',reg_t_rider:'MsouWout — Cadastrar passageiro',reg_t_merchant:'MyPlopPlop — Cadastrar lojista',reg_t_pro:'Profissionais — Cadastro',reg_t_affiliate:'Parenaj Biznis — Cadastrar afiliado',reg_t_delivery:'MyPlopPlop — Pedido de entrega',
+ store_name:'Nome da loja',mp_location:'Localização / Endereço',store_desc:'Descrição da loja',referral_partner:'Parceiro indicador (Como nos conheceu?)',
+ up_driverlic:'CNH',up_natid:'Documento de identidade (RG)',up_insurance:'Seguro',up_vehreg:'Documento do veículo (CRLV)',up_driverphoto:'Foto do motorista',up_bizdocs:'Documentos da empresa',up_diploma:'Diploma / Certificado',up_expdocs:'Comprovantes de experiência',rev_note:'1 revisão inclusa por serviço. Revisões extras podem ter custo.',
+ pickup_addr:'Endereço de coleta',drop_addr:'Endereço de entrega',recip_phone:'Telefone do destinatário',pkg_desc:'Descrição do pacote',deliv_fee:'Taxa de entrega (GDES)',
+ wa_msg:'Olá {name}, aqui está o recibo do seu pedido {id} no Centro HaitiBiznis. Total: {total}. Obrigado!',
+ /* install / offline / reports / notify */
+ install:'Instalar App',ib_head:'Mais rápido, abre como um app de verdade, funciona até sem internet',ib_sub:'Mais rápido, abre como um app de verdade, funciona até sem internet',ib_cta:'📲 Instalar HaitiBiznis POS',
+ ins1:'Toque no menu ⋮ no canto superior direito',ins2:'Toque em «Instalar app»',ins3:'Toque em «Instalar» para finalizar',
+ iosa1:'Toque no botão Compartilhar embaixo',iosa2:'Desça e toque em «Adicionar à Tela de Início»',iosa3:'Toque em «Adicionar» no canto superior direito',ins_done:'✅ HaitiBiznis POS instalado!',
+ mac1:'Abra o menu «File» no topo (no Safari)',mac2:'Escolha «Add to Dock»',mac3:'Clique em «Add» — o app é instalado',
+ pc1:'Olhe à direita da barra de endereços',pc2:'Clique no ícone «Instalar» (⬇ ou ⊕)',pc3:'Clique em «Instalar» para finalizar',
+ inst_title:'Instalar HaitiBiznis POS',inst_and:'1. Abra o menu do navegador (ícone ⋮ ou ≡)\n2. Escolha «Instalar app» ou «Adicionar à Tela de Início»\n3. Confirme — o app aparece como um app de verdade na sua tela',
+ inst_ios:'1. Toque no botão Compartilhar (quadrado com seta) embaixo\n2. Escolha «Adicionar à Tela de Início»\n3. Toque em «Adicionar» no canto superior direito',
+ inst_close:'Fechar',offline_on:'Modo offline — salvo neste aparelho',rep_open:'📈 Relatório detalhado',rep_t:'Relatórios',rep_csv:'⬇️ CSV',
+ rp_today:'Hoje',rp_7:'7 dias',rp_30:'30 dias',rp_all:'Tudo',rep_revenue:'Faturamento',rep_txn:'Transações',rep_avg:'Média',
+ rep_bysvc:'Por serviço',rep_bypay:'Por pagamento',rep_bystat:'Por status',rep_none:'Sem dados neste período.',
+ notify:'📲 Avisar o cliente',notify_t:'Avisar o cliente',notify_wa:'WhatsApp',notify_email:'E-mail',notify_no:'Este cliente não tem telefone nem e-mail.',
+ ready_msg:'Olá {name}, seu pedido {id} no Centro HaitiBiznis está PRONTO. Você já pode retirar. Obrigado!',ready_subj:'Seu pedido está pronto — HaitiBiznis',
+ sv_tag:'Sistema principal — venda e gerencie tudo',fab_newsale:'Nova venda',
+ sv_t:'Sistema de Vendas',sv_sub:'Seu sistema de vendas digital — venda, gerencie clientes e recibos.',soon:'Em breve',pick_service:'Qual serviço você vai vender hoje?',
+ sv_newsale:'Nova venda',sv_customers:'Gestão de clientes',sv_history:'Histórico de vendas',sv_receipts:'Recibos digitais',
+ sv_products:'Gestão de produtos',sv_inventory:'Estoque',sv_notifs:'Notificações em tempo real',sv_payments:'Pagamentos eletrônicos',
+ dash_orders:'Pedidos',dash_customers:'Clientes',dash_notifs:'Notificações',sv_none_cust:'Ainda não há clientes.',sv_none_sales:'Ainda não há vendas.',reopen_receipt:'Ver recibo',
+ pg_creating:'Criando o pagamento…',pg_scan:'Peça ao cliente para escanear o código com o celular, ou abra a página de pagamento.',pg_open:'Abrir página de pagamento',pg_waiting:'Aguardando o pagamento…',pg_paid:'✓ Pagamento recebido!',pg_manual:'Marcar como pago manualmente',pg_fail:'Pagamento não criado',pg_fail_sub:'Não foi possível conectar ao serviço de pagamento. Você pode marcar como pago manualmente ou tentar de novo.',cancel:'Cancelar',
+ set_pay_h:'Pagamento eletrônico',set_payclient:'ID de Comerciante (MonCash/NatCash)',pay_active:'MonCash e NatCash ativos',pay_active_sub:'Escolha MonCash ou NatCash ao fazer uma venda — o cliente paga no celular dele e a venda é marcada como paga automaticamente.',pay_status_paid:'Pago',pay_status_manual:'Pago (manual)',pay_none:'Ainda não há pagamentos eletrônicos.',
+ /* cash access */
+ ca_title:'Saque de Dinheiro',ca_sub:'Entregue dinheiro aos clientes no Centro — sem caixa eletrônico.',
+ ca_avail:'Dinheiro disponível',ca_redeem:'Processar saque',ca_reserve:'Reservar saque',
+ ca_increase:'Aumentar o caixa',ca_decrease:'Diminuir o caixa',ca_pause:'Pausar saques',ca_resume:'Retomar saques',ca_paused:'Saques pausados',
+ ca_history:'Histórico',ca_low:'Caixa baixo (menos de {n}) — coloque mais dinheiro ou pause os saques.',
+ ca_today_out:'Pago hoje',ca_today_fee:'Ganhos de hoje',ca_count:'Saques hoje',
+ ca_code:'Código do saque',ca_enter_code:'Digite ou escaneie o código de 6 dígitos do cliente.',
+ ca_cust:'Nome do cliente',ca_method:'Método',ca_confirm_id:'Conferi a identidade do cliente',
+ ca_approve:'Aprovar e entregar o dinheiro',ca_fee:'Comissão',ca_net:'O cliente recebe',
+ ca_reserved:'Saque reservado',ca_res_sub:'Dê este código ao cliente. Ele expira em 10 minutos.',ca_expires:'Expira em',ca_expired:'Código expirado.',
+ ca_notfound:'Código não encontrado neste aparelho. Digite o valor manualmente.',ca_paid_ok:'Dinheiro entregue!',ca_none:'Ainda não há saques.',ca_receipt:'RECIBO DE SAQUE',
+ ca_insufficient:'Não há dinheiro suficiente no caixa.',ca_add_amt:'Quanto dinheiro adicionar? (GDES)',ca_sub_amt:'Quanto dinheiro retirar? (GDES)',
+ ca_set_h:'Saque de Dinheiro',ca_set_feetype:'Tipo de comissão do lojista',ca_set_feefixed:'Taxa fixa (GDES/saque)',ca_set_feepct:'ou Comissão (%)',ca_set_low:'Limite de caixa baixo (GDES)',ca_fixed:'Fixa (GDES)',ca_pct:'Percentual (%)',
+ ca_soon_msg:'Em breve você poderá sacar seu dinheiro MonCash/NatCash em espécie nos lojistas HaitiBiznis — sem caixa eletrônico.',
+ /* subscription */
+ lic_title:'Assinatura',lic_sub:'Seu plano de licença do POS.',lic_current:'Plano atual',lic_status:'Status',
+ lic_start:'Data de início',lic_exp:'Vencimento',lic_days:'Dias restantes',
+ lic_active:'Ativo',lic_expired:'Vencido',lic_trial:'Teste',lic_suspended:'Suspenso',
+ lic_expired_msg:'Sua assinatura venceu.',lic_expired_sub:'Renove para continuar vendendo.',
+ lic_renew:'Renovar assinatura',lic_upgrade:'Trocar / Melhorar plano',lic_choose:'Escolher este plano',lic_current_tag:'Seu plano',
+ lic_month:'/mês',lic_year:'/ano',lic_monthly:'Mensal',lic_annual:'Anual (2 meses grátis)',lic_custom:'Personalizado',
+ lic_enterprise_note:'Fale com a HaitiBiznis para um plano Enterprise.',lic_history:'Histórico de pagamentos',lic_no_history:'Ainda não há pagamentos.',
+ lic_pay_method:'Escolha a forma de pagamento',lic_activated:'Assinatura ativada!',lic_autorenew:'Renovação automática',lic_feats:'Incluso',
+ lic_banner_trial:'Teste: faltam {n} dias — toque para ver os planos',lic_banner_soon:'A assinatura vence em {n} dias',
+ lic_settings_h:'Assinatura / Licença (Admin)',lic_open:'Abrir página de assinatura',lic_extend:'Estender +30 dias',lic_grant_trial:'Conceder teste de 30 dias',
+ lic_set_active:'Marcar como ativo',lic_set_expired:'Marcar como vencido (teste)',lic_suspend:'Suspender',lic_reactivate:'Reativar',
+ /* hub / earnings / referral */
+ hub_verified:'Parceiro verificado',hub_level:'Nível',hub_refcode:'Código de indicação',
+ hub_title:'Centro de Negócios Digital',hub_revtoday:'Faturamento de hoje',hub_sales:'Vendas de hoje',hub_custserved:'Clientes atendidos',hub_comm:'Comissões',
+ greet_hi:'Olá',dash_wallet:'Saldo da carteira',dash_signups:'Novos cadastros',dash_comm:'Comissões',
+ hub_commbanner:'Você ganhou {n} em comissões esta semana!',hub_manage:'Gerenciar assinatura',hub_quick:'Ações rápidas',
+ hub_newsale:'Nova venda',hub_inventory:'Estoque',hub_customers:'Clientes',hub_earn:'Ganhar',
+ hub_invite_t:'Convidar negócios',hub_invite_s:'Ganhe comissões mensais recorrentes com o Parenaj Biznis.',hub_invite_btn:'Convidar agora',
+ hub_soon_msg:'Esta função estará disponível em breve.',
+ svc_bizreg:'Registro de empresa',svc_insurance:'Seguros',svc_bills:'Pagamento de contas',svc_water:'Conta de água',svc_website:'Criação de sites',svc_delivery:'Entrega',svc_admin:'Serviços administrativos',svc_legal:'Serviços jurídicos',svc_pro:'Profissionais',svc_cashout:'Saque de dinheiro',svc_presswire:'Release de imprensa',svc_pakebiznis:'Pacote de negócio',
+ grp_core:'Ecossistema principal',grp_biz:'Serviços para empresas',grp_growth:'Comércio e crescimento',grp_fin:'Serviços financeiros',
+ fab_reg:'Novo cliente',fab_driver:'Cadastrar motorista MsouWout',fab_merchant:'Cadastrar lojista MyPlopPlop',fab_parenaj:'Cadastrar Parenaj Biznis',fab_pakebiznis:'Pedir pacote de negócio',
+ earn_t:'Seus ganhos',earn_sub:'Todos os seus ganhos no ecossistema HaitiBiznis.',earn_lifetime:'Total acumulado',earn_today:'Hoje',earn_month:'Este mês',
+ earn_direct:'Vendas diretas (por serviço)',earn_parenaj:'Parenaj Biznis',earn_referred:'Lojistas indicados',earn_active_ref:'Indicados ativos',earn_ref_income:'Renda de indicações',earn_open_ref:'Abrir indicações',earn_none:'Ainda não há comissões.',
+ ref_t:'Parenaj Biznis',ref_sub:'Convide outros negócios e ganhe todo mês.',ref_invite:'Convidar um negócio',ref_copy:'Copiar link',ref_yours:'Seus indicados',
+ ref_note:'Cada negócio que você convidar e que assinar gera uma comissão mensal para você enquanto a assinatura dele continuar ativa.',ref_copied:'Link copiado!',ref_msg:'Entre no HaitiBiznis — o centro de negócios digital! Cadastre-se pelo meu link: {link}',
+ /* promo kit */
+ promo_open:'Material de Divulgação',promo_t:'Material de Divulgação',promo_sub:'Baixe flyers e vídeos para divulgar os serviços e ganhar mais comissões.',
+ promo_link_note:'Sempre que compartilhar, inclua seu link de indicação para ganhar comissões:',promo_flyers_h:'Flyers e Posts para Redes Sociais',promo_videos_h:'Vídeos',
+ promo_download:'Baixar',promo_share:'Compartilhar',promo_videos_empty:'Os vídeos de divulgação chegam em breve. Você poderá baixá-los aqui para compartilhar no WhatsApp e no Facebook.',
+ promo_watch:'Assistir',promo_msg:'Conheça os serviços da HaitiBiznis! Cadastre-se pelo meu link: {link}',
+ /* staff */
+ emp_owner:'Proprietário',emp_staff:'Funcionário',emp_signin_t:'Entrar',emp_signin_s:'Escolha seu nome para continuar',emp_hi:'Olá',emp_enter_pin:'Digite seu PIN de 4 dígitos',emp_signin_btn:'Entrar',emp_wrong_pin:'PIN incorreto, tente de novo',
+ emp_first_t:'Criar a conta do proprietário',emp_first_s:'Configure a primeira conta, do dono do negócio. Você pode adicionar funcionários depois.',emp_edit_t:'Editar funcionário',emp_add_t:'Adicionar funcionário',emp_add_s:'Dê um nome e um PIN de 4 dígitos para ele entrar.',
+ emp_name:'Nome',emp_role:'Função',emp_pin:'PIN (4 dígitos)',emp_save:'Salvar',emp_need_name:'Digite um nome',emp_need_pin:'O PIN precisa ter 4 dígitos',
+ emp_manage_t:'Funcionários',emp_manage_s:'Adicione sua equipe. Cada um entra com um PIN; as vendas mostram quem atendeu o cliente.',emp_none:'Ainda não há funcionários.',emp_active:'conectado',emp_switch:'Trocar de funcionário',emp_del_confirm:'Remover {n}?',emp_signed:'Conectado',emp_setup_nudge:'Configurar funcionários e login',emp_employees:'Funcionários',
+ share_pos:'Compartilhar o POS',share_msg:'Experimente o HaitiBiznis Center POS — ponto de venda + mais de 30 serviços digitais. Baixe grátis: {link}',
+ /* order intake */
+ intake_h:'Detalhes do pedido',intake_s:'Preencha estes dados para a equipe começar sem precisar perguntar nada.',sec_universal:'Informações gerais',
+ iu_date:'Data de entrega desejada',iu_desc:'Descrição do projeto',iu_special:'Instruções especiais',
+ i_tagline:'Slogan (opcional)',i_industry:'Setor / Ramo',i_colors:'Cores preferidas',i_style:'Estilo preferido',
+ i_style_modern:'Moderno',i_style_luxury:'Luxo',i_style_minimal:'Minimalista',i_style_corporate:'Corporativo',i_style_fun:'Divertido / Criativo',
+ i_title:'Cargo',i_company:'Empresa',i_website:'Site',i_qr:'Incluir QR Code?',i_social:'Redes sociais',i_yes:'Sim',i_no:'Não',
+ i_pages:'Número de páginas',i_services:'Serviços / Produtos',i_contact:'Dados de contato',i_domain:'Precisa de domínio?',i_hosting:'Precisa de hospedagem?',
+ i_does_what:'O que o negócio faz?',i_target:'Clientes-alvo',i_products:'Produtos / Serviços',i_goals:'Objetivos',
+ i_amount_seeking:'Valor buscado (opcional)',i_problem:'Problema',i_solution:'Solução',i_market:'Mercado',i_model:'Modelo de negócio',i_team:'Equipe',
+ i_video_len:'Duração do vídeo',i_language:'Idioma',i_voiceover:'Com narração?',i_audience:'Público-alvo',i_message:'Mensagem principal',
+ i_headline:'Título',i_event:'Evento / Anúncio',i_contact_person:'Pessoa de contato',i_offer:'Oferta',i_promotion:'Promoção',i_platform:'Plataforma',
+ /* service cards */
+ start_go:'Começar agora',you_earn:'Você ganha',comm_word:'de comissão',bg_earn:'GANHE',bg_new:'NOVO',bg_pop:'POPULAR',bg_protect:'PROTEÇÃO',bg_official:'OFICIAL',bg_soon:'EM BREVE',bg_reco:'🔥 COMECE AQUI',more_svc:'Mais serviços',less_svc:'Menos serviços',
+ cn_msouwout:'MsouWout',cs_msouwout:'Moto e táxi verificados',cn_myplopplop:'MyPlopPlop',cs_myplopplop:'Compre de tudo',cn_parenaj:'Indicações',cs_parenaj:'Ganhe fácil',cn_hbtech:'48HoursReady',cs_hbtech:'Monte seu negócio',
+ cn_admin:'Documentos do negócio',cs_admin:'Papelada oficial',cn_legal:'Advogado',cs_legal:'Ajuda jurídica',cn_pwofesyonel:'Achar profissional',cs_pwofesyonel:'Eletricista, encanador…',cn_tikelakay:'Ingressos',cs_tikelakay:'Ingressos de eventos',
+ cn_delivery:'Entrega',cs_delivery:'Enviar e receber',cn_pakebiznis:'Pacote de negócio',cs_pakebiznis:'Tudo em um',cn_website:'Site',cs_website:'Crie seu site',cn_presswire:'Release',cs_presswire:'Vire notícia',
+ cn_billpay:'Contas',cs_billpay:'Luz, TV a cabo…',cn_water:'Água',cs_water:'DINEPA, caminhão',cn_asirans:'Seguro',cs_asirans:'Proteja-se',cn_cashaccess:'Saque',cs_cashaccess:'Retire seu dinheiro',cn_bizreg:'Abrir empresa',cs_bizreg:'Registre seu negócio',
+ /* registration heroes */
+ reg_s_driver:'Torne-se um motorista verificado',reg_s_rider:'Crie sua conta de passageiro',reg_s_merchant:'Coloque sua loja online',reg_s_pro:'Ofereça seus serviços',reg_s_affiliate:'Convide negócios e ganhe',
+ docs_h:'📸 Fotos dos documentos',up_tap:'Toque para adicionar uma foto',up_added:'Foto adicionada',up_storephoto:'Foto da loja',up_ownerid:'Documento do proprietário',
+ /* misc */
+ price_hint:'digite o preço, toque +',web_menu_h:'Escolha seu pacote de site',biz_baz:'Base em US$, taxa Presses em GDES. Câmbio: {r} GDES/US$',bill_ref_ph:'Nº da conta / referência',water_dinepa:'DINEPA — Água',water_other:'Outra conta de água',menu_web:'Site',menu_brand:'Pacote de negócio',
+ rev_split:'Divisão da receita',gross_sales:'Total das vendas',your_comm:'Sua comissão',platform_share:'Parte HaitiBiznis / Fornecedor',tag_reg:'Cadastro',tag_reg_s:'Cad.',sel_event:'Evento',
+ comm_digital:'Produtos digitais — 30% para você',comm_admin:'Admin / Jurídico — 10% para você',payout_note:'Sua comissão é calculada automaticamente em cada venda.',
+ sb_h:'HaitiBiznis Smart Brief',sb_sub:'Descreva seu negócio em 2 minutos — nossa IA cria o resto.',sb_bizname:'Nome do negócio',sb_about:'Fale sobre o seu negócio',
+ sb_about_ph:'Descreva seu negócio com suas próprias palavras. Conte o que você vende, quem são seus clientes, o que te diferencia, seus objetivos e tudo o mais. Quanto mais detalhes você der, melhor nossa IA vai criar seu logo, resumo executivo, pitch deck, vídeos e material de marketing.',
+ sb_style:'Estilo preferido',sb_surprise:'Me surpreenda',sb_modern:'Moderno',sb_luxury:'Luxo',sb_corporate:'Corporativo',sb_minimalist:'Minimalista',sb_creative:'Criativo',
+ sb_colors:'Cores preferidas',sb_colors_ph:'ex. azul e vermelho',sb_delivery:'Data de entrega',sb_upload_note:'Você pode adicionar logo, fotos ou documentos na próxima etapa.',sb_opt:'(opcional)'
+};
+T.pt=Object.assign({},T.en,T_PT);
+
+/* Product / service names — Portuguese column for tItem(). */
+const ITEM_PT={
+ 'Legal Consultation':'Consultoria jurídica','Contract Drafting':'Elaboração de contratos','Property Transactions':'Transações imobiliárias',
+ 'Labour Law':'Direito do trabalho','Family Law':'Direito de família','Business Agreements':'Acordos comerciais',
+ 'Foundation Registration':'Registro de fundação','NGO Registration':'Registro de ONG','Association Registration':'Registro de associação',
+ 'Patente':'Alvará (Patente)','Extrait d’Archives':'Extrato de arquivo','Légalisation':'Legalização','Permis de conduire':'Carteira de motorista',
+ 'Matricule Fiscal':'Inscrição fiscal','Immatriculation':'Registro de veículo','Assurance':'Seguro','Mariage Civil':'Casamento civil',
+ 'Birth Certificate Assistance':'Ajuda com certidão de nascimento','Passport Assistance':'Ajuda com passaporte','Other government service':'Outro serviço público',
+ 'Kominike pou Laprès (Kreyòl)':'Release de imprensa (Crioulo)','Kominike pou Laprès (2 Lang)':'Release de imprensa (2 idiomas)',
+ 'Redaksyon & Reviziyon':'Redação e revisão','Distribisyon nan Media':'Distribuição para a imprensa',
+ 'Asirans Machin':'Seguro de carro','Asirans Sante':'Plano de saúde','Asirans Vi':'Seguro de vida','Asirans Biznis':'Seguro empresarial','Lòt asirans':'Outro seguro',
+ 'MonCash Services':'Serviços MonCash','NatCash Services':'Serviços NatCash','Mobile Recharge':'Recarga de celular','Internet Bill':'Conta de internet','Other bill':'Outra conta',
+ 'Logo Pwofesyonèl':'Logo profissional','Logo':'Logo','Kat Biznis':'Cartão de visita','Kat Biznis Dijital':'Cartão de visita digital',
+ 'Modifikasyon Foto':'Edição de fotos','Desen Grafik':'Design gráfico','QR Code Pèmanan':'QR Code permanente','Kat Envitasyon Dijital':'Convite digital',
+ 'CV Pwofesyonèl':'Currículo profissional','Flipbook Dijital':'Flipbook digital','Flyer / Afich':'Flyer / Cartaz',
+ 'Rezime Egzekitif':'Resumo executivo','Executive Summary':'Resumo executivo','Video Eksplikatif':'Vídeo explicativo',
+ 'Piblisite Video 10 Segonn':'Anúncio em vídeo de 10 segundos','Video Promo 10 Segonn':'Vídeo promocional de 10 segundos','Video Promo':'Vídeo promocional',
+ 'Landing Page (3 Seksyon)':'Landing Page (3 seções)','Landing Page (5 Seksyon)':'Landing Page (5 seções)','Pitch Deck Envestisè':'Pitch Deck para investidores',
+ 'Kominike pou Laprès':'Release de imprensa','Tradiksyon (EN/FR oswa FR/EN)':'Tradução (EN/FR ou FR/EN)','Sit Entènèt nan 2 Lang':'Site em 2 idiomas',
+ 'Pitch Deck nan 2 Lang':'Pitch Deck em 2 idiomas','Press Release nan 2 Lang':'Release em 2 idiomas','Flipbook nan 2 Lang':'Flipbook em 2 idiomas',
+ 'Afich (Poster)':'Cartaz','Banner':'Banner','Facebook Cover':'Capa do Facebook','Instagram Post':'Post no Instagram','Story':'Story','Menu':'Cardápio',
+ 'Sètifika':'Certificado','Invitation':'Convite','Brochure':'Folheto','Flyer':'Flyer',
+ 'Enskripsyon MyPlopPlop Marketplace':'Cadastro no MyPlopPlop Marketplace','Tout Pakè 10,000 GDES':'Todo o pacote de 10.000 GDES',
+ 'Pakè Rapid':'Pacote Rápido','Pakè Sipò 7/7':'Pacote Suporte 7/7','Pakè Abòdab':'Pacote Acessível','Domèn, Achte & Setup Konplè':'Domínio, Compra e Configuração completa',
+ 'Akèy':'Início','Sou Nou':'Sobre nós','Sèvis':'Serviços','Galeri':'Galeria','Kontak':'Contato','Poukisa Chwazi Nou':'Por que nos escolher',
+ 'Temoignaj':'Depoimentos','Pòtfèy':'Portfólio','Ekip':'Equipe','Pati Nouvèl':'Notícias',
+ 'Rechèch non domèn':'Busca de nome de domínio','Acha domèn':'Compra do domínio','Enstalasyon Hosting':'Instalação da hospedagem','Sit konekte epi pare':'Site conectado e pronto',
+ 'Tout sa ki nan pakè 4,000 GDES':'Todo o pacote de 4.000 GDES','+ Plis opsyon avanse':'+ Mais opções avançadas'
+};
+Object.keys(ITEM_PT).forEach(function(k){if(ITEM_I18N[k])ITEM_I18N[k].pt=ITEM_PT[k];});
+
+/* ---- Brazil / country strings (merged into all 5 languages) ---- */
+const T_BR={
+ ht:{set_country_h:'🌍 Peyi & Peman',set_country:'Peyi kote POS la ap travay',ct_ht:'Ayiti — MonCash, NatCash, Kat',ct_br:'Brezil — Pix, Kat Kredi, Boleto',
+   set_brl:'To BRL (R$ pou 1 US$)',set_pixkey:'Kle Pix (CPF/CNPJ, imel, telefòn oswa kle aleyatwa)',set_pixname:'Non machann (menm jan ak bank la)',set_pixcity:'Vil',
+   set_cardlink:'Lyen peman kat kredi (Mercado Pago, PagSeguro, Stripe…)',set_br_note:'An Brezil, MonCash ak NatCash pa egziste. Pix la gratis epi rive nan segonn. Pou kat kredi, kole lyen peman ou an anba a.',
+   p_pix:'Pix',p_boleto:'Boleto',pix_scan:'Kliyan an eskane kòd la ak app bank li — lajan an rive nan segonn.',
+   pix_copy:'📋 Kopye kòd Pix la',pix_copied:'Kòd la kopye!',pix_confirm:'✓ Mwen resevwa peman an',pix_nokey:'Mete kle Pix ou nan Paramèt pou jenere kòd la.',
+   card_open:'Louvri paj peman an',card_nolink:'Mete lyen peman kat kredi ou nan Paramèt.',
+   boleto_note:'Jenere boleto a nan kont Mercado Pago / PagSeguro ou, epi make vant lan peye lè kliyan an fin peye.',
+   pay_active_br:'Pix ak Kat Kredi aktif',pay_active_sub_br:'Chwazi Pix pou yon kòd QR ki gen egzat kantite a — kliyan an peye nan bank li nan segonn. Kat kredi pase nan lyen peman ou an.'},
+ fr:{set_country_h:'🌍 Pays & Paiement',set_country:'Pays où le POS fonctionne',ct_ht:'Haïti — MonCash, NatCash, Carte',ct_br:'Brésil — Pix, Carte, Boleto',
+   set_brl:'Taux BRL (R$ pour 1 US$)',set_pixkey:'Clé Pix (CPF/CNPJ, e-mail, téléphone ou clé aléatoire)',set_pixname:'Nom du marchand (comme à la banque)',set_pixcity:'Ville',
+   set_cardlink:'Lien de paiement carte (Mercado Pago, PagSeguro, Stripe…)',set_br_note:'Au Brésil, MonCash et NatCash n’existent pas. Pix est gratuit et instantané. Pour la carte, collez votre lien de paiement ci-dessous.',
+   p_pix:'Pix',p_boleto:'Boleto',pix_scan:'Le client scanne le code avec son app bancaire — l’argent arrive en quelques secondes.',
+   pix_copy:'📋 Copier le code Pix',pix_copied:'Code copié !',pix_confirm:'✓ J’ai reçu le paiement',pix_nokey:'Ajoutez votre clé Pix dans les Réglages pour générer le code.',
+   card_open:'Ouvrir la page de paiement',card_nolink:'Ajoutez votre lien de paiement carte dans les Réglages.',
+   boleto_note:'Générez le boleto dans votre compte Mercado Pago / PagSeguro, puis marquez la vente payée une fois le client réglé.',
+   pay_active_br:'Pix et Carte actifs',pay_active_sub_br:'Choisissez Pix pour un QR code au montant exact — le client paie depuis sa banque en quelques secondes. La carte passe par votre lien de paiement.'},
+ en:{set_country_h:'🌍 Country & Payment',set_country:'Country this POS runs in',ct_ht:'Haiti — MonCash, NatCash, Card',ct_br:'Brazil — Pix, Card, Boleto',
+   set_brl:'BRL rate (R$ per US$1)',set_pixkey:'Pix key (CPF/CNPJ, e-mail, phone or random key)',set_pixname:'Merchant name (as at the bank)',set_pixcity:'City',
+   set_cardlink:'Card payment link (Mercado Pago, PagSeguro, Stripe…)',set_br_note:'MonCash and NatCash do not exist in Brazil. Pix is free and instant. For cards, paste your payment link below.',
+   p_pix:'Pix',p_boleto:'Boleto',pix_scan:'The customer scans the code with their banking app — the money lands in seconds.',
+   pix_copy:'📋 Copy Pix code',pix_copied:'Code copied!',pix_confirm:'✓ I received the payment',pix_nokey:'Add your Pix key in Settings to generate the code.',
+   card_open:'Open payment page',card_nolink:'Add your card payment link in Settings.',
+   boleto_note:'Generate the boleto in your Mercado Pago / PagSeguro account, then mark the sale paid once the customer pays.',
+   pay_active_br:'Pix and Card active',pay_active_sub_br:'Choose Pix for a QR code with the exact amount — the customer pays from their bank in seconds. Cards go through your payment link.'},
+ es:{set_country_h:'🌍 País y Pago',set_country:'País donde funciona este POS',ct_ht:'Haití — MonCash, NatCash, Tarjeta',ct_br:'Brasil — Pix, Tarjeta, Boleto',
+   set_brl:'Tasa BRL (R$ por US$1)',set_pixkey:'Clave Pix (CPF/CNPJ, correo, teléfono o clave aleatoria)',set_pixname:'Nombre del comercio (como en el banco)',set_pixcity:'Ciudad',
+   set_cardlink:'Enlace de pago con tarjeta (Mercado Pago, PagSeguro, Stripe…)',set_br_note:'En Brasil no existen MonCash ni NatCash. Pix es gratis e instantáneo. Para tarjeta, pega tu enlace de pago abajo.',
+   p_pix:'Pix',p_boleto:'Boleto',pix_scan:'El cliente escanea el código con su app del banco — el dinero llega en segundos.',
+   pix_copy:'📋 Copiar código Pix',pix_copied:'¡Código copiado!',pix_confirm:'✓ Recibí el pago',pix_nokey:'Agrega tu clave Pix en Ajustes para generar el código.',
+   card_open:'Abrir página de pago',card_nolink:'Agrega tu enlace de pago con tarjeta en Ajustes.',
+   boleto_note:'Genera el boleto en tu cuenta de Mercado Pago / PagSeguro y marca la venta pagada cuando el cliente pague.',
+   pay_active_br:'Pix y Tarjeta activos',pay_active_sub_br:'Elige Pix para un código QR con el monto exacto — el cliente paga desde su banco en segundos. La tarjeta pasa por tu enlace de pago.'},
+ pt:{set_country_h:'🌍 País e Pagamento',set_country:'País onde este POS funciona',ct_ht:'Haiti — MonCash, NatCash, Cartão',ct_br:'Brasil — Pix, Cartão, Boleto',
+   set_brl:'Cotação do real (R$ por US$1)',set_pixkey:'Chave Pix (CPF/CNPJ, e-mail, telefone ou chave aleatória)',set_pixname:'Nome do recebedor (como no banco)',set_pixcity:'Cidade',
+   set_cardlink:'Link de pagamento com cartão (Mercado Pago, PagSeguro, Stripe…)',set_br_note:'No Brasil não existem MonCash nem NatCash. O Pix é gratuito e cai na hora. Para cartão, cole o seu link de pagamento abaixo.',
+   p_pix:'Pix',p_boleto:'Boleto',pix_scan:'O cliente escaneia o código com o app do banco — o dinheiro cai em segundos.',
+   pix_copy:'📋 Copiar código Pix',pix_copied:'Código copiado!',pix_confirm:'✓ Recebi o pagamento',pix_nokey:'Cadastre sua chave Pix nas Configurações para gerar o código.',
+   card_open:'Abrir página de pagamento',card_nolink:'Cadastre seu link de pagamento com cartão nas Configurações.',
+   boleto_note:'Gere o boleto na sua conta Mercado Pago / PagSeguro e marque a venda como paga quando o cliente pagar.',
+   pay_active_br:'Pix e Cartão ativos',pay_active_sub_br:'Escolha Pix para um QR Code com o valor exato — o cliente paga pelo banco em segundos. O cartão passa pelo seu link de pagamento.'}
+};
+Object.keys(T_BR).forEach(function(l){if(T[l])Object.assign(T[l],T_BR[l]);});
 
 /* registration form schemas (person-first) */
 const UP_KEY={'Driver License':'up_driverlic','National ID':'up_natid','Insurance':'up_insurance','Vehicle Registration':'up_vehreg','Driver Photo':'up_driverphoto','Business Documents':'up_bizdocs','Diploma / Certification':'up_diploma','Experience Documents':'up_expdocs','Store Photo':'up_storephoto','Owner ID':'up_ownerid'};
@@ -1698,12 +1922,24 @@ function renderFiles(){const l=document.getElementById('fileList');l.innerHTML='
   r.innerHTML=`${d.url?`<img class="fi" src="${d.url}">`:'<span class="fi">📄</span>'}<span>${d.name}</span><button class="fx">×</button>`;
   r.querySelector('.fx').onclick=()=>{flow.docs.splice(i,1);renderFiles();};l.appendChild(r);});}
 /* pay */
+/* One list of methods for the whole app — the three pay grids are built from
+   it, so switching the country in Settings cannot leave a screen offering
+   MonCash to a customer standing in Brazil. */
+function payMethods(){return isBR()?['pix','card','boleto']:['moncash','natcash','card'];}
+const PAY_META={moncash:{e:'📱',l:()=>'MonCash'},natcash:{e:'📲',l:()=>'NatCash'},card:{e:'💳',l:()=>t('p_card')},
+  pix:{e:'⚡',l:()=>'Pix'},boleto:{e:'🧾',l:()=>'Boleto'},cash:{e:'💵',l:()=>t('p_cash')}};
+function payGridHTML(id,sel){return `<div class="pays" id="${id}">`+payMethods().map(function(m){const meta=PAY_META[m];
+  return `<button class="pay${m===sel?' on':''}" data-pay="${m}"><span class="pe">${meta.e}</span>${meta.l()}</button>`;}).join('')+`</div>`;}
 function renderPay(){const b=document.getElementById('payBreak');b.innerHTML='';
   flow.items.forEach(it=>b.innerHTML+=`<div><span>${it.label}</span><span>${gdes(it.amt)}</span></div>`);
-  b.innerHTML+=`<div class="tot"><span>${t('total')}</span><span>${gdes(flow.amount)}</span></div>`;
-  document.querySelectorAll('#payGrid .pay').forEach(p=>{p.classList.toggle('on',flow.payment===p.dataset.pay);p.onclick=()=>{flow.payment=p.dataset.pay;renderPay();};});
+  b.innerHTML+=`<div class="tot"><span>${t('total')}</span><span>${gdes(flow.amount)}${usdTag(flow.amount)}</span></div>`;
+  /* a method picked before the country changed is no longer offered */
+  if(flow.payment&&payMethods().indexOf(flow.payment)<0)flow.payment=null;
+  const grid=document.getElementById('payGrid');
+  grid.outerHTML=payGridHTML('payGrid',flow.payment);
+  document.querySelectorAll('#payGrid .pay').forEach(p=>{p.onclick=()=>{flow.payment=p.dataset.pay;renderPay();};});
   document.getElementById('payBtn').disabled=!flow.payment;}
-function payLabel(p){return ({cash:t('p_cash'),moncash:'MonCash',natcash:'NatCash',card:t('p_card')})[p]||p||'';}
+function payLabel(p){const m=PAY_META[p];return m?m.l():(p||'');}
 async function completeFlow(){if(!flow.payment){alert(t('need_pay'));return;}
   const orders=load('hb_orders',[]);const id='HB-'+String(1000+orders.length+1);
   const rec={id,type:'sale',statusSet:'sale',module:flow.module,svcName:modById(flow.module).nm,
@@ -1801,10 +2037,7 @@ function openDelivery(){{const rt=document.getElementById('regTitle');rt.style.d
     <label class="fl">${t('deliv_fee')}</label><input type="number" id="dl_fee" inputmode="numeric" value="100">
   </div>
   <div style="font-weight:800;margin:6px 0 8px">${t('pay_t')}</div>
-  <div class="pays" id="dPayGrid">
-    <button class="pay" data-pay="moncash"><span class="pe">📱</span>MonCash</button>
-    <button class="pay" data-pay="natcash"><span class="pe">📲</span>NatCash</button>
-    <button class="pay" data-pay="card"><span class="pe">💳</span>${t('p_card')}</button></div>
+  ${payGridHTML('dPayGrid',null)}
   <div style="height:12px"></div><button class="cta red" onclick="saveDelivery()">${t('pay_do')}</button>`;
   reg={vehType:'moto',payment:null};
   document.getElementById('dveh_moto').classList.remove('ghost');
@@ -1869,12 +2102,9 @@ function ticketSell(){const evs=load('hb_events',[]);const body=document.getElem
     <label class="fl">${t('f_phone')}</label><input type="tel" id="ts_phone">
     <label class="fl">${t('ev_qty')}</label><input type="number" id="ts_qty" value="1" inputmode="numeric"></div>
     <div style="font-weight:800;margin:6px 0 8px">${t('pay_t')}</div>
-    <div class="pays" id="tPayGrid">
-      <button class="pay on" data-pay="moncash"><span class="pe">📱</span>MonCash</button>
-      <button class="pay" data-pay="natcash"><span class="pe">📲</span>NatCash</button>
-      <button class="pay" data-pay="card"><span class="pe">💳</span>${t('p_card')}</button></div>
+    ${payGridHTML('tPayGrid',payMethods()[0])}
     <div style="height:12px"></div><button class="cta red" onclick="sellTicket()">${t('pay_do')}</button>`;
-  reg={payment:'moncash'};
+  reg={payment:payMethods()[0]};
   document.querySelectorAll('#tPayGrid .pay').forEach(p=>p.onclick=()=>{reg.payment=p.dataset.pay;document.querySelectorAll('#tPayGrid .pay').forEach(x=>x.classList.toggle('on',x===p));});
 }
 function sellTicket(){const evs=load('hb_events',[]);const ev=evs.find(e=>e.id===document.getElementById('ts_ev').value);
@@ -1930,8 +2160,74 @@ async function pgVerify(ref){
     body:JSON.stringify({client_id:payClientId(),refference_id:ref})});
   return r.json();
 }
+/* ===================================================================
+   BRAZIL — Pix, card link, boleto.
+   Pix needs no gateway and no account with anyone: the QR code below is a
+   real BR Code (EMV, Banco Central spec) built from the merchant's own Pix
+   key, so the money goes straight into their bank in seconds, free.
+   Card and boleto go through whatever Brazilian provider the merchant
+   already uses (Mercado Pago, PagSeguro, Stripe…) via a payment link.
+   =================================================================== */
+function emvField(id,val){const v=String(val);return id+String(v.length).padStart(2,'0')+v;}
+function pixCrc16(s){let c=0xFFFF;                       /* CRC-16/CCITT-FALSE */
+  for(let i=0;i<s.length;i++){c^=s.charCodeAt(i)<<8;
+    for(let j=0;j<8;j++)c=(c&0x8000)?((c<<1)^0x1021)&0xFFFF:(c<<1)&0xFFFF;}
+  return c.toString(16).toUpperCase().padStart(4,'0');}
+/* The spec allows only plain ASCII in the name and city fields. */
+function pixClean(s,max){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+  .replace(/[^A-Za-z0-9 .-]/g,'').trim().slice(0,max).toUpperCase();}
+function pixPayload(key,name,city,amount,txid){
+  const acct=emvField('00','BR.GOV.BCB.PIX')+emvField('01',String(key||'').trim());
+  let p=emvField('00','01')+emvField('01','12')+emvField('26',acct)+emvField('52','0000')+emvField('53','986');
+  if(amount>0)p+=emvField('54',(+amount).toFixed(2));
+  p+=emvField('58','BR')+emvField('59',pixClean(name,25)||'HAITIBIZNIS')+emvField('60',pixClean(city,15)||'SAO PAULO');
+  p+=emvField('62',emvField('05',String(txid||'').replace(/[^A-Za-z0-9]/g,'').slice(0,25)||'***'));
+  p+='6304';return p+pixCrc16(p);
+}
+/* Brazilian counterpart of collectPayment(). Same contract: 'paid'|'manual'|'cancel'. */
+function collectPaymentBR(ref,amount,method){
+  return new Promise((resolve)=>{
+    const cfg=getCfg(),brl=brlAmt(amount);
+    const ov=document.createElement('div');
+    ov.style.cssText='position:fixed;inset:0;background:rgba(10,16,32,.55);z-index:70;display:flex;align-items:center;justify-content:center;padding:16px';
+    const box=document.createElement('div');
+    box.style.cssText='background:#fff;width:100%;max-width:420px;border-radius:18px;padding:20px 18px;max-height:92vh;overflow:auto;text-align:center';
+    ov.appendChild(box);document.body.appendChild(ov);
+    let done=false;
+    function finish(res){if(done)return;done=true;if(ov.parentNode)document.body.removeChild(ov);resolve(res);}
+    const head=`<div style="font-weight:900;font-size:17px;color:var(--blue)">${payLabel(method)} — ${brlFmt(brl)}</div>
+      <div class="sub" style="margin-top:2px">${gdes(amount)}</div>`;
+    if(method==='pix'){
+      if(!cfg.pixKey){
+        box.innerHTML=head+`<p class="sub" style="margin:14px 0">${t('pix_nokey')}</p>`;
+      }else{
+        const code=pixPayload(cfg.pixKey,cfg.pixName,cfg.pixCity,brl,ref);
+        const qr=qrDataURL(code);
+        box.innerHTML=head+`<p class="sub" style="margin:8px 0 12px">${t('pix_scan')}</p>
+          ${qr?`<img src="${qr}" alt="Pix QR" style="width:212px;height:212px;display:block;margin:0 auto;border:1px solid var(--line);border-radius:12px;padding:6px">`:''}
+          <textarea readonly id="pixCode" style="width:100%;height:64px;margin-top:12px;font-size:10px;font-family:monospace;border:1px solid var(--line);border-radius:10px;padding:8px;resize:none">${code}</textarea>`;
+        const cp=document.createElement('button');cp.className='cta ghost';cp.textContent=t('pix_copy');
+        cp.onclick=()=>{const ta=box.querySelector('#pixCode');ta.select();
+          const ok=()=>{cp.textContent=t('pix_copied');setTimeout(()=>cp.textContent=t('pix_copy'),1600);};
+          if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(code).then(ok,ok);
+          else{try{document.execCommand('copy');}catch(e){}ok();}};
+        box.appendChild(cp);
+      }
+    }else if(cfg.brCardLink){
+      box.innerHTML=head+`<p class="sub" style="margin:10px 0 12px">${method==='boleto'?t('boleto_note'):t('pg_scan')}</p>
+        <a href="${cfg.brCardLink}" target="_blank" rel="noopener" class="cta" style="display:block;text-decoration:none">${t('card_open')}</a>`;
+    }else{
+      box.innerHTML=head+`<p class="sub" style="margin:14px 0">${method==='boleto'?t('boleto_note'):t('card_nolink')}</p>`;
+    }
+    const ok=document.createElement('button');ok.className='cta';ok.style.marginTop='10px';
+    ok.textContent=t('pix_confirm');ok.onclick=()=>finish('manual');box.appendChild(ok);
+    const cx=document.createElement('button');cx.className='cta ghost';cx.textContent=t('cancel');cx.onclick=()=>finish('cancel');box.appendChild(cx);
+  });
+}
+
 /* Show the electronic-payment modal. Resolves 'paid' | 'manual' | 'cancel'. */
 function collectPayment(ref,amount,method){
+  if(isBR())return collectPaymentBR(ref,amount,method);
   return new Promise(async(resolve)=>{
     const ov=document.createElement('div');
     ov.style.cssText='position:fixed;inset:0;background:rgba(10,16,32,.55);z-index:70;display:flex;align-items:center;justify-content:center;padding:16px';
@@ -2077,6 +2373,19 @@ function renderSettings(){const cfg=getCfg();const box=document.getElementById('
     <div class="row2"><button class="cta ghost" onclick="licAdmin('active')">${t('lic_set_active')}</button><button class="cta ghost" onclick="licAdmin('expired')">${t('lic_set_expired')}</button></div>
     <div class="row2"><button class="cta ghost" onclick="licAdmin('suspend')">${t('lic_suspend')}</button><button class="cta ghost" onclick="licAdmin('reactivate')">${t('lic_reactivate')}</button></div>
     <hr style="border:none;border-top:1px solid var(--line);margin:14px 0">
+    <div style="font-weight:800;margin:2px 0 6px">${t('set_country_h')}</div>
+    <label class="fl">${t('set_country')}</label>
+    <select id="set_country" onchange="setCountry(this.value)">
+      <option value="ht"${cfg.country!=='br'?' selected':''}>${t('ct_ht')}</option>
+      <option value="br"${cfg.country==='br'?' selected':''}>${t('ct_br')}</option></select>
+    ${cfg.country==='br'?`
+    <div class="sub" style="margin:8px 0 4px">${t('set_br_note')}</div>
+    <label class="fl">${t('set_brl')}</label><input type="number" step="0.01" id="set_brl" value="${cfg.brl||5.4}">
+    <label class="fl">${t('set_pixkey')}</label><input id="set_pixkey" value="${cfg.pixKey||''}">
+    <label class="fl">${t('set_pixname')}</label><input id="set_pixname" value="${cfg.pixName||''}">
+    <label class="fl">${t('set_pixcity')}</label><input id="set_pixcity" value="${cfg.pixCity||''}">
+    <label class="fl">${t('set_cardlink')}</label><input id="set_cardlink" value="${cfg.brCardLink||''}">`:''}
+    <hr style="border:none;border-top:1px solid var(--line);margin:14px 0">
     <label class="fl">${t('set_rate')}</label><input type="number" id="set_rate" value="${cfg.rate}">
     <label class="fl">${t('set_regfee_d')}</label><input type="number" id="set_rfd" value="${cfg.regFeeDriver}">
     <label class="fl">${t('set_regfee_r')}</label><input type="number" id="set_rfr" value="${cfg.regFeeRider}">
@@ -2094,7 +2403,17 @@ function renderSettings(){const cfg=getCfg();const box=document.getElementById('
     <label class="fl">${t('base')} (US$)</label><input type="number" data-usd="${i}" value="${r.usd}">
     <label class="fl">${t('fee_press')} (GDES)</label><input type="number" data-press="${i}" value="${r.press}"></div>`;});
 }
+/* Changing the country changes which payment buttons exist, so it is saved
+   immediately and the panel re-drawn to reveal (or hide) the Pix fields. */
+function setCountry(c){const cfg=getCfg();cfg.country=(c==='br'?'br':'ht');setCfg(cfg);renderSettings();}
+function setVal(id,d){const el=document.getElementById(id);return el?el.value:d;}
 function saveSettings(){const cfg=getCfg();cfg.rate=+document.getElementById('set_rate').value||132;
+  cfg.country=setVal('set_country',cfg.country)==='br'?'br':'ht';
+  cfg.brl=+setVal('set_brl',cfg.brl)||5.4;                 /* the Brazil fields are only */
+  cfg.pixKey=(setVal('set_pixkey',cfg.pixKey)||'').trim(); /* on screen in Brazil mode,  */
+  cfg.pixName=(setVal('set_pixname',cfg.pixName)||'').trim();   /* so read them defensively */
+  cfg.pixCity=(setVal('set_pixcity',cfg.pixCity)||'').trim();
+  cfg.brCardLink=(setVal('set_cardlink',cfg.brCardLink)||'').trim();
   cfg.regFeeDriver=+document.getElementById('set_rfd').value||0;cfg.regFeeRider=+document.getElementById('set_rfr').value||0;
   cfg.regFeeMerchant=+document.getElementById('set_rfm').value||0;cfg.regFeePro=+document.getElementById('set_rfp').value||0;
   cfg.payClient=(document.getElementById('set_payclient').value||'').trim()||'pp_1ohu5zz2tcx';
@@ -2172,8 +2491,8 @@ function svPayments(){const body=document.getElementById('svBody');
   const tx=load('hb_orders',[]).filter(o=>o.payment&&o.payment!=='cash'&&o.amount>0).slice().reverse();
   body.innerHTML=`${svHeader('openSV()')}<div class="h2">${t('sv_payments')}</div>
     <div class="card" style="background:#eef3ff;border-color:var(--blue)">
-      <div style="font-weight:800;color:var(--blue)">✅ ${t('pay_active')}</div>
-      <div class="sub" style="margin-top:4px">${t('pay_active_sub')}</div></div>
+      <div style="font-weight:800;color:var(--blue)">✅ ${t(isBR()?'pay_active_br':'pay_active')}</div>
+      <div class="sub" style="margin-top:4px">${t(isBR()?'pay_active_sub_br':'pay_active_sub')}</div></div>
     <div id="svPayList"></div>`;
   const wrap=document.getElementById('svPayList');
   if(!tx.length){wrap.innerHTML=`<div class="empty"><div class="ee">💳</div>${t('pay_none')}</div>`;return;}
