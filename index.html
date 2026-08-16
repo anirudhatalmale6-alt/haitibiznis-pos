@@ -291,12 +291,12 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
 <body>
 
 <div id="splash">
-  <img src="assets/pos-logo.png" alt="HaitiBiznis POS">
+  <img src="assets/splash-ht.jpg" alt="HaitiBiznis POS">
 </div>
 
 <div class="appbar">
   <a href="https://haitibiznis.com" class="hbback" title="HaitiBiznis"><span class="ar">←</span><span class="lbl">HaitiBiznis</span></a>
-  <img src="assets/haitibiznis-logo.png" class="logo" alt="HaitiBiznis">
+  <img src="assets/pos-logo-ht.jpg" class="logo" alt="HaitiBiznis">
   <h1 data-i18n="app_t">Sant HaitiBiznis<small data-i18n="app_s">POINT OF SALE</small></h1>
   <div class="lang"><button data-lang="ht" class="on">HT</button><button data-lang="fr">FR</button><button data-lang="en">EN</button><button data-lang="es">ES</button><button data-lang="pt">PT</button></div>
   <button class="gear" onclick="go('set')">⚙️</button>
@@ -968,10 +968,18 @@ function applyI18n(){document.documentElement.lang=lang;
    =================================================================== */
 function brandName(){return isBR()?'48 Horas Pronto':'HaitiBiznis';}
 function svcBrand(){return isBR()?'48 Horas Pronto':'48HoursReady';}
-function brandLogo(){return isBR()?'assets/brasil-pos-logo.png':'assets/haitibiznis-logo.png';}
+/* One POS logo per language — the client had each one drawn in its own language.
+   Brazil wins over the language pill: country=br with the UI in English still
+   has to show the Brazilian mark. */
+const LANG_LOGO={ht:'assets/pos-logo-ht.jpg',fr:'assets/pos-logo-fr.jpg',en:'assets/pos-logo-en.jpg',
+  es:'assets/pos-logo-es.jpg',pt:'assets/brasil-pos-logo.png'};
+const LANG_SPLASH={ht:'assets/splash-ht.jpg',fr:'assets/splash-fr.jpg',en:'assets/splash-en.jpg',
+  es:'assets/splash-es.jpg',pt:'assets/brasil-pos-logo.png'};
+function brandLogo(){return isBR()?LANG_LOGO.pt:(LANG_LOGO[lang]||LANG_LOGO.ht);}
+function splashLogo(){return isBR()?LANG_SPLASH.pt:(LANG_SPLASH[lang]||LANG_SPLASH.ht);}
 function applyBrand(){
   const l=document.querySelector('.appbar .logo');if(l){l.src=brandLogo();l.alt=brandName();}
-  const sp=document.querySelector('#splash img');if(sp)sp.src=isBR()?'assets/brasil-pos-logo.png':'assets/pos-logo.png';
+  const sp=document.querySelector('#splash img');if(sp)sp.src=splashLogo();
   /* The back chip keeps saying HaitiBiznis — that is genuinely where it goes. */
   if(isBR())document.querySelectorAll('#installBtn2,#installHelp [data-i18n="inst_title"]')
     .forEach(function(el){el.textContent=el.textContent.replace(/HaitiBiznis/g,'48 Horas Pronto');});
