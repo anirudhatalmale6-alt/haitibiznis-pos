@@ -279,6 +279,13 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
 #installBanner .ib-x{background:transparent;border:none;color:rgba(255,255,255,.9);font-size:16px;flex-shrink:0;cursor:pointer;padding:2px 5px;line-height:1}
 @media(prefers-reduced-motion:reduce){#installBanner,#installBanner .ib-btn{animation:none}}
 @media print{.appbar,.nav,.back,.cta,.no-print,#installBanner{display:none!important}body{padding:0}}
+/* Leadership — the site's team page shrunk to a phone: face, name, role. */
+.team-c{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:16px;padding:11px 12px;margin-bottom:9px;box-shadow:0 4px 14px rgba(16,26,60,.05)}
+.team-c img,.team-c .ini{width:58px;height:58px;border-radius:50%;object-fit:cover;flex:0 0 58px;background:#eef1f6}
+.team-c .ini{display:flex;align-items:center;justify-content:center;font-weight:900;font-size:19px;color:#0b2a5b;background:linear-gradient(135deg,#FFCC29,#009B3A)}
+.team-c .tn{font-weight:900;font-size:14.5px;line-height:1.2}
+.team-c .tr{font-size:11.5px;color:var(--muted);font-weight:700;margin-top:3px;line-height:1.3}
+.team-c .tb{display:inline-block;font-size:10px;font-weight:800;color:#0c8f45;background:#e6f7ee;border-radius:999px;padding:2px 8px;margin-top:5px}
 </style>
 </head>
 <body>
@@ -334,6 +341,12 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
 <section id="s-promo" class="screen">
   <button class="back" onclick="go('ref')">‹ <span data-i18n="back">Retounen</span></button>
   <div id="promoBody"></div>
+</section>
+
+<!-- Leadership team -->
+<section id="s-team" class="screen">
+  <button class="back" onclick="go('home')">‹ <span data-i18n="back">Retounen</span></button>
+  <div id="teamBody"></div>
 </section>
 
 <section id="s-subs" class="screen">
@@ -902,12 +915,69 @@ const PROMO_FLYERS=[
 ];
 const PROMO_VIDEOS=[]; /* client to supply promo videos → {src,thumb,t} */
 
+/* ===================================================================
+   LEADERSHIP. Same people, same roles as haitibiznis.com/leadership.html —
+   a customer who checks one against the other must find them identical.
+   Flavio has no photo yet, so his card falls back to initials.
+   =================================================================== */
+const TEAM=[
+ {ph:'team-jeffery-boyard.jpg',nm:'Jeffery Boyard',
+  r:{ht:'Fondatè & Direktè Jeneral (CEO)',fr:'Fondateur & Directeur Général (CEO)',en:'Founder & Chief Executive Officer (CEO)',es:'Fundador & Director Ejecutivo (CEO)',pt:'Fundador & Diretor Executivo (CEO)'}},
+ {ini:'FM',nm:'Flavio Michelli',brz:true,co:'HB Technologies',
+  r:{ht:'Direktè Peyi — Brezil',fr:'Directeur Pays — Brésil',en:'Country Director — Brazil',es:'Director de País — Brasil',pt:'Diretor de País — Brasil'}},
+ {ph:'team-gilbert-hippolyte.jpg',nm:'Gilbert Hippolyte',
+  r:{ht:'Direktè Koneksyon (CCO)',fr:'Directeur des Connexions (CCO)',en:'Chief Connector Officer (CCO)',es:'Director de Conexiones (CCO)',pt:'Diretor de Conexões (CCO)'}},
+ {ph:'team-gloria-kamira.jpg',nm:'Gloria Kamira',
+  r:{ht:'Direktè Patenarya Lafrik',fr:'Directrice des Partenariats Afrique',en:'Director of Africa Partnerships',es:'Directora de Alianzas de África',pt:'Diretora de Parcerias na África'}},
+ {ph:'team-marie-anne-maignan.jpg',nm:'Marie-Anne Boyard Maignan',
+  r:{ht:'Estratèj Sante an Chèf',fr:'Stratège en Chef de la Santé',en:'Chief Healthcare Strategist',es:'Estratega Principal de Salud',pt:'Estrategista-Chefe de Saúde'}},
+ {ph:'team-wendell-theodore.jpg',nm:'Wendell Theodore',
+  r:{ht:'Konsiltan Medya an Chèf',fr:'Consultant Média en Chef',en:'Chief Media Consultant',es:'Consultor Principal de Medios',pt:'Consultor-Chefe de Mídia'}},
+ {ph:'team-dukens-emile.jpg',nm:'Dukens Emile',
+  r:{ht:'Direktè Komèsyal & Devlopman Biznis',fr:'Directeur Commercial & Développement des Affaires',en:'Director of Sales & Business Development',es:'Director Comercial y Desarrollo de Negocios',pt:'Diretor Comercial & Desenvolvimento de Negócios'}},
+ {ph:'team-joseph-lambert.jpg',nm:'Joseph Lambert',
+  r:{ht:'Direktè Sekirite Estratejik',fr:'Directeur de la Sécurité Stratégique',en:'Director of Strategic Security',es:'Director de Seguridad Estratégica',pt:'Diretor de Segurança Estratégica'}},
+ {ph:'team-pearl-mareva-hippolyte.jpg',nm:'Pearl-Marêva Hippolyte',
+  r:{ht:'Direktè Patenarya Estratejik',fr:'Directrice des Partenariats Stratégiques',en:'Director of Strategic Partnerships',es:'Directora de Alianzas Estratégicas',pt:'Diretora de Parcerias Estratégicas'}}
+];
+function renderTeam(){
+  /* In Brazil the local director comes first — that is who the customer is standing with. */
+  const list=TEAM.slice();
+  if(isBR()){const i=list.findIndex(x=>x.brz);if(i>0)list.unshift(list.splice(i,1)[0]);}
+  const cards=list.map(m=>{
+    const face=m.ph?`<img src="assets/${m.ph}" alt="${m.nm}" loading="lazy">`:`<div class="ini">${m.ini}</div>`;
+    const co=m.co?`<div class="tb">${m.co}</div>`:'';
+    return `<div class="team-c">${face}<div style="flex:1;min-width:0"><div class="tn">${m.nm}${m.brz?' 🇧🇷':''}</div><div class="tr">${m.r[lang]||m.r.en}</div>${co}</div></div>`;}).join('');
+  document.getElementById('teamBody').innerHTML=`
+    <div class="h2" style="font-size:19px;margin:2px 0 4px">${t('team_h')}</div>
+    <p class="sub" style="margin:0 0 14px">${t('team_s')}</p>
+    ${cards}
+    <a class="cta ghost" style="display:block;text-align:center;text-decoration:none;margin-top:12px" href="https://haitibiznis.com/leadership.html" target="_blank" rel="noopener">${t('team_full')} →</a>`;
+}
+
 let lang=localStorage.getItem('hb_lang')||'ht';
 function t(k){return (T[lang]&&T[lang][k])||T.ht[k]||k;}
 function applyI18n(){document.documentElement.lang=lang;
   document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(T[lang][k]===undefined)return;if(k==='app_t')el.childNodes[0].nodeValue=T[lang].app_t;else el.textContent=T[lang][k];});
   document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.getAttribute('data-i18n-ph');if(T[lang][k]!==undefined)el.placeholder=T[lang][k];});
-  const sm=document.querySelector('.appbar h1 small');if(sm)sm.textContent=t('app_s');}
+  const sm=document.querySelector('.appbar h1 small');if(sm)sm.textContent=t('app_s');
+  applyBrand();}
+/* ===================================================================
+   BRAND. Brazil runs the same POS under its own mark — "48 Horas Pronto".
+   The Haitian branch is untouched: everything here is gated on isBR().
+   =================================================================== */
+function brandName(){return isBR()?'48 Horas Pronto':'HaitiBiznis';}
+function svcBrand(){return isBR()?'48 Horas Pronto':'48HoursReady';}
+function brandLogo(){return isBR()?'assets/brasil-pos-logo.png':'assets/haitibiznis-logo.png';}
+function applyBrand(){
+  const l=document.querySelector('.appbar .logo');if(l){l.src=brandLogo();l.alt=brandName();}
+  const sp=document.querySelector('#splash img');if(sp)sp.src=isBR()?'assets/brasil-pos-logo.png':'assets/pos-logo.png';
+  /* The back chip keeps saying HaitiBiznis — that is genuinely where it goes. */
+  if(isBR())document.querySelectorAll('#installBtn2,#installHelp [data-i18n="inst_title"]')
+    .forEach(function(el){el.textContent=el.textContent.replace(/HaitiBiznis/g,'48 Horas Pronto');});
+  /* app_t is a language string; in Brazil the brand name wins over it. */
+  const h1=document.querySelector('.appbar h1');
+  if(h1&&h1.childNodes[0])h1.childNodes[0].nodeValue=isBR()?'48 Horas Pronto':T[lang].app_t;}
 
 /* ---------- config ---------- */
 const DEF_CFG={rate:132,country:'ht',brl:5.4,brMarkup:2,pixKey:'',pixName:'',pixCity:'',brCardLink:'',
@@ -1027,12 +1097,20 @@ function applyCommission(rec){const amt=+rec.amount||0;const ct=commType(rec.mod
 
 /* module data */
 /* HaitiBiznis Technologies — Menu 1: Website / Landing Page packages (fixed price + fixed sections) */
+/* br: = the R$ price printed on the Brazilian "48 Horas Pronto" boards. A customer
+   holding the flyer must be charged the price on it, so when cfg.brFlyer is on it
+   wins over the automatic conversion. Off = the plain Haitian price × markup. */
 const WEB_PACKAGES=[
- {amt:2000,nm:'Pakè Rapid',secs:5,feats:['Akèy','Sou Nou','Sèvis','Galeri','Kontak']},
- {amt:3000,nm:'Pakè Sipò 7/7',secs:7,feats:['Akèy','Sou Nou','Sèvis','Poukisa Chwazi Nou','Temoignaj','Galeri','Kontak','FAQ']},
- {amt:4000,nm:'Pakè Abòdab',secs:9,feats:['Akèy','Sou Nou','Sèvis','Poukisa Chwazi Nou','Temoignaj','Pòtfèy','Galeri','Kontak','FAQ','Ekip','Pati Nouvèl']},
- {amt:7500,nm:'Domèn, Achte & Setup Konplè',feats:['Rechèch non domèn','Acha domèn','Enstalasyon Hosting','Sit konekte epi pare','Tout sa ki nan pakè 4,000 GDES','+ Plis opsyon avanse']}
+ {amt:2000,br:129,nm:'Pakè Rapid',secs:5,feats:['Akèy','Sou Nou','Sèvis','Galeri','Kontak']},
+ {amt:3000,br:199,nm:'Pakè Sipò 7/7',secs:7,feats:['Akèy','Sou Nou','Sèvis','Poukisa Chwazi Nou','Temoignaj','Galeri','Kontak','FAQ']},
+ {amt:4000,br:299,nm:'Pakè Abòdab',secs:9,feats:['Akèy','Sou Nou','Sèvis','Poukisa Chwazi Nou','Temoignaj','Pòtfèy','Galeri','Kontak','FAQ','Ekip','Pati Nouvèl']},
+ {amt:7500,br:499,nm:'Domèn, Achte & Setup Konplè',feats:['Rechèch non domèn','Acha domèn','Enstalasyon Hosting','Sit konekte epi pare','Tout sa ki nan pakè 4,000 GDES','+ Plis opsyon avanse']}
 ];
+/* The base amount to bill for a package in the market that is on screen. Returning
+   a GDES base (not a R$ price) keeps ONE ledger — commissions and reports are
+   untouched — and gdes(unfx(129)) prints back exactly R$ 129,00. */
+function brFlyerOn(){const c=getCfg();return c.brFlyer!==0;}
+function pkgAmt(p){return (isBR()&&brFlyerOn()&&p.br)?unfx(p.br):p.amt;}
 /* Clickable "see a sample" links per service name — shown as a small eye link in package flows */
 const SAMPLES={
  'Pitch Deck Envestisè':'https://haitibiznis.com/samples/pitch-deck/',
@@ -1043,11 +1121,11 @@ function sampleLink(name){const u=SAMPLES[name];if(!u)return '';
   return `<a href="${u}" target="_blank" rel="noopener" class="smpl" onclick="event.stopPropagation()">👁 ${t('see_sample')}</a>`;}
 /* HaitiBiznis Technologies — Menu 2: Business/branding packages (pick:1 = choose one; pick:0 = all included) */
 const BRAND_PACKAGES=[
- {amt:500,pick:1,feats:['Logo Pwofesyonèl','Kat Biznis',{nm:'Modifikasyon Foto'},{nm:'Desen Grafik',sub:['Flyer','Afich (Poster)','Banner','Facebook Cover','Instagram Post','Story','Menu','Sètifika','Invitation','Brochure']},'QR Code Pèmanan','Kat Envitasyon Dijital','CV Pwofesyonèl']},
- {amt:1000,pick:1,feats:['Flipbook Dijital','Flyer / Afich','Kat Biznis Dijital','Rezime Egzekitif','Video Eksplikatif','Piblisite Video 10 Segonn','Landing Page (3 Seksyon)']},
- {amt:5000,pick:0,feats:['Logo','Kat Biznis','Rezime Egzekitif','Video Eksplikatif','Video Promo 10 Segonn','QR Code Pèmanan','Landing Page (5 Seksyon)'],bonus:'Enskripsyon MyPlopPlop Marketplace'},
- {amt:10000,pick:0,feats:['Logo','Kat Biznis','Executive Summary','Pitch Deck Envestisè','Video Eksplikatif','Video Promo','Kominike pou Laprès']},
- {amt:15000,pick:0,tier:'2 Lang',plus:'Tout Pakè 10,000 GDES',feats:['Tradiksyon (EN/FR oswa FR/EN)','Sit Entènèt nan 2 Lang','Pitch Deck nan 2 Lang','Press Release nan 2 Lang','Flipbook nan 2 Lang']}
+ {amt:500,br:30,pick:1,feats:['Logo Pwofesyonèl','Kat Biznis',{nm:'Modifikasyon Foto'},{nm:'Desen Grafik',sub:['Flyer','Afich (Poster)','Banner','Facebook Cover','Instagram Post','Story','Menu','Sètifika','Invitation','Brochure']},'QR Code Pèmanan','Kat Envitasyon Dijital','CV Pwofesyonèl']},
+ {amt:1000,br:60,pick:1,feats:['Flipbook Dijital','Flyer / Afich','Kat Biznis Dijital','Rezime Egzekitif','Video Eksplikatif','Piblisite Video 10 Segonn','Landing Page (3 Seksyon)']},
+ {amt:5000,br:180,pick:0,feats:['Logo','Kat Biznis','Rezime Egzekitif','Video Eksplikatif','Video Promo 10 Segonn','QR Code Pèmanan','Landing Page (5 Seksyon)'],bonus:'Enskripsyon MyPlopPlop Marketplace'},
+ {amt:10000,br:450,pick:0,feats:['Logo','Kat Biznis','Executive Summary','Pitch Deck Envestisè','Video Eksplikatif','Video Promo','Kominike pou Laprès']},
+ {amt:15000,br:600,pick:0,tier:'2 Lang',plus:'Tout Pakè 10,000 GDES',feats:['Tradiksyon (EN/FR oswa FR/EN)','Sit Entènèt nan 2 Lang','Pitch Deck nan 2 Lang','Press Release nan 2 Lang','Flipbook nan 2 Lang']}
 ];
 /* ===== Universal Smart Order Form — per-service intake fields =====
    field = [key, labelKey, type, opts]  type: text|ta|sel|date|yn  */
@@ -1465,7 +1543,7 @@ Object.keys(ITEM_PT).forEach(function(k){if(ITEM_I18N[k])ITEM_I18N[k].pt=ITEM_PT
 const T_BR={
  ht:{set_markup:'Miltipliye pri Ayiti yo pa',set_markup_note:'Mache Brezil la diferan. x{x} vle di yon pakè 5,000 GDES vann {p}.',set_pt_is_br:'Lang lan sou Pòtigè, kidonk POS la nan mòd Brezil otomatikman.',set_country_h:'🌍 Peyi & Peman',set_country:'Peyi kote POS la ap travay',ct_ht:'Ayiti — MonCash, NatCash, Kat',ct_br:'Brezil — Pix, Kat Kredi, Boleto',
    set_brl:'To BRL (R$ pou 1 US$)',set_pixkey:'Kle Pix (CPF/CNPJ, imel, telefòn oswa kle aleyatwa)',set_pixname:'Non machann (menm jan ak bank la)',set_pixcity:'Vil',
-   set_cardlink:'Lyen peman kat kredi (Mercado Pago, PagSeguro, Stripe…)',set_br_note:'An Brezil, MonCash ak NatCash pa egziste. Pix la gratis epi rive nan segonn. Pou kat kredi, kole lyen peman ou an anba a.',
+   set_cardlink:'Lyen peman kat kredi (Mercado Pago, PagSeguro, Stripe…)',team_h:'Ekip Dirijan',team_s:'Moun ki dèyè HaitiBiznis Technologies.',team_full:'Wè pwofil konplè yo',set_flyer:'Pri pakè yo an Brezil',set_flyer_on:'Sèvi ak pri R$ ki enprime sou tablo a',set_flyer_off:'Konvèti otomatikman (pri Ayiti × miltiplikatè)',set_flyer_note:'Tablo 48 Horas Pronto yo anonse R$ 129 / 199 / 299 / 499 pou sit entènèt ak R$ 30 / 60 / 180 / 450 / 600 pou pakè biznis. Kite l limen pou POS la mande egzakteman pri ki sou tablo a.',set_br_note:'An Brezil, MonCash ak NatCash pa egziste. Pix la gratis epi rive nan segonn. Pou kat kredi, kole lyen peman ou an anba a.',
    p_pix:'Pix',p_boleto:'Boleto',pix_scan:'Kliyan an eskane kòd la ak app bank li — lajan an rive nan segonn.',
    pix_copy:'📋 Kopye kòd Pix la',pix_copied:'Kòd la kopye!',pix_confirm:'✓ Mwen resevwa peman an',pix_nokey:'Mete kle Pix ou nan Paramèt pou jenere kòd la.',
    card_open:'Louvri paj peman an',card_nolink:'Mete lyen peman kat kredi ou nan Paramèt.',
@@ -1473,7 +1551,7 @@ const T_BR={
    pay_active_br:'Pix ak Kat Kredi aktif',pay_active_sub_br:'Chwazi Pix pou yon kòd QR ki gen egzat kantite a — kliyan an peye nan bank li nan segonn. Kat kredi pase nan lyen peman ou an.'},
  fr:{set_markup:'Multiplier les prix haïtiens par',set_markup_note:'Le marché brésilien est différent. x{x} veut dire qu’un forfait de 5 000 GDES se vend {p}.',set_pt_is_br:'La langue est en portugais, le POS passe donc automatiquement en mode Brésil.',set_country_h:'🌍 Pays & Paiement',set_country:'Pays où le POS fonctionne',ct_ht:'Haïti — MonCash, NatCash, Carte',ct_br:'Brésil — Pix, Carte, Boleto',
    set_brl:'Taux BRL (R$ pour 1 US$)',set_pixkey:'Clé Pix (CPF/CNPJ, e-mail, téléphone ou clé aléatoire)',set_pixname:'Nom du marchand (comme à la banque)',set_pixcity:'Ville',
-   set_cardlink:'Lien de paiement carte (Mercado Pago, PagSeguro, Stripe…)',set_br_note:'Au Brésil, MonCash et NatCash n’existent pas. Pix est gratuit et instantané. Pour la carte, collez votre lien de paiement ci-dessous.',
+   set_cardlink:'Lien de paiement carte (Mercado Pago, PagSeguro, Stripe…)',team_h:'Équipe de Direction',team_s:'Les personnes derrière HaitiBiznis Technologies.',team_full:'Voir les profils complets',set_flyer:'Prix des forfaits au Brésil',set_flyer_on:'Utiliser les prix R$ imprimés sur le tableau',set_flyer_off:'Convertir automatiquement (prix Haïti × multiplicateur)',set_flyer_note:'Les tableaux 48 Horas Pronto annoncent R$ 129 / 199 / 299 / 499 pour les sites et R$ 30 / 60 / 180 / 450 / 600 pour les forfaits business. Laissez activé pour que le POS facture exactement le prix affiché.',set_br_note:'Au Brésil, MonCash et NatCash n’existent pas. Pix est gratuit et instantané. Pour la carte, collez votre lien de paiement ci-dessous.',
    p_pix:'Pix',p_boleto:'Boleto',pix_scan:'Le client scanne le code avec son app bancaire — l’argent arrive en quelques secondes.',
    pix_copy:'📋 Copier le code Pix',pix_copied:'Code copié !',pix_confirm:'✓ J’ai reçu le paiement',pix_nokey:'Ajoutez votre clé Pix dans les Réglages pour générer le code.',
    card_open:'Ouvrir la page de paiement',card_nolink:'Ajoutez votre lien de paiement carte dans les Réglages.',
@@ -1481,7 +1559,7 @@ const T_BR={
    pay_active_br:'Pix et Carte actifs',pay_active_sub_br:'Choisissez Pix pour un QR code au montant exact — le client paie depuis sa banque en quelques secondes. La carte passe par votre lien de paiement.'},
  en:{set_markup:'Multiply the Haitian prices by',set_markup_note:'Brazil is a different market. x{x} means a 5,000 GDES package sells for {p}.',set_pt_is_br:'The language is Portuguese, so the POS is in Brazil mode automatically.',set_country_h:'🌍 Country & Payment',set_country:'Country this POS runs in',ct_ht:'Haiti — MonCash, NatCash, Card',ct_br:'Brazil — Pix, Card, Boleto',
    set_brl:'BRL rate (R$ per US$1)',set_pixkey:'Pix key (CPF/CNPJ, e-mail, phone or random key)',set_pixname:'Merchant name (as at the bank)',set_pixcity:'City',
-   set_cardlink:'Card payment link (Mercado Pago, PagSeguro, Stripe…)',set_br_note:'MonCash and NatCash do not exist in Brazil. Pix is free and instant. For cards, paste your payment link below.',
+   set_cardlink:'Card payment link (Mercado Pago, PagSeguro, Stripe…)',team_h:'Leadership Team',team_s:'The people behind HaitiBiznis Technologies.',team_full:'See the full profiles',set_flyer:'Package prices in Brazil',set_flyer_on:'Use the R$ prices printed on the board',set_flyer_off:'Convert automatically (Haiti price × markup)',set_flyer_note:'The 48 Horas Pronto boards advertise R$ 129 / 199 / 299 / 499 for websites and R$ 30 / 60 / 180 / 450 / 600 for business packages. Keep this on so the POS charges exactly what the board shows.',set_br_note:'MonCash and NatCash do not exist in Brazil. Pix is free and instant. For cards, paste your payment link below.',
    p_pix:'Pix',p_boleto:'Boleto',pix_scan:'The customer scans the code with their banking app — the money lands in seconds.',
    pix_copy:'📋 Copy Pix code',pix_copied:'Code copied!',pix_confirm:'✓ I received the payment',pix_nokey:'Add your Pix key in Settings to generate the code.',
    card_open:'Open payment page',card_nolink:'Add your card payment link in Settings.',
@@ -1489,7 +1567,7 @@ const T_BR={
    pay_active_br:'Pix and Card active',pay_active_sub_br:'Choose Pix for a QR code with the exact amount — the customer pays from their bank in seconds. Cards go through your payment link.'},
  es:{set_markup:'Multiplicar los precios haitianos por',set_markup_note:'Brasil es otro mercado. x{x} significa que un paquete de 5,000 GDES se vende a {p}.',set_pt_is_br:'El idioma es portugués, así que el POS está en modo Brasil automáticamente.',set_country_h:'🌍 País y Pago',set_country:'País donde funciona este POS',ct_ht:'Haití — MonCash, NatCash, Tarjeta',ct_br:'Brasil — Pix, Tarjeta, Boleto',
    set_brl:'Tasa BRL (R$ por US$1)',set_pixkey:'Clave Pix (CPF/CNPJ, correo, teléfono o clave aleatoria)',set_pixname:'Nombre del comercio (como en el banco)',set_pixcity:'Ciudad',
-   set_cardlink:'Enlace de pago con tarjeta (Mercado Pago, PagSeguro, Stripe…)',set_br_note:'En Brasil no existen MonCash ni NatCash. Pix es gratis e instantáneo. Para tarjeta, pega tu enlace de pago abajo.',
+   set_cardlink:'Enlace de pago con tarjeta (Mercado Pago, PagSeguro, Stripe…)',team_h:'Equipo Directivo',team_s:'Las personas detrás de HaitiBiznis Technologies.',team_full:'Ver los perfiles completos',set_flyer:'Precios de los paquetes en Brasil',set_flyer_on:'Usar los precios R$ impresos en el tablero',set_flyer_off:'Convertir automáticamente (precio Haití × multiplicador)',set_flyer_note:'Los tableros 48 Horas Pronto anuncian R$ 129 / 199 / 299 / 499 para sitios web y R$ 30 / 60 / 180 / 450 / 600 para paquetes de negocio. Déjalo activado para que el POS cobre exactamente el precio del tablero.',set_br_note:'En Brasil no existen MonCash ni NatCash. Pix es gratis e instantáneo. Para tarjeta, pega tu enlace de pago abajo.',
    p_pix:'Pix',p_boleto:'Boleto',pix_scan:'El cliente escanea el código con su app del banco — el dinero llega en segundos.',
    pix_copy:'📋 Copiar código Pix',pix_copied:'¡Código copiado!',pix_confirm:'✓ Recibí el pago',pix_nokey:'Agrega tu clave Pix en Ajustes para generar el código.',
    card_open:'Abrir página de pago',card_nolink:'Agrega tu enlace de pago con tarjeta en Ajustes.',
@@ -1497,7 +1575,7 @@ const T_BR={
    pay_active_br:'Pix y Tarjeta activos',pay_active_sub_br:'Elige Pix para un código QR con el monto exacto — el cliente paga desde su banco en segundos. La tarjeta pasa por tu enlace de pago.'},
  pt:{set_markup:'Multiplicar os preços do Haiti por',set_markup_note:'O Brasil é outro mercado. x{x} significa que um pacote de 5.000 GDES é vendido por {p}.',set_pt_is_br:'O idioma está em português, então o POS já está no modo Brasil.',set_country_h:'🌍 País e Pagamento',set_country:'País onde este POS funciona',ct_ht:'Haiti — MonCash, NatCash, Cartão',ct_br:'Brasil — Pix, Cartão, Boleto',
    set_brl:'Cotação do real (R$ por US$1)',set_pixkey:'Chave Pix (CPF/CNPJ, e-mail, telefone ou chave aleatória)',set_pixname:'Nome do recebedor (como no banco)',set_pixcity:'Cidade',
-   set_cardlink:'Link de pagamento com cartão (Mercado Pago, PagSeguro, Stripe…)',set_br_note:'No Brasil não existem MonCash nem NatCash. O Pix é gratuito e cai na hora. Para cartão, cole o seu link de pagamento abaixo.',
+   set_cardlink:'Link de pagamento com cartão (Mercado Pago, PagSeguro, Stripe…)',svc_hbtech:'48 Horas Pronto',team_h:'Equipe de Liderança',team_s:'As pessoas por trás da HaitiBiznis Technologies.',team_full:'Ver os perfis completos',set_flyer:'Preços dos pacotes no Brasil',set_flyer_on:'Usar os preços em R$ do material impresso',set_flyer_off:'Converter automaticamente (preço do Haiti × multiplicador)',set_flyer_note:'Os quadros 48 Horas Pronto anunciam R$ 129 / 199 / 299 / 499 para sites e R$ 30 / 60 / 180 / 450 / 600 para pacotes de negócio. Deixe ligado para o POS cobrar exatamente o preço do material.',set_br_note:'No Brasil não existem MonCash nem NatCash. O Pix é gratuito e cai na hora. Para cartão, cole o seu link de pagamento abaixo.',
    p_pix:'Pix',p_boleto:'Boleto',pix_scan:'O cliente escaneia o código com o app do banco — o dinheiro cai em segundos.',
    pix_copy:'📋 Copiar código Pix',pix_copied:'Código copiado!',pix_confirm:'✓ Recebi o pagamento',pix_nokey:'Cadastre sua chave Pix nas Configurações para gerar o código.',
    card_open:'Abrir página de pagamento',card_nolink:'Cadastre seu link de pagamento com cartão nas Configurações.',
@@ -1546,7 +1624,7 @@ function go(name){
   window.scrollTo(0,0);
   const fab=document.getElementById('fabWrap');if(fab){fab.style.display=['home','orders','earn'].includes(name)?'flex':'none';closeFab();}
   if(name==='home')renderHome();if(name==='orders')renderOrders();if(name==='dash')renderDash();if(name==='set')renderSettings();if(name==='reports')renderReports();
-  if(name==='earn')renderEarn();if(name==='ref')renderRef();if(name==='promo')renderPromo();
+  if(name==='earn')renderEarn();if(name==='ref')renderRef();if(name==='promo')renderPromo();if(name==='team')renderTeam();
   refreshBadges();
 }
 function refreshBadges(){const o=load('hb_orders',[]);
@@ -1665,6 +1743,11 @@ function renderHome(){
    <button onclick="shareApp()" style="width:100%;border:0;border-radius:16px;padding:14px 16px;margin-top:10px;text-align:left;display:flex;align-items:center;gap:12px;color:#fff;background:linear-gradient(135deg,#25D366,#128C7E);box-shadow:0 8px 20px rgba(18,140,126,.28)">
      <span style="font-size:22px">🟢</span>
      <span style="flex:1"><span style="display:block;font-size:14px;font-weight:900">${t('share_pos')}</span><span style="display:block;font-size:11.5px;opacity:.92">WhatsApp • https://haitibiznis.com/pos/</span></span>
+     <span style="font-size:18px">→</span>
+   </button>
+   <button onclick="go('team')" style="width:100%;border:0;border-radius:16px;padding:14px 16px;margin-top:10px;text-align:left;display:flex;align-items:center;gap:12px;color:#fff;background:linear-gradient(135deg,#243b6b,#0b1f47);box-shadow:0 8px 20px rgba(11,31,71,.28)">
+     <span style="font-size:22px">👔</span>
+     <span style="flex:1"><span style="display:block;font-size:14px;font-weight:900">${t('team_h')}</span><span style="display:block;font-size:11.5px;opacity:.9">${t('team_s')}</span></span>
      <span style="font-size:18px">→</span>
    </button>`;
   applyI18n();
@@ -1887,27 +1970,27 @@ function renderDetail(){
   computeAmount();showTot();
 }
 function computeAmount(){const m=flow.module;const cfg=getCfg();
-  if(m==='website'){if(flow.extra.pkg!==null){const p=WEB_PACKAGES[flow.extra.pkg];flow.items=[{label:'Sit Web — '+p.nm+(p.secs?' ('+p.secs+' '+t('sections')+')':''),amt:p.amt}];flow.amount=p.amt;}else{flow.items=[];flow.amount=0;}}
+  if(m==='website'){if(flow.extra.pkg!==null){const p=WEB_PACKAGES[flow.extra.pkg];const a=pkgAmt(p);flow.items=[{label:t('menu_web')+' — '+tItem(p.nm)+(p.secs?' ('+p.secs+' '+t('sections')+')':''),amt:a}];flow.amount=a;}else{flow.items=[];flow.amount=0;}}
   else if(m==='hbtech'){
-    if(flow.extra.menu==='web'){if(flow.extra.pkg!==null&&WEB_PACKAGES[flow.extra.pkg]){const p=WEB_PACKAGES[flow.extra.pkg];flow.items=[{label:'Sit Web — '+p.nm+(p.secs?' ('+p.secs+' '+t('sections')+')':''),amt:p.amt}];flow.amount=p.amt;}else{flow.items=[];flow.amount=0;}}
+    if(flow.extra.menu==='web'){if(flow.extra.pkg!==null&&WEB_PACKAGES[flow.extra.pkg]){const p=WEB_PACKAGES[flow.extra.pkg];const a=pkgAmt(p);flow.items=[{label:t('menu_web')+' — '+tItem(p.nm)+(p.secs?' ('+p.secs+' '+t('sections')+')':''),amt:a}];flow.amount=a;}else{flow.items=[];flow.amount=0;}}
     else if(flow.extra.pkg!==null&&BRAND_PACKAGES[flow.extra.pkg]){const p=BRAND_PACKAGES[flow.extra.pkg];
       if(p.pick){const sel=flow.extra.sel[0];
         if(sel){const f=p.feats.find(x=>((typeof x==='string')?x:x.nm)===sel);const needSub=f&&typeof f==='object'&&Array.isArray(f.sub);
           if(needSub&&!flow.extra.sub){flow.items=[];flow.amount=0;}
-          else{const lbl=sel+(flow.extra.sub?' ('+flow.extra.sub+')':'');flow.items=[{label:'48HoursReady '+gdes(p.amt)+' — '+lbl,amt:p.amt}];flow.amount=p.amt;}}
+          else{const lbl=tItem(sel)+(flow.extra.sub?' ('+tItem(flow.extra.sub)+')':'');const a=pkgAmt(p);flow.items=[{label:svcBrand()+' '+gdes(a)+' — '+lbl,amt:a}];flow.amount=a;}}
         else{flow.items=[];flow.amount=0;}}
-      else{flow.items=[{label:'48HoursReady '+gdes(p.amt)+' — '+p.feats.length+' '+t('services'),amt:p.amt}];flow.amount=p.amt;}
+      else{const a=pkgAmt(p);flow.items=[{label:svcBrand()+' '+gdes(a)+' — '+p.feats.length+' '+t('services'),amt:a}];flow.amount=a;}
     }else{flow.items=[];flow.amount=0;}}
   else if(m==='bizreg'){if(flow.extra.reg){const r=cfg.bizreg.find(x=>x.id===flow.extra.reg);const tot=r.usd*(1+cfg.hbFeePct/100)*cfg.rate+r.press;flow.items=[{label:r.nm+' (US$'+r.usd.toLocaleString()+(r.press?' + '+r.press.toLocaleString()+' GDES Près':'')+')',amt:tot}];flow.amount=tot;}else{flow.items=[];flow.amount=0;}}
   else {flow.amount=flow.items.reduce((a,b)=>a+(+b.amt||0),0);}
 }
 /* ---- 48HoursReady / Website: the two package menus (shared by 'website' module and 'hbtech' web/brand toggle) ---- */
 function renderWebPkgs(body){
-  const img=document.createElement('img');img.src='assets/web-menu.jpg';img.alt='Pakè Sit Entènèt';img.style.cssText='width:100%;border-radius:14px;margin:4px 0 12px;box-shadow:0 6px 18px rgba(16,26,60,.12)';body.appendChild(img);
+  const img=document.createElement('img');img.src=isBR()?'assets/brasil-web-menu.jpg':'assets/web-menu.jpg';img.alt='Pakè Sit Entènèt';img.style.cssText='width:100%;border-radius:14px;margin:4px 0 12px;box-shadow:0 6px 18px rgba(16,26,60,.12)';body.appendChild(img);
   const sub=document.createElement('p');sub.className='sub';sub.textContent=t('pick_pkg');body.appendChild(sub);
   WEB_PACKAGES.forEach((p,i)=>{const on=flow.extra.pkg===i;const row=document.createElement('div');row.className='choice radio'+(on?' on':'');
     const tag=p.secs?(p.secs+' '+t('sections')):(p.feats.length+' '+t('services')+' '+t('incl_word'));
-    row.innerHTML=`<span class="dot"></span><span class="txt">${tItem(p.nm)} <span class="pill">${gdes(p.amt)}</span>${usdTag(p.amt)}<div style="font-size:11px;color:var(--muted);font-weight:600;margin-top:3px">${tag}</div></span>`;
+    row.innerHTML=`<span class="dot"></span><span class="txt">${tItem(p.nm)} <span class="pill">${gdes(pkgAmt(p))}</span>${usdTag(pkgAmt(p))}<div style="font-size:11px;color:var(--muted);font-weight:600;margin-top:3px">${tag}</div></span>`;
     row.onclick=()=>{flow.extra.pkg=i;renderDetail();};body.appendChild(row);});
   if(flow.extra.pkg!==null&&WEB_PACKAGES[flow.extra.pkg]){const p=WEB_PACKAGES[flow.extra.pkg];
     const feats=p.feats.map(f=>`<div style="display:flex;gap:8px;align-items:center;font-size:13px;padding:3px 0"><span style="color:var(--good);font-weight:800">✓</span><span>${tItem(f)}</span></div>`).join('');
@@ -1916,11 +1999,11 @@ function renderWebPkgs(body){
     bd.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:6px">${t('pkg_incl')}</div>${feats}${note}`;body.appendChild(bd);}
 }
 function renderBrandPkgs(body){
-  const img=document.createElement('img');img.src='assets/biz-menu.jpg';img.alt='Pakè Biznis';img.style.cssText='width:100%;border-radius:14px;margin:4px 0 12px;box-shadow:0 6px 18px rgba(16,26,60,.12)';body.appendChild(img);
+  const img=document.createElement('img');img.src=isBR()?'assets/brasil-biz-menu.jpg':'assets/biz-menu.jpg';img.alt='Pakè Biznis';img.style.cssText='width:100%;border-radius:14px;margin:4px 0 12px;box-shadow:0 6px 18px rgba(16,26,60,.12)';body.appendChild(img);
   const hd=document.createElement('p');hd.className='sub';hd.textContent=t('pick_pkg');body.appendChild(hd);
   BRAND_PACKAGES.forEach((p,i)=>{const on=flow.extra.pkg===i;const row=document.createElement('div');row.className='choice radio'+(on?' on':'');
     const tag=p.pick?t('choose_one'):(p.feats.length+' '+t('services')+' '+t('incl_word'));
-    row.innerHTML=`<span class="dot"></span><span class="txt">${gdes(p.amt)}${p.tier?' · '+p.tier:''}${usdTag(p.amt)}<div style="font-size:11px;color:var(--muted);font-weight:600;margin-top:3px">${tag}</div></span>`;
+    row.innerHTML=`<span class="dot"></span><span class="txt">${gdes(pkgAmt(p))}${p.tier?' · '+p.tier:''}${usdTag(pkgAmt(p))}<div style="font-size:11px;color:var(--muted);font-weight:600;margin-top:3px">${tag}</div></span>`;
     row.onclick=()=>{flow.extra.pkg=i;flow.extra.sel=[];flow.extra.sub=null;renderDetail();};body.appendChild(row);});
   if(flow.extra.pkg!==null&&BRAND_PACKAGES[flow.extra.pkg]){const p=BRAND_PACKAGES[flow.extra.pkg];
     if(p.pick){const ph=document.createElement('p');ph.className='sub';ph.style.marginTop='10px';ph.textContent=`${t('choose_one')} — ${flow.extra.sel.length}/1`;body.appendChild(ph);
@@ -2289,7 +2372,7 @@ function collectPayment(ref,amount,method){
 function showReceipt(o){const cust=o.name;const items=(o.items||[]).map(it=>`<div class="ritem"><span>${it.label}</span><span>${it.amt?gdes(it.amt):''}</span></div>`).join('');
   document.getElementById('doneExtra').innerHTML='';
   document.getElementById('receiptBox').innerHTML=`
-    <div class="rh"><img src="assets/haitibiznis-logo.png" alt=""><div class="bt">HaitiBiznis</div><div class="st">${o.staff?('👤 '+o.staff):t('cashier')}</div></div>
+    <div class="rh"><img src="${brandLogo()}" alt=""><div class="bt">${brandName()}</div><div class="st">${o.staff?('👤 '+o.staff):t('cashier')}</div></div>
     <div class="rrow"><span>${t('order_no')}</span><b>${o.id}</b></div>
     <div class="rrow"><span>${t('date')}</span><span>${fmtDate(o.ts)}</span></div>
     <div class="rrow"><span>${t('customer')}</span><span>${cust}</span></div>
@@ -2305,7 +2388,7 @@ function showReceipt(o){const cust=o.name;const items=(o.items||[]).map(it=>`<di
 function showTicket(o,ev){const url=qrDataURL(o.ticketCode);
   document.getElementById('doneExtra').innerHTML=`<div class="qrbox">${url?`<img src="${url}" alt="QR">`:''}<div class="qrcode-txt">${o.ticketCode}</div></div>`;
   document.getElementById('receiptBox').innerHTML=`
-    <div class="rh"><img src="assets/haitibiznis-logo.png" alt=""><div class="bt">${t('qr_ticket')}</div><div class="st">${ev.name}</div></div>
+    <div class="rh"><img src="${brandLogo()}" alt=""><div class="bt">${t('qr_ticket')}</div><div class="st">${ev.name}</div></div>
     <div class="rrow"><span>${t('order_no')}</span><b>${o.id}</b></div>
     <div class="rrow"><span>${t('ev_date')}</span><span>${ev.date||'—'}</span></div>
     <div class="rrow"><span>${t('customer')}</span><span>${o.name}</span></div>
@@ -2318,7 +2401,7 @@ function showTicket(o,ev){const url=qrDataURL(o.ticketCode);
 function showReferral(o){const url=qrDataURL(o.refCode);
   document.getElementById('doneExtra').innerHTML=`<div class="qrbox">${url?`<img src="${url}" alt="QR">`:''}<div class="qrcode-txt">${o.refCode}</div></div>`;
   document.getElementById('receiptBox').innerHTML=`
-    <div class="rh"><img src="assets/haitibiznis-logo.png" alt=""><div class="bt">${t('aff_qr')}</div><div class="st">Parenaj Biznis</div></div>
+    <div class="rh"><img src="${brandLogo()}" alt=""><div class="bt">${t('aff_qr')}</div><div class="st">Parenaj Biznis</div></div>
     <div class="rrow"><span>${t('order_no')}</span><b>${o.id}</b></div>
     <div class="rrow"><span>${t('customer')}</span><span>${o.name}</span></div>
     <div class="rrow"><span>${t('qr_ref')}</span><b>${o.refCode}</b></div>
@@ -2409,6 +2492,11 @@ function renderSettings(){const cfg=getCfg();const box=document.getElementById('
     <label class="fl">${t('set_brl')}</label><input type="number" step="0.01" id="set_brl" value="${cfg.brl||5.4}">
     <label class="fl">${t('set_markup')}</label><input type="number" step="0.1" id="set_markup" value="${brMarkup()}">
     <div class="sub" style="margin:2px 0 6px">${t('set_markup_note').replace('{x}',brMarkup()).replace('{p}',brlFmt(fx(5000)))}</div>
+    <label class="fl">${t('set_flyer')}</label>
+    <select id="set_flyer">
+      <option value="1"${brFlyerOn()?' selected':''}>${t('set_flyer_on')}</option>
+      <option value="0"${brFlyerOn()?'':' selected'}>${t('set_flyer_off')}</option></select>
+    <div class="sub" style="margin:2px 0 6px">${t('set_flyer_note')}</div>
     <label class="fl">${t('set_pixkey')}</label><input id="set_pixkey" value="${cfg.pixKey||''}">
     <label class="fl">${t('set_pixname')}</label><input id="set_pixname" value="${cfg.pixName||''}">
     <label class="fl">${t('set_pixcity')}</label><input id="set_pixcity" value="${cfg.pixCity||''}">
@@ -2439,6 +2527,7 @@ function saveSettings(){const cfg=getCfg();cfg.rate=+document.getElementById('se
   cfg.country=setVal('set_country',cfg.country)==='br'?'br':'ht';
   cfg.brl=+setVal('set_brl',cfg.brl)||5.4;                 /* the Brazil fields are only */
   cfg.brMarkup=+setVal('set_markup',cfg.brMarkup)||2;
+  cfg.brFlyer=(setVal('set_flyer',brFlyerOn()?'1':'0')==='0')?0:1;
   cfg.pixKey=(setVal('set_pixkey',cfg.pixKey)||'').trim(); /* on screen in Brazil mode,  */
   cfg.pixName=(setVal('set_pixname',cfg.pixName)||'').trim();   /* so read them defensively */
   cfg.pixCity=(setVal('set_pixcity',cfg.pixCity)||'').trim();

@@ -1,11 +1,12 @@
 /* Sant HaitiBiznis POS — service worker (offline app shell) */
-var CACHE = 'hb-pos-v33';
+var CACHE = 'hb-pos-v34';
 var SHELL = [
   './',
   './index.html',
   './qrcode.js',
   './manifest.json',
   './assets/haitibiznis-logo.png',
+  './assets/brasil-pos-logo.png',
   './assets/msouwout-logo.png',
   './assets/myplopplop-logo.png',
   './assets/48hoursready-logo.jpg',
