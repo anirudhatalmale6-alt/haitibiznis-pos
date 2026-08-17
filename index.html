@@ -105,9 +105,11 @@ main{padding:16px 14px}
 .mod .nm{font-weight:600;font-size:14px;line-height:1.2;color:var(--ink)}
 /* Greeting header + dashboard stat cards (Final UI Design) */
 .greet{background:linear-gradient(120deg,var(--blue),#0b3ec9);color:#fff;border-radius:20px;padding:16px 18px;margin-bottom:14px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 22px rgba(0,87,217,.28)}
+.greet .glogo{width:46px;height:46px;border-radius:14px;flex:0 0 auto;object-fit:contain;background:rgba(255,255,255,.92);padding:2px;box-shadow:0 3px 10px rgba(0,0,0,.18)}
 .greet .gtxt{flex:1;min-width:0}
 .greet .ghi{font-size:12.5px;opacity:.9;font-weight:500}
-.greet .gname{font-size:22px;font-weight:700;line-height:1.15;margin:1px 0}
+.greet .gname{font-size:20px;font-weight:700;line-height:1.15;margin:1px 0;overflow-wrap:anywhere}
+@media(max-width:380px){.greet{padding:14px 14px;gap:9px}.greet .glogo{width:40px;height:40px}.greet .gname{font-size:17.5px}.greet .gicon{width:34px;height:34px;font-size:15px}}
 .greet .gbiz{font-size:12px;opacity:.9;font-weight:500}
 .greet .gicons{display:flex;gap:8px;flex:0 0 auto}
 .greet .gicon{width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,.16);border:0;color:#fff;font-size:17px;display:flex;align-items:center;justify-content:center;position:relative}
@@ -1667,6 +1669,7 @@ function renderHome(){
   const hr=new Date().getHours();const greetIco=hr<12?'☀️':hr<18?'🌤️':'🌙';
   document.getElementById('homeHead').innerHTML=`
    <div class="greet">
+     <img class="glogo" src="assets/hbtech-badge.png" alt="HB Technologies">
      <div class="gtxt">
        <div class="ghi">${greetIco} ${t('greet_hi')},</div>
        <div class="gname">${p.name}</div>
