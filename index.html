@@ -418,6 +418,9 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
   <div id="fstep-docs" class="fbox" style="display:none">
     <div class="h2" data-i18n="docs_t">Dokiman</div>
     <p class="sub" data-i18n="docs_s">Ajoute fichye (PDF, JPG, PNG, DOCX). Y ap tache ak kòmand lan.</p>
+    <!-- on a design order this step is the customer's reference material, which
+         is not obvious from "add documents" alone -->
+    <p class="sub" id="docsHint" style="display:none;background:#eef3ff;border:1px solid #ccdaf7;border-radius:10px;padding:9px 11px;color:#1c3d80;font-weight:600"></p>
     <label class="dropz" for="docInput"><span class="de">📎</span><span data-i18n="docs_add">Ajoute Dokiman</span></label>
     <input type="file" id="docInput" accept=".pdf,.jpg,.jpeg,.png,.docx,image/*" multiple capture="environment" style="display:none">
     <div id="fileList"></div>
@@ -1641,31 +1644,36 @@ const T_DRAFT={
   att_h:'Fichye kliyan an bay',att_gone:'Pa la',
   doc_big:'{n} twò gwo. Maksimòm 12 MB.',doc_fail:'Nou pa t ka sere fichye a sou aparèy la. Eseye ankò.',
   pay_cancel_q:'Anile peman an? Kòmand lan ap rete sere — w ap ka fini l pita.',
-  pay_cancelled:'✅ Kòmand lan sere. Ou ka fini l nan paj akèy la.'},
+  pay_cancelled:'✅ Kòmand lan sere. Ou ka fini l nan paj akèy la.',
+  docs_hint_brief:'📎 Mete sa kliyan an gen deja: ansyen logo li (si li vle nou refè l), foto, ansyen kat biznis, oswa yon egzanp li renmen. Se sa ekip la ap travay avè l.'},
  fr:{dr_t:'Commande non terminée',dr_go:'Continuer la commande',dr_del:'Supprimer',
   dr_del_q:'Supprimer la commande non terminée ? Tout ce que vous avez saisi sera perdu.',
   att_h:'Fichiers du client',att_gone:'Absent',
   doc_big:'{n} est trop volumineux. Maximum 12 Mo.',doc_fail:'Impossible d’enregistrer le fichier sur l’appareil. Réessayez.',
   pay_cancel_q:'Annuler le paiement ? La commande sera conservée — vous pourrez la terminer plus tard.',
-  pay_cancelled:'✅ Commande conservée. Reprenez-la depuis l’accueil.'},
+  pay_cancelled:'✅ Commande conservée. Reprenez-la depuis l’accueil.',
+  docs_hint_brief:'📎 Ajoutez ce que le client possède déjà : son logo actuel (s’il veut qu’on le refasse), des photos, une ancienne carte de visite, ou un exemple qu’il aime. C’est à partir de ça que l’équipe travaille.'},
  en:{dr_t:'Unfinished order',dr_go:'Continue this order',dr_del:'Discard',
   dr_del_q:'Discard the unfinished order? Everything you typed will be lost.',
   att_h:'Customer files',att_gone:'Missing',
   doc_big:'{n} is too large. Maximum 12 MB.',doc_fail:'Could not save the file on this device. Please try again.',
   pay_cancel_q:'Cancel the payment? The order is kept — you can finish it later.',
-  pay_cancelled:'✅ Order kept. Pick it up again from the home screen.'},
+  pay_cancelled:'✅ Order kept. Pick it up again from the home screen.',
+  docs_hint_brief:'📎 Add what the customer already has: their current logo (if they want it redesigned), photos, an old business card, or an example they like. This is what the team works from.'},
  es:{dr_t:'Pedido sin terminar',dr_go:'Continuar el pedido',dr_del:'Descartar',
   dr_del_q:'¿Descartar el pedido sin terminar? Se perderá todo lo que escribiste.',
   att_h:'Archivos del cliente',att_gone:'No disponible',
   doc_big:'{n} es demasiado grande. Máximo 12 MB.',doc_fail:'No se pudo guardar el archivo en el dispositivo. Inténtalo de nuevo.',
   pay_cancel_q:'¿Cancelar el pago? El pedido se conserva — puedes terminarlo más tarde.',
-  pay_cancelled:'✅ Pedido guardado. Retómalo desde la pantalla de inicio.'},
+  pay_cancelled:'✅ Pedido guardado. Retómalo desde la pantalla de inicio.',
+  docs_hint_brief:'📎 Agrega lo que el cliente ya tiene: su logo actual (si quiere rediseñarlo), fotos, una tarjeta de presentación antigua o un ejemplo que le guste. Con eso trabaja el equipo.'},
  pt:{dr_t:'Pedido não finalizado',dr_go:'Continuar o pedido',dr_del:'Descartar',
   dr_del_q:'Descartar o pedido não finalizado? Tudo o que você digitou será perdido.',
   att_h:'Arquivos do cliente',att_gone:'Indisponível',
   doc_big:'{n} é grande demais. Máximo 12 MB.',doc_fail:'Não foi possível salvar o arquivo no aparelho. Tente novamente.',
   pay_cancel_q:'Cancelar o pagamento? O pedido fica salvo — você pode finalizar depois.',
-  pay_cancelled:'✅ Pedido salvo. Retome pela tela inicial.'}
+  pay_cancelled:'✅ Pedido salvo. Retome pela tela inicial.',
+  docs_hint_brief:'📎 Adicione o que o cliente já tem: o logo atual (se quiser refazer), fotos, um cartão de visita antigo ou um exemplo de que goste. É a partir disso que a equipe trabalha.'}
 };
 Object.keys(T_DRAFT).forEach(function(l){if(T[l])Object.assign(T[l],T_DRAFT[l]);});
 
@@ -2019,7 +2027,7 @@ function flowBack(){ if(fstep===1)go('home'); else {fstep--;showFlowStep();} }
 function setFlowSteps(){document.querySelectorAll('.steps .st').forEach(el=>{const n=+el.dataset.fstep;el.classList.toggle('on',n===fstep);el.classList.toggle('done',n<fstep);});}
 function showFlowStep(){setFlowSteps();
   ['cust','detail','docs','pay'].forEach((x,i)=>document.getElementById('fstep-'+x).style.display=(i+1===fstep)?'block':'none');
-  if(fstep===2)renderDetail();if(fstep===3)renderFiles();if(fstep===4)renderPay();
+  if(fstep===2)renderDetail();if(fstep===3){renderFiles();renderDocsHint();}if(fstep===4)renderPay();
   saveDraft();window.scrollTo(0,0);}
 function flowStep(n){
   if(n===3){computeAmount();if(!flow.items.length){alert(t('need_sel'));return;}}
@@ -2254,6 +2262,16 @@ function renderDraftBar(){
   el.querySelector('.ddel').onclick=function(){if(confirm(t('dr_del_q')))draftDiscard();};
 }
 
+/* On a design order this step is where the customer hands over what the team has
+   to work FROM — the logo they already have and want redesigned, a photo, an old
+   business card. "Add documents" on its own does not say that, and a seller who
+   does not know what to ask for collects nothing. */
+function renderDocsHint(){
+  var el=document.getElementById('docsHint');if(!el||!flow)return;
+  var brief=isBriefModule(flow.module);
+  el.textContent=brief?t('docs_hint_brief'):'';
+  el.style.display=brief?'block':'none';
+}
 /* docs */
 document.getElementById('docInput').addEventListener('change',function(e){
   var files=[].slice.call(e.target.files);e.target.value='';
