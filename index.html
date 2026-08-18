@@ -293,6 +293,26 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
 .team-c .tn{font-weight:900;font-size:14.5px;line-height:1.2}
 .team-c .tr{font-size:11.5px;color:var(--muted);font-weight:700;margin-top:3px;line-height:1.3}
 .team-c .tb{display:inline-block;font-size:10px;font-weight:800;color:#0c8f45;background:#e6f7ee;border-radius:999px;padding:2px 8px;margin-top:5px}
+
+/* unfinished order offered back on the home screen */
+.draftc{background:#fff8e6;border:1px solid #f2d489;border-radius:14px;padding:12px 13px;margin-bottom:12px;box-shadow:0 4px 14px rgba(16,26,60,.06)}
+.draftc .dh{display:flex;align-items:center;gap:8px;font-size:13.5px;color:#7a5a00}
+.draftc .di{font-size:17px}
+.draftc .ds{font-size:12px;color:#6b5a2e;font-weight:700;margin:5px 0 10px;word-break:break-word}
+.draftc .db{display:flex;gap:8px}
+.draftc .dgo{flex:1;border:0;border-radius:11px;padding:10px;font-weight:900;font-size:13px;color:#fff;background:var(--blue)}
+.draftc .ddel{border:1px solid #e0cfa0;background:#fff;border-radius:11px;padding:10px 14px;font-weight:800;font-size:12.5px;color:#8a6d1f}
+
+/* attachments inside an order */
+.atts{display:flex;flex-wrap:wrap;gap:8px;margin-top:7px}
+.att{width:74px;text-align:center;text-decoration:none;color:inherit}
+.att .ab{width:74px;height:74px;border-radius:10px;border:1px solid var(--line);background:#f4f6fa;display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:24px}
+.att .ab img{width:100%;height:100%;object-fit:cover}
+.att .an{font-size:9.5px;color:var(--muted);font-weight:700;margin-top:3px;line-height:1.15;word-break:break-all}
+.att.gone .ab{background:#fdeaea;color:#b91c1c;font-size:12px;font-weight:800}
+
+#hbToast{position:fixed;left:50%;bottom:78px;transform:translate(-50%,14px);z-index:95;background:#10203f;color:#fff;font-size:13px;font-weight:700;padding:11px 16px;border-radius:12px;max-width:88vw;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.28);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+#hbToast.on{opacity:1;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -327,6 +347,8 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
 
 <main>
 <section id="s-home" class="screen on">
+  <!-- an unfinished order is offered back here, so nothing typed is ever lost -->
+  <div id="draftBar"></div>
   <div id="homeHead"></div>
   <div id="homeQuick"></div>
   <div class="h2" style="font-size:17px;margin:16px 0 10px;text-transform:capitalize" id="homeSvcTitle" data-i18n="services">Sèvis</div>
@@ -1610,6 +1632,43 @@ const T_BR={
 };
 Object.keys(T_BR).forEach(function(l){if(T[l])Object.assign(T[l],T_BR[l]);});
 
+/* ---- unfinished orders + real attachments ----
+   Added after T.pt is built, so pt is listed explicitly here; it does not
+   inherit from English the way the earlier blocks do. */
+const T_DRAFT={
+ ht:{dr_t:'Kòmand ou pa t fini',dr_go:'Kontinye kòmand lan',dr_del:'Efase',
+  dr_del_q:'Efase kòmand ki pa fini an? Tout sa ou te ekri ap pèdi.',
+  att_h:'Fichye kliyan an bay',att_gone:'Pa la',
+  doc_big:'{n} twò gwo. Maksimòm 12 MB.',doc_fail:'Nou pa t ka sere fichye a sou aparèy la. Eseye ankò.',
+  pay_cancel_q:'Anile peman an? Kòmand lan ap rete sere — w ap ka fini l pita.',
+  pay_cancelled:'✅ Kòmand lan sere. Ou ka fini l nan paj akèy la.'},
+ fr:{dr_t:'Commande non terminée',dr_go:'Continuer la commande',dr_del:'Supprimer',
+  dr_del_q:'Supprimer la commande non terminée ? Tout ce que vous avez saisi sera perdu.',
+  att_h:'Fichiers du client',att_gone:'Absent',
+  doc_big:'{n} est trop volumineux. Maximum 12 Mo.',doc_fail:'Impossible d’enregistrer le fichier sur l’appareil. Réessayez.',
+  pay_cancel_q:'Annuler le paiement ? La commande sera conservée — vous pourrez la terminer plus tard.',
+  pay_cancelled:'✅ Commande conservée. Reprenez-la depuis l’accueil.'},
+ en:{dr_t:'Unfinished order',dr_go:'Continue this order',dr_del:'Discard',
+  dr_del_q:'Discard the unfinished order? Everything you typed will be lost.',
+  att_h:'Customer files',att_gone:'Missing',
+  doc_big:'{n} is too large. Maximum 12 MB.',doc_fail:'Could not save the file on this device. Please try again.',
+  pay_cancel_q:'Cancel the payment? The order is kept — you can finish it later.',
+  pay_cancelled:'✅ Order kept. Pick it up again from the home screen.'},
+ es:{dr_t:'Pedido sin terminar',dr_go:'Continuar el pedido',dr_del:'Descartar',
+  dr_del_q:'¿Descartar el pedido sin terminar? Se perderá todo lo que escribiste.',
+  att_h:'Archivos del cliente',att_gone:'No disponible',
+  doc_big:'{n} es demasiado grande. Máximo 12 MB.',doc_fail:'No se pudo guardar el archivo en el dispositivo. Inténtalo de nuevo.',
+  pay_cancel_q:'¿Cancelar el pago? El pedido se conserva — puedes terminarlo más tarde.',
+  pay_cancelled:'✅ Pedido guardado. Retómalo desde la pantalla de inicio.'},
+ pt:{dr_t:'Pedido não finalizado',dr_go:'Continuar o pedido',dr_del:'Descartar',
+  dr_del_q:'Descartar o pedido não finalizado? Tudo o que você digitou será perdido.',
+  att_h:'Arquivos do cliente',att_gone:'Indisponível',
+  doc_big:'{n} é grande demais. Máximo 12 MB.',doc_fail:'Não foi possível salvar o arquivo no aparelho. Tente novamente.',
+  pay_cancel_q:'Cancelar o pagamento? O pedido fica salvo — você pode finalizar depois.',
+  pay_cancelled:'✅ Pedido salvo. Retome pela tela inicial.'}
+};
+Object.keys(T_DRAFT).forEach(function(l){if(T[l])Object.assign(T[l],T_DRAFT[l]);});
+
 /* registration form schemas (person-first) */
 const UP_KEY={'Driver License':'up_driverlic','National ID':'up_natid','Insurance':'up_insurance','Vehicle Registration':'up_vehreg','Driver Photo':'up_driverphoto','Business Documents':'up_bizdocs','Diploma / Certification':'up_diploma','Experience Documents':'up_expdocs','Store Photo':'up_storephoto','Owner ID':'up_ownerid'};
 function upT(u){return UP_KEY[u]?t(UP_KEY[u]):u;}
@@ -1649,7 +1708,7 @@ function go(name){
   if(!nm[name])document.querySelector('.nav button[data-nav="home"]').classList.add('on');
   window.scrollTo(0,0);
   const fab=document.getElementById('fabWrap');if(fab){fab.style.display=['home','orders','earn'].includes(name)?'flex':'none';closeFab();}
-  if(name==='home')renderHome();if(name==='orders')renderOrders();if(name==='dash')renderDash();if(name==='set')renderSettings();if(name==='reports')renderReports();
+  if(name==='home'){renderHome();renderDraftBar();}if(name==='orders')renderOrders();if(name==='dash')renderDash();if(name==='set')renderSettings();if(name==='reports')renderReports();
   if(name==='earn')renderEarn();if(name==='ref')renderRef();if(name==='promo')renderPromo();if(name==='team')renderTeam();
   refreshBadges();
 }
@@ -1670,6 +1729,14 @@ function profile(){var p=load('hb_profile',null);
 /* Falls back to whoever is signed in, so a shop that set up staff never sees a blank. */
 function bizName(){var p=profile();if(p.name)return p.name;var a=activeStaff();return (a&&a.name)?a.name:'';}
 function escHtml(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+/* a short message that does not need to be dismissed — alert() in the middle of
+   a sale makes the seller think something broke */
+function toast(msg){
+  var el=document.getElementById('hbToast');
+  if(!el){el=document.createElement('div');el.id='hbToast';document.body.appendChild(el);}
+  el.textContent=msg;el.classList.add('on');
+  clearTimeout(toast._t);toast._t=setTimeout(function(){el.classList.remove('on');},3200);
+}
 function editBizName(){
   var v=prompt(t('set_bizname'),profile().name||'');
   if(v===null)return;
@@ -1952,7 +2019,8 @@ function flowBack(){ if(fstep===1)go('home'); else {fstep--;showFlowStep();} }
 function setFlowSteps(){document.querySelectorAll('.steps .st').forEach(el=>{const n=+el.dataset.fstep;el.classList.toggle('on',n===fstep);el.classList.toggle('done',n<fstep);});}
 function showFlowStep(){setFlowSteps();
   ['cust','detail','docs','pay'].forEach((x,i)=>document.getElementById('fstep-'+x).style.display=(i+1===fstep)?'block':'none');
-  if(fstep===2)renderDetail();if(fstep===4)renderPay();window.scrollTo(0,0);}
+  if(fstep===2)renderDetail();if(fstep===3)renderFiles();if(fstep===4)renderPay();
+  saveDraft();window.scrollTo(0,0);}
 function flowStep(n){
   if(n===3){computeAmount();if(!flow.items.length){alert(t('need_sel'));return;}}
   fstep=n;showFlowStep();
@@ -2083,11 +2151,129 @@ function renderBrandPkgs(body){
       const bon=p.bonus?`<div style="margin-top:8px;font-size:12px;font-weight:700;color:var(--good);background:#eafaf0;border-radius:8px;padding:7px 9px">★ BONUS — ${tItem(p.bonus)}</div>`:'';
       bd.innerHTML=`<div style="font-weight:800;font-size:13px;margin-bottom:6px">${t('pkg_incl')}</div>${plus}${feats}${bon}`;body.appendChild(bd);}}
 }
+/* ===================================================================
+   ATTACHMENTS THAT SURVIVE, AND ORDERS THAT SURVIVE
+
+   Reported by the client: "I try to buy a logo but after putting all the info
+   and uploaded a picture it disappeared on the POS." Reproduced on the live
+   POS, and it was three separate things:
+
+   1. The picture was never stored. The docs step kept a blob: URL — which dies
+      with the page — and completeFlow() saved only the file NAME. A finished
+      order said "📎 1" and the photo existed nowhere on earth.
+   2. The whole order lived in one in-memory object with no draft. Anything that
+      reloads the page loses everything typed, and on a phone that happens on
+      its own: paying with MonCash opens the payment page in a new tab, and
+      Chrome routinely discards the POS tab sitting behind it.
+   3. Cancelling at the payment box threw the order away silently — no warning,
+      no way back.
+
+   Files now go to IndexedDB, which is the only storage on the device big enough
+   for photos, and the order carries a key to them. The draft is written on
+   every step so nothing typed is ever lost.
+   =================================================================== */
+const DOC_STORE='files';
+function docDB(){return new Promise(function(res,rej){
+  var r=indexedDB.open('hb_docs',1);
+  r.onupgradeneeded=function(){if(!r.result.objectStoreNames.contains(DOC_STORE))r.result.createObjectStore(DOC_STORE);};
+  r.onsuccess=function(){res(r.result);};r.onerror=function(){rej(r.error);};});}
+function docPut(key,blob){return docDB().then(function(db){return new Promise(function(res,rej){
+  var tx=db.transaction(DOC_STORE,'readwrite');tx.objectStore(DOC_STORE).put(blob,key);
+  tx.oncomplete=function(){res(key);};tx.onerror=function(){rej(tx.error);};tx.onabort=function(){rej(tx.error);};});});}
+function docGet(key){return docDB().then(function(db){return new Promise(function(res){
+  var q=db.transaction(DOC_STORE,'readonly').objectStore(DOC_STORE).get(key);
+  q.onsuccess=function(){res(q.result||null);};q.onerror=function(){res(null);};});}).catch(function(){return null;});}
+function docDel(key){return docDB().then(function(db){var tx=db.transaction(DOC_STORE,'readwrite');
+  tx.objectStore(DOC_STORE).delete(key);}).catch(function(){});}
+
+/* A photo straight off a phone camera is 3–6 MB. Stored raw, a dozen orders
+   would fill the device and the browser would start refusing to save. 1600px at
+   q0.72 keeps a logo brief perfectly legible at roughly a tenth of the size.
+   Anything that is not an image (PDF, DOCX) is stored exactly as it came in. */
+function shrinkImage(file){
+  return new Promise(function(res){
+    if(!file.type||file.type.indexOf('image/')!==0||file.type==='image/gif')return res(file);
+    var url=URL.createObjectURL(file),img=new Image();
+    img.onload=function(){
+      var m=1600,w=img.naturalWidth,h=img.naturalHeight;
+      if(!w||!h){URL.revokeObjectURL(url);return res(file);}
+      if(w>m||h>m){var s=m/Math.max(w,h);w=Math.round(w*s);h=Math.round(h*s);}
+      var c=document.createElement('canvas');c.width=w;c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      c.toBlob(function(b){URL.revokeObjectURL(url);res(b&&b.size<file.size?b:file);},'image/jpeg',0.72);
+    };
+    img.onerror=function(){URL.revokeObjectURL(url);res(file);};
+    img.src=url;
+  });
+}
+function fileSize(n){n=+n||0;return n>=1048576?((n/1048576).toFixed(1)+' MB'):(Math.max(1,Math.round(n/1024))+' KB');}
+
+/* ---- draft: everything typed is written to the device on every step ---- */
+const DRAFT_KEY='hb_draft';
+function draftWorthKeeping(){return !!(flow&&(flow.customer||(flow.items&&flow.items.length)||
+  (flow.docs&&flow.docs.length)||(flow.intake&&Object.keys(flow.intake).length)));}
+function saveDraft(){
+  if(!draftWorthKeeping())return;
+  try{save(DRAFT_KEY,{module:flow.module,customer:flow.customer,items:flow.items,amount:flow.amount,
+    payment:flow.payment,extra:flow.extra,intake:flow.intake,step:fstep,ts:nowStamp(),
+    docs:(flow.docs||[]).map(function(d){return {name:d.name,size:d.size,type:d.type,key:d.key};})});
+  }catch(e){/* storage full — the order still works, it just cannot be resumed */}
+}
+function clearDraft(){try{localStorage.removeItem(DRAFT_KEY);}catch(e){}}
+function draftDiscard(){
+  var d=load(DRAFT_KEY,null);
+  if(d&&d.docs)d.docs.forEach(function(x){if(x.key)docDel(x.key);});
+  clearDraft();renderDraftBar();
+}
+function draftResume(){
+  var d=load(DRAFT_KEY,null);if(!d||!d.module)return;
+  flow={module:d.module,customer:d.customer||null,items:d.items||[],amount:d.amount||0,
+        payment:d.payment||null,extra:d.extra||{},intake:d.intake||{},docs:d.docs||[]};
+  /* the thumbnails come back from IndexedDB, not from a dead blob: URL */
+  flow.docs.forEach(function(dd){
+    if(dd.key&&dd.type&&dd.type.indexOf('image/')===0)
+      docGet(dd.key).then(function(b){if(b){dd.url=URL.createObjectURL(b);if(fstep===3)renderFiles();}});});
+  var m=modById(flow.module);
+  document.getElementById('flowSvcLabel').textContent=m?(m.nmKey?t(m.nmKey):m.nm):flow.module;
+  go('flow');fstep=Math.min(Math.max(1,+d.step||1),4);showFlowStep();
+  if(fstep===1)renderCustSearch();
+}
+function renderDraftBar(){
+  var el=document.getElementById('draftBar');if(!el)return;
+  var d=load(DRAFT_KEY,null);
+  if(!d||!d.module){el.innerHTML='';return;}
+  var m=modById(d.module);var svc=m?(m.nmKey?t(m.nmKey):m.nm):d.module;
+  var who=(d.customer&&d.customer.name)?d.customer.name:'';
+  var bits=[svc];if(who)bits.push(who);if(d.amount)bits.push(gdes(d.amount));
+  if(d.docs&&d.docs.length)bits.push('📎 '+d.docs.length);
+  el.innerHTML='<div class="draftc"><div class="dh"><span class="di">📝</span><b>'+t('dr_t')+'</b></div>'+
+    '<div class="ds">'+escHtml(bits.join(' · '))+'</div>'+
+    '<div class="db"><button class="dgo">'+t('dr_go')+' →</button>'+
+    '<button class="ddel">'+t('dr_del')+'</button></div></div>';
+  el.querySelector('.dgo').onclick=draftResume;
+  el.querySelector('.ddel').onclick=function(){if(confirm(t('dr_del_q')))draftDiscard();};
+}
+
 /* docs */
-document.getElementById('docInput').addEventListener('change',e=>{[...e.target.files].forEach(f=>flow.docs.push({name:f.name,url:f.type.startsWith('image/')?URL.createObjectURL(f):null}));e.target.value='';renderFiles();});
-function renderFiles(){const l=document.getElementById('fileList');l.innerHTML='';flow.docs.forEach((d,i)=>{const r=document.createElement('div');r.className='filerow';
-  r.innerHTML=`${d.url?`<img class="fi" src="${d.url}">`:'<span class="fi">📄</span>'}<span>${d.name}</span><button class="fx">×</button>`;
-  r.querySelector('.fx').onclick=()=>{flow.docs.splice(i,1);renderFiles();};l.appendChild(r);});}
+document.getElementById('docInput').addEventListener('change',function(e){
+  var files=[].slice.call(e.target.files);e.target.value='';
+  (function next(i){
+    if(i>=files.length){renderFiles();saveDraft();return;}
+    var f=files[i];
+    if(f.size>12*1024*1024){alert(t('doc_big').replace('{n}',f.name));return next(i+1);}
+    shrinkImage(f).then(function(blob){
+      var key='d-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8);
+      return docPut(key,blob).then(function(){
+        flow.docs.push({name:f.name,size:blob.size,type:blob.type||f.type,key:key,
+          url:(blob.type||f.type||'').indexOf('image/')===0?URL.createObjectURL(blob):null});
+      });
+    }).catch(function(){alert(t('doc_fail'));})
+      .then(function(){renderFiles();saveDraft();next(i+1);});
+  })(0);
+});
+function renderFiles(){const l=document.getElementById('fileList');if(!l||!flow)return;l.innerHTML='';flow.docs.forEach((d,i)=>{const r=document.createElement('div');r.className='filerow';
+  r.innerHTML=`${d.url?`<img class="fi" src="${d.url}">`:'<span class="fi">📄</span>'}<span>${escHtml(d.name)}${d.size?` <small style="color:var(--muted);font-weight:700">${fileSize(d.size)}</small>`:''}</span><button class="fx">×</button>`;
+  r.querySelector('.fx').onclick=()=>{const g=flow.docs[i];if(g&&g.key)docDel(g.key);flow.docs.splice(i,1);renderFiles();saveDraft();};l.appendChild(r);});}
 /* pay */
 /* One list of methods for the whole app — the three pay grids are built from
    it, so switching the country in Settings cannot leave a screen offering
@@ -2111,15 +2297,20 @@ async function completeFlow(){if(!flow.payment){alert(t('need_pay'));return;}
   const orders=load('hb_orders',[]);const id='HB-'+String(1000+orders.length+1);
   const rec={id,type:'sale',statusSet:'sale',module:flow.module,svcName:modById(flow.module).nm,
     custId:flow.customer.id,name:flow.customer.name,phone:flow.customer.phone,wa:flow.customer.wa,
-    items:flow.items.slice(),amount:flow.amount,payment:flow.payment,docs:flow.docs.map(d=>({name:d.name})),
+    items:flow.items.slice(),amount:flow.amount,payment:flow.payment,
+    docs:flow.docs.map(d=>({name:d.name,size:d.size,type:d.type,key:d.key})),
     intake:collectIntake(),status:flow.docs.length?'prog':'wait',ts:nowStamp()};
   if(flow.payment!=='cash'&&flow.amount>0){
     const ref=id+'-'+Date.now().toString(36);
     const res=await collectPayment(ref,flow.amount,flow.payment);
-    if(res==='cancel')return;                 // aborted — nothing saved
+    /* Cancelling used to throw the order away with everything in it. The draft
+       is on the device, so the seller lands back on the payment step with the
+       order intact and can finish it whenever the customer is ready. */
+    if(res==='cancel'){saveDraft();toast(t('pay_cancelled'));return;}
     rec.payRef=ref;rec.payStatus=(res==='paid'?'paid':'manual');
   }else{rec.payStatus='cash';}
-  applyCommission(rec);orders.push(stampStaff(rec));save('hb_orders',orders);showReceipt(rec);refreshBadges();
+  applyCommission(rec);orders.push(stampStaff(rec));save('hb_orders',orders);
+  clearDraft();showReceipt(rec);refreshBadges();
 }
 
 /* ===================================================================
@@ -2148,7 +2339,25 @@ function startReg(kind){const sc=REG_FORMS[kind];reg={kind,docs:{},fee:0,vehType
     const lab=document.createElement('label');lab.className='uptile';
     lab.innerHTML=`<div class="ut-ic">📷</div><div class="ut-tx"><div class="ut-t">${ul}</div><div class="ut-s">${t('up_tap')}</div></div>`;
     const inp=document.createElement('input');inp.type='file';inp.accept='.pdf,.jpg,.jpeg,.png,.docx,image/*';inp.style.display='none';
-    lab.appendChild(inp);inp.onchange=e=>{reg.docs[u]=[...e.target.files].map(f=>f.name);lab.classList.add('done');lab.querySelector('.ut-ic').textContent='✅';lab.querySelector('.ut-s').textContent='✓ '+t('up_added')+' ('+e.target.files.length+')';};
+    /* Registration uploads had the same hole as the order attachments: only the
+       file NAME was kept, so a driver's licence photo was gone the moment the
+       form was submitted. The files now go to the same store. */
+    lab.appendChild(inp);inp.onchange=function(e){
+      var files=[].slice.call(e.target.files);reg.docs[u]=[];
+      lab.classList.add('done');lab.querySelector('.ut-ic').textContent='⏳';
+      lab.querySelector('.ut-s').textContent='…';
+      (function next(i){
+        if(i>=files.length){lab.querySelector('.ut-ic').textContent='✅';
+          lab.querySelector('.ut-s').textContent='✓ '+t('up_added')+' ('+reg.docs[u].length+')';return;}
+        var f=files[i];
+        if(f.size>12*1024*1024){alert(t('doc_big').replace('{n}',f.name));return next(i+1);}
+        shrinkImage(f).then(function(blob){
+          var key='d-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8);
+          return docPut(key,blob).then(function(){
+            reg.docs[u].push({name:f.name,size:blob.size,type:blob.type||f.type,key:key});});
+        }).catch(function(){alert(t('doc_fail'));}).then(function(){next(i+1);});
+      })(0);
+    };
     body.appendChild(lab);});
   const btn=document.createElement('button');btn.className='cta';btn.textContent=sc.feeKey?t('pay_do'):t('save');btn.onclick=()=>saveReg(kind);body.appendChild(btn);
   go('reg');
@@ -2159,7 +2368,10 @@ function startReg(kind){const sc=REG_FORMS[kind];reg={kind,docs:{},fee:0,vehType
 function saveReg(kind){const sc=REG_FORMS[kind];const name=document.getElementById('rf_name').value.trim();if(!name){alert(t('need_name'));return;}
   const data={};sc.fields.forEach(f=>{const key=f[0];if(key==='vehicle'){data.vehicle=reg.vehType==='moto'?'Moto':'Machin';}else{const el=document.getElementById('rf_'+key);if(el)data[key]=el.value.trim();}});
   const fee=sc.feeKey?fxIn('rf_fee',0):0;
-  const docsFlat=[];Object.keys(reg.docs).forEach(k=>reg.docs[k].forEach(n=>docsFlat.push({name:k+': '+n})));
+  const docsFlat=[];Object.keys(reg.docs).forEach(k=>reg.docs[k].forEach(function(d){
+    /* older drafts stored a bare filename string; keep reading those */
+    if(typeof d==='string')docsFlat.push({name:k+': '+d});
+    else docsFlat.push({name:k+': '+d.name,size:d.size,type:d.type,key:d.key});}));
   const orders=load('hb_orders',[]);const id=sc.prefix+'-'+String(1000+orders.length+1);
   const metaBits=[];sc.fields.forEach(f=>{const key=f[0],lblKey=f[1];if(['name','phone','wa','email'].includes(key))return;if(data[key])metaBits.push(t(lblKey)+': '+data[key]);});
   const rec={id,type:'reg',regKind:kind,statusSet:sc.statusSet||'merch',module:kind,svcName:t(sc.titleKey),
@@ -2388,7 +2600,7 @@ function collectPaymentBR(ref,amount,method){
     }
     const ok=document.createElement('button');ok.className='cta';ok.style.marginTop='10px';
     ok.textContent=t('pix_confirm');ok.onclick=()=>finish('manual');box.appendChild(ok);
-    const cx=document.createElement('button');cx.className='cta ghost';cx.textContent=t('cancel');cx.onclick=()=>finish('cancel');box.appendChild(cx);
+    const cx=document.createElement('button');cx.className='cta ghost';cx.textContent=t('cancel');cx.onclick=()=>{if(confirm(t('pay_cancel_q')))finish('cancel');};box.appendChild(cx);
   });
 }
 
@@ -2410,7 +2622,7 @@ function collectPayment(ref,amount,method){
       box.innerHTML=`<div style="font-weight:800;color:var(--red);margin-bottom:8px">${t('pg_fail')}</div>
         <p class="sub" style="margin-bottom:14px">${t('pg_fail_sub')}</p>`;
       const mk=document.createElement('button');mk.className='cta';mk.textContent=t('pg_manual');mk.onclick=()=>finish('manual');box.appendChild(mk);
-      const cx=document.createElement('button');cx.className='cta ghost';cx.textContent=t('cancel');cx.onclick=()=>finish('cancel');box.appendChild(cx);
+      const cx=document.createElement('button');cx.className='cta ghost';cx.textContent=t('cancel');cx.onclick=()=>{if(confirm(t('pay_cancel_q')))finish('cancel');};box.appendChild(cx);
       return;
     }
     const qr=qrDataURL(data.url);
@@ -2420,7 +2632,7 @@ function collectPayment(ref,amount,method){
       <a href="${data.url}" target="_blank" rel="noopener" class="cta" style="display:block;margin:14px 0 6px;text-decoration:none">${t('pg_open')}</a>
       <div id="pgStat" style="margin:8px 0;color:var(--muted);font-size:13px">${t('pg_waiting')}</div>`;
     const mk=document.createElement('button');mk.className='cta ghost';mk.textContent=t('pg_manual');mk.onclick=()=>finish('manual');box.appendChild(mk);
-    const cx=document.createElement('button');cx.className='cta ghost';cx.textContent=t('cancel');cx.onclick=()=>finish('cancel');box.appendChild(cx);
+    const cx=document.createElement('button');cx.className='cta ghost';cx.textContent=t('cancel');cx.onclick=()=>{if(confirm(t('pay_cancel_q')))finish('cancel');};box.appendChild(cx);
     const stat=box.querySelector('#pgStat');
     timer=setInterval(async()=>{
       let v=null;try{v=await pgVerify(ref);}catch(e){return;}
@@ -2475,6 +2687,33 @@ function setupWA(o){const btn=document.getElementById('waBtn');const num=(o.wa||
    ORDERS + SEARCH
    =================================================================== */
 let filter='all';
+/* The attachments an order carries. The tiles are placeholders — the files live
+   in IndexedDB, so they are fetched after the list is drawn rather than blocking
+   it. Tapping one opens the real file; the arrow saves it to the phone, which is
+   how the seller forwards a customer's photo to the production team today. */
+function attachHTML(o){
+  if(!o.docs||!o.docs.length)return '';
+  return `<div style="font-size:11.5px;margin-top:8px;color:#666;font-weight:800">📎 ${t('att_h')} (${o.docs.length})</div>
+    <div class="atts">`+o.docs.map(function(d){
+      return `<div class="att" data-dockey="${escHtml(d.key||'')}" data-docname="${escHtml(d.name||'')}">
+        <div class="ab">⏳</div><div class="an">${escHtml(d.name||'')}</div></div>`;}).join('')+`</div>`;
+}
+function hydrateAttachments(root){
+  (root||document).querySelectorAll('.att[data-dockey]').forEach(function(el){
+    if(el.dataset.done)return;el.dataset.done='1';
+    var key=el.dataset.dockey,name=el.dataset.docname||'file';
+    var box=el.querySelector('.ab');
+    if(!key){el.classList.add('gone');box.textContent=t('att_gone');return;}
+    docGet(key).then(function(b){
+      if(!b){el.classList.add('gone');box.textContent=t('att_gone');return;}
+      var u=URL.createObjectURL(b);
+      var img=(b.type||'').indexOf('image/')===0;
+      box.innerHTML=img?'<img src="'+u+'" alt="">':'📄';
+      el.innerHTML='<a href="'+u+'" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">'+box.outerHTML+'</a>'+
+        '<a class="an" href="'+u+'" download="'+escHtml(name)+'" style="display:block;color:var(--blue)">⬇︎ '+escHtml(name)+'</a>';
+    });
+  });
+}
 function renderOrders(){const fb=document.getElementById('filterBar');fb.innerHTML='';
   const opts=[{id:'all',lbl:t('all')},{id:'wait',lbl:t('st_wait')},{id:'prog',lbl:t('st_prog')},{id:'ready',lbl:t('st_ready')},{id:'done',lbl:t('st_done')},{id:'reg',lbl:t('tag_reg')}];
   opts.forEach(o=>{const b=document.createElement('button');b.textContent=o.lbl;b.className=filter===o.id?'on':'';b.onclick=()=>{filter=o.id;renderOrders();};fb.appendChild(b);});
@@ -2489,7 +2728,7 @@ function renderOrders(){const fb=document.getElementById('filterBar');fb.innerHT
     const el=document.createElement('div');el.className='order';const tag=o.type!=='sale'?`<span class="rtag">${o.type==='reg'?t('tag_reg_s'):o.type}</span>`:'';
     const itemsH=(o.items||[]).map(it=>`<div class="rrow" style="font-size:12px"><span>${it.label}</span><span>${it.amt?gdes(it.amt):''}</span></div>`).join('');
     const intakeH=(o.intake||[]).map(s=>`<div style="font-weight:800;font-size:11.5px;margin:6px 0 2px">${s.title}</div>`+s.items.map(it=>`<div class="rrow" style="font-size:11.5px"><span style="color:#666">${it[0]}</span><span style="text-align:right;max-width:56%">${it[1]}</span></div>`).join('')).join('');
-    const docsH=(o.docs&&o.docs.length)?`<div style="font-size:11.5px;margin-top:6px;color:#666">📎 ${o.docs.map(d=>d.name).join(', ')}</div>`:'';
+    const docsH=attachHTML(o);
     const det=(itemsH||intakeH||docsH)?`<details style="margin-top:6px"><summary style="font-size:12px;font-weight:800;color:var(--blue);cursor:pointer;list-style:none">📋 ${t('intake_h')}</summary><div style="padding:6px 2px 2px">${itemsH}${intakeH}${docsH}</div></details>`:'';
     el.innerHTML=`<div class="top"><div><div class="who">${o.name}${tag}</div><div class="meta">${o.id} · ${o.phone||''} · ${fmtDate(o.ts)}</div></div>
       <span class="badge" style="background:${st.c};color:${st.t}">${st.em} ${t(st.k)}</span></div>
@@ -2503,6 +2742,7 @@ function renderOrders(){const fb=document.getElementById('filterBar');fb.innerHT
     const nb=document.createElement('button');nb.className='mini';nb.textContent=t('notify');nb.style.marginTop='8px';
     nb.onclick=()=>openNotify(o);el.appendChild(nb);
     list.appendChild(el);});
+  hydrateAttachments(list);
 }
 document.getElementById('ordSearch').addEventListener('input',renderOrders);
 
@@ -3252,11 +3492,17 @@ function rerenderCurrent(){
     const nm=md?(md.nmKey?t(md.nmKey):md.nm):m;const sl=document.getElementById('flowSvcLabel');if(sl)sl.textContent=nm;
     if(typeof fstep!=='undefined'&&fstep===1)renderCustSearch();else showFlowStep();return;}
   if(R[id]){try{R[id]();}catch(e){}}
+  renderDraftBar();   /* the resume card is written in the seller's language too */
 }
 
 /* ---------- boot ---------- */
 document.querySelectorAll('.lang button').forEach(x=>x.classList.toggle('on',x.dataset.lang===lang));
-applyI18n();renderHome();refreshBadges();
+applyI18n();renderHome();refreshBadges();renderDraftBar();
+/* The brief is a lot of typing. Save it while it is being typed, not only when
+   the seller moves to the next step — a phone can drop the tab at any moment. */
+(function(){var tm=null,fs=document.getElementById('s-flow');if(!fs)return;
+  function q(){if(!flow)return;clearTimeout(tm);tm=setTimeout(saveDraft,600);}
+  fs.addEventListener('input',q);fs.addEventListener('change',q);})();
 /* splash screen: show POS logo on open, then fade out */
 (function(){var sp=document.getElementById('splash');if(!sp)return;setTimeout(function(){sp.classList.add('hide');setTimeout(function(){sp.remove();},600);},1600);})();
 /* employees: if the owner has set up staff, require PIN sign-in */
