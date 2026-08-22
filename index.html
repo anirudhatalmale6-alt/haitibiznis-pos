@@ -8,18 +8,18 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HaitiBiznis">
 <meta property="og:title" content="LajanMaker Center">
-<meta property="og:description" content="Point of sale + 30+ digital services for Haitian merchants. 7-day free trial, then from 1,000 GDES/month - or Founder's Lifetime, 10,000 GDES paid once.">
+<meta property="og:description" content="Aprann, vann, fe lajan. Enskri chofe ak biznis, vann 30+ pwodwi dijital, fe komisyon. 7 jou gratis, apre sa apati 1,000 GDES/mwa - oswa Founder's Lifetime, 10,000 GDES yon sel peman.">
 <meta property="og:url" content="https://haitibiznis.com/pos/">
-<meta property="og:image" content="https://haitibiznis.com/pos/assets/og-share-7day.png">
-<meta property="og:image:secure_url" content="https://haitibiznis.com/pos/assets/og-share-7day.png">
+<meta property="og:image" content="https://haitibiznis.com/pos/assets/og-lajanmaker.png">
+<meta property="og:image:secure_url" content="https://haitibiznis.com/pos/assets/og-lajanmaker.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="LajanMaker Center">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="LajanMaker Center">
-<meta name="twitter:description" content="Point of sale + 30+ digital services for Haitian merchants. 7-day free trial, then from 1,000 GDES/month - or Founder's Lifetime, 10,000 GDES paid once.">
-<meta name="twitter:image" content="https://haitibiznis.com/pos/assets/og-share-7day.png">
+<meta name="twitter:description" content="Aprann, vann, fe lajan. Enskri chofe ak biznis, vann 30+ pwodwi dijital, fe komisyon. 7 jou gratis, apre sa apati 1,000 GDES/mwa - oswa Founder's Lifetime, 10,000 GDES yon sel peman.">
+<meta name="twitter:image" content="https://haitibiznis.com/pos/assets/og-lajanmaker.png">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
 <link rel="manifest" href="manifest.json">
@@ -39,7 +39,7 @@
 html,body{margin:0;padding:0;overflow-x:hidden}
 body{font-family:"Poppins","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.4;padding-bottom:150px;max-width:720px;margin:0 auto;min-height:100vh}
 button{font-family:inherit;cursor:pointer}img{display:block}
-#splash{position:fixed;inset:0;z-index:9999;background:#0033A0;display:flex;align-items:center;justify-content:center;transition:opacity .5s ease}
+#splash{position:fixed;inset:0;z-index:9999;background:#0A4DB3;display:flex;align-items:center;justify-content:center;transition:opacity .5s ease}
 #splash.hide{opacity:0;pointer-events:none}
 #splash img{width:60%;max-width:280px;height:auto;border-radius:24px;box-shadow:0 12px 40px rgba(0,0,0,.28);animation:splashPop .6s cubic-bezier(.2,.8,.2,1) both}
 @keyframes splashPop{0%{transform:scale(.82);opacity:0}60%{transform:scale(1.03);opacity:1}100%{transform:scale(1);opacity:1}}
@@ -353,8 +353,8 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
 
 <div class="appbar">
   <a href="https://haitibiznis.com" class="hbback" title="HaitiBiznis"><span class="ar">←</span><span class="lbl">HaitiBiznis</span></a>
-  <img src="assets/pos-logo-ht.jpg" class="logo" alt="HaitiBiznis">
-  <h1 data-i18n="app_t">Sant HaitiBiznis<small data-i18n="app_s">POINT OF SALE</small></h1>
+  <img src="assets/pos-logo-ht.jpg" class="logo" alt="LajanMaker Center">
+  <h1 data-i18n="app_t">LajanMaker Center<small data-i18n="app_s">APRANN • VANN • FÈ LAJAN</small></h1>
   <div class="lang"><button data-lang="ht" class="on">HT</button><button data-lang="fr">FR</button><button data-lang="en">EN</button><button data-lang="es">ES</button><button data-lang="pt">PT</button></div>
   <button class="gear" onclick="go('set')">⚙️</button>
 </div>
@@ -365,11 +365,11 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
     <div class="ib-tx" data-i18n="ib_head">Pi rapid, louvri tankou yon vrè app, mache menm san entènèt</div>
     <button id="installClose" class="ib-x" aria-label="close">✕</button>
   </div>
-  <button id="installBtn2" class="ib-btn" data-i18n="ib_cta">📲 Enstale HaitiBiznis POS</button>
+  <button id="installBtn2" class="ib-btn" data-i18n="ib_cta">📲 Enstale LajanMaker Center</button>
 </div>
 <div id="installHelp" class="ihelp-ov">
   <div class="ihelp-card">
-    <div class="ihelp-h"><span>📲</span><b data-i18n="inst_title">Enstale HaitiBiznis POS</b></div>
+    <div class="ihelp-h"><span>📲</span><b data-i18n="inst_title">Enstale LajanMaker Center</b></div>
     <div class="ihelp-steps" id="installHelpSteps"></div>
     <button class="ihelp-btn" id="installHelpClose" data-i18n="inst_close">Fèmen</button>
   </div>
@@ -1460,7 +1460,7 @@ Object.keys(T_FIX).forEach(function(l){Object.assign(T[l],T_FIX[l]);});
    =================================================================== */
 const T_PT={
  greet_setname:'Coloque o seu nome',set_bizname:'Nome do seu negócio',
- app_t:'Centro HaitiBiznis',app_s:'PONTO DE VENDA',home_t:'Bem-vindo! O que você quer fazer hoje?',home_s:'Caixa: cadastre clientes, venda serviços, receba o pagamento.',
+ app_t:'Centro HaitiBiznis',app_s:'APRENDA • VENDA • GANHE',home_t:'Bem-vindo! O que você quer fazer hoje?',home_s:'Caixa: cadastre clientes, venda serviços, receba o pagamento.',
  back:'Voltar',next:'Continuar',subtotal:'Total',cust_t:'Cliente',cust_search:'Buscar nome / telefone...',cust_new:'+ Novo cliente',
  f_name:'Nome completo',f_phone:'Telefone',f_wa:'WhatsApp',f_email:'E-mail (opcional)',f_addr:'Endereço (opcional)',cust_save:'Continuar',
  docs_t:'Documentos',docs_s:'Adicione arquivos (PDF, JPG, PNG, DOCX). Eles ficam anexados ao pedido.',docs_add:'Adicionar documentos',
@@ -1756,7 +1756,7 @@ const T_LM={
   lm_track:'Swiv Lajan Ou',lm_track_s:'Sa ou fè jodi a',
   lm_learn:'Aprann & Sètifye',lm_learn_s:'LajanMaker Academy',
   lm_acad_t:'LajanMaker Academy',
-  lm_acad_msg:'Fòmasyon pou vin yon LajanMaker Agent sètifye. N ap prepare kou yo kounye a — n ap avize w lè yo pare.',
+  lm_acad_msg:'Pou kounye a, LajanMaker Academy se yon sant fòmasyon an pèsòn. Kontakte nou pou pwochen sesyon an — kou anndan aplikasyon an ap vini pi devan.',
   ib_cta:'📲 Enstale LajanMaker Center',ins_done:'✅ LajanMaker Center enstale!',
   inst_title:'Enstale LajanMaker Center',
   lic_sub:'Plan abònman LajanMaker ou a.',share_pos:'Pataje LajanMaker',
@@ -1773,7 +1773,7 @@ const T_LM={
   lm_track:'Suivre vos gains',lm_track_s:'Ce que vous avez fait',
   lm_learn:'Apprendre & certifier',lm_learn_s:'LajanMaker Academy',
   lm_acad_t:'LajanMaker Academy',
-  lm_acad_msg:'La formation pour devenir LajanMaker Agent certifié. Les cours sont en préparation — vous serez prévenu dès qu’ils sont prêts.',
+  lm_acad_msg:'Pour le moment, LajanMaker Academy est un centre de formation en présentiel. Contactez-nous pour la prochaine session — les cours dans l’application viendront plus tard.',
   ib_cta:'📲 Installer LajanMaker Center',ins_done:'✅ LajanMaker Center installé !',
   inst_title:'Installer LajanMaker Center',
   lic_sub:'Votre abonnement LajanMaker.',share_pos:'Partager LajanMaker',
@@ -1790,7 +1790,7 @@ const T_LM={
   lm_track:'Track Earnings',lm_track_s:'What you made today',
   lm_learn:'Learn & Get Certified',lm_learn_s:'LajanMaker Academy',
   lm_acad_t:'LajanMaker Academy',
-  lm_acad_msg:'The training that makes you a certified LajanMaker Agent. The courses are being built now — you will be told the moment they are ready.',
+  lm_acad_msg:'For now, LajanMaker Academy is an in-person training center. Contact us for the next session — courses inside the app will come later.',
   ib_cta:'📲 Install LajanMaker Center',ins_done:'✅ LajanMaker Center installed!',
   inst_title:'Install LajanMaker Center',
   lic_sub:'Your LajanMaker plan.',share_pos:'Share LajanMaker',
@@ -1807,7 +1807,7 @@ const T_LM={
   lm_track:'Seguir tus ganancias',lm_track_s:'Lo que hiciste hoy',
   lm_learn:'Aprender y certificarte',lm_learn_s:'LajanMaker Academy',
   lm_acad_t:'LajanMaker Academy',
-  lm_acad_msg:'La formación para ser Agente LajanMaker certificado. Los cursos se están preparando — te avisaremos en cuanto estén listos.',
+  lm_acad_msg:'Por ahora, LajanMaker Academy es un centro de formación presencial. Contáctanos para la próxima sesión — los cursos dentro de la app llegarán más adelante.',
   ib_cta:'📲 Instalar LajanMaker Center',ins_done:'✅ ¡LajanMaker Center instalado!',
   inst_title:'Instalar LajanMaker Center',
   lic_sub:'Tu plan LajanMaker.',share_pos:'Compartir LajanMaker',

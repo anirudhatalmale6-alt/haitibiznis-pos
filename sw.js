@@ -1,5 +1,5 @@
 /* LajanMaker Center — service worker (offline app shell) */
-var CACHE = 'hb-pos-v46';
+var CACHE = 'hb-pos-v47';
 var SHELL = [
   './',
   './index.html',
@@ -19,7 +19,9 @@ var SHELL = [
   './assets/favicon-16.png',
   './assets/icon-192.png',
   './assets/icon-512.png',
-  './assets/icon-180.png'
+  './assets/icon-180.png',
+  './assets/icon-maskable-192.png',
+  './assets/icon-maskable-512.png'
 ];
 
 self.addEventListener('install', function (e) {
