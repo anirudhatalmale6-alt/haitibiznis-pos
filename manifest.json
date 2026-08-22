@@ -1,7 +1,7 @@
 {
-  "name": "Sant HaitiBiznis — POS",
-  "short_name": "HaitiBiznis POS",
-  "description": "Point of Sale for HaitiBiznis Center — onboard customers, sell services, take payment.",
+  "name": "LajanMaker Center",
+  "short_name": "LajanMaker",
+  "description": "Aprann • Vann • Fè Lajan — enskri chofè ak biznis, vann pwodwi dijital, fè komisyon.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>HaitiBiznis Center POS — Point of Sale + 30 Digital Services</title>
-<meta name="description" content="HaitiBiznis Center POS — point of sale plus 30+ digital services for Haitian merchants. Download free, 7-day free trial.">
+<title>LajanMaker Center — Aprann • Vann • Fè Lajan</title>
+<meta name="description" content="LajanMaker Center — aprann, vann, fè lajan. Enskri chofè ak biznis, vann pwodwi dijital, fè komisyon. Gratis pou eseye 7 jou.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HaitiBiznis">
-<meta property="og:title" content="HaitiBiznis Center POS">
+<meta property="og:title" content="LajanMaker Center">
 <meta property="og:description" content="Point of sale + 30+ digital services for Haitian merchants. 7-day free trial, then from 1,000 GDES/month - or Founder's Lifetime, 10,000 GDES paid once.">
 <meta property="og:url" content="https://haitibiznis.com/pos/">
 <meta property="og:image" content="https://haitibiznis.com/pos/assets/og-share-7day.png">
@@ -15,9 +15,9 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="HaitiBiznis Center POS">
+<meta property="og:image:alt" content="LajanMaker Center">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="HaitiBiznis Center POS">
+<meta name="twitter:title" content="LajanMaker Center">
 <meta name="twitter:description" content="Point of sale + 30+ digital services for Haitian merchants. 7-day free trial, then from 1,000 GDES/month - or Founder's Lifetime, 10,000 GDES paid once.">
 <meta name="twitter:image" content="https://haitibiznis.com/pos/assets/og-share-7day.png">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
@@ -29,7 +29,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="HaitiBiznis POS">
+<meta name="apple-mobile-web-app-title" content="LajanMaker Center">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#0057D9">
 <style>
@@ -313,12 +313,42 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
 
 #hbToast{position:fixed;left:50%;bottom:78px;transform:translate(-50%,14px);z-index:95;background:#10203f;color:#fff;font-size:13px;font-weight:700;padding:11px 16px;border-radius:12px;max-width:88vw;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.28);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
 #hbToast.on{opacity:1;transform:translate(-50%,0)}
+/* "LajanMaker Center" + the slogan is a longer header than the old one, so the
+   bar is tightened on phone widths instead of letting the name ellipsis away. */
+.appbar h1{font-size:15px}
+.appbar h1 small{font-size:10.5px;letter-spacing:.2px}
+@media(max-width:430px){.appbar{gap:7px;padding:10px 10px}
+  .appbar h1{font-size:13px}.appbar h1 small{font-size:9.5px;letter-spacing:0}
+  .appbar .logo{width:34px;height:34px}
+  .lang{gap:0;padding:2px}.lang button{font-size:10px;padding:4px 3px}
+  .gear{width:30px;height:30px;font-size:15px}}
+/* Below 375px the back chip is what pushes the brand name into an ellipsis.
+   The bottom nav and the gear both still get you out, so the chip goes. */
+@media(max-width:375px){.hbback{display:none}}
+@media(max-width:340px){.appbar h1{font-size:11.5px}.appbar h1 small{display:none}
+  .lang button{font-size:9px;padding:3px 2px}.appbar{gap:5px;padding:10px 8px}}
+
+/* ---- LajanMaker benefit strip ---- */
+.lm-why{margin:14px 0 2px}
+.lm-slog{display:flex;align-items:center;justify-content:center;gap:9px;font-weight:900;
+  font-size:12.5px;letter-spacing:.07em;margin-bottom:11px}
+.lm-slog i{color:#cbd3e0;font-style:normal;font-size:10px}
+.lm-h{font-size:17px;font-weight:900;margin:0 0 10px}
+.lm-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
+.lm-t{border:1px solid var(--line);border-top:3px solid var(--c);background:#fff;
+  border-radius:14px;padding:12px 5px 10px;box-shadow:var(--shadow);display:flex;
+  flex-direction:column;align-items:center;gap:5px;text-align:center}
+.lm-t:active{transform:scale(.97)}
+.lm-e{font-size:23px;line-height:1}
+.lm-n{font-size:11px;font-weight:800;line-height:1.2;color:var(--ink)}
+.lm-s{font-size:9.5px;font-weight:600;color:var(--muted);line-height:1.2}
+@media(max-width:342px){.lm-grid{gap:7px}.lm-n{font-size:10px}.lm-s{font-size:9px}}
 </style>
 </head>
 <body>
 
 <div id="splash">
-  <img src="assets/splash-ht.jpg" alt="HaitiBiznis POS">
+  <img src="assets/splash-ht.jpg" alt="LajanMaker Center">
 </div>
 
 <div class="appbar">
@@ -1005,6 +1035,8 @@ function applyI18n(){document.documentElement.lang=lang;
    The Haitian branch is untouched: everything here is gated on isBR().
    =================================================================== */
 function brandName(){return isBR()?'48 Horas Pronto':'HaitiBiznis';}
+/* The PRODUCT name. HaitiBiznis stays the company that owns it. */
+function posBrand(){return isBR()?'48 Horas Pronto':'LajanMaker Center';}
 function svcBrand(){return isBR()?'48 Horas Pronto':'48HoursReady';}
 /* One POS logo per language — the client had each one drawn in its own language.
    Brazil wins over the language pill: country=br with the UI in English still
@@ -1020,7 +1052,7 @@ function applyBrand(){
   const sp=document.querySelector('#splash img');if(sp)sp.src=splashLogo();
   /* The back chip keeps saying HaitiBiznis — that is genuinely where it goes. */
   if(isBR())document.querySelectorAll('#installBtn2,#installHelp [data-i18n="inst_title"]')
-    .forEach(function(el){el.textContent=el.textContent.replace(/HaitiBiznis/g,'48 Horas Pronto');});
+    .forEach(function(el){el.textContent=el.textContent.replace(/LajanMaker Center|HaitiBiznis/g,'48 Horas Pronto');});
   /* app_t is a language string; in Brazil the brand name wins over it. */
   const h1=document.querySelector('.appbar h1');
   if(h1&&h1.childNodes[0])h1.childNodes[0].nodeValue=isBR()?'48 Horas Pronto':T[lang].app_t;}
@@ -1676,6 +1708,127 @@ const T_DRAFT={
   docs_hint_brief:'📎 Adicione o que o cliente já tem: o logo atual (se quiser refazer), fotos, um cartão de visita antigo ou um exemplo de que goste. É a partir disso que a equipe trabalha.'}
 };
 Object.keys(T_DRAFT).forEach(function(l){if(T[l])Object.assign(T[l],T_DRAFT[l]);});
+/* ===================================================================
+   LAJANMAKER — the six things an agent actually does, in money language,
+   one tap each. Driver and merchant sign-up already existed but sat two
+   taps deep behind a brand name, so they are surfaced here by name.
+   Brazil runs its own mark, so the strip is skipped there.
+   =================================================================== */
+function lmReg(k){if(licGate())startReg(k);}
+function lmMod(id){const m=modById(id);if(m)openModule(m);}
+function openAcademy(){
+  const m=caOverlay(`<div style="text-align:center">
+    <div style="font-size:44px">🎓</div>
+    <div style="font-weight:900;font-size:18px;margin-top:4px">${t('lm_acad_t')}</div>
+    <div style="display:inline-block;background:#f59e0b;color:#fff;font-size:11px;font-weight:800;padding:3px 12px;border-radius:20px;margin:8px 0">${t('soon')}</div>
+    <div class="sub">${t('lm_acad_msg')}</div>
+    <div style="height:12px"></div>
+    <button class="cta ghost" id="ac_x">${t('back')}</button></div>`);
+  m.box.querySelector('#ac_x').onclick=m.close;
+}
+function renderWhy(){
+  const el=document.getElementById('homeWhy');if(!el)return;
+  if(isBR()){el.innerHTML='';return;}
+  const TILES=[
+    ['🏍️','lm_drivers',"lmReg('driver')",'#D21034'],
+    ['🏪','lm_biz',"lmReg('merchant')",'#0ea5a0'],
+    ['📱','lm_digital',"lmMod('hbtech')",'#7c3aed'],
+    ['💰','lm_comm',"lmMod('parenaj')",'#12a150'],
+    ['📊','lm_track',"go('earn')",'#0057D9'],
+    ['🎓','lm_learn',"openAcademy()",'#f59e0b']];
+  el.innerHTML=`<div class="lm-why">
+   <div class="lm-slog"><span style="color:#E31B23">${t('lm_s1')}</span><i>●</i><span style="color:#f59e0b">${t('lm_s2')}</span><i>●</i><span style="color:#00B050">${t('lm_s3')}</span></div>
+   <div class="lm-h">${t('lm_why_t')}</div>
+   <div class="lm-grid">${TILES.map(function(x){
+     return `<button class="lm-t" onclick="${x[2]}" style="--c:${x[3]}"><span class="lm-e">${x[0]}</span><span class="lm-n">${t(x[1])}</span><span class="lm-s">${t(x[1]+'_s')}</span></button>`;
+   }).join('')}</div></div>`;
+}
+
+/* Benefit-first wording, merged over everything above it so it always wins. */
+const T_LM={
+ ht:{app_t:'LajanMaker Center',app_s:'APRANN • VANN • FÈ LAJAN',
+  lm_s1:'APRANN',lm_s2:'VANN',lm_s3:'FÈ LAJAN',
+  lm_why_t:'Sa ou ka fè pou fè lajan',
+  lm_drivers:'Enskri Chofè',lm_drivers_s:'Moto & taxi',
+  lm_biz:'Enskri Biznis',lm_biz_s:'Machann & magazen',
+  lm_digital:'Vann Dijital',lm_digital_s:'Sit, logo, pakè',
+  lm_comm:'Fè Komisyon',lm_comm_s:'Parenaj biznis',
+  lm_track:'Swiv Lajan Ou',lm_track_s:'Sa ou fè jodi a',
+  lm_learn:'Aprann & Sètifye',lm_learn_s:'LajanMaker Academy',
+  lm_acad_t:'LajanMaker Academy',
+  lm_acad_msg:'Fòmasyon pou vin yon LajanMaker Agent sètifye. N ap prepare kou yo kounye a — n ap avize w lè yo pare.',
+  ib_cta:'📲 Enstale LajanMaker Center',ins_done:'✅ LajanMaker Center enstale!',
+  inst_title:'Enstale LajanMaker Center',
+  lic_sub:'Plan abònman LajanMaker ou a.',share_pos:'Pataje LajanMaker',
+  set_country:'Peyi kote w ap travay',
+  grp_core:'Enskri & Fè Lajan',grp_biz:'Vann bay Biznis',
+  grp_growth:'Vann Pwodwi Dijital',grp_fin:'Sèvis Lajan'},
+ fr:{app_t:'LajanMaker Center',app_s:'APRANN • VANN • FÈ LAJAN',
+  lm_s1:'APRANN',lm_s2:'VANN',lm_s3:'FÈ LAJAN',
+  lm_why_t:'Ce que vous pouvez faire pour gagner',
+  lm_drivers:'Inscrire chauffeurs',lm_drivers_s:'Moto & taxi',
+  lm_biz:'Inscrire commerces',lm_biz_s:'Marchands & boutiques',
+  lm_digital:'Vendre du digital',lm_digital_s:'Sites, logos, packs',
+  lm_comm:'Gagner des commissions',lm_comm_s:'Parrainage business',
+  lm_track:'Suivre vos gains',lm_track_s:'Ce que vous avez fait',
+  lm_learn:'Apprendre & certifier',lm_learn_s:'LajanMaker Academy',
+  lm_acad_t:'LajanMaker Academy',
+  lm_acad_msg:'La formation pour devenir LajanMaker Agent certifié. Les cours sont en préparation — vous serez prévenu dès qu’ils sont prêts.',
+  ib_cta:'📲 Installer LajanMaker Center',ins_done:'✅ LajanMaker Center installé !',
+  inst_title:'Installer LajanMaker Center',
+  lic_sub:'Votre abonnement LajanMaker.',share_pos:'Partager LajanMaker',
+  set_country:'Pays où vous travaillez',
+  grp_core:'Inscrire & Gagner',grp_biz:'Vendre aux entreprises',
+  grp_growth:'Vendre du digital',grp_fin:'Services d’argent'},
+ en:{app_t:'LajanMaker Center',app_s:'LEARN • SELL • EARN',
+  lm_s1:'LEARN',lm_s2:'SELL',lm_s3:'EARN',
+  lm_why_t:'What you can do to make money',
+  lm_drivers:'Register Drivers',lm_drivers_s:'Moto & taxi',
+  lm_biz:'Register Businesses',lm_biz_s:'Merchants & shops',
+  lm_digital:'Sell Digital Products',lm_digital_s:'Sites, logos, packages',
+  lm_comm:'Earn Commissions',lm_comm_s:'Business referrals',
+  lm_track:'Track Earnings',lm_track_s:'What you made today',
+  lm_learn:'Learn & Get Certified',lm_learn_s:'LajanMaker Academy',
+  lm_acad_t:'LajanMaker Academy',
+  lm_acad_msg:'The training that makes you a certified LajanMaker Agent. The courses are being built now — you will be told the moment they are ready.',
+  ib_cta:'📲 Install LajanMaker Center',ins_done:'✅ LajanMaker Center installed!',
+  inst_title:'Install LajanMaker Center',
+  lic_sub:'Your LajanMaker plan.',share_pos:'Share LajanMaker',
+  set_country:'Country you work in',
+  grp_core:'Register & Earn',grp_biz:'Sell to Businesses',
+  grp_growth:'Sell Digital Products',grp_fin:'Money Services'},
+ es:{app_t:'LajanMaker Center',app_s:'APRENDE • VENDE • GANA',
+  lm_s1:'APRENDE',lm_s2:'VENDE',lm_s3:'GANA',
+  lm_why_t:'Lo que puedes hacer para ganar',
+  lm_drivers:'Registrar conductores',lm_drivers_s:'Moto y taxi',
+  lm_biz:'Registrar negocios',lm_biz_s:'Comerciantes y tiendas',
+  lm_digital:'Vender digital',lm_digital_s:'Sitios, logos, paquetes',
+  lm_comm:'Ganar comisiones',lm_comm_s:'Referidos de negocio',
+  lm_track:'Seguir tus ganancias',lm_track_s:'Lo que hiciste hoy',
+  lm_learn:'Aprender y certificarte',lm_learn_s:'LajanMaker Academy',
+  lm_acad_t:'LajanMaker Academy',
+  lm_acad_msg:'La formación para ser Agente LajanMaker certificado. Los cursos se están preparando — te avisaremos en cuanto estén listos.',
+  ib_cta:'📲 Instalar LajanMaker Center',ins_done:'✅ ¡LajanMaker Center instalado!',
+  inst_title:'Instalar LajanMaker Center',
+  lic_sub:'Tu plan LajanMaker.',share_pos:'Compartir LajanMaker',
+  set_country:'País donde trabajas',
+  grp_core:'Registra y Gana',grp_biz:'Vende a Empresas',
+  grp_growth:'Vende Productos Digitales',grp_fin:'Servicios de dinero'},
+ /* Brazil keeps "48 Horas Pronto" - only the six tile labels are translated,
+    and the strip itself is hidden under isBR() anyway. */
+ pt:{lm_s1:'APRENDA',lm_s2:'VENDA',lm_s3:'GANHE',
+  lm_why_t:'O que você pode fazer para ganhar',
+  lm_drivers:'Cadastrar motoristas',lm_drivers_s:'Moto e táxi',
+  lm_biz:'Cadastrar negócios',lm_biz_s:'Lojistas e lojas',
+  lm_digital:'Vender digital',lm_digital_s:'Sites, logos, pacotes',
+  lm_comm:'Ganhar comissões',lm_comm_s:'Indicação de negócios',
+  lm_track:'Acompanhar ganhos',lm_track_s:'O que você fez hoje',
+  lm_learn:'Aprender e certificar',lm_learn_s:'LajanMaker Academy',
+  lm_acad_t:'LajanMaker Academy',
+  lm_acad_msg:'O treinamento para se tornar um Agente certificado. Os cursos estão sendo preparados — avisaremos assim que estiverem prontos.'}
+};
+Object.keys(T_LM).forEach(function(l){if(T[l])Object.assign(T[l],T_LM[l]);});
+
 
 /* registration form schemas (person-first) */
 const UP_KEY={'Driver License':'up_driverlic','National ID':'up_natid','Insurance':'up_insurance','Vehicle Registration':'up_vehreg','Driver Photo':'up_driverphoto','Business Documents':'up_bizdocs','Diploma / Certification':'up_diploma','Experience Documents':'up_expdocs','Store Photo':'up_storephoto','Owner ID':'up_ownerid'};
@@ -1772,7 +1925,7 @@ function renderHome(){
      <div class="gtxt">
        <div class="ghi">${greetIco} ${t('greet_hi')},</div>
        <div class="gname" onclick="editBizName()" role="button" tabindex="0" title="${t('set_bizname')}">${bizName()?escHtml(bizName()):`<span class="gset">${t('greet_setname')}</span><span class="gpen">✏️</span>`}</div>
-       <div class="gbiz">🏢 ${isBR()?'Digital Business Center':'HaitiBiznis Center'}</div>
+       <div class="gbiz">🏢 ${isBR()?'Digital Business Center':'LajanMaker Center'}</div>
      </div>
      <div class="gicons">
        <button class="gicon" onclick="go('earn')" aria-label="alerts">🔔<span class="gdot"></span></button>
@@ -1786,6 +1939,7 @@ function renderHome(){
      <div class="dcard c-sig"><div class="dtop"><span class="dlabel">${t('dash_signups')}</span><span class="dicon">👥</span></div><div class="dnum">${sigToday}</div></div>
      <div class="dcard c-com"><div class="dtop"><span class="dlabel">${t('dash_comm')}</span><span class="dicon">💵</span></div><div class="dnum">${dnum(commToday)}</div></div>
    </div>
+   <div id="homeWhy"></div>
    ${(function(){var a=activeStaff();var has=staffList().length;
      if(a)return '<button onclick="signOut()" style="width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 12px;margin:12px 0;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow)"><span style="font-weight:800;font-size:12.5px">👤 '+t('emp_signed')+': '+a.name+' <span style="color:var(--muted);font-weight:600">· '+(a.role==='owner'?t('emp_owner'):t('emp_staff'))+'</span></span><span style="color:var(--blue);font-weight:800;font-size:12px;flex:0 0 auto">🔄 '+t('emp_switch')+'</span></button>';
      if(!has)return '<button onclick="manageStaff()" style="width:100%;border:1px dashed var(--blue);background:#eef3ff;border-radius:12px;padding:9px 12px;margin:12px 0;display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800;font-size:12.5px;color:var(--blue)">👥 '+t('emp_setup_nudge')+'</span><span style="color:var(--blue);font-weight:800;font-size:12px;flex:0 0 auto">→</span></button>';
@@ -1796,6 +1950,7 @@ function renderHome(){
      <span style="font-weight:800;font-size:13px"><span style="color:${si[0]}">●</span> ${planName(l.plan)} · ${days} ${t('lic_days').toLowerCase()}</span>
      <span style="color:var(--blue);font-weight:700;font-size:12px">${t('hub_manage')} →</span>
    </button>`;
+  renderWhy();
   document.getElementById('homeQuick').innerHTML=`
    <div class="h2" style="font-size:17px;margin:16px 0 10px">${t('hub_quick')}</div>
    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px">
@@ -3427,7 +3582,7 @@ function shareApp(){
   /* A Brazilian sharing the app has to send a link that opens in Portuguese. */
   var url=isBR()?'https://haitibiznis.com/pos/?lang=pt':'https://haitibiznis.com/pos/';
   var msg=t('share_msg').replace('{link}',url);
-  if(navigator.share){navigator.share({title:brandName()+' POS',text:msg,url:url}).catch(function(){});}
+  if(navigator.share){navigator.share({title:posBrand(),text:msg,url:url}).catch(function(){});}
   else{window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
 }
 

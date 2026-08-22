@@ -1,5 +1,5 @@
-/* Sant HaitiBiznis POS — service worker (offline app shell) */
-var CACHE = 'hb-pos-v45';
+/* LajanMaker Center — service worker (offline app shell) */
+var CACHE = 'hb-pos-v46';
 var SHELL = [
   './',
   './index.html',
