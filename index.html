@@ -1301,8 +1301,12 @@ function collectIntake(){const out=[];if(!isBriefModule(flow.module))return out;
 const ADMIN_ITEMS=['Patente','Extrait d’Archives','Légalisation','Permis de conduire','Matricule Fiscal','Immatriculation','Assurance','Mariage Civil','Birth Certificate Assistance','Passport Assistance','Other government service'];
 const LEGAL_ITEMS=['Legal Consultation','Contract Drafting','Property Transactions','Labour Law','Family Law','Business Agreements','Foundation Registration','NGO Registration','Association Registration'];
 const BILL_TYPES=['EDH','DINEPA','MonCash Services','NatCash Services','Mobile Recharge','Internet Bill','Other bill'];
-const MERCH_CATS=['🍽️ Restoran / Manje','🛒 Sipèmache / Makèt','💊 Famasi','👕 Rad / Mòd','📱 Elektwonik','💄 Bote / Swen Pèsonèl','🏠 Atik Mezon','📦 Lòt'];
-const MERCH_REFERRAL=['FTPH/COTRASMOTHA','SPAP','Facebook','WhatsApp','Zanmi / Fanmi','Lòt'];
+/* Merchant categories are stored as stable keys, not as the words on screen, so a
+   merchant signed up by a Kreyol agent and one signed up by a Brazilian agent land
+   in the SAME category. The keys match the list on myplopplop.com/store-designer.html
+   one for one - keep them in step if either side changes. */
+const MERCH_CATS=['restaurant','supermarket','pharmacy','hardware','clothing','electronics','beauty','homegoods','wholesale','bakery','other'];
+const MERCH_REFERRAL=['ftph','spap','facebook','whatsapp','friendfam','other'];
 const PRESS_ITEMS=['Kominike pou Laprès (Kreyòl)','Kominike pou Laprès (2 Lang)','Redaksyon & Reviziyon','Distribisyon nan Media'];
 const ITEMS_MAP={admin:ADMIN_ITEMS,legal:LEGAL_ITEMS,presswire:PRESS_ITEMS,
   asirans:['Asirans Machin','Asirans Sante','Asirans Vi','Asirans Biznis','Lòt asirans']};
@@ -1829,6 +1833,24 @@ const T_LM={
 };
 Object.keys(T_LM).forEach(function(l){if(T[l])Object.assign(T[l],T_LM[l]);});
 
+/* ---- merchant category + referral options ----
+   These two dropdowns used to be a hardcoded Kreyol list, so a Brazilian lojista
+   was asked to pick "Restoran / Manje". The wording for fr/en/es/pt is taken from
+   myplopplop.com/store-designer.html verbatim so both forms read the same. */
+const T_MCAT={
+ ht:{mcat_restaurant:'🍽️ Restoran / Manje',mcat_supermarket:'🛒 Sipèmache / Makèt',mcat_pharmacy:'💊 Famasi',mcat_hardware:'🔧 Kinkayri',mcat_clothing:'👗 Rad / Mòd',mcat_electronics:'📱 Elektwonik',mcat_beauty:'💄 Bote / Swen Pèsonèl',mcat_homegoods:'🏠 Atik Mezon',mcat_wholesale:'📦 Gwosis',mcat_bakery:'🥖 Boulanjri',mcat_other:'🏬 Lòt',
+     mref_ftph:'FTPH/COTRASMOTHA',mref_spap:'SPAP',mref_facebook:'Facebook',mref_whatsapp:'WhatsApp',mref_friendfam:'Zanmi / Fanmi',mref_other:'Lòt'},
+ fr:{mcat_restaurant:'🍽️ Restaurant',mcat_supermarket:'🛒 Supermarché',mcat_pharmacy:'💊 Pharmacie',mcat_hardware:'🔧 Quincaillerie',mcat_clothing:'👗 Vêtements',mcat_electronics:'📱 Électronique',mcat_beauty:'💄 Beauté',mcat_homegoods:'🏠 Articles maison',mcat_wholesale:'📦 Gros',mcat_bakery:'🥖 Boulangerie',mcat_other:'🏬 Autre',
+     mref_ftph:'FTPH/COTRASMOTHA',mref_spap:'SPAP',mref_facebook:'Facebook',mref_whatsapp:'WhatsApp',mref_friendfam:'Ami / Famille',mref_other:'Autre'},
+ en:{mcat_restaurant:'🍽️ Restaurant',mcat_supermarket:'🛒 Supermarket',mcat_pharmacy:'💊 Pharmacy',mcat_hardware:'🔧 Hardware Store',mcat_clothing:'👗 Clothing',mcat_electronics:'📱 Electronics',mcat_beauty:'💄 Beauty',mcat_homegoods:'🏠 Home Goods',mcat_wholesale:'📦 Wholesale',mcat_bakery:'🥖 Bakery',mcat_other:'🏬 Other',
+     mref_ftph:'FTPH/COTRASMOTHA',mref_spap:'SPAP',mref_facebook:'Facebook',mref_whatsapp:'WhatsApp',mref_friendfam:'Friend / Family',mref_other:'Other'},
+ es:{mcat_restaurant:'🍽️ Restaurante',mcat_supermarket:'🛒 Supermercado',mcat_pharmacy:'💊 Farmacia',mcat_hardware:'🔧 Ferretería',mcat_clothing:'👗 Ropa',mcat_electronics:'📱 Electrónica',mcat_beauty:'💄 Belleza',mcat_homegoods:'🏠 Artículos para el hogar',mcat_wholesale:'📦 Mayorista',mcat_bakery:'🥖 Panadería',mcat_other:'🏬 Otro',
+     mref_ftph:'FTPH/COTRASMOTHA',mref_spap:'SPAP',mref_facebook:'Facebook',mref_whatsapp:'WhatsApp',mref_friendfam:'Amigo / Familia',mref_other:'Otro'},
+ pt:{mcat_restaurant:'🍽️ Restaurante',mcat_supermarket:'🛒 Supermercado',mcat_pharmacy:'💊 Farmácia',mcat_hardware:'🔧 Material de construção',mcat_clothing:'👗 Roupas',mcat_electronics:'📱 Eletrônicos',mcat_beauty:'💄 Beleza',mcat_homegoods:'🏠 Artigos para casa',mcat_wholesale:'📦 Atacado',mcat_bakery:'🥖 Padaria',mcat_other:'🏬 Outro',
+     mref_ftph:'FTPH/COTRASMOTHA',mref_spap:'SPAP',mref_facebook:'Facebook',mref_whatsapp:'WhatsApp',mref_friendfam:'Amigo / Família',mref_other:'Outro'}
+};
+Object.keys(T_MCAT).forEach(function(l){if(T[l])Object.assign(T[l],T_MCAT[l]);});
+
 
 /* registration form schemas (person-first) */
 const UP_KEY={'Driver License':'up_driverlic','National ID':'up_natid','Insurance':'up_insurance','Vehicle Registration':'up_vehreg','Driver Photo':'up_driverphoto','Business Documents':'up_bizdocs','Diploma / Certification':'up_diploma','Experience Documents':'up_expdocs','Store Photo':'up_storephoto','Owner ID':'up_ownerid'};
@@ -1842,7 +1864,7 @@ const REG_FORMS={
  rider:{titleKey:'reg_t_rider',statusSet:'verify',prefix:'RDR',feeKey:'regFeeRider',
    fields:[['name','f_name',1],['phone','f_phone'],['wa','f_wa']],uploads:[]},
  merchant:{titleKey:'reg_t_merchant',statusSet:'merch',prefix:'MRC',feeKey:'regFeeMerchant',
-   fields:[['biz','store_name'],['category','category','sel',MERCH_CATS],['name','owner',1],['phone','f_phone'],['wa','f_wa'],['addr','mp_location'],['desc','store_desc','ta'],['referral','referral_partner','sel',MERCH_REFERRAL]],
+   fields:[['biz','store_name'],['category','category','sel',MERCH_CATS,'mcat_'],['name','owner',1],['phone','f_phone'],['wa','f_wa'],['addr','mp_location'],['desc','store_desc','ta'],['referral','referral_partner','sel',MERCH_REFERRAL,'mref_']],
    uploads:['Store Photo','Owner ID']},
  pro:{titleKey:'reg_t_pro',statusSet:'pro',prefix:'PRO',feeKey:'regFeePro',
    fields:[['name','f_name',1],['profession','profession'],['phone','f_phone'],['wa','f_wa'],['addr','address']],
@@ -2499,8 +2521,10 @@ function startReg(kind){const sc=REG_FORMS[kind];reg={kind,docs:{},fee:0,vehType
    body.appendChild(hero);}
   if(kind==='affiliate'){const cl=document.createElement('button');cl.className='cta ghost';cl.style.marginBottom='12px';cl.textContent=t('aff_comm')+' →';cl.onclick=openCommission;body.appendChild(cl);}
   const card=document.createElement('div');card.className='card';
-  sc.fields.forEach(f=>{const[key,lbl,type,opts]=f;
-    if(type==='sel'){card.innerHTML+=`<label class="fl">${t(lbl)}</label><select id="rf_${key}"><option value=""></option>${opts.map(o=>`<option>${o}</option>`).join('')}</select>`;}
+  sc.fields.forEach(f=>{const[key,lbl,type,opts,tpre]=f;
+    /* tpre = translation prefix. The option VALUE stays the stable key so the record
+       is language-independent; only the text the agent reads changes. */
+    if(type==='sel'){card.innerHTML+=`<label class="fl">${t(lbl)}</label><select id="rf_${key}"><option value=""></option>${opts.map(o=>`<option value="${o}">${tpre?t(tpre+o):o}</option>`).join('')}</select>`;}
     else if(type==='ta'){card.innerHTML+=`<label class="fl">${t(lbl)}</label><textarea id="rf_${key}"></textarea>`;}
     else if(key==='vehicle'){card.innerHTML+=`<label class="fl">${t('vehicle')}</label><div class="row2" style="margin-bottom:14px"><button class="cta ghost" id="veh_moto" style="margin:0">🏍️ Moto</button><button class="cta ghost" id="veh_car" style="margin:0">🚗 Machin</button></div>`;}
     else{card.innerHTML+=`<label class="fl">${t(lbl)}</label><input type="${key==='email'?'email':(key==='phone'||key==='wa'?'tel':'text')}" id="rf_${key}">`;}
@@ -2539,17 +2563,23 @@ function startReg(kind){const sc=REG_FORMS[kind];reg={kind,docs:{},fee:0,vehType
     document.getElementById('veh_car').onclick=()=>{reg.vehType='car';document.getElementById('veh_car').classList.remove('ghost');document.getElementById('veh_moto').classList.add('ghost');};}
 }
 function saveReg(kind){const sc=REG_FORMS[kind];const name=document.getElementById('rf_name').value.trim();if(!name){alert(t('need_name'));return;}
-  const data={};sc.fields.forEach(f=>{const key=f[0];if(key==='vehicle'){data.vehicle=reg.vehType==='moto'?'Moto':'Machin';}else{const el=document.getElementById('rf_'+key);if(el)data[key]=el.value.trim();}});
+  /* dataLbl keeps the words the agent actually saw, for the receipt. data keeps the
+     stable value, which for a dropdown is now a key like "bakery" rather than a
+     Kreyol phrase - that is what makes the record readable by MyPlopPlop later. */
+  const data={},dataLbl={};
+  sc.fields.forEach(f=>{const key=f[0];if(key==='vehicle'){data.vehicle=reg.vehType==='moto'?'Moto':'Machin';}
+    else{const el=document.getElementById('rf_'+key);if(el){data[key]=el.value.trim();
+      if(el.tagName==='SELECT'&&el.selectedIndex>0)dataLbl[key]=el.options[el.selectedIndex].textContent;}}});
   const fee=sc.feeKey?fxIn('rf_fee',0):0;
   const docsFlat=[];Object.keys(reg.docs).forEach(k=>reg.docs[k].forEach(function(d){
     /* older drafts stored a bare filename string; keep reading those */
     if(typeof d==='string')docsFlat.push({name:k+': '+d});
     else docsFlat.push({name:k+': '+d.name,size:d.size,type:d.type,key:d.key});}));
   const orders=load('hb_orders',[]);const id=sc.prefix+'-'+String(1000+orders.length+1);
-  const metaBits=[];sc.fields.forEach(f=>{const key=f[0],lblKey=f[1];if(['name','phone','wa','email'].includes(key))return;if(data[key])metaBits.push(t(lblKey)+': '+data[key]);});
+  const metaBits=[];sc.fields.forEach(f=>{const key=f[0],lblKey=f[1];if(['name','phone','wa','email'].includes(key))return;if(data[key])metaBits.push(t(lblKey)+': '+(dataLbl[key]||data[key]));});
   const rec={id,type:'reg',regKind:kind,statusSet:sc.statusSet||'merch',module:kind,svcName:t(sc.titleKey),
     name,phone:data.phone||'',wa:data.wa||'',email:data.email||'',
-    items:metaBits.map(m=>({label:m,amt:0})),amount:fee,payment:fee>0?'cash':null,
+    items:metaBits.map(m=>({label:m,amt:0})),amount:fee,payment:fee>0?'cash':null,fields:data,
     docs:docsFlat,status:(sc.statusSet?STATUS[sc.statusSet][0].id:'pending'),ts:nowStamp()};
   /* affiliate referral code */
   if(sc.referral){rec.refCode='HB-'+name.replace(/[^A-Za-z]/g,'').slice(0,4).toUpperCase()+String(1000+orders.length+1);}
