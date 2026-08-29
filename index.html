@@ -233,6 +233,17 @@ textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted)
 .uptile .ut-t{font-weight:800;font-size:13px;line-height:1.2}
 .uptile .ut-s{font-size:11px;color:var(--muted);font-weight:600;margin-top:3px}
 .uptile.done .ut-s{color:var(--good);font-weight:800}
+/* MyPlopPlop hand-off panel on the merchant receipt */
+.mppbox{border-radius:16px;padding:14px 15px;margin-bottom:14px;text-align:left;border:2px solid #e3e8f2;background:#fff;box-shadow:var(--shadow)}
+.mppbox.ok{border-color:#12a150;background:#f2fbf5}
+.mppbox.warn{border-color:#f0a202;background:#fffaf0}
+.mppbox.wait{border-color:#c9d4ea;background:#f7f9ff}
+.mppbox .mpp-h{font-weight:900;font-size:15px;color:#0b6b37;margin-bottom:10px}
+.mppbox .mpp-l{font-size:11.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.3px}
+.mppbox .mpp-url{display:block;word-break:break-all;font-size:13px;font-weight:700;color:var(--blue);margin:3px 0 9px;text-decoration:none}
+.mppbox .mpp-copy{width:100%;border:0;background:var(--blue);color:#fff;font-weight:800;font-size:14px;padding:11px;border-radius:12px}
+.mppbox .mpp-pin{font-size:30px;font-weight:900;letter-spacing:7px;color:#0b1f4b;margin:2px 0 6px}
+.mppbox .mpp-note{font-size:12px;line-height:1.45;color:#40506e;font-weight:600;margin-top:6px}
 /* orders */
 .searchbox{margin-bottom:12px}
 .filterbar{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px}
@@ -1851,6 +1862,45 @@ const T_MCAT={
 };
 Object.keys(T_MCAT).forEach(function(l){if(T[l])Object.assign(T[l],T_MCAT[l]);});
 
+/* Wording for the MyPlopPlop hand-off shown on the merchant's receipt. */
+const T_MPP={
+ ht:{need_phone:'Antre nimewo telefòn machann nan',mpp_working:'N ap kreye magazen an sou MyPlopPlop…',
+     mpp_live_h:'✅ Magazen an anliy sou MyPlopPlop',mpp_link:'Lyen magazen an',mpp_pin:'Kòd PIN machann nan',
+     mpp_pin_note:'Machann nan konekte sou myplopplop.com ak nimewo telefòn li ak PIN sa a pou l mete logo, foto ak pwodwi li yo.',
+     mpp_queued:'📴 Pa gen entènèt. Magazen an ap kreye pou kont li lè siyal la tounen.',
+     mpp_exists:'⚠️ Nimewo sa a gen yon kont MyPlopPlop deja. Machann nan ka konekte ak pwòp PIN li — nou pa kreye yon dezyèm magazen.',
+     mpp_failed:'⚠️ Nou pa rive jwenn MyPlopPlop. Enskripsyon an sere sou telefòn nan, n ap reeseye.',
+     mpp_copy:'Kopye lyen an',mpp_copied:'Lyen an kopye'},
+ fr:{need_phone:'Entrez le numéro de téléphone du marchand',mpp_working:'Création de la boutique sur MyPlopPlop…',
+     mpp_live_h:'✅ Boutique en ligne sur MyPlopPlop',mpp_link:'Lien de la boutique',mpp_pin:'Code PIN du marchand',
+     mpp_pin_note:'Le marchand se connecte sur myplopplop.com avec son numéro et ce PIN pour ajouter son logo, ses photos et ses produits.',
+     mpp_queued:'📴 Pas d’internet. La boutique sera créée automatiquement dès le retour du signal.',
+     mpp_exists:'⚠️ Ce numéro a déjà un compte MyPlopPlop. Le marchand peut se connecter avec son propre PIN — aucune deuxième boutique n’a été créée.',
+     mpp_failed:'⚠️ MyPlopPlop est injoignable. L’inscription est gardée sur le téléphone, nous réessaierons.',
+     mpp_copy:'Copier le lien',mpp_copied:'Lien copié'},
+ en:{need_phone:'Enter the merchant’s phone number',mpp_working:'Creating the store on MyPlopPlop…',
+     mpp_live_h:'✅ Store is live on MyPlopPlop',mpp_link:'Store link',mpp_pin:'Merchant PIN',
+     mpp_pin_note:'The merchant logs in on myplopplop.com with their phone number and this PIN to add their logo, photos and products.',
+     mpp_queued:'📴 No internet. The store will be created automatically when the signal comes back.',
+     mpp_exists:'⚠️ This number already has a MyPlopPlop account. The merchant can log in with their own PIN — no second store was created.',
+     mpp_failed:'⚠️ Could not reach MyPlopPlop. The registration is kept on the phone and will be retried.',
+     mpp_copy:'Copy link',mpp_copied:'Link copied'},
+ es:{need_phone:'Ingrese el número de teléfono del comerciante',mpp_working:'Creando la tienda en MyPlopPlop…',
+     mpp_live_h:'✅ Tienda en línea en MyPlopPlop',mpp_link:'Enlace de la tienda',mpp_pin:'PIN del comerciante',
+     mpp_pin_note:'El comerciante entra en myplopplop.com con su número y este PIN para agregar su logo, fotos y productos.',
+     mpp_queued:'📴 Sin internet. La tienda se creará sola cuando vuelva la señal.',
+     mpp_exists:'⚠️ Este número ya tiene una cuenta MyPlopPlop. El comerciante puede entrar con su propio PIN — no se creó una segunda tienda.',
+     mpp_failed:'⚠️ No se pudo contactar a MyPlopPlop. El registro queda en el teléfono y se reintentará.',
+     mpp_copy:'Copiar enlace',mpp_copied:'Enlace copiado'},
+ pt:{need_phone:'Digite o telefone do lojista',mpp_working:'Criando a loja no MyPlopPlop…',
+     mpp_live_h:'✅ Loja no ar no MyPlopPlop',mpp_link:'Link da loja',mpp_pin:'PIN do lojista',
+     mpp_pin_note:'O lojista entra em myplopplop.com com o telefone e este PIN para colocar o logo, as fotos e os produtos.',
+     mpp_queued:'📴 Sem internet. A loja será criada sozinha assim que o sinal voltar.',
+     mpp_exists:'⚠️ Este telefone já tem conta no MyPlopPlop. O lojista pode entrar com o próprio PIN — nenhuma segunda loja foi criada.',
+     mpp_failed:'⚠️ Não conseguimos falar com o MyPlopPlop. O cadastro fica no telefone e será reenviado.',
+     mpp_copy:'Copiar link',mpp_copied:'Link copiado'}
+};
+Object.keys(T_MPP).forEach(function(l){if(T[l])Object.assign(T[l],T_MPP[l]);});
 
 /* registration form schemas (person-first) */
 const UP_KEY={'Driver License':'up_driverlic','National ID':'up_natid','Insurance':'up_insurance','Vehicle Registration':'up_vehreg','Driver Photo':'up_driverphoto','Business Documents':'up_bizdocs','Diploma / Certification':'up_diploma','Experience Documents':'up_expdocs','Store Photo':'up_storephoto','Owner ID':'up_ownerid'};
@@ -2563,6 +2613,10 @@ function startReg(kind){const sc=REG_FORMS[kind];reg={kind,docs:{},fee:0,vehType
     document.getElementById('veh_car').onclick=()=>{reg.vehType='car';document.getElementById('veh_car').classList.remove('ghost');document.getElementById('veh_moto').classList.add('ghost');};}
 }
 function saveReg(kind){const sc=REG_FORMS[kind];const name=document.getElementById('rf_name').value.trim();if(!name){alert(t('need_name'));return;}
+  /* A merchant's phone is how they log in to MyPlopPlop afterwards, so for this
+     one form it is required - without it we cannot create their account. */
+  if(kind==='merchant'){const ph=(document.getElementById('rf_phone').value||'').replace(/[^0-9]/g,'');
+    if(ph.length<8){alert(t('need_phone'));return;}}
   /* dataLbl keeps the words the agent actually saw, for the receipt. data keeps the
      stable value, which for a dropdown is now a key like "bakery" rather than a
      Kreyol phrase - that is what makes the record readable by MyPlopPlop later. */
@@ -2586,9 +2640,111 @@ function saveReg(kind){const sc=REG_FORMS[kind];const name=document.getElementBy
   applyCommission(rec);orders.push(stampStaff(rec));save('hb_orders',orders);
   /* also add as customer for future lookup */
   const custs=customers();if(!custs.find(c=>c.phone&&c.phone===rec.phone&&rec.phone)){custs.push({id:'C-'+(custs.length+1),name,phone:rec.phone,wa:rec.wa,email:rec.email,addr:'',ts:nowStamp()});save('hb_customers',custs);}
+  /* Queue the MyPlopPlop hand-off BEFORE showing the receipt, so a registration
+     survives the agent closing the app or losing signal a second later. */
+  if(kind==='merchant'){rec.mpp={status:'pending',pin:mppPin()};
+    const os=load('hb_orders',[]),me=os.find(x=>x.id===rec.id);if(me){me.mpp=rec.mpp;save('hb_orders',os);}
+    const q=mppQueue();q.push({id:rec.id,name:rec.name,phone:rec.phone,fields:data,pin:rec.mpp.pin,tries:0});
+    save('hb_mpp_queue',q);mppWatch=rec.id;}
   if(sc.referral){showReferral(rec);}else{showReceipt(rec);}
+  if(kind==='merchant'){mppPanel(rec.id);mppFlush();}
   refreshBadges();
 }
+
+/* ===================================================================
+   MYPLOPPLOP MERCHANT SYNC
+   The screen is called "MyPlopPlop - Enskri Machann", so registering a merchant
+   has to actually create them on MyPlopPlop. It used to stop at this phone.
+   Agents sign merchants up in places with no signal, so nothing is sent
+   straight from the form: the job is queued first and flushed in the
+   background, and retried on the next open or when the phone comes back online.
+   =================================================================== */
+window.MPP_API=window.MPP_API||'https://myplopplop-api.onrender.com';
+window.MPP_SITE=window.MPP_SITE||'https://myplopplop.com';
+/* The marketplace stores a shorter category list than this form offers, so
+   clothing / electronics / beauty / homegoods all sit under "retail" there.
+   Same mapping as store-designer.html - keep the two in step. */
+const MPP_CAT={restaurant:'restaurant',supermarket:'supermarket',pharmacy:'pharmacy',hardware:'hardware',
+  clothing:'retail',electronics:'retail',beauty:'retail',homegoods:'retail',wholesale:'wholesale',bakery:'bakery',other:'other'};
+/* MyPlopPlop accounts have no Portuguese yet, and Kreyol is 'kr' there, not 'ht'.
+   Sending 'pt' or 'ht' fails the account outright, so map before sending. */
+const MPP_LANG={ht:'kr',fr:'fr',en:'en',es:'es',pt:'fr'};
+let mppWatch='';
+function mppPin(){return String(1000+Math.floor(Math.random()*9000));}
+function mppQueue(){return load('hb_mpp_queue',[]);}
+async function mppPost(path,body,token){
+  /* Render puts free services to sleep; a cold start can take most of a minute. */
+  const ctl=new AbortController(),tm=setTimeout(function(){ctl.abort();},90000);
+  try{
+    const r=await fetch(window.MPP_API+path,{method:'POST',signal:ctl.signal,
+      headers:Object.assign({'Content-Type':'application/json'},token?{Authorization:'Bearer '+token}:{}),
+      body:JSON.stringify(body)});
+    let j={};try{j=await r.json();}catch(e){}
+    return {ok:r.ok,status:r.status,body:j};
+  }finally{clearTimeout(tm);}
+}
+async function mppSyncMerchant(job){
+  const f=job.fields||{};
+  const reg=await mppPost('/api/auth/register',{name:f.name||job.name,phone:job.phone,pin:job.pin,
+    role:'merchant',language:MPP_LANG[lang]||'fr'});
+  /* 400 means the phone is already an account. Retrying will never fix that, so
+     report it to the agent instead of queueing it for ever. */
+  if(!reg.ok)return reg.status===400?{status:'exists'}:Promise.reject(new Error('register '+reg.status));
+  const st=await mppPost('/api/stores',{name:f.biz||job.name,category:MPP_CAT[f.category]||'other',
+    phone:job.phone,description:f.desc||'',address:{street:f.addr||''},
+    deliveryOptions:{delivery:true,selfPickup:true},status:'active'},reg.body.token);
+  if(!st.ok)throw new Error('store '+st.status);
+  const d=st.body.data||{};
+  return {status:'live',slug:d.slug||'',storeId:d._id||'',pin:job.pin};
+}
+function mppMark(id,res){const os=load('hb_orders',[]),o=os.find(x=>x.id===id);
+  if(!o)return;o.mpp=Object.assign({},o.mpp,res);save('hb_orders',os);
+  if(id===mppWatch)mppPanel(id);}
+async function mppFlush(){
+  if(mppFlush._busy)return;mppFlush._busy=true;
+  try{
+    const q=mppQueue();if(!q.length)return;
+    if(navigator.onLine===false)return;
+    const keep=[];
+    for(const job of q){
+      try{mppMark(job.id,{status:'working'});
+        const res=await mppSyncMerchant(job);mppMark(job.id,res);}
+      catch(e){job.tries=(job.tries||0)+1;
+        /* Keep it for the next open, but stop pretending after eight tries. */
+        if(job.tries<8){keep.push(job);mppMark(job.id,{status:'pending'});}
+        else mppMark(job.id,{status:'failed'});}
+    }
+    save('hb_mpp_queue',keep);
+  }finally{mppFlush._busy=false;}
+}
+function mppStoreUrl(slug){return window.MPP_SITE+'/store.html?slug='+encodeURIComponent(slug);}
+function mppPanel(id){
+  const box=document.getElementById('doneExtra');if(!box)return;
+  const o=load('hb_orders',[]).find(x=>x.id===id);if(!o||!o.mpp)return;
+  const m=o.mpp,esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
+  if(m.status==='live'){
+    const url=mppStoreUrl(m.slug);
+    box.innerHTML='<div class="mppbox ok">'+
+      '<div class="mpp-h">'+esc(t('mpp_live_h'))+'</div>'+
+      '<div class="mpp-l">'+esc(t('mpp_link'))+'</div>'+
+      '<a class="mpp-url" href="'+esc(url)+'" target="_blank" rel="noopener">'+esc(url)+'</a>'+
+      '<button class="mpp-copy" type="button">'+esc(t('mpp_copy'))+'</button>'+
+      '<div class="mpp-l" style="margin-top:10px">'+esc(t('mpp_pin'))+'</div>'+
+      '<div class="mpp-pin">'+esc(m.pin||'')+'</div>'+
+      '<div class="mpp-note">'+esc(t('mpp_pin_note'))+'</div></div>';
+    box.querySelector('.mpp-copy').onclick=function(){
+      const done=function(){toast(t('mpp_copied'));};
+      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url).then(done,done);
+      else{const ta=document.createElement('textarea');ta.value=url;document.body.appendChild(ta);ta.select();
+        try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);done();}};
+    return;
+  }
+  const cls=m.status==='exists'||m.status==='failed'?'warn':'wait';
+  const msg=m.status==='working'?t('mpp_working'):m.status==='exists'?t('mpp_exists'):
+            m.status==='failed'?t('mpp_failed'):navigator.onLine===false?t('mpp_queued'):t('mpp_working');
+  box.innerHTML='<div class="mppbox '+cls+'"><div class="mpp-note" style="margin:0">'+esc(msg)+'</div></div>';
+}
+window.addEventListener('online',function(){mppFlush();});
 
 /* ---------- Driver Verification (checklist) ---------- */
 function openVerify(){const body=document.getElementById('regBody');{const rt=document.getElementById('regTitle');rt.style.display='';rt.textContent=t('verify_t');rt.setAttribute('data-i18n','verify_t');}
@@ -3701,6 +3857,8 @@ function rerenderCurrent(){
 /* ---------- boot ---------- */
 document.querySelectorAll('.lang button').forEach(x=>x.classList.toggle('on',x.dataset.lang===lang));
 applyI18n();renderHome();refreshBadges();renderDraftBar();
+/* Any merchant registered while the phone had no signal goes out now. */
+setTimeout(function(){try{mppFlush();}catch(e){}},1500);
 /* The brief is a lot of typing. Save it while it is being typed, not only when
    the seller moves to the next step — a phone can drop the tab at any moment. */
 (function(){var tm=null,fs=document.getElementById('s-flow');if(!fs)return;
