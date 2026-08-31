@@ -1729,7 +1729,7 @@ Object.keys(T_DRAFT).forEach(function(l){if(T[l])Object.assign(T[l],T_DRAFT[l]);
    taps deep behind a brand name, so they are surfaced here by name.
    Brazil runs its own mark, so the strip is skipped there.
    =================================================================== */
-function lmReg(k){if(licGate())startReg(k);}
+function lmReg(k){startReg(k);}   /* startReg does the subscription check itself */
 function lmMod(id){const m=modById(id);if(m)openModule(m);}
 function openAcademy(){
   const m=caOverlay(`<div style="text-align:center">
@@ -1902,6 +1902,56 @@ const T_MPP={
 };
 Object.keys(T_MPP).forEach(function(l){if(T[l])Object.assign(T[l],T_MPP[l]);});
 
+/* ---- Admin access + team phones ---- */
+const T_ADM={
+ ht:{adm_open:'Aksè Admin',adm_t:'Admin',adm_ask:'Antre kòd admin ou an',adm_code:'Kòd admin',adm_unlock:'Louvri',
+     adm_wrong:'Kòd la pa bon',adm_wait:'Twòp esè. Tann yon minit epi eseye ankò.',adm_lock:'Fèmen admin',
+     adm_lic_h:'Abònman sou telefòn sa a',adm_team_h:'Aksè Ekip',
+     adm_team_s:'Enskri yon moun nan ekip ou a sou telefòn sa a. Yon telefòn ekip kontinye travay san abònman.',
+     adm_team_add:'Enskri yon moun nan ekip la',adm_team_this:'Telefòn sa a se pou ekip la',
+     adm_team_rm:'Retire l nan ekip la',adm_team_rmq:'Retire telefòn sa a nan ekip la? L ap bezwen yon abònman ankò.',
+     adm_role:'Wòl',adm_role_agent:'Ajan',adm_role_sup:'Sipèvizè',adm_role_mgr:'Manadjè',
+     adm_name:'Non konplè',adm_need_name:'Antre yon non',adm_team_on:'Aksè ekip la aktive',
+     adm_badge:'Telefòn ekip',adm_nosub:'pa bezwen abònman'},
+ fr:{adm_open:'Accès Admin',adm_t:'Admin',adm_ask:'Entrez votre code admin',adm_code:'Code admin',adm_unlock:'Déverrouiller',
+     adm_wrong:'Code incorrect',adm_wait:'Trop de tentatives. Attendez une minute.',adm_lock:'Verrouiller l’admin',
+     adm_lic_h:'Abonnement sur ce téléphone',adm_team_h:'Accès équipe',
+     adm_team_s:'Enregistrez un membre de votre équipe sur ce téléphone. Un téléphone d’équipe fonctionne sans abonnement.',
+     adm_team_add:'Enregistrer un membre de l’équipe',adm_team_this:'Ce téléphone appartient à l’équipe',
+     adm_team_rm:'Retirer de l’équipe',adm_team_rmq:'Retirer ce téléphone de l’équipe ? Il aura de nouveau besoin d’un abonnement.',
+     adm_role:'Rôle',adm_role_agent:'Agent',adm_role_sup:'Superviseur',adm_role_mgr:'Responsable',
+     adm_name:'Nom complet',adm_need_name:'Entrez un nom',adm_team_on:'Accès équipe activé',
+     adm_badge:'Téléphone d’équipe',adm_nosub:'sans abonnement'},
+ en:{adm_open:'Admin access',adm_t:'Admin',adm_ask:'Enter your admin code',adm_code:'Admin code',adm_unlock:'Unlock',
+     adm_wrong:'Wrong code',adm_wait:'Too many attempts. Wait a minute and try again.',adm_lock:'Lock admin',
+     adm_lic_h:'Subscription on this phone',adm_team_h:'Team access',
+     adm_team_s:'Register one of your own staff on this phone. A team phone keeps working with no subscription.',
+     adm_team_add:'Register a team member',adm_team_this:'This phone belongs to the team',
+     adm_team_rm:'Remove from the team',adm_team_rmq:'Remove this phone from the team? It will need a subscription again.',
+     adm_role:'Role',adm_role_agent:'Agent',adm_role_sup:'Supervisor',adm_role_mgr:'Manager',
+     adm_name:'Full name',adm_need_name:'Enter a name',adm_team_on:'Team access is on',
+     adm_badge:'Team phone',adm_nosub:'no subscription needed'},
+ es:{adm_open:'Acceso Admin',adm_t:'Admin',adm_ask:'Ingresa tu código de admin',adm_code:'Código admin',adm_unlock:'Desbloquear',
+     adm_wrong:'Código incorrecto',adm_wait:'Demasiados intentos. Espera un minuto.',adm_lock:'Bloquear admin',
+     adm_lic_h:'Suscripción en este teléfono',adm_team_h:'Acceso de equipo',
+     adm_team_s:'Registra a alguien de tu equipo en este teléfono. Un teléfono del equipo sigue funcionando sin suscripción.',
+     adm_team_add:'Registrar a un miembro del equipo',adm_team_this:'Este teléfono pertenece al equipo',
+     adm_team_rm:'Quitar del equipo',adm_team_rmq:'¿Quitar este teléfono del equipo? Volverá a necesitar una suscripción.',
+     adm_role:'Rol',adm_role_agent:'Agente',adm_role_sup:'Supervisor',adm_role_mgr:'Encargado',
+     adm_name:'Nombre completo',adm_need_name:'Ingresa un nombre',adm_team_on:'Acceso de equipo activado',
+     adm_badge:'Teléfono del equipo',adm_nosub:'sin suscripción'},
+ pt:{adm_open:'Acesso Admin',adm_t:'Admin',adm_ask:'Digite seu código de admin',adm_code:'Código admin',adm_unlock:'Desbloquear',
+     adm_wrong:'Código incorreto',adm_wait:'Muitas tentativas. Espere um minuto.',adm_lock:'Bloquear admin',
+     adm_lic_h:'Assinatura neste telefone',adm_team_h:'Acesso da equipe',
+     adm_team_s:'Cadastre alguém da sua equipe neste telefone. Um telefone da equipe continua funcionando sem assinatura.',
+     adm_team_add:'Cadastrar um membro da equipe',adm_team_this:'Este telefone pertence à equipe',
+     adm_team_rm:'Remover da equipe',adm_team_rmq:'Remover este telefone da equipe? Ele vai precisar de assinatura de novo.',
+     adm_role:'Função',adm_role_agent:'Agente',adm_role_sup:'Supervisor',adm_role_mgr:'Gerente',
+     adm_name:'Nome completo',adm_need_name:'Digite um nome',adm_team_on:'Acesso da equipe ativado',
+     adm_badge:'Telefone da equipe',adm_nosub:'sem assinatura'}
+};
+Object.keys(T_ADM).forEach(function(l){if(T[l])Object.assign(T[l],T_ADM[l]);});
+
 /* registration form schemas (person-first) */
 const UP_KEY={'Driver License':'up_driverlic','National ID':'up_natid','Insurance':'up_insurance','Vehicle Registration':'up_vehreg','Driver Photo':'up_driverphoto','Business Documents':'up_bizdocs','Diploma / Certification':'up_diploma','Experience Documents':'up_expdocs','Store Photo':'up_storephoto','Owner ID':'up_ownerid'};
 function upT(u){return UP_KEY[u]?t(UP_KEY[u]):u;}
@@ -1990,6 +2040,7 @@ function renderHome(){
   const sigToday=o.filter(x=>isToday(x.ts)&&x.type==='reg').length;
   const commWeek=o.filter(x=>x.amount>0&&(Date.now()-new Date(x.ts).getTime())<7*864e5).reduce((a,b)=>a+orderComm(b),0);
   const l=lic();const days=Math.max(0,licDays(l));const si=licStatusInfo(l);const exp=licExpired(l);
+  const tm=team();   /* a team phone shows its badge instead of the subscription pill */
   const hr=new Date().getHours();const greetIco=hr<12?'☀️':hr<18?'🌤️':'🌙';
   document.getElementById('homeHead').innerHTML=`
    <div class="greet">
@@ -2016,12 +2067,15 @@ function renderHome(){
      if(a)return '<button onclick="signOut()" style="width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 12px;margin:12px 0;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow)"><span style="font-weight:800;font-size:12.5px">👤 '+t('emp_signed')+': '+a.name+' <span style="color:var(--muted);font-weight:600">· '+(a.role==='owner'?t('emp_owner'):t('emp_staff'))+'</span></span><span style="color:var(--blue);font-weight:800;font-size:12px;flex:0 0 auto">🔄 '+t('emp_switch')+'</span></button>';
      if(!has)return '<button onclick="manageStaff()" style="width:100%;border:1px dashed var(--blue);background:#eef3ff;border-radius:12px;padding:9px 12px;margin:12px 0;display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800;font-size:12.5px;color:var(--blue)">👥 '+t('emp_setup_nudge')+'</span><span style="color:var(--blue);font-weight:800;font-size:12px;flex:0 0 auto">→</span></button>';
      return '<div style="height:12px"></div>';})()}
-   ${exp?`<button onclick="openLicense()" style="width:100%;border:0;border-radius:14px;padding:12px 14px;font-weight:800;text-align:left;color:#fff;font-size:13px;margin-bottom:12px;background:#b91c1c">⚠️ ${t('lic_expired_msg')} — ${t('lic_renew')} →</button>`:
+   ${(exp&&!tm)?`<button onclick="openLicense()" style="width:100%;border:0;border-radius:14px;padding:12px 14px;font-weight:800;text-align:left;color:#fff;font-size:13px;margin-bottom:12px;background:#b91c1c">⚠️ ${t('lic_expired_msg')} — ${t('lic_renew')} →</button>`:
      `<button onclick="go('earn')" style="width:100%;border:0;border-radius:14px;padding:14px;font-weight:800;text-align:left;color:#fff;font-size:13px;margin-bottom:12px;background:linear-gradient(120deg,var(--good),#0f9d55);display:flex;justify-content:space-between;align-items:center;gap:8px"><span>🎉 ${t('hub_commbanner').replace('{n}',gdes(commWeek))}</span><span style="opacity:.9">→</span></button>`}
-   <button onclick="openLicense()" style="width:100%;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px 14px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow)">
+   ${tm?`<button onclick="openAdmin()" style="width:100%;border:1px solid #12a150;background:#f2fbf5;border-radius:14px;padding:12px 14px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;gap:8px">
+     <span style="font-weight:800;font-size:13px;color:#0b6b37;text-align:left">🛡️ ${t('adm_badge')} · ${escHtml(tm.name)}<br><span style="font-weight:600;font-size:11.5px">${t('adm_nosub')}</span></span>
+     <span style="color:#0b6b37;font-weight:700;font-size:12px;flex:0 0 auto">${t('adm_t')} →</span>
+   </button>`:`<button onclick="openLicense()" style="width:100%;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px 14px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow)">
      <span style="font-weight:800;font-size:13px"><span style="color:${si[0]}">●</span> ${planName(l.plan)} · ${days} ${t('lic_days').toLowerCase()}</span>
      <span style="color:var(--blue);font-weight:700;font-size:12px">${t('hub_manage')} →</span>
-   </button>`;
+   </button>`}`;
   renderWhy();
   document.getElementById('homeQuick').innerHTML=`
    <div class="h2" style="font-size:17px;margin:16px 0 10px">${t('hub_quick')}</div>
@@ -2244,6 +2298,8 @@ function findCust(q){q=q.toLowerCase();return customers().filter(c=>(c.name||'')
 let flow=null;   // {module, customer, items[], amount, docs[], payment, extra}
 let fstep=1;
 function startFlow(moduleId,preItems){
+  /* Same reason as startReg: every way into a sale goes through here. */
+  if(!licGate())return;
   flow={module:moduleId,customer:null,items:preItems||[],amount:0,docs:[],payment:null,extra:{},intake:{}};
   if(['website','hbtech'].includes(moduleId)){flow.extra.pkg=null;flow.extra.sel=[];flow.extra.sub=null;flow.extra.menu=(moduleId==='hbtech')?'web':null;}
   if(moduleId==='bizreg'){flow.extra.reg=null;}
@@ -2562,7 +2618,12 @@ async function completeFlow(){if(!flow.payment){alert(t('need_pay'));return;}
    REGISTRATION FLOW (person-first, data-driven)
    =================================================================== */
 let reg=null;
-function startReg(kind){const sc=REG_FORMS[kind];reg={kind,docs:{},fee:0,vehType:'moto'};
+function startReg(kind){
+  /* The subscription check lives HERE, not on the buttons. Registration can be
+     reached from the + button, the module tiles and the MsouWout / MyPlopPlop
+     sub-lists, and the + button used to skip the check entirely. */
+  if(!licGate())return;
+  const sc=REG_FORMS[kind];reg={kind,docs:{},fee:0,vehType:'moto'};
   {const rt=document.getElementById('regTitle');rt.textContent='';rt.style.display='none';}document.getElementById('regSub').textContent='';
   const body=document.getElementById('regBody');body.innerHTML='';
   {const hm=REG_HERO[kind]||{em:'📝',color:'#2563eb'};const hero=document.createElement('div');hero.className='reghero';
@@ -3134,11 +3195,9 @@ function renderSettings(){const cfg=getCfg();const box=document.getElementById('
     <button class="cta" style="margin-bottom:10px" onclick="manageStaff()">👥 ${t('emp_employees')}</button>
     <button class="cta" style="margin-bottom:12px;background:linear-gradient(135deg,#25D366,#128C7E);border:0" onclick="shareApp()">🟢 ${t('share_pos')} — WhatsApp</button>
     <button class="cta" style="margin-bottom:12px" onclick="openLicense()">💳 ${t('lic_open')}</button>
-    <div style="font-weight:800;margin:2px 0 4px">${t('lic_settings_h')}</div>
-    <div class="sub" style="margin-bottom:8px">${planName(lic().plan)} · ${_si[1]} · ${Math.max(0,licDays())} ${t('lic_days').toLowerCase()}</div>
-    <div class="row2"><button class="cta ghost" onclick="licAdmin('extend')">${t('lic_extend')}</button><button class="cta ghost" onclick="licAdmin('trial')">${t('lic_grant_trial')}</button></div>
-    <div class="row2"><button class="cta ghost" onclick="licAdmin('active')">${t('lic_set_active')}</button><button class="cta ghost" onclick="licAdmin('expired')">${t('lic_set_expired')}</button></div>
-    <div class="row2"><button class="cta ghost" onclick="licAdmin('suspend')">${t('lic_suspend')}</button><button class="cta ghost" onclick="licAdmin('reactivate')">${t('lic_reactivate')}</button></div>
+    <div class="sub" style="margin-bottom:8px"><span style="color:${_si[0]}">●</span> ${planName(lic().plan)} · ${_si[1]} · ${Math.max(0,licDays())} ${t('lic_days').toLowerCase()}</div>
+    <button class="cta ghost" style="margin-bottom:6px" onclick="openAdmin()">🔐 ${t('adm_open')}</button>
+    ${team()?`<div style="font-size:12.5px;font-weight:700;color:#0b6b37;margin-bottom:12px">🛡️ ${t('adm_badge')} · ${escHtml(team().name)} — ${t('adm_nosub')}</div>`:'<div style="height:6px"></div>'}
     <hr style="border:none;border-top:1px solid var(--line);margin:14px 0">
     <div style="font-weight:800;margin:2px 0 6px">${t('set_country_h')}</div>
     <label class="fl">${t('set_country')}</label>
@@ -3548,14 +3607,17 @@ function licDays(l){l=l||lic();if(l.lifetime)return Infinity;return Math.ceil((n
 function licEffStatus(l){l=l||lic();if(l.status==='suspended')return'suspended';if(!l.lifetime&&licDays(l)<0)return'expired';if(l.plan==='trial')return'trial';return'active';}
 function licExpired(l){var s=licEffStatus(l);return s==='expired'||s==='suspended';}
 function licStatusInfo(l){var s=licEffStatus(l);return {suspended:['#b45309',t('lic_suspended')],expired:['#b91c1c',t('lic_expired')],trial:['#2563eb',t('lic_trial')],active:['#16a34a',t('lic_active')]}[s];}
-function licGate(){if(licExpired()){openLicense(true);return false;}return true;}
+/* A team phone belongs to us, not to a paying merchant, so the subscription
+   never blocks it — that is the whole point of registering it as a team phone. */
+function licGate(){if(isTeam())return true;if(licExpired()){openLicense(true);return false;}return true;}
 function openLicense(fromGate){
   const body=document.getElementById('licBody');const l=lic();const days=licDays(l);const si=licStatusInfo(l);const exp=licExpired(l);
   let html=`<button class="back" onclick="go('set')">‹ ${t('back')}</button>
     <div class="h2">💳 ${t('lic_title')}</div><p class="sub">${t('lic_sub')}</p>`;
   if(exp)html+=`<div class="card" style="background:#fef2f2;border-color:#ef4444">
      <div style="font-weight:900;color:#b91c1c">${t('lic_expired_msg')}</div>
-     <div class="sub" style="margin-top:2px">${t('lic_expired_sub')}</div></div>`;
+     <div class="sub" style="margin-top:2px">${t('lic_expired_sub')}</div>
+     <button class="cta ghost" style="margin-top:10px" onclick="openAdmin()">🔐 ${t('adm_open')}</button></div>`;
   html+=`<div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div><div style="font-size:12px;color:var(--muted);font-weight:700">${t('lic_current')}</div>
@@ -3643,6 +3705,126 @@ function licAdmin(action){const l=lic();
 }
 
 /* ===================================================================
+   ADMIN ACCESS — the licence controls and team phones, behind a code
+
+   These buttons used to sit open on the Settings screen, which meant any
+   merchant could tap "Extend +30 days" and the subscription never really
+   ended. They now need the admin code.
+
+   The code itself is NOT in this file. What is stored is a PBKDF2-SHA256
+   derivation of it (200,000 rounds), so reading the page source does not
+   give the code away and guessing it is not worth anyone's time.
+
+   Honest limit: the licence is still per-device (there is no licence
+   server yet), so this stops a merchant tapping a button — it does not
+   stop someone technical clearing the app's data.
+   =================================================================== */
+const ADMIN_SALT='lajanmaker-pos-admin-v1';
+const ADMIN_HASH='6b425ba916bb71d5dcf604cdb805c5bc9b90e523fe44c3b0725f45bd4fbd45af';
+const ADMIN_MINUTES=30;              /* locks itself again after this long */
+let admTries=0,admBlockUntil=0;
+
+/* Typed on a phone keyboard, so spaces, dashes and lower case all pass. */
+function admNorm(s){return String(s||'').replace(/[^A-Za-z0-9]/g,'').toUpperCase();}
+async function admCheck(code){
+  const c=admNorm(code);if(!c)return false;
+  if(!(window.crypto&&window.crypto.subtle))return false;
+  const enc=new TextEncoder();
+  const key=await crypto.subtle.importKey('raw',enc.encode(c),{name:'PBKDF2'},false,['deriveBits']);
+  const bits=await crypto.subtle.deriveBits({name:'PBKDF2',salt:enc.encode(ADMIN_SALT),iterations:200000,hash:'SHA-256'},key,256);
+  const hex=Array.from(new Uint8Array(bits)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+  return hex===ADMIN_HASH;
+}
+function admUnlocked(){return (+load('hb_admin_until',0))>Date.now();}
+function admUnlock(){save('hb_admin_until',Date.now()+ADMIN_MINUTES*60000);}
+function admLock(){localStorage.removeItem('hb_admin_until');}
+
+function team(){return load('hb_team',null);}
+function isTeam(){return !!team();}
+function admRoleLbl(r){return {agent:t('adm_role_agent'),sup:t('adm_role_sup'),mgr:t('adm_role_mgr')}[r]||r;}
+
+function openAdmin(){
+  if(admUnlocked()){admPanel();return;}
+  const m=caOverlay('<div style="text-align:center"><div style="font-size:34px">🔐</div>'
+    +'<div style="font-weight:900;font-size:18px;margin:2px 0">'+t('adm_t')+'</div>'
+    +'<div class="sub" style="margin-bottom:12px">'+t('adm_ask')+'</div>'
+    +'<input id="admIn" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="'+t('adm_code')+'" style="width:100%;text-align:center;letter-spacing:2px;font-size:19px;font-weight:800;padding:11px;border:2px solid var(--line);border-radius:12px">'
+    +'<div id="admErr" style="color:#b91c1c;font-weight:700;font-size:13px;min-height:18px;margin-top:6px"></div>'
+    +'<button class="cta" id="admGo">'+t('adm_unlock')+'</button>'
+    +'<button class="cta ghost" id="admX" style="margin-top:8px">'+t('back')+'</button></div>');
+  m.ov.style.zIndex='96';
+  const inp=m.box.querySelector('#admIn');setTimeout(function(){inp.focus();},50);
+  async function submit(){
+    const err=m.box.querySelector('#admErr'),btn=m.box.querySelector('#admGo');
+    if(Date.now()<admBlockUntil){err.textContent=t('adm_wait');return;}
+    btn.disabled=true;
+    const ok=await admCheck(inp.value);
+    btn.disabled=false;
+    if(ok){admTries=0;admUnlock();m.close();admPanel();return;}
+    admTries++;if(admTries>=5){admBlockUntil=Date.now()+60000;admTries=0;}
+    err.textContent=Date.now()<admBlockUntil?t('adm_wait'):t('adm_wrong');
+    inp.value='';inp.focus();
+  }
+  m.box.querySelector('#admGo').onclick=submit;
+  inp.addEventListener('keydown',function(e){if(e.key==='Enter')submit();});
+  m.box.querySelector('#admX').onclick=m.close;
+}
+
+function admPanel(){
+  const l=lic(),si=licStatusInfo(l),tm=team();
+  const teamBox=tm
+    ? '<div style="border:2px solid #12a150;background:#f2fbf5;border-radius:14px;padding:12px;margin-bottom:10px">'
+      +'<div style="font-size:11.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.3px">'+t('adm_team_this')+'</div>'
+      +'<div style="font-weight:900;font-size:16px;margin:3px 0 1px">'+escHtml(tm.name)+'</div>'
+      +'<div style="font-size:12.5px;font-weight:700;color:#0b6b37">'+escHtml(admRoleLbl(tm.role))+' · '+t('adm_nosub')+'</div></div>'
+      +'<button class="cta ghost" id="admRm" style="color:#b91c1c;border-color:#fca5a5">'+t('adm_team_rm')+'</button>'
+    : '<div class="sub" style="margin-bottom:8px">'+t('adm_team_s')+'</div>'
+      +'<button class="cta" id="admAdd">＋ '+t('adm_team_add')+'</button>';
+  const m=caOverlay('<div style="font-weight:900;font-size:17px;margin-bottom:2px">🔐 '+t('adm_t')+' — '+posBrand()+'</div>'
+    +'<div style="font-weight:800;margin:14px 0 4px">'+t('adm_team_h')+'</div>'+teamBox
+    +'<hr style="border:none;border-top:1px solid var(--line);margin:16px 0">'
+    +'<div style="font-weight:800;margin:2px 0 4px">'+t('adm_lic_h')+'</div>'
+    +'<div class="sub" style="margin-bottom:8px"><span style="color:'+si[0]+'">●</span> '+planName(l.plan)+' · '+si[1]+' · '+Math.max(0,licDays(l))+' '+t('lic_days').toLowerCase()+'</div>'
+    +'<div class="row2"><button class="cta ghost" data-la="extend">'+t('lic_extend')+'</button><button class="cta ghost" data-la="trial">'+t('lic_grant_trial')+'</button></div>'
+    +'<div class="row2"><button class="cta ghost" data-la="active">'+t('lic_set_active')+'</button><button class="cta ghost" data-la="expired">'+t('lic_set_expired')+'</button></div>'
+    +'<div class="row2"><button class="cta ghost" data-la="suspend">'+t('lic_suspend')+'</button><button class="cta ghost" data-la="reactivate">'+t('lic_reactivate')+'</button></div>'
+    +'<hr style="border:none;border-top:1px solid var(--line);margin:16px 0">'
+    +'<button class="cta ghost" id="admLock">🔒 '+t('adm_lock')+'</button>'
+    +'<button class="cta ghost" id="admClose" style="margin-top:8px">'+t('back')+'</button>');
+  m.ov.style.zIndex='96';
+  m.box.querySelectorAll('[data-la]').forEach(function(b){b.onclick=function(){
+    licAdmin(b.dataset.la);m.close();admPanel();};});
+  const add=m.box.querySelector('#admAdd');
+  if(add)add.onclick=function(){m.close();admTeamForm();};
+  const rm=m.box.querySelector('#admRm');
+  if(rm)rm.onclick=function(){if(!confirm(t('adm_team_rmq')))return;
+    localStorage.removeItem('hb_team');m.close();renderHome();renderSettings();admPanel();};
+  m.box.querySelector('#admLock').onclick=function(){admLock();m.close();};
+  m.box.querySelector('#admClose').onclick=m.close;
+}
+
+function admTeamForm(){
+  const m=caOverlay('<div style="font-weight:900;font-size:17px;margin-bottom:2px">👤 '+t('adm_team_add')+'</div>'
+    +'<div class="sub" style="margin-bottom:10px">'+t('adm_team_s')+'</div>'
+    +'<label class="fl">'+t('adm_name')+'</label><input id="tmName" placeholder="'+t('adm_name')+'">'
+    +'<label class="fl">'+t('adm_role')+'</label><select id="tmRole">'
+      +'<option value="agent">'+t('adm_role_agent')+'</option>'
+      +'<option value="sup">'+t('adm_role_sup')+'</option>'
+      +'<option value="mgr">'+t('adm_role_mgr')+'</option></select>'
+    +'<div id="tmErr" style="color:#b91c1c;font-weight:700;font-size:13px;min-height:18px;margin-top:4px"></div>'
+    +'<button class="cta" id="tmSave">'+t('emp_save')+'</button>'
+    +'<button class="cta ghost" id="tmX" style="margin-top:8px">‹ '+t('back')+'</button>');
+  m.ov.style.zIndex='97';
+  m.box.querySelector('#tmX').onclick=function(){m.close();admPanel();};
+  m.box.querySelector('#tmSave').onclick=function(){
+    const nm=(m.box.querySelector('#tmName').value||'').trim();
+    if(!nm){m.box.querySelector('#tmErr').textContent=t('adm_need_name');return;}
+    save('hb_team',{name:nm,role:m.box.querySelector('#tmRole').value,ts:nowStamp()});
+    m.close();alert(t('adm_team_on'));renderHome();renderSettings();
+  };
+}
+
+/* ===================================================================
    NOTIFY CUSTOMER (WhatsApp / Email) — e.g. "package ready"
    =================================================================== */
 function custEmail(o){if(o.email)return o.email;const c=customers().find(c=>(o.custId&&c.id===o.custId)||(o.phone&&c.phone===o.phone));return c?c.email:'';}
@@ -3697,10 +3879,10 @@ function renderReports(){
 }
 function csvCell(v){v=(v==null?'':String(v)).replace(/"/g,'""');return /[",\n]/.test(v)?'"'+v+'"':v;}
 function exportCSV(){const os=repOrders();
-  const head=['Order','Type','Service','Customer','Phone','WhatsApp','Amount_'+(isBR()?'BRL':'GDES'),'Payment','Status','Date'];
+  const head=['Order','Type','Service','Customer','Phone','WhatsApp','Amount_'+(isBR()?'BRL':'GDES'),'Payment','Status','Date','Registered_by'];
   const lines=[head.join(',')];
   os.forEach(o=>{const st=t((sInfo(o.statusSet||'sale',o.status)||{}).k||'');
-    lines.push([o.id,o.type||'',o.svcName||'',o.name||'',o.phone||'',o.wa||'',fxOut(o.amount||0),o.payment?payLabel(o.payment):'',st,fmtDate(o.ts)].map(csvCell).join(','));});
+    lines.push([o.id,o.type||'',o.svcName||'',o.name||'',o.phone||'',o.wa||'',fxOut(o.amount||0),o.payment?payLabel(o.payment):'',st,fmtDate(o.ts),o.team||o.staff||''].map(csvCell).join(','));});
   const blob=new Blob(['﻿'+lines.join('\n')],{type:'text/csv;charset=utf-8'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='haitibiznis-report-'+repRange+'.csv';
   document.body.appendChild(a);a.click();document.body.removeChild(a);}
@@ -3712,7 +3894,10 @@ function staffList(){return load('hb_staff',[]);}
 function saveStaff(l){save('hb_staff',l);}
 function activeStaff(){return load('hb_active_staff',null);}
 function setActiveStaff(s){if(s)save('hb_active_staff',{id:s.id,name:s.name,role:s.role});else localStorage.removeItem('hb_active_staff');}
-function stampStaff(rec){var a=activeStaff();if(a){rec.staff=a.name;rec.staffId=a.id;}return rec;}
+function stampStaff(rec){var a=activeStaff();if(a){rec.staff=a.name;rec.staffId=a.id;}
+  /* On a team phone, record which of our own people did it. */
+  var tm=team();if(tm){rec.team=tm.name;rec.teamRole=tm.role;}
+  return rec;}
 function genStaffId(){return 'E'+Math.floor(1000+Math.random()*8999);}
 function signOut(){setActiveStaff(null);openSignIn();}
 
