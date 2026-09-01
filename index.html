@@ -4235,9 +4235,14 @@ function tmcJoinForm(){
    remember one that was handed to him. */
 function admPwForm(){
   const own=admOwn();
+  /* "I cant remember it and takes too much time to find it and use it."
+     Reaching this form already required typing the code that is in force, and
+     then the first box asked for it a second time. If the panel is still
+     unlocked from that, do not ask again - he proved it a moment ago. */
+  const proven=admUnlocked();
   const m=caOverlay('<div style="font-weight:900;font-size:17px;margin-bottom:2px">🔑 '+t('adm_pw')+'</div>'
     +'<div class="sub" style="margin-bottom:10px">'+t('adm_pw_s')+'</div>'
-    +'<label class="fl">'+t('adm_pw_cur')+'</label><input id="pwCur" type="password" autocomplete="off" spellcheck="false" placeholder="'+t('adm_code')+'">'
+    +(proven?'':'<label class="fl">'+t('adm_pw_cur')+'</label><input id="pwCur" type="password" autocomplete="off" spellcheck="false" placeholder="'+t('adm_code')+'">')
     +'<label class="fl">'+t('adm_pw_new')+'</label><input id="pwNew" autocomplete="off" spellcheck="false" placeholder="'+t('adm_pw_new')+'">'
     +'<label class="fl">'+t('adm_pw_rep')+'</label><input id="pwRep" autocomplete="off" spellcheck="false" placeholder="'+t('adm_pw_rep')+'">'
     +'<div id="pwErr" style="color:#b91c1c;font-weight:700;font-size:13px;min-height:18px;margin-top:4px"></div>'
@@ -4256,8 +4261,10 @@ function admPwForm(){
     if(nu.length<4){err.textContent=t('adm_pw_short');return;}
     if(nu!==rp){err.textContent=t('adm_pw_nomatch');return;}
     btn.disabled=true;err.textContent='';
-    /* prove he holds the code that is in force before letting him replace it */
-    const ok=await admCheck(m.box.querySelector('#pwCur').value);
+    /* prove he holds the code that is in force before letting him replace it -
+       unless the unlock he just passed through is still valid */
+    const cur=m.box.querySelector('#pwCur');
+    const ok=proven?admUnlocked():await admCheck(cur?cur.value:'');
     if(!ok){btn.disabled=false;err.textContent=t('adm_pw_bad');return;}
     const salt=admNewSalt();
     save('hb_admin_pw',{salt:salt,hash:await admDerive(nu,salt),ts:nowStamp()});
@@ -4533,7 +4540,7 @@ function shareApp(){
    =================================================================== */
 /* Version the seller can read out loud. When someone says "I don't see the new
    button", the first useful question is which build their phone is running. */
-const APP_VER='56';
+const APP_VER='57';
 var swReg=null;
 if('serviceWorker' in navigator){
   window.addEventListener('load',function(){
