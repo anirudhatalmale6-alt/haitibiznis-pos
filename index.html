@@ -2140,6 +2140,37 @@ const T_EMP2={
 };
 Object.keys(T_EMP2).forEach(function(l){if(T[l])Object.assign(T[l],T_EMP2[l]);});
 
+/* -------------------------------------------------------------------------
+   Employees, third pass.
+
+   "LajanMaker still does not let me change my password/PIN while I am logged
+   in" - the button was there, but only rendered when somebody was signed in.
+   Tap outside the sign-in card and it vanishes, so from where he sits it does
+   not exist. It is always on screen now and says what to do instead.
+
+   "It should only allow me to create employees unless I explicitly choose to
+   create an owner" - so the role box now opens on Anplwaye every time,
+   including the very first account.
+   ------------------------------------------------------------------------- */
+const T_EMP3={
+ ht:{emp_noowner:'Pa gen okenn mèt biznis sou telefòn sa a pou kounye a.',
+     emp_pin_needsignin:'Pou chanje PIN ou, konekte anba non ou dabò. Chwazi non ou nan lis la.',
+     emp_pin_nostaff:'Pa gen okenn kont sou telefòn sa a ankò, kidonk pa gen PIN pou chanje. Èske ou vle kreye premye kont lan kounye a?'},
+ fr:{emp_noowner:'Il n’y a encore aucun propriétaire sur ce téléphone.',
+     emp_pin_needsignin:'Pour changer votre PIN, connectez-vous d’abord sous votre nom. Choisissez votre nom dans la liste.',
+     emp_pin_nostaff:'Il n’y a encore aucun compte sur ce téléphone, donc aucun PIN à changer. Voulez-vous créer le premier compte maintenant ?'},
+ en:{emp_noowner:'There is no owner on this phone yet.',
+     emp_pin_needsignin:'To change your PIN, sign in under your own name first. Pick your name from the list.',
+     emp_pin_nostaff:'There is no account on this phone yet, so there is no PIN to change. Do you want to create the first account now?'},
+ es:{emp_noowner:'Todavía no hay ningún propietario en este teléfono.',
+     emp_pin_needsignin:'Para cambiar su PIN, inicie sesión con su nombre primero. Elija su nombre en la lista.',
+     emp_pin_nostaff:'Todavía no hay ninguna cuenta en este teléfono, así que no hay PIN que cambiar. ¿Quiere crear la primera cuenta ahora?'},
+ pt:{emp_noowner:'Ainda não há nenhum dono neste telefone.',
+     emp_pin_needsignin:'Para mudar seu PIN, entre com o seu nome primeiro. Escolha seu nome na lista.',
+     emp_pin_nostaff:'Ainda não há nenhuma conta neste telefone, então não há PIN para mudar. Quer criar a primeira conta agora?'}
+};
+Object.keys(T_EMP3).forEach(function(l){if(T[l])Object.assign(T[l],T_EMP3[l]);});
+
 /* ---- App version, forced update, and getting out of an in-app browser ---- */
 const T_APP={
  ht:{app_h:'App la',app_ver:'Vèsyon',app_upd:'Mete app la ajou',
@@ -3426,7 +3457,7 @@ function renderSettings(){const cfg=getCfg();const box=document.getElementById('
      own code - on a 390x780 phone it started at y=763, i.e. off the screen. */
   box.innerHTML=`<button class="cta ghost" style="margin-bottom:6px" onclick="openAdmin()">🔐 ${t('adm_open')}</button>
     <button class="cta ghost" style="margin-bottom:6px" onclick="openAdmin(admPwForm)">🔑 ${t('adm_pw')}</button>
-    ${activeStaff()?`<button class="cta ghost" style="margin-bottom:6px" onclick="myPinForm()">🔢 ${t('emp_mypin')} · ${escHtml(activeStaff().name)}</button>`:''}
+    <button class="cta ghost" style="margin-bottom:6px" onclick="myPinEntry()">🔢 ${t('emp_mypin')}${activeStaff()?' · '+escHtml(activeStaff().name):''}</button>
     ${team()?'':`<button class="cta ghost" style="margin-bottom:6px" onclick="tmcJoinForm()">🛡️ ${t('tmc_enter')}</button>`}
     ${team()?`<div style="font-size:12.5px;font-weight:700;color:#0b6b37;margin-bottom:10px">🛡️ ${t('adm_badge')} · ${escHtml(team().name)} — ${t('adm_nosub')}</div>`:'<div style="height:4px"></div>'}
     <hr style="border:none;border-top:1px solid var(--line);margin:12px 0">
@@ -4285,29 +4316,32 @@ function stampStaff(rec){var a=activeStaff();if(a){rec.staff=a.name;rec.staffId=
 function genStaffId(){return 'E'+Math.floor(1000+Math.random()*8999);}
 function signOut(){setActiveStaff(null);openSignIn();}
 
-function openSignIn(){
+function hasOwner(){return staffList().some(function(x){return x.role==='owner';});}
+/* `after` lets a screen send someone through sign-in and get them back, instead
+   of dumping them on the home screen having forgotten what they came to do. */
+function openSignIn(after){
   var list=staffList();
   if(!list.length){return staffForm(true);}
   var tiles=list.map(function(s){return '<button class="cta ghost" data-sid="'+s.id+'" style="text-align:left;margin-bottom:8px;display:flex;align-items:center;gap:10px"><span style="width:34px;height:34px;border-radius:10px;background:'+(s.role==='owner'?'#00209F':'#0f9d55')+';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900">'+((s.name[0]||'?').toUpperCase())+'</span><span style="flex:1"><b>'+s.name+'</b><br><span style="font-size:11px;color:var(--muted)">'+(s.role==='owner'?t('emp_owner'):t('emp_staff'))+'</span></span></button>';}).join('');
   var m=caOverlay('<div style="text-align:center"><div style="font-size:34px">👥</div><div style="font-weight:900;font-size:18px;margin:2px 0">'+t('emp_signin_t')+'</div><div class="sub" style="margin-bottom:12px">'+t('emp_signin_s')+'</div><div style="text-align:left">'+tiles+'</div></div>');
   m.ov.style.zIndex='90';
-  m.box.querySelectorAll('[data-sid]').forEach(function(b){b.onclick=function(){var s=staffList().find(function(x){return x.id===b.dataset.sid;});m.close();pinPrompt(s);};});
+  m.box.querySelectorAll('[data-sid]').forEach(function(b){b.onclick=function(){var s=staffList().find(function(x){return x.id===b.dataset.sid;});m.close();pinPrompt(s,after);};});
 }
-function pinPrompt(s){
+function pinPrompt(s,after){
   var m=caOverlay('<div style="text-align:center"><div style="font-weight:900;font-size:17px;margin-bottom:2px">'+t('emp_hi')+' '+escHtml(s.name)+'</div><div class="sub" style="margin-bottom:10px">'+t('emp_enter_pin')+'</div><input id="pinIn" inputmode="numeric" maxlength="4" style="width:150px;text-align:center;letter-spacing:10px;font-size:26px;font-weight:900;padding:10px;border:2px solid var(--line);border-radius:12px" placeholder="••••"><div id="pinErr" style="color:#b91c1c;font-weight:700;font-size:13px;height:18px;margin-top:6px"></div><button class="cta" id="pinGo" style="margin-top:4px">'+t('emp_signin_btn')+'</button><button class="cta ghost" id="pinForgot" style="margin-top:8px">🔓 '+t('emp_forgot')+'</button><button class="cta ghost" id="pinBack" style="margin-top:8px">‹ '+t('back')+'</button></div>');
   m.ov.style.zIndex='90';
   var inp=m.box.querySelector('#pinIn');setTimeout(function(){inp.focus();},50);
-  function submit(){if((inp.value||'')===s.pin){setActiveStaff(s);m.close();renderHome();go('home');}else{m.box.querySelector('#pinErr').textContent=t('emp_wrong_pin');inp.value='';inp.focus();}}
+  function submit(){if((inp.value||'')===s.pin){setActiveStaff(s);m.close();renderHome();if(after){after();}else{go('home');}}else{m.box.querySelector('#pinErr').textContent=t('emp_wrong_pin');inp.value='';inp.focus();}}
   m.box.querySelector('#pinGo').onclick=submit;
   inp.addEventListener('keydown',function(e){if(e.key==='Enter')submit();});
   /* Without this the till is simply gone: a PIN nobody remembers sits in front
      of the whole app and there is no door round it. The admin code is that
      door, and the first admin code always works, so it can never be shut. */
-  m.box.querySelector('#pinForgot').onclick=function(){m.close();openAdmin(function(){pinReset(s.id);});};
-  m.box.querySelector('#pinBack').onclick=function(){m.close();openSignIn();};
+  m.box.querySelector('#pinForgot').onclick=function(){m.close();openAdmin(function(){pinReset(s.id,after);});};
+  m.box.querySelector('#pinBack').onclick=function(){m.close();openSignIn(after);};
 }
 /* Reached with the admin code, so it does not ask for the PIN it is replacing. */
-function pinReset(id){
+function pinReset(id,after){
   var s=staffList().find(function(x){return x.id===id;});if(!s)return openSignIn();
   var m=caOverlay('<div style="font-weight:900;font-size:17px;margin-bottom:2px">🔓 '+escHtml(t('emp_reset_t').replace('{n}',s.name))+'</div>'
     +'<div class="sub" style="margin-bottom:10px">'+t('emp_reset_s')+'</div>'
@@ -4326,9 +4360,25 @@ function pinReset(id){
     var l=staffList(),rec=l.find(function(x){return x.id===id;});
     rec.pin=a;saveStaff(l);
     /* Straight in - he came here because he could not get in. */
-    setActiveStaff(rec);m.close();renderHome();go('home');
+    setActiveStaff(rec);m.close();renderHome();if(after){after();}else{go('home');}
     alert(t('emp_pin_done'));
   };
+}
+/* The button used to be hidden whenever nobody was signed in - and the sign-in
+   card closes on a tap outside it, so "I am logged in" and "the app knows who I
+   am" are not the same thing. A control that disappears reads as a control that
+   was never built. It is always on screen now; when it cannot do the job yet it
+   says why and takes you to the step that fixes it. */
+function myPinEntry(){
+  if(!staffList().length){
+    if(confirm(t('emp_pin_nostaff')))staffForm(true);
+    return;
+  }
+  if(!activeStaff()){
+    alert(t('emp_pin_needsignin'));
+    return openSignIn(myPinForm);
+  }
+  myPinForm();
 }
 /* Anyone signed in can change their own PIN, and only their own. */
 function myPinForm(){
@@ -4364,15 +4414,29 @@ function myPinForm(){
    screen now, with a line under it saying what each role can do. */
 function staffForm(isFirst,editId){
   var ed=editId?staffList().find(function(x){return x.id===editId;}):null;
-  var dRole=ed?ed.role:(isFirst?'owner':'staff');
+  /* His instruction, in his words: "It should only allow me to create employees
+     unless I explicitly choose to create an owner." So the box opens on Anplwaye
+     every time, including the first account. Owner is now always a deliberate tap. */
+  var dRole=ed?ed.role:'staff';
   var roleRow='<label class="fl">'+t('emp_role')+'</label><select id="sfRole">'
     +'<option value="staff"'+(dRole==='staff'?' selected':'')+'>'+t('emp_staff')+'</option>'
     +'<option value="owner"'+(dRole==='owner'?' selected':'')+'>'+t('emp_owner')+'</option></select>'
     +'<div class="sub" id="sfRoleN" style="margin:4px 0 2px"></div>';
-  var m=caOverlay('<div style="font-weight:900;font-size:17px;margin-bottom:2px">'+(isFirst?t('emp_first_t'):ed?t('emp_edit_t'):t('emp_add_t'))+'</div><div class="sub" style="margin-bottom:10px">'+(isFirst?t('emp_first_s2'):t('emp_add_s'))+'</div><label class="fl">'+t('emp_name')+'</label><input id="sfName" value="'+escHtml(ed?ed.name:(isFirst?(profile().name||''):''))+'" placeholder="'+t('emp_name')+'">'+roleRow+'<label class="fl">'+t('emp_pin')+'</label><input id="sfPin" inputmode="numeric" maxlength="4" value="'+(ed?ed.pin:'')+'" placeholder="••••" style="letter-spacing:6px;font-weight:800"><div id="sfErr" style="color:#b91c1c;font-weight:700;font-size:13px;height:18px;margin-top:4px"></div><button class="cta" id="sfSave" style="margin-top:4px">'+t('emp_save')+'</button><button class="cta ghost" id="sfCancel" style="margin-top:8px">‹ '+t('back')+'</button>');
+  var m=caOverlay('<div id="sfTitle" style="font-weight:900;font-size:17px;margin-bottom:2px"></div><div class="sub" id="sfSub" style="margin-bottom:10px"></div><label class="fl">'+t('emp_name')+'</label><input id="sfName" value="'+escHtml(ed?ed.name:(isFirst?(profile().name||''):''))+'" placeholder="'+t('emp_name')+'">'+roleRow+'<label class="fl">'+t('emp_pin')+'</label><input id="sfPin" inputmode="numeric" maxlength="4" value="'+(ed?ed.pin:'')+'" placeholder="••••" style="letter-spacing:6px;font-weight:800"><div id="sfErr" style="color:#b91c1c;font-weight:700;font-size:13px;height:18px;margin-top:4px"></div><button class="cta" id="sfSave" style="margin-top:4px">'+t('emp_save')+'</button><button class="cta ghost" id="sfCancel" style="margin-top:8px">‹ '+t('back')+'</button>');
   m.ov.style.zIndex='95';
-  var sel=m.box.querySelector('#sfRole'),note=m.box.querySelector('#sfRoleN');
-  function drawNote(){note.textContent=t(sel.value==='owner'?'emp_role_owner_n':'emp_role_staff_n');}
+  var sel=m.box.querySelector('#sfRole'),note=m.box.querySelector('#sfRoleN'),ttl=m.box.querySelector('#sfTitle');
+  /* The heading follows the role. A card headed "Create owner account" while
+     the role box says Employee is exactly the contradiction he read out to me. */
+  var sub=m.box.querySelector('#sfSub');
+  function drawNote(){
+    var owner=sel.value==='owner';
+    note.textContent=t(owner?'emp_role_owner_n':'emp_role_staff_n');
+    /* State the gap, do not close it for him: telling him no owner exists is
+       information; picking owner on his behalf is the bug we just removed. */
+    if(!ed&&!owner&&!hasOwner())note.textContent+=' '+t('emp_noowner');
+    ttl.textContent=ed?t('emp_edit_t'):(owner?t('emp_first_t'):t('emp_add_t'));
+    sub.textContent=(isFirst&&owner)?t('emp_first_s2'):t('emp_add_s');
+  }
   sel.onchange=drawNote;drawNote();
   m.box.querySelector('#sfCancel').onclick=function(){m.close();if(!isFirst)manageStaff();};
   m.box.querySelector('#sfSave').onclick=function(){
@@ -4411,6 +4475,10 @@ function staffCanManage(){
   var l=staffList();
   if(!l.length)return true;                     /* nothing to protect yet */
   if(admUnlocked())return true;                 /* the owner's admin code */
+  /* Now that the first account defaults to employee, a phone can legitimately
+     have staff and no owner. Locking the list in that state would strand him
+     with no way to promote anybody - and there is no owner PIN to protect. */
+  if(!hasOwner())return true;
   var a=activeStaff();
   return !!(a&&a.role==='owner');
 }
@@ -4439,7 +4507,7 @@ function shareApp(){
    =================================================================== */
 /* Version the seller can read out loud. When someone says "I don't see the new
    button", the first useful question is which build their phone is running. */
-const APP_VER='54';
+const APP_VER='55';
 var swReg=null;
 if('serviceWorker' in navigator){
   window.addEventListener('load',function(){
