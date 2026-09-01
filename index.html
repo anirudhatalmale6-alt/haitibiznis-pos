@@ -180,7 +180,11 @@ main{padding:16px 14px}
 .subbtn .se{font-size:26px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);margin-bottom:14px}
 label.fl{display:block;font-weight:700;font-size:13px;margin:0 0 6px}
-input[type=text],input[type=tel],input[type=number],input[type=email],select,textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:13px 12px;font-size:16px;background:#fbfcfe;color:var(--ink);margin-bottom:14px;font-family:inherit}
+/* `input:not([type])` and password were missing, so 22 boxes across the app -
+   the change-PIN form, the change-code form, team join, customer sign-up, the
+   Pix settings - rendered as bare browser inputs: narrow, and small enough that
+   a phone zooms the page when you tap them. */
+input[type=text],input[type=tel],input[type=number],input[type=email],input[type=password],input:not([type]),select,textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:13px 12px;font-size:16px;background:#fbfcfe;color:var(--ink);margin-bottom:14px;font-family:inherit}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);background:#fff}
 textarea{min-height:58px;resize:vertical}.hint{font-size:12px;color:var(--muted);margin:-8px 0 14px}
 .row2{display:flex;gap:10px}.row2>div{flex:1}
@@ -4540,7 +4544,7 @@ function shareApp(){
    =================================================================== */
 /* Version the seller can read out loud. When someone says "I don't see the new
    button", the first useful question is which build their phone is running. */
-const APP_VER='57';
+const APP_VER='58';
 var swReg=null;
 if('serviceWorker' in navigator){
   window.addEventListener('load',function(){
