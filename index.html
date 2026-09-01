@@ -2032,6 +2032,114 @@ const T_ADM={
 };
 Object.keys(T_ADM).forEach(function(l){if(T[l])Object.assign(T[l],T_ADM[l]);});
 
+/* -------------------------------------------------------------------------
+   Employees, second pass.
+
+   The owner added a man called Emile Dukens and the app labelled him
+   Pwopriyetè — "It says Owner! Nothing make sense there no workflow". It was
+   doing exactly what it was written to do: the FIRST account was forced to
+   owner and the role selector was hidden on that one form, so the one time
+   the choice mattered it was not on screen. Then, because the sign-in screen
+   had no way past it, a PIN he did not set stood between him and his own till.
+
+   So: the role is always visible, a forgotten PIN can always be reset with the
+   admin code, everyone can change their own PIN, and after adding someone the
+   app says in plain words what just happened and what she has to do.
+   ------------------------------------------------------------------------- */
+const T_EMP2={
+ ht:{emp_first_s2:'Premye kont lan se pou mèt biznis la — sa vle di ou menm. W ap ka ajoute anplwaye w yo apre.',
+     emp_role_owner_n:'Mèt biznis la: li ka ajoute, chanje epi retire anplwaye.',
+     emp_role_staff_n:'Anplwaye: li ka fè vant, men li pa ka chanje lis la.',
+     emp_added_t:'{n} ka konekte kounye a',
+     emp_added_s:'Sou TELEFÒN SA A, {n} ap chwazi non li epi tape PIN li a. Chak vant l ap fè ap make non li.',
+     emp_added_other:'Si {n} gen pwòp telefòn pa l, se yon kòd ekip li bezwen — se pa yon PIN.',
+     emp_added_code:'📨 Ba li yon kòd ekip',emp_added_ok:'Bon, mwen konprann',
+     emp_this_phone:'Lis sa a se pou moun k ap sèvi ak telefòn sa a.',
+     emp_signin_open:'Konekte',
+     emp_forgot:'Mwen bliye PIN mwen',
+     emp_reset_t:'Nouvo PIN pou {n}',
+     emp_reset_s:'Antre yon PIN 4 chif ou pral sonje.',
+     emp_mypin:'Chanje PIN mwen',
+     emp_mypin_s:'Chanje PIN 4 chif ou sèvi pou konekte a.',
+     emp_pin_cur:'PIN w ap sèvi kounye a',emp_pin_new:'Nouvo PIN',emp_pin_rep:'Repete nouvo PIN nan',
+     emp_pin_bad:'PIN w ap sèvi kounye a pa bon',emp_pin_nomatch:'De nouvo PIN yo pa menm',
+     emp_pin_done:'PIN ou chanje',emp_pin_same:'Nouvo PIN nan se menm ak ansyen an',
+     emp_only_owner:'Se mèt biznis la sèlman ki ka chanje lis anplwaye yo.'},
+ fr:{emp_first_s2:'Le premier compte est celui du propriétaire — c’est-à-dire vous. Vous pourrez ajouter vos employés ensuite.',
+     emp_role_owner_n:'Propriétaire : peut ajouter, modifier et retirer des employés.',
+     emp_role_staff_n:'Employé : peut faire des ventes, mais ne peut pas modifier la liste.',
+     emp_added_t:'{n} peut se connecter',
+     emp_added_s:'Sur CE TÉLÉPHONE, {n} choisit son nom et tape son PIN. Chaque vente portera son nom.',
+     emp_added_other:'Si {n} a son propre téléphone, il lui faut un code d’équipe — pas un PIN.',
+     emp_added_code:'📨 Lui donner un code d’équipe',emp_added_ok:'C’est compris',
+     emp_this_phone:'Cette liste concerne les personnes qui utilisent ce téléphone.',
+     emp_signin_open:'Se connecter',
+     emp_forgot:'J’ai oublié mon PIN',
+     emp_reset_t:'Nouveau PIN pour {n}',
+     emp_reset_s:'Entrez un PIN à 4 chiffres dont vous vous souviendrez.',
+     emp_mypin:'Changer mon PIN',
+     emp_mypin_s:'Changez le PIN à 4 chiffres que vous utilisez pour vous connecter.',
+     emp_pin_cur:'PIN actuel',emp_pin_new:'Nouveau PIN',emp_pin_rep:'Répétez le nouveau PIN',
+     emp_pin_bad:'PIN actuel incorrect',emp_pin_nomatch:'Les deux nouveaux PIN ne correspondent pas',
+     emp_pin_done:'Votre PIN a été changé',emp_pin_same:'Le nouveau PIN est identique à l’ancien',
+     emp_only_owner:'Seul le propriétaire peut modifier la liste des employés.'},
+ en:{emp_first_s2:'The first account is the business owner’s — that is you. You can add your employees after.',
+     emp_role_owner_n:'Owner: can add, edit and remove employees.',
+     emp_role_staff_n:'Employee: can make sales, but cannot change the list.',
+     emp_added_t:'{n} can sign in now',
+     emp_added_s:'On THIS PHONE, {n} picks their name and types their PIN. Every sale will carry their name.',
+     emp_added_other:'If {n} has their own phone, what they need is a team code — not a PIN.',
+     emp_added_code:'📨 Give them a team code',emp_added_ok:'Got it',
+     emp_this_phone:'This list is for the people who use this phone.',
+     emp_signin_open:'Sign in',
+     emp_forgot:'I forgot my PIN',
+     emp_reset_t:'New PIN for {n}',
+     emp_reset_s:'Enter a 4-digit PIN you will remember.',
+     emp_mypin:'Change my PIN',
+     emp_mypin_s:'Change the 4-digit PIN you sign in with.',
+     emp_pin_cur:'Current PIN',emp_pin_new:'New PIN',emp_pin_rep:'Repeat the new PIN',
+     emp_pin_bad:'Current PIN is wrong',emp_pin_nomatch:'The two new PINs do not match',
+     emp_pin_done:'Your PIN has been changed',emp_pin_same:'The new PIN is the same as the old one',
+     emp_only_owner:'Only the business owner can change the employee list.'},
+ es:{emp_first_s2:'La primera cuenta es la del dueño del negocio — o sea, usted. Después podrá agregar a sus empleados.',
+     emp_role_owner_n:'Propietario: puede agregar, editar y quitar empleados.',
+     emp_role_staff_n:'Empleado: puede hacer ventas, pero no cambiar la lista.',
+     emp_added_t:'{n} ya puede iniciar sesión',
+     emp_added_s:'En ESTE TELÉFONO, {n} elige su nombre y escribe su PIN. Cada venta llevará su nombre.',
+     emp_added_other:'Si {n} tiene su propio teléfono, lo que necesita es un código de equipo — no un PIN.',
+     emp_added_code:'📨 Darle un código de equipo',emp_added_ok:'Entendido',
+     emp_this_phone:'Esta lista es para las personas que usan este teléfono.',
+     emp_signin_open:'Iniciar sesión',
+     emp_forgot:'Olvidé mi PIN',
+     emp_reset_t:'Nuevo PIN para {n}',
+     emp_reset_s:'Escriba un PIN de 4 dígitos que vaya a recordar.',
+     emp_mypin:'Cambiar mi PIN',
+     emp_mypin_s:'Cambie el PIN de 4 dígitos con el que inicia sesión.',
+     emp_pin_cur:'PIN actual',emp_pin_new:'Nuevo PIN',emp_pin_rep:'Repita el nuevo PIN',
+     emp_pin_bad:'El PIN actual no es correcto',emp_pin_nomatch:'Los dos PIN nuevos no coinciden',
+     emp_pin_done:'Su PIN ha sido cambiado',emp_pin_same:'El nuevo PIN es igual al anterior',
+     emp_only_owner:'Solo el dueño del negocio puede cambiar la lista de empleados.'},
+ pt:{emp_first_s2:'A primeira conta é a do dono do negócio — ou seja, você. Depois você pode adicionar seus funcionários.',
+     emp_role_owner_n:'Proprietário: pode adicionar, editar e remover funcionários.',
+     emp_role_staff_n:'Funcionário: pode fazer vendas, mas não pode mudar a lista.',
+     emp_added_t:'{n} já pode entrar',
+     emp_added_s:'NESTE CELULAR, {n} escolhe o nome dele e digita o PIN. Cada venda vai levar o nome dele.',
+     emp_added_other:'Se {n} tiver o próprio celular, o que ele precisa é de um código de equipe — não de um PIN.',
+     emp_added_code:'📨 Dar um código de equipe',emp_added_ok:'Entendi',
+     emp_this_phone:'Esta lista é para as pessoas que usam este celular.',
+     emp_signin_open:'Entrar',
+     emp_forgot:'Esqueci meu PIN',
+     emp_reset_t:'Novo PIN para {n}',
+     emp_reset_s:'Digite um PIN de 4 dígitos que você vá lembrar.',
+     emp_mypin:'Mudar meu PIN',
+     emp_mypin_s:'Mude o PIN de 4 dígitos que você usa para entrar.',
+     emp_pin_cur:'PIN atual',emp_pin_new:'Novo PIN',emp_pin_rep:'Repita o novo PIN',
+     emp_pin_bad:'O PIN atual está errado',emp_pin_nomatch:'Os dois PIN novos não são iguais',
+     emp_pin_done:'Seu PIN foi alterado',emp_pin_same:'O novo PIN é igual ao antigo',
+     emp_only_owner:'Só o dono do negócio pode mudar a lista de funcionários.'}
+};
+Object.keys(T_EMP2).forEach(function(l){if(T[l])Object.assign(T[l],T_EMP2[l]);});
+
 /* ---- App version, forced update, and getting out of an in-app browser ---- */
 const T_APP={
  ht:{app_h:'App la',app_ver:'Vèsyon',app_upd:'Mete app la ajou',
@@ -2186,7 +2294,9 @@ function renderHome(){
    ${(function(){var a=activeStaff();var has=staffList().length;
      if(a)return '<button onclick="signOut()" style="width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 12px;margin:12px 0;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow)"><span style="font-weight:800;font-size:12.5px">👤 '+t('emp_signed')+': '+a.name+' <span style="color:var(--muted);font-weight:600">· '+(a.role==='owner'?t('emp_owner'):t('emp_staff'))+'</span></span><span style="color:var(--blue);font-weight:800;font-size:12px;flex:0 0 auto">🔄 '+t('emp_switch')+'</span></button>';
      if(!has)return '<button onclick="manageStaff()" style="width:100%;border:1px dashed var(--blue);background:#eef3ff;border-radius:12px;padding:9px 12px;margin:12px 0;display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800;font-size:12.5px;color:var(--blue)">👥 '+t('emp_setup_nudge')+'</span><span style="color:var(--blue);font-weight:800;font-size:12px;flex:0 0 auto">→</span></button>';
-     return '<div style="height:12px"></div>';})()}
+     /* Staff exist but nobody is signed in - the sign-in card can be dismissed
+        by tapping outside it, and there was then no way back to it. */
+     return '<button onclick="openSignIn()" style="width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 12px;margin:12px 0;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow)"><span style="font-weight:800;font-size:12.5px">👤 '+t('emp_signin_open')+'</span><span style="color:var(--blue);font-weight:800;font-size:12px;flex:0 0 auto">→</span></button>';})()}
    ${(exp&&!tm)?`<button onclick="openLicense()" style="width:100%;border:0;border-radius:14px;padding:12px 14px;font-weight:800;text-align:left;color:#fff;font-size:13px;margin-bottom:12px;background:#b91c1c">⚠️ ${t('lic_expired_msg')} — ${t('lic_renew')} →</button>`:
      `<button onclick="go('earn')" style="width:100%;border:0;border-radius:14px;padding:14px;font-weight:800;text-align:left;color:#fff;font-size:13px;margin-bottom:12px;background:linear-gradient(120deg,var(--good),#0f9d55);display:flex;justify-content:space-between;align-items:center;gap:8px"><span>🎉 ${t('hub_commbanner').replace('{n}',gdes(commWeek))}</span><span style="opacity:.9">→</span></button>`}
    ${tm?`<button onclick="openAdmin()" style="width:100%;border:1px solid #12a150;background:#f2fbf5;border-radius:14px;padding:12px 14px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;gap:8px">
@@ -3316,6 +3426,7 @@ function renderSettings(){const cfg=getCfg();const box=document.getElementById('
      own code - on a 390x780 phone it started at y=763, i.e. off the screen. */
   box.innerHTML=`<button class="cta ghost" style="margin-bottom:6px" onclick="openAdmin()">🔐 ${t('adm_open')}</button>
     <button class="cta ghost" style="margin-bottom:6px" onclick="openAdmin(admPwForm)">🔑 ${t('adm_pw')}</button>
+    ${activeStaff()?`<button class="cta ghost" style="margin-bottom:6px" onclick="myPinForm()">🔢 ${t('emp_mypin')} · ${escHtml(activeStaff().name)}</button>`:''}
     ${team()?'':`<button class="cta ghost" style="margin-bottom:6px" onclick="tmcJoinForm()">🛡️ ${t('tmc_enter')}</button>`}
     ${team()?`<div style="font-size:12.5px;font-weight:700;color:#0b6b37;margin-bottom:10px">🛡️ ${t('adm_badge')} · ${escHtml(team().name)} — ${t('adm_nosub')}</div>`:'<div style="height:4px"></div>'}
     <hr style="border:none;border-top:1px solid var(--line);margin:12px 0">
@@ -4183,38 +4294,131 @@ function openSignIn(){
   m.box.querySelectorAll('[data-sid]').forEach(function(b){b.onclick=function(){var s=staffList().find(function(x){return x.id===b.dataset.sid;});m.close();pinPrompt(s);};});
 }
 function pinPrompt(s){
-  var m=caOverlay('<div style="text-align:center"><div style="font-weight:900;font-size:17px;margin-bottom:2px">'+t('emp_hi')+' '+s.name+'</div><div class="sub" style="margin-bottom:10px">'+t('emp_enter_pin')+'</div><input id="pinIn" inputmode="numeric" maxlength="4" style="width:150px;text-align:center;letter-spacing:10px;font-size:26px;font-weight:900;padding:10px;border:2px solid var(--line);border-radius:12px" placeholder="••••"><div id="pinErr" style="color:#b91c1c;font-weight:700;font-size:13px;height:18px;margin-top:6px"></div><button class="cta" id="pinGo" style="margin-top:4px">'+t('emp_signin_btn')+'</button><button class="cta ghost" id="pinBack" style="margin-top:8px">‹ '+t('back')+'</button></div>');
+  var m=caOverlay('<div style="text-align:center"><div style="font-weight:900;font-size:17px;margin-bottom:2px">'+t('emp_hi')+' '+escHtml(s.name)+'</div><div class="sub" style="margin-bottom:10px">'+t('emp_enter_pin')+'</div><input id="pinIn" inputmode="numeric" maxlength="4" style="width:150px;text-align:center;letter-spacing:10px;font-size:26px;font-weight:900;padding:10px;border:2px solid var(--line);border-radius:12px" placeholder="••••"><div id="pinErr" style="color:#b91c1c;font-weight:700;font-size:13px;height:18px;margin-top:6px"></div><button class="cta" id="pinGo" style="margin-top:4px">'+t('emp_signin_btn')+'</button><button class="cta ghost" id="pinForgot" style="margin-top:8px">🔓 '+t('emp_forgot')+'</button><button class="cta ghost" id="pinBack" style="margin-top:8px">‹ '+t('back')+'</button></div>');
   m.ov.style.zIndex='90';
   var inp=m.box.querySelector('#pinIn');setTimeout(function(){inp.focus();},50);
   function submit(){if((inp.value||'')===s.pin){setActiveStaff(s);m.close();renderHome();go('home');}else{m.box.querySelector('#pinErr').textContent=t('emp_wrong_pin');inp.value='';inp.focus();}}
   m.box.querySelector('#pinGo').onclick=submit;
   inp.addEventListener('keydown',function(e){if(e.key==='Enter')submit();});
+  /* Without this the till is simply gone: a PIN nobody remembers sits in front
+     of the whole app and there is no door round it. The admin code is that
+     door, and the first admin code always works, so it can never be shut. */
+  m.box.querySelector('#pinForgot').onclick=function(){m.close();openAdmin(function(){pinReset(s.id);});};
   m.box.querySelector('#pinBack').onclick=function(){m.close();openSignIn();};
 }
+/* Reached with the admin code, so it does not ask for the PIN it is replacing. */
+function pinReset(id){
+  var s=staffList().find(function(x){return x.id===id;});if(!s)return openSignIn();
+  var m=caOverlay('<div style="font-weight:900;font-size:17px;margin-bottom:2px">🔓 '+escHtml(t('emp_reset_t').replace('{n}',s.name))+'</div>'
+    +'<div class="sub" style="margin-bottom:10px">'+t('emp_reset_s')+'</div>'
+    +'<label class="fl">'+t('emp_pin_new')+'</label><input id="prNew" inputmode="numeric" maxlength="4" placeholder="••••" style="letter-spacing:6px;font-weight:800">'
+    +'<label class="fl">'+t('emp_pin_rep')+'</label><input id="prRep" inputmode="numeric" maxlength="4" placeholder="••••" style="letter-spacing:6px;font-weight:800">'
+    +'<div id="prErr" style="color:#b91c1c;font-weight:700;font-size:13px;min-height:18px;margin-top:4px"></div>'
+    +'<button class="cta" id="prGo" style="margin-top:4px">'+t('emp_save')+'</button>'
+    +'<button class="cta ghost" id="prX" style="margin-top:8px">‹ '+t('back')+'</button>');
+  m.ov.style.zIndex='96';
+  m.box.querySelector('#prX').onclick=function(){m.close();openSignIn();};
+  m.box.querySelector('#prGo').onclick=function(){
+    var a=(m.box.querySelector('#prNew').value||'').trim(),b=(m.box.querySelector('#prRep').value||'').trim();
+    var err=m.box.querySelector('#prErr');
+    if(!/^[0-9]{4}$/.test(a)){err.textContent=t('emp_need_pin');return;}
+    if(a!==b){err.textContent=t('emp_pin_nomatch');return;}
+    var l=staffList(),rec=l.find(function(x){return x.id===id;});
+    rec.pin=a;saveStaff(l);
+    /* Straight in - he came here because he could not get in. */
+    setActiveStaff(rec);m.close();renderHome();go('home');
+    alert(t('emp_pin_done'));
+  };
+}
+/* Anyone signed in can change their own PIN, and only their own. */
+function myPinForm(){
+  var a=activeStaff();if(!a)return openSignIn();
+  var s=staffList().find(function(x){return x.id===a.id;});if(!s)return openSignIn();
+  var m=caOverlay('<div style="font-weight:900;font-size:17px;margin-bottom:2px">🔑 '+t('emp_mypin')+'</div>'
+    +'<div class="sub" style="margin-bottom:10px">'+t('emp_mypin_s')+'</div>'
+    +'<label class="fl">'+t('emp_pin_cur')+'</label><input id="mpCur" inputmode="numeric" maxlength="4" placeholder="••••" style="letter-spacing:6px;font-weight:800">'
+    +'<label class="fl">'+t('emp_pin_new')+'</label><input id="mpNew" inputmode="numeric" maxlength="4" placeholder="••••" style="letter-spacing:6px;font-weight:800">'
+    +'<label class="fl">'+t('emp_pin_rep')+'</label><input id="mpRep" inputmode="numeric" maxlength="4" placeholder="••••" style="letter-spacing:6px;font-weight:800">'
+    +'<div id="mpErr" style="color:#b91c1c;font-weight:700;font-size:13px;min-height:18px;margin-top:4px"></div>'
+    +'<button class="cta" id="mpGo" style="margin-top:4px">'+t('emp_save')+'</button>'
+    +'<button class="cta ghost" id="mpX" style="margin-top:8px">‹ '+t('back')+'</button>');
+  m.ov.style.zIndex='96';
+  m.box.querySelector('#mpX').onclick=m.close;
+  m.box.querySelector('#mpGo').onclick=function(){
+    var cur=(m.box.querySelector('#mpCur').value||'').trim();
+    var nw=(m.box.querySelector('#mpNew').value||'').trim();
+    var rp=(m.box.querySelector('#mpRep').value||'').trim();
+    var err=m.box.querySelector('#mpErr');
+    if(cur!==s.pin){err.textContent=t('emp_pin_bad');return;}
+    if(!/^[0-9]{4}$/.test(nw)){err.textContent=t('emp_need_pin');return;}
+    if(nw===cur){err.textContent=t('emp_pin_same');return;}
+    if(nw!==rp){err.textContent=t('emp_pin_nomatch');return;}
+    var l=staffList(),rec=l.find(function(x){return x.id===s.id;});
+    rec.pin=nw;saveStaff(l);setActiveStaff(rec);m.close();
+    alert(t('emp_pin_done'));
+  };
+}
+/* The role selector used to be hidden on the very first account, which is the
+   one time the choice actually matters - the owner typed an employee's name
+   into a form that silently made that employee the owner. It is always on
+   screen now, with a line under it saying what each role can do. */
 function staffForm(isFirst,editId){
   var ed=editId?staffList().find(function(x){return x.id===editId;}):null;
-  var roleRow=isFirst?'':'<label class="fl">'+t('emp_role')+'</label><select id="sfRole"><option value="staff"'+(ed&&ed.role==='staff'?' selected':'')+'>'+t('emp_staff')+'</option><option value="owner"'+(ed&&ed.role==='owner'?' selected':'')+'>'+t('emp_owner')+'</option></select>';
-  var m=caOverlay('<div style="font-weight:900;font-size:17px;margin-bottom:2px">'+(isFirst?t('emp_first_t'):ed?t('emp_edit_t'):t('emp_add_t'))+'</div><div class="sub" style="margin-bottom:10px">'+(isFirst?t('emp_first_s'):t('emp_add_s'))+'</div><label class="fl">'+t('emp_name')+'</label><input id="sfName" value="'+(ed?ed.name:'')+'" placeholder="'+t('emp_name')+'">'+roleRow+'<label class="fl">'+t('emp_pin')+'</label><input id="sfPin" inputmode="numeric" maxlength="4" value="'+(ed?ed.pin:'')+'" placeholder="••••" style="letter-spacing:6px;font-weight:800"><div id="sfErr" style="color:#b91c1c;font-weight:700;font-size:13px;height:18px;margin-top:4px"></div><button class="cta" id="sfSave" style="margin-top:4px">'+t('emp_save')+'</button><button class="cta ghost" id="sfCancel" style="margin-top:8px">‹ '+t('back')+'</button>');
+  var dRole=ed?ed.role:(isFirst?'owner':'staff');
+  var roleRow='<label class="fl">'+t('emp_role')+'</label><select id="sfRole">'
+    +'<option value="staff"'+(dRole==='staff'?' selected':'')+'>'+t('emp_staff')+'</option>'
+    +'<option value="owner"'+(dRole==='owner'?' selected':'')+'>'+t('emp_owner')+'</option></select>'
+    +'<div class="sub" id="sfRoleN" style="margin:4px 0 2px"></div>';
+  var m=caOverlay('<div style="font-weight:900;font-size:17px;margin-bottom:2px">'+(isFirst?t('emp_first_t'):ed?t('emp_edit_t'):t('emp_add_t'))+'</div><div class="sub" style="margin-bottom:10px">'+(isFirst?t('emp_first_s2'):t('emp_add_s'))+'</div><label class="fl">'+t('emp_name')+'</label><input id="sfName" value="'+escHtml(ed?ed.name:(isFirst?(profile().name||''):''))+'" placeholder="'+t('emp_name')+'">'+roleRow+'<label class="fl">'+t('emp_pin')+'</label><input id="sfPin" inputmode="numeric" maxlength="4" value="'+(ed?ed.pin:'')+'" placeholder="••••" style="letter-spacing:6px;font-weight:800"><div id="sfErr" style="color:#b91c1c;font-weight:700;font-size:13px;height:18px;margin-top:4px"></div><button class="cta" id="sfSave" style="margin-top:4px">'+t('emp_save')+'</button><button class="cta ghost" id="sfCancel" style="margin-top:8px">‹ '+t('back')+'</button>');
   m.ov.style.zIndex='95';
+  var sel=m.box.querySelector('#sfRole'),note=m.box.querySelector('#sfRoleN');
+  function drawNote(){note.textContent=t(sel.value==='owner'?'emp_role_owner_n':'emp_role_staff_n');}
+  sel.onchange=drawNote;drawNote();
   m.box.querySelector('#sfCancel').onclick=function(){m.close();if(!isFirst)manageStaff();};
   m.box.querySelector('#sfSave').onclick=function(){
     var nm=(m.box.querySelector('#sfName').value||'').trim();
     var pin=(m.box.querySelector('#sfPin').value||'').trim();
-    var role=isFirst?'owner':(m.box.querySelector('#sfRole')?m.box.querySelector('#sfRole').value:(ed?ed.role:'staff'));
+    var role=sel.value==='owner'?'owner':'staff';
     if(!nm){m.box.querySelector('#sfErr').textContent=t('emp_need_name');return;}
     if(!/^[0-9]{4}$/.test(pin)){m.box.querySelector('#sfErr').textContent=t('emp_need_pin');return;}
     var l=staffList();
     if(ed){ed.name=nm;ed.pin=pin;ed.role=role;var a=activeStaff();if(a&&a.id===ed.id)setActiveStaff(ed);}
     else l.push({id:genStaffId(),name:nm,pin:pin,role:role,ts:nowStamp()});
     saveStaff(l);m.close();
-    if(isFirst){setActiveStaff(staffList()[0]);renderHome();go('home');}
-    else manageStaff();
+    if(isFirst){setActiveStaff(staffList()[0]);renderHome();go('home');return;}
+    /* Adding someone is where "I dont get the workflow" came from: the name went
+       into a list and nothing told him what she now has to do. */
+    if(!ed)return staffAdded(nm);
+    manageStaff();
   };
 }
+/* Said once, in plain words, straight after the name is saved. */
+function staffAdded(nm){
+  var m=caOverlay('<div style="text-align:center"><div style="font-size:34px">✅</div>'
+    +'<div style="font-weight:900;font-size:17px;margin:2px 0 6px">'+escHtml(t('emp_added_t').replace('{n}',nm))+'</div>'
+    +'<div class="sub" style="text-align:left;margin-bottom:10px">'+escHtml(t('emp_added_s').replace('{n}',nm))+'</div>'
+    +'<div class="sub" style="text-align:left;margin-bottom:10px">'+escHtml(t('emp_added_other').replace('{n}',nm))+'</div>'
+    +'<button class="cta ghost" id="saCode" style="margin-bottom:8px">'+t('emp_added_code')+'</button>'
+    +'<button class="cta" id="saOk">'+t('emp_added_ok')+'</button></div>');
+  m.ov.style.zIndex='96';
+  m.box.querySelector('#saCode').onclick=function(){m.close();openAdmin(tmcMakeForm);};
+  m.box.querySelector('#saOk').onclick=function(){m.close();manageStaff();};
+}
+/* The licence buttons taught this lesson once already: a screen that can undo
+   the protection has to be behind the same door. An employee must not be able
+   to open this list and reset the owner's PIN. */
+function staffCanManage(){
+  var l=staffList();
+  if(!l.length)return true;                     /* nothing to protect yet */
+  if(admUnlocked())return true;                 /* the owner's admin code */
+  var a=activeStaff();
+  return !!(a&&a.role==='owner');
+}
 function manageStaff(){
+  if(!staffCanManage())return openAdmin(manageStaff);
   var l=staffList();var a=activeStaff();
   var rows=l.length?l.map(function(s){return '<div style="display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px"><span style="width:32px;height:32px;border-radius:9px;background:'+(s.role==='owner'?'#00209F':'#0f9d55')+';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;flex:0 0 auto">'+((s.name[0]||'?').toUpperCase())+'</span><span style="flex:1;min-width:0"><b>'+s.name+'</b>'+(a&&a.id===s.id?' <span style="color:#0f9d55;font-size:11px;font-weight:800">● '+t('emp_active')+'</span>':'')+'<br><span style="font-size:11px;color:var(--muted)">'+(s.role==='owner'?t('emp_owner'):t('emp_staff'))+' · PIN ••••</span></span><button class="mini" data-edit="'+s.id+'" style="border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 9px;font-weight:700;flex:0 0 auto">✎</button><button class="mini" data-del="'+s.id+'" style="border:1px solid #fca5a5;background:#fff;color:#b91c1c;border-radius:8px;padding:5px 9px;font-weight:700;flex:0 0 auto">🗑</button></div>';}).join(''):'<div class="sub" style="margin-bottom:10px">'+t('emp_none')+'</div>';
-  var m=caOverlay('<div style="font-weight:900;font-size:17px;margin-bottom:2px">👥 '+t('emp_manage_t')+'</div><div class="sub" style="margin-bottom:12px">'+t('emp_manage_s')+'</div>'+rows+'<button class="cta" id="stAdd" style="margin-top:4px">＋ '+t('emp_add_t')+'</button>'+(l.length?'<button class="cta ghost" id="stSwitch" style="margin-top:8px">🔄 '+t('emp_switch')+'</button>':'')+'<button class="cta ghost" id="stClose" style="margin-top:8px">'+t('back')+'</button>');
+  var m=caOverlay('<div style="font-weight:900;font-size:17px;margin-bottom:2px">👥 '+t('emp_manage_t')+'</div><div class="sub" style="margin-bottom:4px">'+t('emp_manage_s')+'</div><div class="sub" style="margin-bottom:12px"><b>'+t('emp_this_phone')+'</b></div>'+rows+'<button class="cta" id="stAdd" style="margin-top:4px">＋ '+t('emp_add_t')+'</button>'+(l.length?'<button class="cta ghost" id="stSwitch" style="margin-top:8px">🔄 '+t('emp_switch')+'</button>':'')+'<button class="cta ghost" id="stClose" style="margin-top:8px">'+t('back')+'</button>');
   m.box.querySelector('#stAdd').onclick=function(){m.close();staffForm(staffList().length===0);};
   var sw=m.box.querySelector('#stSwitch');if(sw)sw.onclick=function(){m.close();signOut();};
   m.box.querySelector('#stClose').onclick=m.close;
@@ -4235,7 +4439,7 @@ function shareApp(){
    =================================================================== */
 /* Version the seller can read out loud. When someone says "I don't see the new
    button", the first useful question is which build their phone is running. */
-const APP_VER='53';
+const APP_VER='54';
 var swReg=null;
 if('serviceWorker' in navigator){
   window.addEventListener('load',function(){
