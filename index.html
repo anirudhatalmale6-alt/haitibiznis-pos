@@ -2032,6 +2032,46 @@ const T_ADM={
 };
 Object.keys(T_ADM).forEach(function(l){if(T[l])Object.assign(T[l],T_ADM[l]);});
 
+/* ---- App version, forced update, and getting out of an in-app browser ---- */
+const T_APP={
+ ht:{app_h:'App la',app_ver:'Vèsyon',app_upd:'Mete app la ajou',
+     app_upd_s:'Si w pa wè yon bagay nouvo mwen di w mwen mete, peze bouton sa a. App la ap chaje dènye vèsyon an. Travay ou pa pèdi.',
+     app_how:'Kijan pou enstale app la',
+     iab_head:'Ou nan browser Facebook/WhatsApp la. Li pa ka enstale app la.',
+     iab_open:'Louvri nan Chrome',iab_copy:'Kopye lyen an',
+     iab_s1:'Louvri paj sa a nan Chrome (pa nan Facebook oswa WhatsApp).',
+     iab_s2:'Nan Chrome, bouton "Enstale" a ap parèt pou kont li. Peze l.'},
+ fr:{app_h:'L’application',app_ver:'Version',app_upd:'Mettre l’application à jour',
+     app_upd_s:'Si vous ne voyez pas une nouveauté annoncée, appuyez ici. L’application recharge la dernière version. Vos données restent.',
+     app_how:'Comment installer l’application',
+     iab_head:'Vous êtes dans le navigateur de Facebook/WhatsApp. Il ne peut rien installer.',
+     iab_open:'Ouvrir dans Chrome',iab_copy:'Copier le lien',
+     iab_s1:'Ouvrez cette page dans Chrome (pas dans Facebook ni WhatsApp).',
+     iab_s2:'Dans Chrome, le bouton « Installer » apparaît tout seul. Appuyez dessus.'},
+ en:{app_h:'The app',app_ver:'Version',app_upd:'Update the app',
+     app_upd_s:'If you cannot see something new I told you about, tap this. The app reloads the latest version. Nothing you saved is lost.',
+     app_how:'How to install the app',
+     iab_head:'You are in the Facebook/WhatsApp browser. It cannot install anything.',
+     iab_open:'Open in Chrome',iab_copy:'Copy the link',
+     iab_s1:'Open this page in Chrome (not inside Facebook or WhatsApp).',
+     iab_s2:'In Chrome the "Install" button appears on its own. Tap it.'},
+ es:{app_h:'La aplicación',app_ver:'Versión',app_upd:'Actualizar la aplicación',
+     app_upd_s:'Si no ves algo nuevo que te anuncié, toca aquí. La aplicación carga la última versión. No pierdes nada.',
+     app_how:'Cómo instalar la aplicación',
+     iab_head:'Estás en el navegador de Facebook/WhatsApp. No puede instalar nada.',
+     iab_open:'Abrir en Chrome',iab_copy:'Copiar el enlace',
+     iab_s1:'Abre esta página en Chrome (no dentro de Facebook ni WhatsApp).',
+     iab_s2:'En Chrome el botón «Instalar» aparece solo. Tócalo.'},
+ pt:{app_h:'O aplicativo',app_ver:'Versão',app_upd:'Atualizar o aplicativo',
+     app_upd_s:'Se você não vê algo novo que eu avisei, toque aqui. O aplicativo carrega a versão mais recente. Nada do que você salvou se perde.',
+     app_how:'Como instalar o aplicativo',
+     iab_head:'Você está no navegador do Facebook/WhatsApp. Ele não instala nada.',
+     iab_open:'Abrir no Chrome',iab_copy:'Copiar o link',
+     iab_s1:'Abra esta página no Chrome (não dentro do Facebook nem do WhatsApp).',
+     iab_s2:'No Chrome o botão "Instalar" aparece sozinho. Toque nele.'}
+};
+Object.keys(T_APP).forEach(function(l){if(T[l])Object.assign(T[l],T_APP[l]);});
+
 /* registration form schemas (person-first) */
 const UP_KEY={'Driver License':'up_driverlic','National ID':'up_natid','Insurance':'up_insurance','Vehicle Registration':'up_vehreg','Driver Photo':'up_driverphoto','Business Documents':'up_bizdocs','Diploma / Certification':'up_diploma','Experience Documents':'up_expdocs','Store Photo':'up_storephoto','Owner ID':'up_ownerid'};
 function upT(u){return UP_KEY[u]?t(UP_KEY[u]):u;}
@@ -3271,14 +3311,19 @@ function renderDash(){const o=load('hb_orders',[]);
 
 /* ---------- settings ---------- */
 function renderSettings(){const cfg=getCfg();const box=document.getElementById('setBody');const _si=licStatusInfo();
-  box.innerHTML=`<button class="cta ghost" style="margin-bottom:10px" onclick="editBizName()">🏷️ ${t('set_bizname')}${bizName()?' · '+escHtml(bizName()):''}</button>
+  /* The security controls come FIRST. They used to sit under five other
+     buttons and the owner reported he could not find the one that changes his
+     own code - on a 390x780 phone it started at y=763, i.e. off the screen. */
+  box.innerHTML=`<button class="cta ghost" style="margin-bottom:6px" onclick="openAdmin()">🔐 ${t('adm_open')}</button>
+    <button class="cta ghost" style="margin-bottom:6px" onclick="openAdmin(admPwForm)">🔑 ${t('adm_pw')}</button>
+    ${team()?'':`<button class="cta ghost" style="margin-bottom:6px" onclick="tmcJoinForm()">🛡️ ${t('tmc_enter')}</button>`}
+    ${team()?`<div style="font-size:12.5px;font-weight:700;color:#0b6b37;margin-bottom:10px">🛡️ ${t('adm_badge')} · ${escHtml(team().name)} — ${t('adm_nosub')}</div>`:'<div style="height:4px"></div>'}
+    <hr style="border:none;border-top:1px solid var(--line);margin:12px 0">
+    <button class="cta ghost" style="margin-bottom:10px" onclick="editBizName()">🏷️ ${t('set_bizname')}${bizName()?' · '+escHtml(bizName()):''}</button>
     <button class="cta" style="margin-bottom:10px" onclick="manageStaff()">👥 ${t('emp_employees')}</button>
     <button class="cta" style="margin-bottom:12px;background:linear-gradient(135deg,#25D366,#128C7E);border:0" onclick="shareApp()">🟢 ${t('share_pos')} — WhatsApp</button>
     <button class="cta" style="margin-bottom:12px" onclick="openLicense()">💳 ${t('lic_open')}</button>
     <div class="sub" style="margin-bottom:8px"><span style="color:${_si[0]}">●</span> ${planName(lic().plan)} · ${_si[1]} · ${Math.max(0,licDays())} ${t('lic_days').toLowerCase()}</div>
-    <button class="cta ghost" style="margin-bottom:6px" onclick="openAdmin()">🔐 ${t('adm_open')}</button>
-    ${team()?'':`<button class="cta ghost" style="margin-bottom:6px" onclick="tmcJoinForm()">🛡️ ${t('tmc_enter')}</button>`}
-    ${team()?`<div style="font-size:12.5px;font-weight:700;color:#0b6b37;margin-bottom:12px">🛡️ ${t('adm_badge')} · ${escHtml(team().name)} — ${t('adm_nosub')}</div>`:'<div style="height:6px"></div>'}
     <hr style="border:none;border-top:1px solid var(--line);margin:14px 0">
     <div style="font-weight:800;margin:2px 0 6px">${t('set_country_h')}</div>
     <label class="fl">${t('set_country')}</label>
@@ -3317,6 +3362,14 @@ function renderSettings(){const cfg=getCfg();const box=document.getElementById('
   cfg.bizreg.forEach((r,i)=>{box.innerHTML+=`<div style="border-top:1px solid var(--line);padding-top:10px;margin-top:4px"><div style="font-weight:700;margin-bottom:6px">${r.nm}</div>
     <label class="fl">${t('base')} (US$)</label><input type="number" data-usd="${i}" value="${r.usd}">
     <label class="fl">${t('fee_press')} (GDES)</label><input type="number" data-press="${i}" value="${r.press}"></div>`;});
+  /* Printed last so "which version are you on?" is a question anyone can answer,
+     and so there is always a way back onto the newest build from inside the app. */
+  box.innerHTML+=`<hr style="border:none;border-top:1px solid var(--line);margin:16px 0">
+    <div style="font-weight:800;margin:2px 0 6px">📱 ${t('app_h')}</div>
+    <div class="sub" style="margin-bottom:8px">${t('app_ver')} <b>${APP_VER}</b></div>
+    <button class="cta ghost" style="margin-bottom:8px" onclick="appUpdate()">🔄 ${t('app_upd')}</button>
+    <div class="sub" style="margin-bottom:10px">${t('app_upd_s')}</div>
+    ${isInstalled()?'':`<button class="cta ghost" onclick="showInstallHelp()">📲 ${t('app_how')}</button>`}`;
 }
 /* Changing the country changes which payment buttons exist, so it is saved
    immediately and the panel re-drawn to reveal (or hide) the Pix fields. */
@@ -3880,8 +3933,11 @@ async function tmcRead(code){
 }
 function admRoleLbl(r){return {agent:t('adm_role_agent'),sup:t('adm_role_sup'),mgr:t('adm_role_mgr')}[r]||r;}
 
-function openAdmin(){
-  if(admUnlocked()){admPanel();return;}
+/* `after` lets a button send him straight where he wanted to go once the code
+   is accepted, instead of dropping him on the panel to hunt again. */
+function openAdmin(after){
+  const go=(typeof after==='function')?after:admPanel;
+  if(admUnlocked()){go();return;}
   const m=caOverlay('<div style="text-align:center"><div style="font-size:34px">🔐</div>'
     +'<div style="font-weight:900;font-size:18px;margin:2px 0">'+t('adm_t')+'</div>'
     +'<div class="sub" style="margin-bottom:12px">'+t('adm_ask')+'</div>'
@@ -3897,7 +3953,7 @@ function openAdmin(){
     btn.disabled=true;
     const ok=await admCheck(inp.value);
     btn.disabled=false;
-    if(ok){admTries=0;admUnlock();m.close();admPanel();return;}
+    if(ok){admTries=0;admUnlock();m.close();go();return;}
     admTries++;if(admTries>=5){admBlockUntil=Date.now()+60000;admTries=0;}
     err.textContent=Date.now()<admBlockUntil?t('adm_wait'):t('adm_wrong');
     inp.value='';inp.focus();
@@ -3915,8 +3971,10 @@ function admPanel(){
       +'<div style="font-weight:900;font-size:16px;margin:3px 0 1px">'+escHtml(tm.name)+'</div>'
       +'<div style="font-size:12.5px;font-weight:700;color:#0b6b37">'+escHtml(admRoleLbl(tm.role))+' · '+t('adm_nosub')+'</div></div>'
       +'<button class="cta ghost" id="admRm" style="color:#b91c1c;border-color:#fca5a5">'+t('adm_team_rm')+'</button>'
-    : '<div class="sub" style="margin-bottom:8px">'+t('adm_team_s')+'</div>'
-      +'<button class="cta" id="admAdd">＋ '+t('adm_team_add')+'</button>';
+    /* No "register someone on THIS phone" any more. That only ever marked the
+       handset in his hand, so the person he named never received anything.
+       One route now: make a code and send it. */
+    : '<div class="sub" style="margin-bottom:8px">'+t('tmc_make_s')+'</div>';
   const m=caOverlay('<div style="font-weight:900;font-size:17px;margin-bottom:2px">🔐 '+t('adm_t')+' — '+posBrand()+'</div>'
     /* First thing on the panel: he could not find this when it sat at the bottom. */
     +'<button class="cta" id="admPw" style="margin-top:12px">🔑 '+t('adm_pw')+'</button>'
@@ -3938,8 +3996,6 @@ function admPanel(){
   m.box.querySelector('#admCode').onclick=function(){m.close();tmcMakeForm();};
   m.box.querySelectorAll('[data-la]').forEach(function(b){b.onclick=function(){
     licAdmin(b.dataset.la);m.close();admPanel();};});
-  const add=m.box.querySelector('#admAdd');
-  if(add)add.onclick=function(){m.close();admTeamForm();};
   const rm=m.box.querySelector('#admRm');
   if(rm)rm.onclick=function(){if(!confirm(t('adm_team_rmq')))return;
     localStorage.removeItem('hb_team');m.close();renderHome();renderSettings();admPanel();};
@@ -3947,26 +4003,6 @@ function admPanel(){
   m.box.querySelector('#admClose').onclick=m.close;
 }
 
-function admTeamForm(){
-  const m=caOverlay('<div style="font-weight:900;font-size:17px;margin-bottom:2px">👤 '+t('adm_team_add')+'</div>'
-    +'<div class="sub" style="margin-bottom:10px">'+t('adm_team_s')+'</div>'
-    +'<label class="fl">'+t('adm_name')+'</label><input id="tmName" placeholder="'+t('adm_name')+'">'
-    +'<label class="fl">'+t('adm_role')+'</label><select id="tmRole">'
-      +'<option value="agent">'+t('adm_role_agent')+'</option>'
-      +'<option value="sup">'+t('adm_role_sup')+'</option>'
-      +'<option value="mgr">'+t('adm_role_mgr')+'</option></select>'
-    +'<div id="tmErr" style="color:#b91c1c;font-weight:700;font-size:13px;min-height:18px;margin-top:4px"></div>'
-    +'<button class="cta" id="tmSave">'+t('emp_save')+'</button>'
-    +'<button class="cta ghost" id="tmX" style="margin-top:8px">‹ '+t('back')+'</button>');
-  m.ov.style.zIndex='97';
-  m.box.querySelector('#tmX').onclick=function(){m.close();admPanel();};
-  m.box.querySelector('#tmSave').onclick=function(){
-    const nm=(m.box.querySelector('#tmName').value||'').trim();
-    if(!nm){m.box.querySelector('#tmErr').textContent=t('adm_need_name');return;}
-    save('hb_team',{name:nm,role:m.box.querySelector('#tmRole').value,ts:nowStamp()});
-    m.close();alert(t('adm_team_on'));renderHome();renderSettings();
-  };
-}
 
 /* His side: make a code and send it. He never touches the other phone. */
 function tmcMakeForm(){
@@ -4197,11 +4233,57 @@ function shareApp(){
 /* ===================================================================
    PWA: service worker + install prompt + offline indicator
    =================================================================== */
-if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
+/* Version the seller can read out loud. When someone says "I don't see the new
+   button", the first useful question is which build their phone is running. */
+const APP_VER='53';
+var swReg=null;
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('sw.js').then(function(r){
+      swReg=r;
+      try{r.update();}catch(e){}
+    }).catch(function(){});
+  });
+  /* Check for a new build every time the app comes back to the front. A phone
+     that lives in a pocket can otherwise sit on one build for days. */
+  document.addEventListener('visibilitychange',function(){
+    if(document.visibilityState==='visible'&&swReg){try{swReg.update();}catch(e){}}
+  });
+  /* A new service worker took over while the app was open -> refresh once, and
+     only once, so this can never become a reload loop. */
+  navigator.serviceWorker.addEventListener('message',function(ev){
+    if(!ev.data||ev.data.type!=='SW_UPDATED')return;
+    var seen=sessionStorage.getItem('hb_swseen');
+    if(seen===ev.data.cache)return;
+    sessionStorage.setItem('hb_swseen',ev.data.cache);
+    if(seen)location.reload();      /* first run of the session just records it */
+  });
+}
+/* Force the phone onto the newest build: drop every cache, drop the worker,
+   reload past the browser cache. This is the button for "it still looks old". */
+function appUpdate(){
+  var done=function(){location.replace(location.pathname+'?v='+Date.now());};
+  var jobs=[];
+  try{if(navigator.serviceWorker&&navigator.serviceWorker.controller)
+    navigator.serviceWorker.controller.postMessage({type:'WIPE'});}catch(e){}
+  if(window.caches&&caches.keys)jobs.push(caches.keys().then(function(k){
+    return Promise.all(k.map(function(n){return caches.delete(n);}));}).catch(function(){}));
+  if(navigator.serviceWorker&&navigator.serviceWorker.getRegistrations)
+    jobs.push(navigator.serviceWorker.getRegistrations().then(function(rs){
+      return Promise.all(rs.map(function(r){return r.unregister();}));}).catch(function(){}));
+  Promise.all(jobs).then(done,done);
+  setTimeout(done,4000);            /* never leave him staring at a dead button */
+}
 let deferredPrompt=null;var autoPrompted=false;
 function isInstalled(){return window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;}
 function showInstallUI(){
   if(isInstalled())return;                       // already running as an installed app — nothing to show
+  if(inAppBrowser()){                            // inside Facebook/WhatsApp: promise the step that actually works
+    var tx=document.querySelector('#installBanner .ib-tx');
+    var bt=document.getElementById('installBtn2');
+    if(tx)tx.textContent=t('iab_head');
+    if(bt)bt.textContent='🌐 '+t('iab_open');
+  }
   document.getElementById('installBanner').classList.add('show');   // one prominent install bar, stays until installed
 }
 function hideInstallUI(){
@@ -4216,8 +4298,46 @@ function installSuccess(){
   b.classList.add('show');
   setTimeout(function(){b.classList.remove('show');},4500);
 }
+/* The link is shared on WhatsApp and Facebook, and those apps open it inside
+   their OWN browser. That browser cannot install anything - there is no menu
+   item to find, however hard you look. Telling someone to "tap the 3 dots" in
+   there is advice that cannot work, so detect it and get them out first. */
+function inAppBrowser(){
+  var ua=navigator.userAgent||'';
+  if(/FBAN|FBAV|FB_IAB|FBIOS|Instagram|Line\/|MicroMessenger|Snapchat|TikTok|musical_ly|Twitter/i.test(ua))return true;
+  /* Android WebView: "; wv)" - what WhatsApp and many others embed. */
+  if(/Android/i.test(ua)&&/;\s*wv\)/i.test(ua))return true;
+  return false;
+}
+/* Hand them straight to Chrome. The intent: URL is the only thing that reliably
+   escapes an Android in-app browser; the copy button is the fallback for iOS. */
+function openInChrome(){
+  var url='https://haitibiznis.com/pos/';
+  if(/Android/i.test(navigator.userAgent||'')){
+    window.location.href='intent://haitibiznis.com/pos/#Intent;scheme=https;package=com.android.chrome;end';
+    return;
+  }
+  copyInstallLink();
+}
+function copyInstallLink(){
+  var url='https://haitibiznis.com/pos/';
+  var say=function(){var b=document.getElementById('iabCopy');if(b)b.textContent='✅ '+t('tmc_copied');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(say,function(){prompt(t('iab_copy'),url);});}
+  else{prompt(t('iab_copy'),url);}
+}
+function showOpenInBrowser(){
+  var and=/Android/i.test(navigator.userAgent||'');
+  document.getElementById('installHelpSteps').innerHTML=
+    '<div class="istep"><div class="istep-n">1</div><div class="istep-ic">🌐</div><div class="istep-tx">'+t('iab_s1')+'</div></div>'
+    +'<div class="istep-ar">↓</div>'
+    +'<div class="istep"><div class="istep-n">2</div><div class="istep-ic">📲</div><div class="istep-tx">'+t('iab_s2')+'</div></div>'
+    +'<button class="ihelp-btn" style="margin-top:12px" onclick="openInChrome()">'+(and?'🌐 '+t('iab_open'):'🔗 '+t('iab_copy'))+'</button>'
+    +'<button class="ihelp-btn" id="iabCopy" style="margin-top:8px;background:#eef2f7;color:#111" onclick="copyInstallLink()">🔗 '+t('iab_copy')+'</button>';
+  document.getElementById('installHelp').classList.add('show');
+}
 /* Fallback (only when the browser can't do the one-tap install): 3 big illustrated steps, no paragraphs */
 function showInstallHelp(){
+  if(inAppBrowser()){showOpenInBrowser();return;}
   var ua=navigator.userAgent||'';
   var isIOS=/iphone|ipad|ipod/i.test(ua)||(/mac/i.test(ua)&&navigator.maxTouchPoints>1);
   var isAndroid=/android/i.test(ua);
@@ -4274,11 +4394,13 @@ function rerenderCurrent(){
     if(typeof fstep!=='undefined'&&fstep===1)renderCustSearch();else showFlowStep();return;}
   if(R[id]){try{R[id]();}catch(e){}}
   renderDraftBar();   /* the resume card is written in the seller's language too */
+  try{showInstallUI();}catch(e){}   /* applyI18n rewrites the install bar - restate it */
 }
 
 /* ---------- boot ---------- */
 document.querySelectorAll('.lang button').forEach(x=>x.classList.toggle('on',x.dataset.lang===lang));
 applyI18n();renderHome();refreshBadges();renderDraftBar();
+try{showInstallUI();}catch(e){}   /* after applyI18n, so the in-app-browser wording survives */
 /* Any merchant registered while the phone had no signal goes out now. */
 setTimeout(function(){try{mppFlush();}catch(e){}},1500);
 /* The brief is a lot of typing. Save it while it is being typed, not only when
