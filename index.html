@@ -2145,6 +2145,51 @@ const T_EMP2={
 Object.keys(T_EMP2).forEach(function(l){if(T[l])Object.assign(T[l],T_EMP2[l]);});
 
 /* -------------------------------------------------------------------------
+   The one lock with no key of its own.
+
+   "Why can i change my code! I cant remember it and takes too much time to
+   find it and use it." He was right, and it is worse than an annoyance: the
+   admin code is the ONLY way to the team badge, to a forgotten PIN, and to
+   changing the admin code itself. Forget it and every one of those doors is
+   shut, including the one that would let him set a code he can remember. The
+   first code still works, but it lives in a chat message he has to go hunting
+   for, and that is what he is telling me costs him the time.
+
+   The owner already proves who he is every morning, with a 4-digit PIN he
+   chose. So that is the second door. It is not a weaker lock than the one it
+   sits beside: it accepts only the PIN of an owner who is signed in on this
+   phone right now, and an employee's PIN opens nothing.
+   ------------------------------------------------------------------------- */
+const T_ADM2={
+ ht:{adm_use_pin:'Sèvi ak PIN mwen',
+     adm_pin_t:'Antre PIN 4 chif ou a',
+     adm_pin_s:'Se mèt biznis la sèlman ki ka louvri konsa.',
+     adm_pin_bad:'Move PIN, eseye ankò',
+     adm_or_code:'‹ Antre kòd admin nan pito'},
+ fr:{adm_use_pin:'Utiliser mon PIN',
+     adm_pin_t:'Entrez votre PIN à 4 chiffres',
+     adm_pin_s:'Seul le propriétaire peut ouvrir de cette façon.',
+     adm_pin_bad:'PIN incorrect, réessayez',
+     adm_or_code:'‹ Saisir plutôt le code admin'},
+ en:{adm_use_pin:'Use my PIN',
+     adm_pin_t:'Enter your 4-digit PIN',
+     adm_pin_s:'Only the business owner can open it this way.',
+     adm_pin_bad:'Wrong PIN, try again',
+     adm_or_code:'‹ Type the admin code instead'},
+ es:{adm_use_pin:'Usar mi PIN',
+     adm_pin_t:'Ingrese su PIN de 4 dígitos',
+     adm_pin_s:'Solo el dueño del negocio puede abrir así.',
+     adm_pin_bad:'PIN incorrecto, intente de nuevo',
+     adm_or_code:'‹ Escribir el código admin'},
+ pt:{adm_use_pin:'Usar meu PIN',
+     adm_pin_t:'Digite seu PIN de 4 dígitos',
+     adm_pin_s:'Só o dono do negócio pode abrir assim.',
+     adm_pin_bad:'PIN errado, tente de novo',
+     adm_or_code:'‹ Digitar o código admin'}
+};
+Object.keys(T_ADM2).forEach(function(l){if(T[l])Object.assign(T[l],T_ADM2[l]);});
+
+/* -------------------------------------------------------------------------
    Employees, third pass.
 
    "LajanMaker still does not let me change my password/PIN while I am logged
@@ -2343,7 +2388,13 @@ function renderHome(){
    </div>
    <div id="homeWhy"></div>
    ${(function(){var a=activeStaff();var has=staffList().length;
-     if(a)return '<button onclick="signOut()" style="width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 12px;margin:12px 0;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow)"><span style="font-weight:800;font-size:12.5px">👤 '+t('emp_signed')+': '+a.name+' <span style="color:var(--muted);font-weight:600">· '+(a.role==='owner'?t('emp_owner'):t('emp_staff'))+'</span></span><span style="color:var(--blue);font-weight:800;font-size:12px;flex:0 0 auto">🔄 '+t('emp_switch')+'</span></button>';
+     /* He circled this row and asked how to sign employees up and delete them.
+        The row only ever did one thing - sign out - so the list, where adding
+        and removing live, was reachable from Paramet and nowhere else. The name
+        now opens the list; the chip on the right still switches. */
+     if(a)return '<div style="width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;margin:12px 0;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow);overflow:hidden">'
+       +'<button onclick="manageStaff()" style="flex:1;min-width:0;text-align:left;border:0;background:none;padding:9px 4px 9px 12px;font:inherit"><span style="font-weight:800;font-size:12.5px">👤 '+t('emp_signed')+': '+a.name+' <span style="color:var(--muted);font-weight:600">· '+(a.role==='owner'?t('emp_owner'):t('emp_staff'))+'</span></span></button>'
+       +'<button onclick="signOut()" style="flex:0 0 auto;border:0;background:none;padding:9px 12px 9px 6px;color:var(--blue);font-weight:800;font-size:12px;font-family:inherit">🔄 '+t('emp_switch')+'</button></div>';
      if(!has)return '<button onclick="manageStaff()" style="width:100%;border:1px dashed var(--blue);background:#eef3ff;border-radius:12px;padding:9px 12px;margin:12px 0;display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800;font-size:12.5px;color:var(--blue)">👥 '+t('emp_setup_nudge')+'</span><span style="color:var(--blue);font-weight:800;font-size:12px;flex:0 0 auto">→</span></button>';
      /* Staff exist but nobody is signed in - the sign-in card can be dismissed
         by tapping outside it, and there was then no way back to it. */
@@ -4116,6 +4167,7 @@ function openAdmin(after){
     +'<input id="admIn" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="'+t('adm_code')+'" style="width:100%;text-align:center;letter-spacing:2px;font-size:19px;font-weight:800;padding:11px;border:2px solid var(--line);border-radius:12px">'
     +'<div id="admErr" style="color:#b91c1c;font-weight:700;font-size:13px;min-height:18px;margin-top:6px"></div>'
     +'<button class="cta" id="admGo">'+t('adm_unlock')+'</button>'
+    +(admOwnerSelf()?'<button class="cta ghost" id="admPin" style="margin-top:8px">🔢 '+t('adm_use_pin')+'</button>':'')
     +'<button class="cta ghost" id="admX" style="margin-top:8px">'+t('back')+'</button></div>');
   m.ov.style.zIndex='96';
   const inp=m.box.querySelector('#admIn');setTimeout(function(){inp.focus();},50);
@@ -4132,7 +4184,38 @@ function openAdmin(after){
   }
   m.box.querySelector('#admGo').onclick=submit;
   inp.addEventListener('keydown',function(e){if(e.key==='Enter')submit();});
+  const pinBtn=m.box.querySelector('#admPin');
+  if(pinBtn)pinBtn.onclick=function(){m.close();admPinDoor(go);};
   m.box.querySelector('#admX').onclick=m.close;
+}
+
+/* Only an owner who is signed in on this phone, and only with the PIN that is
+   actually on his own record. Anyone else sees no such button. */
+function admOwnerSelf(){
+  var a=activeStaff();if(!a||a.role!=='owner')return null;
+  var s=staffList().find(function(x){return x.id===a.id;});
+  return (s&&s.role==='owner'&&/^[0-9]{4}$/.test(s.pin||''))?s:null;
+}
+function admPinDoor(go){
+  var s=admOwnerSelf();if(!s)return openAdmin(go);
+  var m=caOverlay('<div style="text-align:center"><div style="font-size:34px">🔢</div>'
+    +'<div style="font-weight:900;font-size:17px;margin:2px 0">'+escHtml(s.name)+'</div>'
+    +'<div class="sub" style="margin-bottom:10px">'+t('adm_pin_t')+'</div>'
+    +'<input id="apIn" inputmode="numeric" maxlength="4" placeholder="••••" style="width:150px;text-align:center;letter-spacing:10px;font-size:26px;font-weight:900;padding:10px;border:2px solid var(--line);border-radius:12px">'
+    +'<div id="apErr" style="color:#b91c1c;font-weight:700;font-size:13px;min-height:18px;margin-top:6px"></div>'
+    +'<button class="cta" id="apGo">'+t('adm_unlock')+'</button>'
+    +'<div class="sub" style="margin:8px 0 0">'+t('adm_pin_s')+'</div>'
+    +'<button class="cta ghost" id="apCode" style="margin-top:8px">'+t('adm_or_code')+'</button></div>');
+  m.ov.style.zIndex='96';
+  var inp=m.box.querySelector('#apIn');setTimeout(function(){inp.focus();},50);
+  function submit(){
+    if((inp.value||'')===s.pin){admUnlock();m.close();go();return;}
+    m.box.querySelector('#apErr').textContent=t('adm_pin_bad');
+    inp.value='';inp.focus();
+  }
+  m.box.querySelector('#apGo').onclick=submit;
+  inp.addEventListener('keydown',function(e){if(e.key==='Enter')submit();});
+  m.box.querySelector('#apCode').onclick=function(){m.close();openAdmin(go);};
 }
 
 function admPanel(){
@@ -4544,7 +4627,7 @@ function shareApp(){
    =================================================================== */
 /* Version the seller can read out loud. When someone says "I don't see the new
    button", the first useful question is which build their phone is running. */
-const APP_VER='58';
+const APP_VER='59';
 var swReg=null;
 if('serviceWorker' in navigator){
   window.addEventListener('load',function(){
