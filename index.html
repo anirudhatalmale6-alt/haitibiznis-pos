@@ -2171,6 +2171,22 @@ const T_EMP3={
 };
 Object.keys(T_EMP3).forEach(function(l){if(T[l])Object.assign(T[l],T_EMP3[l]);});
 
+/* -------------------------------------------------------------------------
+   Sèvis Administratif, Sèvis Legal, Kominike Laprès and Asirans have no fixed
+   rate - the seller taps the service and types the price into the small box
+   beside it. Tapping the row without typing anything selected the item at 0 and
+   the sale went all the way through: receipt printed, TOTAL 0 GDES, commission
+   0. Found in the launch sweep, not by him. Name the item that needs a price.
+   ------------------------------------------------------------------------- */
+const T_PRICE={
+ ht:{need_price:'Mete pri a pou: {n}'},
+ fr:{need_price:'Indiquez le prix pour : {n}'},
+ en:{need_price:'Enter the price for: {n}'},
+ es:{need_price:'Escriba el precio de: {n}'},
+ pt:{need_price:'Digite o preço de: {n}'}
+};
+Object.keys(T_PRICE).forEach(function(l){if(T[l])Object.assign(T[l],T_PRICE[l]);});
+
 /* ---- App version, forced update, and getting out of an in-app browser ---- */
 const T_APP={
  ht:{app_h:'App la',app_ver:'Vèsyon',app_upd:'Mete app la ajou',
@@ -2574,7 +2590,17 @@ function showFlowStep(){setFlowSteps();
   if(fstep===2)renderDetail();if(fstep===3){renderFiles();renderDocsHint();}if(fstep===4)renderPay();
   saveDraft();window.scrollTo(0,0);}
 function flowStep(n){
-  if(n===3){computeAmount();if(!flow.items.length){alert(t('need_sel'));return;}}
+  if(n===3){computeAmount();if(!flow.items.length){alert(t('need_sel'));return;}
+    /* Only the typed-price catalogues. The package modules build their own items
+       with a price already attached, and must not be second-guessed here. */
+    if(ITEMS_MAP[flow.module]){
+      var noPrice=flow.items.filter(function(it){return !((+it.amt)>0);});
+      if(noPrice.length){
+        alert(t('need_price').replace('{n}',noPrice.map(function(x){return tItem(x.label);}).join(', ')));
+        return;
+      }
+    }
+  }
   fstep=n;showFlowStep();
 }
 function renderCustSearch(){
@@ -4507,7 +4533,7 @@ function shareApp(){
    =================================================================== */
 /* Version the seller can read out loud. When someone says "I don't see the new
    button", the first useful question is which build their phone is running. */
-const APP_VER='55';
+const APP_VER='56';
 var swReg=null;
 if('serviceWorker' in navigator){
   window.addEventListener('load',function(){
