@@ -2220,6 +2220,39 @@ const T_EMP3={
 };
 Object.keys(T_EMP3).forEach(function(l){if(T[l])Object.assign(T[l],T_EMP3[l]);});
 
+/* "Now i need to add employees but i cant add their names." He typed a name,
+   pressed Sere, and the form answered "PIN dwe gen 4 chif" - so to write down
+   somebody's name he first had to invent a 4-digit number for them. The app
+   picks one now; the box still shows it and he can type over it. */
+const T_EMP4={
+ ht:{emp_pin_auto:'Nou chwazi yon PIN pou li. Ou ka chanje l si ou vle.',
+     emp_pin_mine:'Sa a se PIN pa ou. Chanje l pou yon bagay ou ka sonje.',
+     emp_added_pin:'PIN {n} an se',
+     emp_added_pin_note:'Ekri l yon kote. Li ka chanje l nan Paramèt.',
+     emp_first_pin:'PIN ou a se {p} — ekri l yon kote. Ou ka chanje l nan Paramèt.'},
+ fr:{emp_pin_auto:'Nous avons choisi un PIN pour lui. Vous pouvez le changer.',
+     emp_pin_mine:'Ceci est VOTRE PIN. Remplacez-le par un nombre dont vous vous souviendrez.',
+     emp_added_pin:'Le PIN de {n} est',
+     emp_added_pin_note:'Notez-le. Il pourra le changer dans Paramètres.',
+     emp_first_pin:'Votre PIN est {p} — notez-le. Vous pouvez le changer dans Paramètres.'},
+ en:{emp_pin_auto:'We picked a PIN for them. You can change it.',
+     emp_pin_mine:'This is YOUR PIN. Change it to something you will remember.',
+     emp_added_pin:"{n}'s PIN is",
+     emp_added_pin_note:'Write it down. They can change it in Settings.',
+     emp_first_pin:'Your PIN is {p} — write it down. You can change it in Settings.'},
+ es:{emp_pin_auto:'Elegimos un PIN para él. Puede cambiarlo.',
+     emp_pin_mine:'Este es SU PIN. Cámbielo por uno que recuerde.',
+     emp_added_pin:'El PIN de {n} es',
+     emp_added_pin_note:'Anótelo. Podrá cambiarlo en Ajustes.',
+     emp_first_pin:'Su PIN es {p} — anótelo. Puede cambiarlo en Ajustes.'},
+ pt:{emp_pin_auto:'Escolhemos um PIN para ele. Você pode mudar.',
+     emp_pin_mine:'Este é o SEU PIN. Troque por um que você lembre.',
+     emp_added_pin:'O PIN de {n} é',
+     emp_added_pin_note:'Anote. Ele pode mudar em Configurações.',
+     emp_first_pin:'Seu PIN é {p} — anote. Você pode mudar em Configurações.'}
+};
+Object.keys(T_EMP4).forEach(function(l){if(T[l])Object.assign(T[l],T_EMP4[l]);});
+
 /* -------------------------------------------------------------------------
    Sèvis Administratif, Sèvis Legal, Kominike Laprès and Asirans have no fixed
    rate - the seller taps the service and types the price into the small box
@@ -3713,10 +3746,35 @@ function caCode(){var s='';for(var i=0;i<6;i++)s+=Math.floor(Math.random()*10);r
 function caRef(){return 'CW-'+Date.now().toString(36).toUpperCase();}
 function caOverlay(inner){
   const ov=document.createElement('div');ov.style.cssText='position:fixed;inset:0;background:rgba(10,16,32,.55);z-index:70;display:flex;align-items:center;justify-content:center;padding:16px';
-  const box=document.createElement('div');box.style.cssText='background:#fff;width:100%;max-width:430px;border-radius:18px;padding:20px 18px;max-height:90vh;overflow:auto';
+  const box=document.createElement('div');box.style.cssText='background:#fff;width:100%;max-width:430px;border-radius:18px;padding:20px 18px;max-height:100%;overflow:auto';
   box.innerHTML=inner;ov.appendChild(box);document.body.appendChild(ov);
-  ov.onclick=e=>{if(e.target===ov)document.body.removeChild(ov);};
-  return {ov,box,close:()=>{if(ov.parentNode)document.body.removeChild(ov);}};
+  ov.onclick=e=>{if(e.target===ov){drop();document.body.removeChild(ov);}};
+  /* The card is now as tall as what the phone can actually show. vh does not
+     shrink when the keyboard opens, so a card sized in vh keeps its Save button
+     under the keyboard with nothing to scroll. */
+  var vv=window.visualViewport,fit=null;
+  if(vv){
+    /* Only when the keyboard is actually up. Off-keyboard the card keeps the
+       plain inset:0 it has always had. */
+    fit=function(){
+      if(vv.height&&Math.abs(vv.height-window.innerHeight)>40){
+        ov.style.height=vv.height+'px';ov.style.bottom='auto';ov.style.top=(vv.offsetTop||0)+'px';
+      }else{
+        ov.style.height='';ov.style.top='';ov.style.bottom='';ov.style.inset='0';
+      }
+    };
+    fit();vv.addEventListener('resize',fit);vv.addEventListener('scroll',fit);
+  }
+  const drop=()=>{if(vv&&fit){vv.removeEventListener('resize',fit);vv.removeEventListener('scroll',fit);}};
+  /* On a phone the keyboard covers the bottom half of the screen, and vh units
+     do not know that - so the Save button under the box he is typing in ends up
+     behind the keyboard with no obvious way to reach it. Pull whatever has the
+     cursor into the middle of what is still visible. */
+  box.addEventListener('focusin',function(e){
+    if(!/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName))return;
+    setTimeout(function(){try{e.target.scrollIntoView({block:'center'});}catch(err){}},280);
+  });
+  return {ov,box,close:()=>{drop();if(ov.parentNode)document.body.removeChild(ov);}};
 }
 function openCash(){
   const body=document.getElementById('cashBody');const st=caState();const cfg=getCfg();
@@ -4532,8 +4590,11 @@ function myPinForm(){
    one time the choice actually matters - the owner typed an employee's name
    into a form that silently made that employee the owner. It is always on
    screen now, with a line under it saying what each role can do. */
+/* Nobody should have to invent a number before they can write down a name. */
+function genPin(){var p;do{p=String(Math.floor(1000+Math.random()*9000));}while(/^(\d)\1{3}$/.test(p)||p==='1234');return p;}
 function staffForm(isFirst,editId){
   var ed=editId?staffList().find(function(x){return x.id===editId;}):null;
+  var dPin=ed?ed.pin:genPin();
   /* His instruction, in his words: "It should only allow me to create employees
      unless I explicitly choose to create an owner." So the box opens on Anplwaye
      every time, including the first account. Owner is now always a deliberate tap. */
@@ -4542,7 +4603,7 @@ function staffForm(isFirst,editId){
     +'<option value="staff"'+(dRole==='staff'?' selected':'')+'>'+t('emp_staff')+'</option>'
     +'<option value="owner"'+(dRole==='owner'?' selected':'')+'>'+t('emp_owner')+'</option></select>'
     +'<div class="sub" id="sfRoleN" style="margin:4px 0 2px"></div>';
-  var m=caOverlay('<div id="sfTitle" style="font-weight:900;font-size:17px;margin-bottom:2px"></div><div class="sub" id="sfSub" style="margin-bottom:10px"></div><label class="fl">'+t('emp_name')+'</label><input id="sfName" value="'+escHtml(ed?ed.name:(isFirst?(profile().name||''):''))+'" placeholder="'+t('emp_name')+'">'+roleRow+'<label class="fl">'+t('emp_pin')+'</label><input id="sfPin" inputmode="numeric" maxlength="4" value="'+(ed?ed.pin:'')+'" placeholder="••••" style="letter-spacing:6px;font-weight:800"><div id="sfErr" style="color:#b91c1c;font-weight:700;font-size:13px;height:18px;margin-top:4px"></div><button class="cta" id="sfSave" style="margin-top:4px">'+t('emp_save')+'</button><button class="cta ghost" id="sfCancel" style="margin-top:8px">‹ '+t('back')+'</button>');
+  var m=caOverlay('<div id="sfTitle" style="font-weight:900;font-size:17px;margin-bottom:2px"></div><div class="sub" id="sfSub" style="margin-bottom:10px"></div><label class="fl">'+t('emp_name')+'</label><input id="sfName" value="'+escHtml(ed?ed.name:(isFirst?(profile().name||''):''))+'" placeholder="'+t('emp_name')+'">'+roleRow+'<label class="fl">'+t('emp_pin')+'</label><input id="sfPin" inputmode="numeric" maxlength="4" value="'+dPin+'" placeholder="••••" style="letter-spacing:6px;font-weight:800"><div class="sub" id="sfPinN" style="margin:4px 0 2px">'+(ed?'':t(isFirst?'emp_pin_mine':'emp_pin_auto'))+'</div><div id="sfErr" style="color:#b91c1c;font-weight:700;font-size:13px;height:18px;margin-top:4px"></div><button class="cta" id="sfSave" style="margin-top:4px">'+t('emp_save')+'</button><button class="cta ghost" id="sfCancel" style="margin-top:8px">‹ '+t('back')+'</button>');
   m.ov.style.zIndex='95';
   var sel=m.box.querySelector('#sfRole'),note=m.box.querySelector('#sfRoleN'),ttl=m.box.querySelector('#sfTitle');
   /* The heading follows the role. A card headed "Create owner account" while
@@ -4569,17 +4630,26 @@ function staffForm(isFirst,editId){
     if(ed){ed.name=nm;ed.pin=pin;ed.role=role;var a=activeStaff();if(a&&a.id===ed.id)setActiveStaff(ed);}
     else l.push({id:genStaffId(),name:nm,pin:pin,role:role,ts:nowStamp()});
     saveStaff(l);m.close();
-    if(isFirst){setActiveStaff(staffList()[0]);renderHome();go('home');return;}
+    /* He is signed in from here on, so he must be told the number he will be
+       asked for next time - especially when the app chose it. */
+    if(isFirst){setActiveStaff(staffList()[0]);renderHome();go('home');alert(t('emp_first_pin').replace('{p}',pin));return;}
     /* Adding someone is where "I dont get the workflow" came from: the name went
        into a list and nothing told him what she now has to do. */
-    if(!ed)return staffAdded(nm);
+    if(!ed)return staffAdded(nm,pin);
     manageStaff();
   };
 }
 /* Said once, in plain words, straight after the name is saved. */
-function staffAdded(nm){
+function staffAdded(nm,pin){
+  /* The PIN is the one thing he has to pass on, so it is the biggest thing on
+     the card - not a sentence about it. */
+  var pinBlock=pin?('<div style="background:#f1f5f9;border-radius:12px;padding:12px;margin-bottom:10px">'
+    +'<div style="font-size:12px;color:var(--muted);font-weight:700">'+escHtml(t('emp_added_pin').replace('{n}',nm))+'</div>'
+    +'<div style="font-size:30px;font-weight:900;letter-spacing:8px">'+escHtml(pin)+'</div>'
+    +'<div style="font-size:11px;color:var(--muted)">'+escHtml(t('emp_added_pin_note'))+'</div></div>'):'';
   var m=caOverlay('<div style="text-align:center"><div style="font-size:34px">✅</div>'
     +'<div style="font-weight:900;font-size:17px;margin:2px 0 6px">'+escHtml(t('emp_added_t').replace('{n}',nm))+'</div>'
+    +pinBlock
     +'<div class="sub" style="text-align:left;margin-bottom:10px">'+escHtml(t('emp_added_s').replace('{n}',nm))+'</div>'
     +'<div class="sub" style="text-align:left;margin-bottom:10px">'+escHtml(t('emp_added_other').replace('{n}',nm))+'</div>'
     +'<button class="cta ghost" id="saCode" style="margin-bottom:8px">'+t('emp_added_code')+'</button>'
@@ -4605,7 +4675,7 @@ function staffCanManage(){
 function manageStaff(){
   if(!staffCanManage())return openAdmin(manageStaff);
   var l=staffList();var a=activeStaff();
-  var rows=l.length?l.map(function(s){return '<div style="display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px"><span style="width:32px;height:32px;border-radius:9px;background:'+(s.role==='owner'?'#00209F':'#0f9d55')+';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;flex:0 0 auto">'+((s.name[0]||'?').toUpperCase())+'</span><span style="flex:1;min-width:0"><b>'+s.name+'</b>'+(a&&a.id===s.id?' <span style="color:#0f9d55;font-size:11px;font-weight:800">● '+t('emp_active')+'</span>':'')+'<br><span style="font-size:11px;color:var(--muted)">'+(s.role==='owner'?t('emp_owner'):t('emp_staff'))+' · PIN ••••</span></span><button class="mini" data-edit="'+s.id+'" style="border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 9px;font-weight:700;flex:0 0 auto">✎</button><button class="mini" data-del="'+s.id+'" style="border:1px solid #fca5a5;background:#fff;color:#b91c1c;border-radius:8px;padding:5px 9px;font-weight:700;flex:0 0 auto">🗑</button></div>';}).join(''):'<div class="sub" style="margin-bottom:10px">'+t('emp_none')+'</div>';
+  var rows=l.length?l.map(function(s){return '<div style="display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px"><span style="width:32px;height:32px;border-radius:9px;background:'+(s.role==='owner'?'#00209F':'#0f9d55')+';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;flex:0 0 auto">'+((s.name[0]||'?').toUpperCase())+'</span><span style="flex:1;min-width:0"><b>'+s.name+'</b>'+(a&&a.id===s.id?' <span style="color:#0f9d55;font-size:11px;font-weight:800">● '+t('emp_active')+'</span>':'')+'<br><span style="font-size:11px;color:var(--muted)">'+(s.role==='owner'?t('emp_owner'):t('emp_staff'))+' · PIN '+escHtml(s.pin||'----')+'</span></span><button class="mini" data-edit="'+s.id+'" style="border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 9px;font-weight:700;flex:0 0 auto">✎</button><button class="mini" data-del="'+s.id+'" style="border:1px solid #fca5a5;background:#fff;color:#b91c1c;border-radius:8px;padding:5px 9px;font-weight:700;flex:0 0 auto">🗑</button></div>';}).join(''):'<div class="sub" style="margin-bottom:10px">'+t('emp_none')+'</div>';
   var m=caOverlay('<div style="font-weight:900;font-size:17px;margin-bottom:2px">👥 '+t('emp_manage_t')+'</div><div class="sub" style="margin-bottom:4px">'+t('emp_manage_s')+'</div><div class="sub" style="margin-bottom:12px"><b>'+t('emp_this_phone')+'</b></div>'+rows+'<button class="cta" id="stAdd" style="margin-top:4px">＋ '+t('emp_add_t')+'</button>'+(l.length?'<button class="cta ghost" id="stSwitch" style="margin-top:8px">🔄 '+t('emp_switch')+'</button>':'')+'<button class="cta ghost" id="stClose" style="margin-top:8px">'+t('back')+'</button>');
   m.box.querySelector('#stAdd').onclick=function(){m.close();staffForm(staffList().length===0);};
   var sw=m.box.querySelector('#stSwitch');if(sw)sw.onclick=function(){m.close();signOut();};
@@ -4627,7 +4697,7 @@ function shareApp(){
    =================================================================== */
 /* Version the seller can read out loud. When someone says "I don't see the new
    button", the first useful question is which build their phone is running. */
-const APP_VER='59';
+const APP_VER='60';
 var swReg=null;
 if('serviceWorker' in navigator){
   window.addEventListener('load',function(){

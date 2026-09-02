@@ -1,5 +1,5 @@
 /* LajanMaker Center — service worker (offline app shell) */
-var CACHE = 'hb-pos-v59';
+var CACHE = 'hb-pos-v60';
 var SHELL = [
   './',
   './index.html',
