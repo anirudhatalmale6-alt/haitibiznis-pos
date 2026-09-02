@@ -2253,6 +2253,76 @@ const T_EMP4={
 };
 Object.keys(T_EMP4).forEach(function(l){if(T[l])Object.assign(T[l],T_EMP4[l]);});
 
+/* "After i add a pin code for Jennifer and Dukens i cannot share it with them"
+   and "The system is telling her that she will need to pay in 6 days".
+   Two halves of one thing. A PIN only opens the phone it was typed into; her own
+   phone needs a team code, and that lived on a different screen behind a
+   different door. One button now sends both in one WhatsApp message, and the
+   subscription screen finally says out loud that an employee does not pay. */
+const T_EMP5={
+ ht:{emp_share:'Voye aksè a',
+     emp_share_t:'Voye aksè {n}',
+     emp_share_s:'De bagay nan yon sèl mesaj: PIN li pou telefòn sa a, ak kòd ekip la pou pwòp telefòn li.',
+     emp_share_pin:'PIN sou telefòn sa a',
+     emp_share_code:'Kòd ekip pou pwòp telefòn li',
+     emp_share_wa:'Voye sou WhatsApp',
+     emp_share_copy:'Kopye mesaj la',
+     emp_share_copied:'Mesaj la kopye',
+     emp_share_wait:'N ap prepare kòd la...',
+     emp_share_msg:'Bonjou {n}! Men aksè ou pou LajanMaker Center.\n\n1) Sou telefòn biznis la: chwazi non ou epi tape PIN {pin}\n\n2) Sou pwòp telefòn ou: louvri {link}\nPeze "Antre kòd ekip la", tape kòd {code} epi mete non w.\nOu p ap gen pou peye anyen.',
+     lic_team_h:'Ou se yon anplwaye?',
+     lic_team_s:'Si ou travay pou yon moun ki gen abònman deja, tape kòd ekip li ba ou. Ou p ap gen pou peye anyen.'},
+ fr:{emp_share:'Envoyer l’accès',
+     emp_share_t:'Envoyer l’accès de {n}',
+     emp_share_s:'Deux choses en un seul message : son PIN pour ce téléphone, et le code d’équipe pour son propre téléphone.',
+     emp_share_pin:'PIN sur ce téléphone',
+     emp_share_code:'Code d’équipe pour son propre téléphone',
+     emp_share_wa:'Envoyer sur WhatsApp',
+     emp_share_copy:'Copier le message',
+     emp_share_copied:'Message copié',
+     emp_share_wait:'Préparation du code...',
+     emp_share_msg:'Bonjour {n} ! Voici votre accès à LajanMaker Center.\n\n1) Sur le téléphone de l’entreprise : choisissez votre nom et tapez le PIN {pin}\n\n2) Sur votre propre téléphone : ouvrez {link}\nAppuyez sur « Entrer un code d’équipe », tapez le code {code} et mettez votre nom.\nVous n’aurez rien à payer.',
+     lic_team_h:'Vous êtes employé ?',
+     lic_team_s:'Si vous travaillez pour quelqu’un qui est déjà abonné, tapez le code d’équipe qu’il vous a donné. Vous n’aurez rien à payer.'},
+ en:{emp_share:'Send their access',
+     emp_share_t:'Send {n} their access',
+     emp_share_s:'Two things in one message: their PIN for this phone, and the team code for their own phone.',
+     emp_share_pin:'PIN on this phone',
+     emp_share_code:'Team code for their own phone',
+     emp_share_wa:'Send on WhatsApp',
+     emp_share_copy:'Copy the message',
+     emp_share_copied:'Message copied',
+     emp_share_wait:'Preparing the code...',
+     emp_share_msg:'Hi {n}! Here is your access to LajanMaker Center.\n\n1) On the business phone: pick your name and type PIN {pin}\n\n2) On your own phone: open {link}\nPress "Enter a team code", type the code {code} and put your name.\nYou will not have to pay anything.',
+     lic_team_h:'Are you an employee?',
+     lic_team_s:'If you work for someone who already subscribes, type the team code they gave you. You will not have to pay anything.'},
+ es:{emp_share:'Enviar su acceso',
+     emp_share_t:'Enviar el acceso de {n}',
+     emp_share_s:'Dos cosas en un solo mensaje: su PIN para este teléfono y el código de equipo para su propio teléfono.',
+     emp_share_pin:'PIN en este teléfono',
+     emp_share_code:'Código de equipo para su propio teléfono',
+     emp_share_wa:'Enviar por WhatsApp',
+     emp_share_copy:'Copiar el mensaje',
+     emp_share_copied:'Mensaje copiado',
+     emp_share_wait:'Preparando el código...',
+     emp_share_msg:'¡Hola {n}! Este es tu acceso a LajanMaker Center.\n\n1) En el teléfono del negocio: elige tu nombre y escribe el PIN {pin}\n\n2) En tu propio teléfono: abre {link}\nPulsa "Ingresar un código de equipo", escribe el código {code} y pon tu nombre.\nNo tendrás que pagar nada.',
+     lic_team_h:'¿Eres empleado?',
+     lic_team_s:'Si trabajas para alguien que ya tiene suscripción, escribe el código de equipo que te dio. No tendrás que pagar nada.'},
+ pt:{emp_share:'Enviar o acesso',
+     emp_share_t:'Enviar o acesso de {n}',
+     emp_share_s:'Duas coisas em uma só mensagem: o PIN para este celular e o código de equipe para o celular dela.',
+     emp_share_pin:'PIN neste celular',
+     emp_share_code:'Código de equipe para o celular dela',
+     emp_share_wa:'Enviar no WhatsApp',
+     emp_share_copy:'Copiar a mensagem',
+     emp_share_copied:'Mensagem copiada',
+     emp_share_wait:'Preparando o código...',
+     emp_share_msg:'Olá {n}! Este é o seu acesso ao LajanMaker Center.\n\n1) No celular da empresa: escolha o seu nome e digite o PIN {pin}\n\n2) No seu próprio celular: abra {link}\nToque em "Digitar um código de equipe", digite o código {code} e coloque o seu nome.\nVocê não vai precisar pagar nada.',
+     lic_team_h:'Você é funcionário?',
+     lic_team_s:'Se você trabalha para alguém que já tem assinatura, digite o código de equipe que a pessoa te deu. Você não vai precisar pagar nada.'}
+};
+Object.keys(T_EMP5).forEach(function(l){if(T[l])Object.assign(T[l],T_EMP5[l]);});
+
 /* -------------------------------------------------------------------------
    Sèvis Administratif, Sèvis Legal, Kominike Laprès and Asirans have no fixed
    rate - the seller taps the service and types the price into the small box
@@ -4034,6 +4104,14 @@ function openLicense(fromGate){
      <div class="sub" style="margin-top:2px">${t('lic_expired_sub')}</div>
      <button class="cta ghost" style="margin-top:10px" onclick="tmcJoinForm()">🛡️ ${t('tmc_enter')}</button>
      <button class="cta ghost" style="margin-top:8px" onclick="openAdmin()">🔐 ${t('adm_open')}</button></div>`;
+  /* "The system is telling her that she will need to pay in 6 days." It was
+     telling the truth for an owner and lying to an employee, and the way out
+     was on a screen she had no reason to open. The door belongs on the page
+     that asks for the money - not only after the trial has already run out. */
+  if(!exp&&!team())html+=`<div class="card" style="background:#f2fbf5;border-color:#12a150">
+     <div style="font-weight:900;color:#0b6b37">🛡️ ${t('lic_team_h')}</div>
+     <div class="sub" style="margin-top:2px">${t('lic_team_s')}</div>
+     <button class="cta ghost" id="licTeamJoin" style="margin-top:10px">${t('tmc_enter')}</button></div>`;
   html+=`<div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div><div style="font-size:12px;color:var(--muted);font-weight:700">${t('lic_current')}</div>
@@ -4052,6 +4130,7 @@ function openLicense(fromGate){
   <div id="licHist"></div>`;
   body.innerHTML=html;
   document.getElementById('licAR').onchange=e=>{const x=lic();x.autoRenew=e.target.checked;licSave(x);};
+  const ltj=document.getElementById('licTeamJoin');if(ltj)ltj.onclick=function(){tmcJoinForm();};
   licRenderPlans();licRenderHist();go('license');
 }
 function licSetCycle(c){licCycle=c;const m=document.getElementById('licCycM'),a=document.getElementById('licCycA');if(m)m.className=c==='monthly'?'on':'';if(a)a.className=c==='annual'?'on':'';licRenderPlans();}
@@ -4627,20 +4706,21 @@ function staffForm(isFirst,editId){
     if(!nm){m.box.querySelector('#sfErr').textContent=t('emp_need_name');return;}
     if(!/^[0-9]{4}$/.test(pin)){m.box.querySelector('#sfErr').textContent=t('emp_need_pin');return;}
     var l=staffList();
+    var newId=null;
     if(ed){ed.name=nm;ed.pin=pin;ed.role=role;var a=activeStaff();if(a&&a.id===ed.id)setActiveStaff(ed);}
-    else l.push({id:genStaffId(),name:nm,pin:pin,role:role,ts:nowStamp()});
+    else {newId=genStaffId();l.push({id:newId,name:nm,pin:pin,role:role,ts:nowStamp()});}
     saveStaff(l);m.close();
     /* He is signed in from here on, so he must be told the number he will be
        asked for next time - especially when the app chose it. */
     if(isFirst){setActiveStaff(staffList()[0]);renderHome();go('home');alert(t('emp_first_pin').replace('{p}',pin));return;}
     /* Adding someone is where "I dont get the workflow" came from: the name went
        into a list and nothing told him what she now has to do. */
-    if(!ed)return staffAdded(nm,pin);
+    if(!ed)return staffAdded(nm,pin,newId);
     manageStaff();
   };
 }
 /* Said once, in plain words, straight after the name is saved. */
-function staffAdded(nm,pin){
+function staffAdded(nm,pin,id){
   /* The PIN is the one thing he has to pass on, so it is the biggest thing on
      the card - not a sentence about it. */
   var pinBlock=pin?('<div style="background:#f1f5f9;border-radius:12px;padding:12px;margin-bottom:10px">'
@@ -4652,11 +4732,49 @@ function staffAdded(nm,pin){
     +pinBlock
     +'<div class="sub" style="text-align:left;margin-bottom:10px">'+escHtml(t('emp_added_s').replace('{n}',nm))+'</div>'
     +'<div class="sub" style="text-align:left;margin-bottom:10px">'+escHtml(t('emp_added_other').replace('{n}',nm))+'</div>'
-    +'<button class="cta ghost" id="saCode" style="margin-bottom:8px">'+t('emp_added_code')+'</button>'
-    +'<button class="cta" id="saOk">'+t('emp_added_ok')+'</button></div>');
+    +'<button class="cta" id="saCode" style="margin-bottom:8px">📤 '+t('emp_share')+'</button>'
+    +'<button class="cta ghost" id="saOk">'+t('emp_added_ok')+'</button></div>');
   m.ov.style.zIndex='96';
-  m.box.querySelector('#saCode').onclick=function(){m.close();openAdmin(tmcMakeForm);};
+  m.box.querySelector('#saCode').onclick=function(){m.close();staffShare(id);};
   m.box.querySelector('#saOk').onclick=function(){m.close();manageStaff();};
+}
+/* One message, both halves of what she needs. The PIN alone was never enough:
+   it opens THIS phone, and she is standing somewhere else with her own. The
+   team code is what stops her phone asking her for a subscription, so the two
+   travel together or he ends up explaining it twice. */
+function staffShare(id){
+  var s=staffList().find(function(x){return x.id===id;});
+  if(!s)return manageStaff();
+  var link=location.origin+location.pathname;
+  var m=caOverlay('<div style="font-weight:900;font-size:17px;margin-bottom:2px">📤 '+escHtml(t('emp_share_t').replace('{n}',s.name))+'</div>'
+    +'<div class="sub" style="margin-bottom:12px">'+t('emp_share_s')+'</div>'
+    +'<div style="background:#f1f5f9;border-radius:12px;padding:12px;margin-bottom:8px">'
+      +'<div style="font-size:11.5px;color:var(--muted);font-weight:800">1 · '+escHtml(t('emp_share_pin'))+'</div>'
+      +'<div style="font-size:28px;font-weight:900;letter-spacing:8px">'+escHtml(s.pin||'----')+'</div></div>'
+    +'<div style="background:#f2fbf5;border:2px solid #12a150;border-radius:12px;padding:12px;margin-bottom:12px">'
+      +'<div style="font-size:11.5px;color:var(--muted);font-weight:800">2 · '+escHtml(t('emp_share_code'))+'</div>'
+      +'<div id="shCode" style="font-size:24px;font-weight:900;letter-spacing:3px">'+escHtml(t('emp_share_wait'))+'</div></div>'
+    +'<a id="shWa" class="cta" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;pointer-events:none;opacity:.5">💬 '+t('emp_share_wa')+'</a>'
+    +'<button class="cta ghost" id="shCopy" style="margin-top:8px" disabled>📋 '+t('emp_share_copy')+'</button>'
+    +'<button class="cta ghost" id="shX" style="margin-top:8px">'+t('back')+'</button>');
+  m.ov.style.zIndex='97';
+  m.box.querySelector('#shX').onclick=function(){m.close();manageStaff();};
+  /* The code is derived, so it takes a moment. Everything that needs it stays
+     switched off until it is there - a WhatsApp draft with the word
+     "preparing" in it would be worse than no button at all. */
+  tmcMake(s.role==='owner'?'mgr':'agent').then(function(code){
+    var msg=t('emp_share_msg').replace('{n}',s.name).replace('{pin}',s.pin||'----')
+              .replace('{code}',code).replace('{link}',link);
+    var el=m.box.querySelector('#shCode');if(el)el.textContent=code;
+    var wa=m.box.querySelector('#shWa');
+    if(wa){wa.href='https://wa.me/?text='+encodeURIComponent(msg);wa.style.pointerEvents='';wa.style.opacity='';}
+    var cp=m.box.querySelector('#shCopy');
+    if(cp){cp.disabled=false;cp.onclick=function(){
+      var done=function(){alert(t('emp_share_copied'));};
+      if(navigator.clipboard)navigator.clipboard.writeText(msg).then(done,done);else done();};}
+  },function(){
+    var el=m.box.querySelector('#shCode');if(el)el.textContent='--';
+  });
 }
 /* The licence buttons taught this lesson once already: a screen that can undo
    the protection has to be behind the same door. An employee must not be able
@@ -4675,12 +4793,20 @@ function staffCanManage(){
 function manageStaff(){
   if(!staffCanManage())return openAdmin(manageStaff);
   var l=staffList();var a=activeStaff();
-  var rows=l.length?l.map(function(s){return '<div style="display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px"><span style="width:32px;height:32px;border-radius:9px;background:'+(s.role==='owner'?'#00209F':'#0f9d55')+';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;flex:0 0 auto">'+((s.name[0]||'?').toUpperCase())+'</span><span style="flex:1;min-width:0"><b>'+s.name+'</b>'+(a&&a.id===s.id?' <span style="color:#0f9d55;font-size:11px;font-weight:800">● '+t('emp_active')+'</span>':'')+'<br><span style="font-size:11px;color:var(--muted)">'+(s.role==='owner'?t('emp_owner'):t('emp_staff'))+' · PIN '+escHtml(s.pin||'----')+'</span></span><button class="mini" data-edit="'+s.id+'" style="border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 9px;font-weight:700;flex:0 0 auto">✎</button><button class="mini" data-del="'+s.id+'" style="border:1px solid #fca5a5;background:#fff;color:#b91c1c;border-radius:8px;padding:5px 9px;font-weight:700;flex:0 0 auto">🗑</button></div>';}).join(''):'<div class="sub" style="margin-bottom:10px">'+t('emp_none')+'</div>';
+  /* "After i add a pin code for Jennifer and Dukens i cannot share it with them."
+     Showing him the PIN was only half the job - the send button has to sit on
+     the row of the person it belongs to, so it is still there tomorrow and not
+     only on the card that appeared the moment she was added. */
+  var rows=l.length?l.map(function(s){return '<div style="border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px">'
+    +'<div style="display:flex;align-items:center;gap:10px"><span style="width:32px;height:32px;border-radius:9px;background:'+(s.role==='owner'?'#00209F':'#0f9d55')+';color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;flex:0 0 auto">'+((s.name[0]||'?').toUpperCase())+'</span><span style="flex:1;min-width:0"><b>'+s.name+'</b>'+(a&&a.id===s.id?' <span style="color:#0f9d55;font-size:11px;font-weight:800">● '+t('emp_active')+'</span>':'')+'<br><span style="font-size:11px;color:var(--muted)">'+(s.role==='owner'?t('emp_owner'):t('emp_staff'))+' · PIN '+escHtml(s.pin||'----')+'</span></span><button class="mini" data-edit="'+s.id+'" style="border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 9px;font-weight:700;flex:0 0 auto">✎</button><button class="mini" data-del="'+s.id+'" style="border:1px solid #fca5a5;background:#fff;color:#b91c1c;border-radius:8px;padding:5px 9px;font-weight:700;flex:0 0 auto">🗑</button></div>'
+    +'<button data-share="'+s.id+'" style="width:100%;margin-top:8px;border:1px solid var(--blue);background:#eef3ff;color:var(--blue);border-radius:9px;padding:8px;font-weight:800;font-size:12.5px;font-family:inherit">📤 '+t('emp_share')+'</button>'
+    +'</div>';}).join(''):'<div class="sub" style="margin-bottom:10px">'+t('emp_none')+'</div>';
   var m=caOverlay('<div style="font-weight:900;font-size:17px;margin-bottom:2px">👥 '+t('emp_manage_t')+'</div><div class="sub" style="margin-bottom:4px">'+t('emp_manage_s')+'</div><div class="sub" style="margin-bottom:12px"><b>'+t('emp_this_phone')+'</b></div>'+rows+'<button class="cta" id="stAdd" style="margin-top:4px">＋ '+t('emp_add_t')+'</button>'+(l.length?'<button class="cta ghost" id="stSwitch" style="margin-top:8px">🔄 '+t('emp_switch')+'</button>':'')+'<button class="cta ghost" id="stClose" style="margin-top:8px">'+t('back')+'</button>');
   m.box.querySelector('#stAdd').onclick=function(){m.close();staffForm(staffList().length===0);};
   var sw=m.box.querySelector('#stSwitch');if(sw)sw.onclick=function(){m.close();signOut();};
   m.box.querySelector('#stClose').onclick=m.close;
   m.box.querySelectorAll('[data-edit]').forEach(function(b){b.onclick=function(){m.close();staffForm(false,b.dataset.edit);};});
+  m.box.querySelectorAll('[data-share]').forEach(function(b){b.onclick=function(){m.close();staffShare(b.dataset.share);};});
   m.box.querySelectorAll('[data-del]').forEach(function(b){b.onclick=function(){var id=b.dataset.del;var s=staffList().find(function(x){return x.id===id;});if(!confirm(t('emp_del_confirm').replace('{n}',s.name)))return;var l2=staffList().filter(function(x){return x.id!==id;});saveStaff(l2);var av=activeStaff();if(av&&av.id===id)setActiveStaff(l2[0]||null);m.close();manageStaff();};});
 }
 /* Share the POS app (distinct from affiliate referral) */
@@ -4697,7 +4823,7 @@ function shareApp(){
    =================================================================== */
 /* Version the seller can read out loud. When someone says "I don't see the new
    button", the first useful question is which build their phone is running. */
-const APP_VER='60';
+const APP_VER='61';
 var swReg=null;
 if('serviceWorker' in navigator){
   window.addEventListener('load',function(){
